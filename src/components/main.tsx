@@ -48,7 +48,23 @@ export const Main = (
         {props.leftHref ? <Link href={props.leftHref}>{icon}</Link> : icon}
       </div>
 
-      <div className={"flex-1 relative"}>{props.children}</div>
+      <div className={"flex-1 relative"}>
+        <div className={"z-10 relative"}>{props.children}</div>
+
+        <div className={"absolute left-0 right-0 bottom-0 top-0"}>
+          <Image
+            src={"/images/hero.png"}
+            alt={"hero"}
+            sizes="100vw"
+            width={0}
+            height={0}
+            fill
+            style={{
+              objectFit: "cover",
+            }}
+          />
+        </div>
+      </div>
 
       <div
         className="fixed top-1/2 right-0 z-10 -translate-y-1/2"

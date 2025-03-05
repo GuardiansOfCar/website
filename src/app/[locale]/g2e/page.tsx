@@ -17,37 +17,21 @@ export default function G2E() {
         />
       )}
 
-      <div className={"relative"}>
-        <div
-          className={
-            "py-10 pl-14 flex items-center z-10 relative h-[750px] justify-center"
-          }
-        >
-          <Image
-            className={"absolute"}
-            src={"/images/mockup.png"}
-            alt={"m"}
-            width={200}
-            height={400}
-          />
-          <h1 className={"text-primary text-header-1 relative z-10"}>
-            COMING SOON...
-          </h1>
-        </div>
-
-        <div className={"absolute left-0 right-0 bottom-0 top-0"}>
-          <Image
-            src={"/images/hero.png"}
-            alt={"hero"}
-            sizes="100vw"
-            width={0}
-            height={0}
-            fill
-            style={{
-              objectFit: "cover",
-            }}
-          />
-        </div>
+      <div
+        className={
+          "py-10 pl-14 flex items-center z-10 relative h-[750px] justify-center"
+        }
+      >
+        <Image
+          className={"absolute"}
+          src={"/images/mockup.png"}
+          alt={"m"}
+          width={200}
+          height={400}
+        />
+        <h1 className={"text-primary text-header-1 relative z-10"}>
+          COMING SOON...
+        </h1>
       </div>
     </Main>
   );
