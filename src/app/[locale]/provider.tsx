@@ -10,7 +10,6 @@ import { Popup } from "@/components/popup";
 import { Button } from "@/components/button";
 import clsx from "clsx";
 import { useWallet } from "@/lib/use-wallet";
-import { clearInterval } from "node:timers";
 
 const queryClient = new QueryClient();
 

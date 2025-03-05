@@ -7,7 +7,9 @@ import { Button } from "@/components/button";
 import Image from "next/image";
 import { StakingSupply } from "@/app/[locale]/staking/components/supply";
 import { Popup } from "@/components/popup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { API_BASE_URL } from "@/lib/constants";
+import { useWallet } from "@/lib/use-wallet";
 
 export default function StakingPage() {
   const t = useTranslations();
@@ -32,6 +34,95 @@ export default function StakingPage() {
   const handleClaimPopupClose = () => {
     setClaimPopup(false);
   };
+
+  const wallet = useWallet();
+  const [status, setStatus] = useState({
+    stakedBalance: 0,
+    availableBalance: 0,
+  });
+
+  const [total, setTotal] = useState({
+    myPoolRate: "",
+    totalStaked: 0,
+  });
+
+  const [estimated, setEstimated] = useState({
+    id: 0,
+    annualRate: "",
+  });
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/v1/stakings/estimated`).then(async (res) => {
+      if (res.status === 200 || res.status === 201) {
+        const data = (await res.json()) as {
+          id: number;
+          annualRate: string;
+        };
+        setEstimated(data);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!wallet.id) return;
+
+    fetch(`${API_BASE_URL}/v1/stakings/status/total`).then(async (res) => {
+      if (res.status === 200 || res.status === 201) {
+        const data = (await res.json()) as {
+          myPoolRate: string;
+          totalStaked: number;
+        };
+        setTotal(data);
+      }
+    });
+  }, [wallet.id]);
+
+  useEffect(() => {
+    if (!wallet.id) return;
+
+    fetch(
+      `${API_BASE_URL}/v1/stakings/status/me/${wallet.id}?userWalletId=${wallet.id}`,
+    ).then(async (res) => {
+      if (res.status === 200 || res.status === 201) {
+        const data = (await res.json()) as {
+          stakedBalance: number;
+          availableBalance: number;
+        };
+        setStatus(data);
+      }
+    });
+  }, [wallet.id]);
+
+  const [reward, setReward] = useState("");
+
+  useEffect(() => {
+    if (!wallet.id) return;
+
+    fetch(
+      `${API_BASE_URL}/v1/stakings/reward/me/${wallet.id}?userWalletId=${wallet.id}`,
+    ).then(async (res) => {
+      if (res.status === 200 || res.status === 201) {
+        const data = (await res.json()) as {
+          reward: string;
+        };
+        setReward(data.reward);
+      }
+    });
+  }, [wallet.id]);
+
+  const handleClaim = async () => {
+    fetch(`${API_BASE_URL}/`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userWalletId: wallet.id,
+        amount: reward,
+        otpCode: "string",
+      }),
+    });
+  };
+
   return (
     <>
       {buyPopup && (
@@ -120,7 +211,7 @@ export default function StakingPage() {
             <div className={"flex flex-col items-center"}>
               <p className={"text-center text-body-3"}>{t("staking.c2")}</p>
               <span className={"text-header-3"}>
-                2{" "}
+                {reward}{" "}
                 <span className={"text-header-3 text-primary-10"}>$GOCAR</span>
               </span>
             </div>
@@ -130,8 +221,13 @@ export default function StakingPage() {
               {t("staking.f5")}
             </p>
 
-            <Button>CLAIM</Button>
-            <Button className={"!bg-neutral-40"}>{t("staking.c13")}</Button>
+            <Button onClick={handleClaim}>CLAIM</Button>
+            <Button
+              onClick={handleClaimPopupClose}
+              className={"!bg-neutral-40"}
+            >
+              {t("staking.c13")}
+            </Button>
           </div>
         </Popup>
       )}
@@ -150,7 +246,8 @@ export default function StakingPage() {
               description={
                 <>
                   <span>
-                    0 <span className={"text-primary-10"}>$GOCAR</span>
+                    {status.stakedBalance}{" "}
+                    <span className={"text-primary-10"}>$GOCAR</span>
                   </span>
                 </>
               }
@@ -159,7 +256,8 @@ export default function StakingPage() {
                 <span className={"text-body-3"}>{t("staking.c2")}</span>
                 <div className={"text-title-1b"}>
                   <span>
-                    0 <span className={"text-primary-10"}>$GOCAR</span>
+                    {status.availableBalance}{" "}
+                    <span className={"text-primary-10"}>$GOCAR</span>
                   </span>
                 </div>
               </div>
@@ -177,7 +275,7 @@ export default function StakingPage() {
               headerBorder
               description={
                 <>
-                  <span>0%</span>
+                  <span>{total.myPoolRate}</span>
                 </>
               }
             >
@@ -185,7 +283,8 @@ export default function StakingPage() {
                 <span className={"text-body-3"}>{t("staking.d2")}</span>
                 <div className={"text-title-1b"}>
                   <span>
-                    0 <span className={"text-primary-10"}>$GOCAR</span>
+                    {total.totalStaked}{" "}
+                    <span className={"text-primary-10"}>$GOCAR</span>
                   </span>
                 </div>
               </div>
@@ -196,7 +295,8 @@ export default function StakingPage() {
               description={
                 <>
                   <span>
-                    24%<span className={"text-label-1 ml-1"}>p/a</span>
+                    {estimated.annualRate}
+                    <span className={"text-label-1 ml-1"}>p/a</span>
                   </span>
                 </>
               }
@@ -213,7 +313,7 @@ export default function StakingPage() {
               description={
                 <>
                   <span>
-                    0 <span className={"text-primary-10"}>$GOCAR</span>
+                    {reward} <span className={"text-primary-10"}>$GOCAR</span>
                   </span>
                 </>
               }

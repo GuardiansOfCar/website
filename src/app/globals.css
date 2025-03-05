@@ -17,6 +17,7 @@ input::-webkit-inner-spin-button {
 input[type='number'] {
     -moz-appearance: textfield;
 }
+
 @keyframes marquee {
     from {
         transform: translateX(0);
@@ -28,6 +29,13 @@ input[type='number'] {
 
 
 @layer components {
+    .bg-hero {
+        background-image: url(/images/hero.png);
+        background-size: cover; /* 너비에 맞추고 높이는 비율 유지 */
+        background-repeat: repeat-y; /* Y축 방향으로만 반복 */
+        background-position: center top; /* 중앙 정렬 */
+    }
+
     .shadow-text {
         text-shadow: 2px 2px 0px #000000,
         -2px 2px 0px #000000,

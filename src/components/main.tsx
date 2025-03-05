@@ -34,11 +34,7 @@ export const Main = (
   );
 
   return (
-    <main
-      className={
-        "w-full max-w-[var(--max-width)] mx-auto p-10 relative flex items-center"
-      }
-    >
+    <main className={"w-full max-w-[var(--max-width)] mx-auto p-10 relative "}>
       <div
         className={"fixed top-1/2 -translate-y-1/2 left-0 z-10"}
         style={{
@@ -48,23 +44,7 @@ export const Main = (
         {props.leftHref ? <Link href={props.leftHref}>{icon}</Link> : icon}
       </div>
 
-      <div className={"flex-1 relative"}>
-        <div className={"z-10 relative"}>{props.children}</div>
-
-        <div className={"absolute left-0 right-0 bottom-0 top-0"}>
-          <Image
-            src={"/images/hero.png"}
-            alt={"hero"}
-            sizes="100vw"
-            width={0}
-            height={0}
-            fill
-            style={{
-              objectFit: "cover",
-            }}
-          />
-        </div>
-      </div>
+      <div className={"flex-1 relative"}>{props.children}</div>
 
       <div
         className="fixed top-1/2 right-0 z-10 -translate-y-1/2"

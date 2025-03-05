@@ -8,6 +8,7 @@ import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { Banner } from "@/components/banner";
 import LocaleProvider from "@/app/[locale]/provider";
+import Image from "next/image";
 
 const grandstander = localFont({
   src: "../../../public/fonts/Grandstander.ttf",
@@ -23,19 +24,23 @@ export default async function LocaleLayout(props: PropsWithChildren) {
 
   return (
     <html lang={locale}>
-      <body className={`${grandstander.className} antialiased`}>
-        <NextIntlClientProvider messages={messages}>
-          <LocaleProvider>
-            <header className={"min-w-[var(--max-width)]"}>
-              <Nav />
-              <Banner />
-            </header>
-            <div className={"min-w-[var(--max-width)]"}>{props.children}</div>
-            <footer className={"min-w-[var(--max-width)]"}>
-              <Footer />
-            </footer>
-          </LocaleProvider>
-        </NextIntlClientProvider>
+      <body className={`${grandstander.className} antialiased bg-hero`}>
+        <div className={"relative z-[10]"}>
+          <NextIntlClientProvider messages={messages}>
+            <LocaleProvider>
+              <header className={"min-w-[var(--max-width)]"}>
+                <Nav />
+                <Banner />
+              </header>
+              <div className={"min-w-[var(--max-width)]"}>{props.children}</div>
+              <footer className={"min-w-[var(--max-width)]"}>
+                <Footer />
+              </footer>
+            </LocaleProvider>
+          </NextIntlClientProvider>
+        </div>
+
+
       </body>
     </html>
   );
