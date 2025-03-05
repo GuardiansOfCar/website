@@ -41,7 +41,7 @@ export const Nav = () => {
           "w-full max-w-[var(--max-width)] h-[72px] mx-auto flex items-center justify-between px-10"
         }
       >
-        <Link href={"/public"}>
+        <Link href={"/"}>
           <h1 className={clsx("text-header-3 text-primary")}>
             GUARDIANS OF THE CAR
           </h1>
