@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --max-width: 1440px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox  */
+input[type='number'] {
+    -moz-appearance: textfield;
+}
+@keyframes marquee {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+
+@layer components {
+    .shadow-text {
+        text-shadow: 2px 2px 0px #000000,
+        -2px 2px 0px #000000,
+        2px -2px 0px #000000,
+        -2px -2px 0px #000000,
+        0px 2px 0px #000000,
+        2px 0px 0px #000000,
+        -2px 0px 0px #000000,
+        0px -2px 0px #000000;
+    }
+
+    .animate-marquee {
+        display: flex;
+        animation: marquee 20s linear infinite;
+    }
+
+    .text-header-1 {
+        font-size: 40px;
+        line-height: 48px;
+        font-weight: bold;
+    }
+
+    .text-header-2 {
+        font-size: 32px;
+        line-height: 40px;
+        font-weight: bold;
+    }
+
+    .text-header-3 {
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: bold;
+    }
+
+    .text-header-4 {
+        font-size: 20px;
+        line-height: 28px;
+        font-weight: bold;
+    }
+
+    .text-title-1 {
+        font-size: 18px;
+        line-height: 20px;
+        font-weight: 600;
+    }
+
+    .text-title-1b {
+        @apply text-title-1;
+        font-weight: bold;
+    }
+
+    .text-title-2 {
+        font-size: 16px;
+        line-height: 20px;
+        font-weight: 500;
+    }
+
+    .text-title-2b {
+        @apply text-title-2;
+        font-weight: bold;
+    }
+
+    .text-body-1 {
+        font-size: 16px;
+        line-height: 20px;
+        font-weight: 500;
+    }
+
+    .text-body-1b {
+        @apply text-body-1;
+        font-weight: bold;
+    }
+
+    .text-body-2 {
+        font-size: 15px;
+        line-height: 22px;
+        font-weight: 500;
+    }
+
+    .text-body-2b {
+        @apply text-body-2;
+        font-weight: bold;
+    }
+
+    .text-body-3 {
+        font-size: 14px;
+        line-height: 22px;
+        font-weight: 500;
+    }
+
+    .text-body-3b {
+        @apply text-body-3;
+        font-weight: bold;
+    }
+
+    .text-label-1 {
+        font-size: 12px;
+        line-height: 20px;
+        font-weight: bold;
+    }
+}
+
+body {
+    font-family: Grandstander, sans-serif;
+    background-color: #000000;
+}
+

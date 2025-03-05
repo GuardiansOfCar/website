@@ -1,0 +1,35 @@
+"use client";
+
+import { Main } from "@/components/main";
+import { useTranslations } from "next-intl";
+import { ReferralSection } from "@/app/[locale]/referral/components/section";
+import { ReferralHistory } from "@/app/[locale]/referral/components/history";
+import { useEffect, useState } from "react";
+import { API_BASE_URL } from "@/lib/constants";
+
+export default function ReferralPage() {
+  const t = useTranslations();
+  const [rate, setRate] = useState(0);
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/v1/rewards/list`)
+      .then((res) => res.json())
+      .then((result) => {
+        const r = result.data.find((x: any) => x.type === "REF");
+        setRate(r?.rate || 0);
+      });
+  }, []);
+
+  return (
+    <Main leftHref={"/howtobuy"} rightHref={"/faq"}>
+      <h2 className={"text-header-2 text-primary mx-10 mb-4"}>
+        {t("referral.b1", { 0: rate })}
+      </h2>
+
+      <div className={"flex flex-col space-y-8 items-start px-10"}>
+        <ReferralSection title={t("referral.c1")}>{rate}%</ReferralSection>
+        <ReferralHistory />
+      </div>
+    </Main>
+  );
+}
