@@ -52,7 +52,7 @@ export default function StakingPage() {
   });
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/v1/stakings/estimated`).then(async (res) => {
+    fetch(`${API_BASE_URL}/v1/stakings/status/estimated`).then(async (res) => {
       if (res.status === 200 || res.status === 201) {
         const data = (await res.json()) as {
           id: number;
@@ -66,7 +66,9 @@ export default function StakingPage() {
   useEffect(() => {
     if (!wallet.id) return;
 
-    fetch(`${API_BASE_URL}/v1/stakings/status/total`).then(async (res) => {
+    fetch(
+      `${API_BASE_URL}/v1/stakings/status/total?userWalletId=${wallet.id}`,
+    ).then(async (res) => {
       if (res.status === 200 || res.status === 201) {
         const data = (await res.json()) as {
           myPoolRate: string;

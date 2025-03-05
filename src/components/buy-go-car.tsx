@@ -459,7 +459,6 @@ const MyICOInfo = () => {
 
   useEffect(() => {
     if (!wallet.id) return;
-
     fetch(
       `${API_BASE_URL}/v1/stakings/status/me/${wallet.id}?userWalletId=${wallet.id}`,
     ).then(async (res) => {
