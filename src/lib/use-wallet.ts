@@ -6,6 +6,7 @@ export function useWallet() {
   const walletStore = useWalletStore();
   const [id, setId] = useState<number>(0);
   const [referral, setReferral] = useState("");
+  const [icoAddress, setIcoAddress] = useState("");
 
   const fetchId = () => {
     fetch(
@@ -23,7 +24,8 @@ export function useWallet() {
 
         setId(data.walletId);
         setReferral(data.referralCode);
-      })
+        setIcoAddress(data.icoAddress);
+      });
   };
 
   useEffect(() => {
@@ -37,7 +39,6 @@ export function useWallet() {
     };
   }, [walletStore.address]);
 
-
   return {
     set: (address: string, provider: Provider) => {
       if (!address) return alert("You don't have wallet to set.");
@@ -47,10 +48,11 @@ export function useWallet() {
     address: walletStore.address,
     id,
     clear: () => {
-      walletStore.clear()
+      walletStore.clear();
     },
     provider: walletStore.provider,
     referral,
+    icoAddress,
     network: walletStore.network,
     coin: walletStore.coin,
     setCoin: walletStore.setCoin,

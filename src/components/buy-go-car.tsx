@@ -6,7 +6,6 @@ import clsx from "clsx";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Checkbox } from "@/components/checkbox";
 import { Button } from "@/components/button";
-import { Popup } from "@/components/popup";
 import { useWallet } from "@/lib/use-wallet";
 import { useReferralStore } from "@/lib/use-referral-store";
 import { useForm } from "react-hook-form";
@@ -184,8 +183,6 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
 
   return (
     <>
-      <OtpPopup />
-
       <WalletManagePopup ref={walletManageRef} />
 
       <div
@@ -416,36 +413,6 @@ const PresaleCountdown = ({ endDate }: { endDate: string }) => {
   );
 };
 
-export const OtpPopup = () => {
-  const [open, setOpen] = useState(false);
-  const handleOtpPopupClose = () => {
-    setOpen(false);
-  };
-
-  if (!open) return null;
-  return (
-    <Popup onClose={handleOtpPopupClose} title={"OTP Authentication"}>
-      <div className={"flex flex-col space-y-3"}>
-        <p className={"text-center"}>Enter the code to verify your identity</p>
-
-        <input className={"py-3 px-2 bg-[#CDE7E5] text-body-2 rounded-none"} />
-
-        <Button
-          onClick={handleOtpPopupClose}
-          disabled
-          className={clsx("disabled:bg-neutral-30")}
-        >
-          CONTINUE
-        </Button>
-
-        <Button onClick={handleOtpPopupClose} className={"!bg-neutral-40"}>
-          CANCEL
-        </Button>
-      </div>
-    </Popup>
-  );
-};
-
 const ICOState = ({}: {}) => {
   const t = useTranslations();
   const [accum, setAccum] = useState(0);
@@ -485,22 +452,33 @@ const MyICOInfo = () => {
   const t = useTranslations();
   const wallet = useWallet();
 
+  const [result, setResult] = useState({
+    stakedBalance: 0,
+    availableBalance: 0,
+  });
+
   useEffect(() => {
     if (!wallet.id) return;
     fetch(
       `${API_BASE_URL}/v1/stakings/status/me/${wallet.id}?userWalletId=${wallet.id}`,
-    )
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-        //"stakedBalance": 0,
-        //      "availableBalance": 0
-      });
+    ).then(async (res) => {
+      if (res.status === 200 || res.status === 201) {
+        const data = (await res.json()) as {
+          stakedBalance: number;
+          availableBalance: number;
+        };
+        setResult(data);
+      }
+    });
   }, [wallet.id]);
+
   return (
     <div className={"flex flex-col space-y-1"}>
       <div className={"flex items-center space-x-2"}>
-        <p className={"text-label-1"}>{t("home.presalePurchase7")} = 0</p>
+        <p className={"text-label-1"}>
+          {t("home.presalePurchase7")} ={" "}
+          {result.stakedBalance + result.availableBalance}{" "}
+        </p>
         <Image
           src={"/images/tooltip.png"}
           alt={"tooltip"}
@@ -510,7 +488,9 @@ const MyICOInfo = () => {
       </div>
 
       <div className={"flex items-center space-x-2"}>
-        <p className={"text-label-1"}>{t("home.presalePurchase8")} = 0</p>
+        <p className={"text-label-1"}>
+          {t("home.presalePurchase8")} = {result.stakedBalance}
+        </p>
         <Image
           src={"/images/tooltip.png"}
           alt={"tooltip"}
