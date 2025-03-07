@@ -1,33 +1,78 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect } from "react";
 import { useWallet } from "@/lib/use-wallet";
-import { useConnect, useAccount, useDisconnect } from "wagmi";
+import {
+  useAppKit,
+  useAppKitProvider,
+  Provider,
+  useAppKitAccount,
+  useAppKitNetworkCore,
+  useDisconnect,
+} from "@reown/appkit/react";
+import type { Provider as SolProvider } from "@reown/appkit-adapter-solana/react";
+import { bsc, mainnet, solana } from "@reown/appkit/networks";
+import { appKit } from "@/app/[locale]/provider";
+import { useSolanaTx } from "@/lib/use-solana-tx";
+import { useEvmTx } from "@/lib/use-evm-tx";
 
 export function useWalletConnect() {
-  const { connectors, connect } = useConnect();
-  const connector = useMemo(
-    () => connectors.find((x) => x.id === "walletConnect"),
-    [connectors],
-  );
-  const { address } = useAccount();
+  const { open } = useAppKit();
+  const { address, isConnected } = useAppKitAccount();
+  const { caipNetworkId } = useAppKitNetworkCore();
+  const { disconnect } = useDisconnect();
+  const { walletProvider } = useAppKitProvider<Provider>("eip155");
   const wallet = useWallet();
-  const connectRequestState = useRef(false);
+  const { walletProvider: solanaWalletProvider } =
+    useAppKitProvider<SolProvider>("solana");
 
   useEffect(() => {
-    if (address) {
-      if (connectRequestState.current) {
-        wallet.set(address, "walletconnect");
-        connectRequestState.current = false;
-      }
+    if (address && isConnected) {
+      wallet.set(address, "walletconnect");
     }
-  }, [address]);
+  }, [address, isConnected, wallet.provider]);
 
   const handleConnect = async () => {
-    if (!connector) return alert("You don't use Wallet Connect.");
-    connectRequestState.current = true;
-    connect({ connector });
+    if (
+      (wallet.network === "SOL" &&
+        address &&
+        caipNetworkId &&
+        !caipNetworkId?.startsWith("solana")) ||
+      (wallet.network !== "SOL" &&
+        address &&
+        caipNetworkId &&
+        !caipNetworkId?.startsWith("eip"))
+    ) {
+      await disconnect();
+    } else {
+      if (address && isConnected) return wallet.set(address, "walletconnect");
+    }
+
+    if (wallet.network === "BNB") {
+      appKit.switchNetwork(bsc);
+    } else if (wallet.network === "ETH") {
+      appKit.switchNetwork(mainnet);
+    } else {
+      appKit.switchNetwork(solana);
+    }
+
+    open({
+      view: "Connect",
+      namespace: wallet.network === "SOL" ? "solana" : "eip155",
+    });
+  };
+
+  const solanaTx = useSolanaTx(solanaWalletProvider);
+  const evmTx = useEvmTx(walletProvider);
+
+  const handleTx = async (amt: number) => {
+    if (wallet.network === "SOL") {
+      return await solanaTx.generateSignedTransaction(amt);
+    } else {
+      return await evmTx.generateSignedTransaction(amt);
+    }
   };
 
   return {
+    generateTx: handleTx,
     connect: handleConnect,
   };
 }

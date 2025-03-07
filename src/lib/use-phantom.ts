@@ -37,12 +37,8 @@ export function usePhantom() {
 
   const generateTx = async (amount: number) => {
     return wallet.network === "SOL"
-      ? await solanaTx.generateSignedTransaction(wallet.address, amount)
-      : await evmTx.generateSignedTransaction(
-          wallet.network,
-          wallet.address,
-          amount,
-        );
+      ? await solanaTx.generateSignedTransaction(amount)
+      : await evmTx.generateSignedTransaction(amount);
   };
 
   return {

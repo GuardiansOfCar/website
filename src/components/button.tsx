@@ -7,9 +7,11 @@ export const Button = ({
   size = "md",
   className,
   disabled,
+  type,
   onClick,
   children,
 }: PropsWithChildren<{
+  type?: "submit" | "reset" | "button";
   disabled?: boolean;
   onClick?: () => void;
   className?: ClassValue;
@@ -17,6 +19,7 @@ export const Button = ({
 }>) => {
   return (
     <button
+      type={type}
       disabled={disabled}
       onClick={onClick}
       className={clsx(

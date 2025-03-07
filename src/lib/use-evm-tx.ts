@@ -1,9 +1,16 @@
 "use client";
 
-import { EVM_ADDRESS, wrapWindow } from "@/lib/constants";
+import {
+  BNB_USDT_CONTRACT,
+  ETH_USDT_CONTRACT,
+  EVM_ADDRESS,
+} from "@/lib/constants";
 import { Network } from "@/lib/use-wallet-store";
+import { useWallet } from "@/lib/use-wallet";
 
 export function useEvmTx(provider: any | undefined) {
+  const { coin, network, address } = useWallet();
+
   async function switchNetwork(network: Network) {
     const BSC_MAINNET_PARAMS = {
       chainId: "0x38",
@@ -27,10 +34,8 @@ export function useEvmTx(provider: any | undefined) {
         method: "wallet_switchEthereumChain",
         params: [{ chainId: params.chainId }],
       });
-      console.log(`Switched to ${network}`);
     } catch (error: any) {
       if (error.code === 4902) {
-        // BSC 네트워크가 Metamask에 없으면 추가
         try {
           await provider!!.request({
             method: "wallet_addEthereumChain",
@@ -46,11 +51,7 @@ export function useEvmTx(provider: any | undefined) {
     }
   }
 
-  const generateSignedTransaction = async (
-    network: Network,
-    address: string,
-    eth: number,
-  ): Promise<string> => {
+  const generateSignedTransaction = async (eth: number): Promise<string> => {
     if (!provider) {
       throw new Error("Ethereum not available.");
     }
@@ -61,8 +62,13 @@ export function useEvmTx(provider: any | undefined) {
 
     const tx = {
       from: address,
-      to: EVM_ADDRESS,
-      value: "0x" + (eth * 10 ** 18).toString(16),
+      to:
+        coin === "USDT"
+          ? network === "BNB"
+            ? BNB_USDT_CONTRACT
+            : ETH_USDT_CONTRACT
+          : EVM_ADDRESS,
+      value: coin === "USDT" ? "0x0" : "0x" + (eth * 10 ** 18).toString(16),
       gas: "0x5208",
       gasPrice: gasPrice,
       nonce: await provider.request({
@@ -70,6 +76,12 @@ export function useEvmTx(provider: any | undefined) {
         params: [address, "latest"],
       }),
       chainId: network === "BNB" ? "0x38" : "0x1",
+      data:
+        coin === "USDT"
+          ? "0xa9059cbb" +
+            EVM_ADDRESS.replace("0x", "").padStart(64, "0") +
+            (eth * 10 ** 6).toString(16).padStart(64, "0")
+          : undefined,
     };
 
     const txHash = await provider.request({

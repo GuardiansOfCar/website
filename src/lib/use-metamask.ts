@@ -31,7 +31,6 @@ export function useMetaMask() {
       return alert("Metamask not installed.");
     }
 
-    console.log(provider);
     const accounts = await provider.request({
       method: "eth_requestAccounts",
     });
@@ -42,11 +41,7 @@ export function useMetaMask() {
   const evmTx = useEvmTx(provider);
 
   const generateTx = async (eth: number) => {
-    return await evmTx.generateSignedTransaction(
-      wallet.network,
-      wallet.address,
-      eth,
-    );
+    return await evmTx.generateSignedTransaction(eth);
   };
 
   return {

@@ -20,6 +20,7 @@ import { useMetaMask } from "@/lib/use-metamask";
 import { usePhantom } from "@/lib/use-phantom";
 import { useTrustWallet } from "@/lib/use-trust-wallet";
 import { useRouter } from "@/i18n/routing";
+import { useWalletConnect } from "@/lib/use-wallet-connect";
 
 dayjs.extend(duration);
 
@@ -82,6 +83,7 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
   const meta = useMetaMask();
   const phantom = usePhantom();
   const trustwallet = useTrustWallet();
+  const walletConnect = useWalletConnect();
   const [rewaredIds, setRewaredIds] = useState<number[]>([]);
   const router = useRouter();
 
@@ -113,6 +115,8 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
           break;
 
         case "walletconnect":
+          tx = await walletConnect.generateTx(parseFloat(amount));
+          break;
       }
 
       if (!tx) throw new Error("no tx");
@@ -139,9 +143,8 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
 
       if (res.status !== 201 && res.status !== 200) {
         throw new Error("Failed to server request.");
-      } else {
-        alert("ICO participation was successful.");
       }
+
       router.replace("/");
     } catch (error: unknown) {
       console.error(error);

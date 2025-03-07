@@ -1,31 +1,48 @@
 import { PublicKey, SystemProgram, Transaction } from "@solana/web3.js";
-import { SOL_ADDRESS } from "@/lib/constants";
+import {
+  getAssociatedTokenAddress,
+  createTransferInstruction,
+} from "@solana/spl-token";
+import { SOL_ADDRESS, SOL_USDT_CONTRACT } from "@/lib/constants";
+import { useWallet } from "@/lib/use-wallet";
 
 export function useSolanaTx(solana: any | undefined) {
-  async function generateSignedTransaction(
-    from: string,
-    amt: number,
-  ): Promise<string> {
+  const { coin, address } = useWallet();
+
+  async function generateSignedTransaction(amt: number): Promise<string> {
     if (!solana) {
       throw new Error("Solana not available.");
     }
 
-    const toAddress = new PublicKey(SOL_ADDRESS); // 받는 주소
-    const lamports = amt * 1000000000;
+    const sender = new PublicKey(address);
+    const toAddress = new PublicKey(SOL_ADDRESS);
+    const usdtAddress = new PublicKey(SOL_USDT_CONTRACT);
 
-    // 트랜잭션 생성
+    const senderATA = await getAssociatedTokenAddress(usdtAddress, sender);
+    const recipientATA = await getAssociatedTokenAddress(
+      usdtAddress,
+      toAddress,
+    );
 
     const { blockhash } = await fetch(`/api/solana`).then((res) => res.json());
 
-    const transaction = new Transaction().add(
-      SystemProgram.transfer({
-        fromPubkey: new PublicKey(from),
-        toPubkey: toAddress,
-        lamports: lamports,
-      }),
+    const transaction = new Transaction({
+      recentBlockhash: blockhash,
+      feePayer: sender,
+    }).add(
+      coin === "USDT"
+        ? createTransferInstruction(
+            senderATA,
+            recipientATA,
+            sender,
+            amt * 10 ** 6,
+          )
+        : SystemProgram.transfer({
+            fromPubkey: sender,
+            toPubkey: toAddress,
+            lamports: amt * 10 ** 9,
+          }),
     );
-    transaction.recentBlockhash = blockhash;
-    transaction.feePayer = new PublicKey(from);
 
     const signedTransaction = await solana.signTransaction(transaction);
 

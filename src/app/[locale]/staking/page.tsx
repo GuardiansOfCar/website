@@ -66,17 +66,17 @@ export default function StakingPage() {
   useEffect(() => {
     if (!wallet.id) return;
 
-    fetch(
-      `${API_BASE_URL}/v1/stakings/status/total?userWalletId=${wallet.id}`,
-    ).then(async (res) => {
-      if (res.status === 200 || res.status === 201) {
-        const data = (await res.json()) as {
-          myPoolRate: string;
-          totalStaked: number;
-        };
-        setTotal(data);
-      }
-    });
+    fetch(`${API_BASE_URL}/v1/stakings/status/total/me/${wallet.id}`).then(
+      async (res) => {
+        if (res.status === 200 || res.status === 201) {
+          const data = (await res.json()) as {
+            myPoolRate: string;
+            totalStaked: number;
+          };
+          setTotal(data);
+        }
+      },
+    );
   }, [wallet.id]);
 
   useEffect(() => {
@@ -100,16 +100,16 @@ export default function StakingPage() {
   useEffect(() => {
     if (!wallet.id) return;
 
-    fetch(
-      `${API_BASE_URL}/v1/stakings/reward/me/${wallet.id}?userWalletId=${wallet.id}`,
-    ).then(async (res) => {
-      if (res.status === 200 || res.status === 201) {
-        const data = (await res.json()) as {
-          reward: string;
-        };
-        setReward(data.reward);
-      }
-    });
+    fetch(`${API_BASE_URL}/v1/stakings/reward/me/${wallet.id}`).then(
+      async (res) => {
+        if (res.status === 200 || res.status === 201) {
+          const data = (await res.json()) as {
+            reward: string;
+          };
+          setReward(data.reward);
+        }
+      },
+    );
   }, [wallet.id]);
 
   const handleClaim = async () => {

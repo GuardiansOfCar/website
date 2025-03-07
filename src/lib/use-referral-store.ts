@@ -7,15 +7,8 @@ interface ReferralStore {
 }
 
 export const useReferralStore = create<ReferralStore>()(
-  devtools(
-    persist(
-      (set) => ({
-        value: "",
-        setValue: (value: string) => set({ value }),
-      }),
-      {
-        name: "referral-storage",
-      },
-    ),
-  ),
+  devtools((set) => ({
+    value: "",
+    setValue: (value: string) => set({ value }),
+  })),
 );

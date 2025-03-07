@@ -6,7 +6,7 @@ import { usePhantom } from "@/lib/use-phantom";
 import { useTrustWallet } from "@/lib/use-trust-wallet";
 import { useWalletConnect } from "@/lib/use-wallet-connect";
 import { useWallet } from "@/lib/use-wallet";
-import {wrapWindow} from "@/lib/constants";
+import { wrapWindow } from "@/lib/constants";
 
 export const Wallet = ({
   type,
@@ -21,7 +21,6 @@ export const Wallet = ({
   const trustWallet = useTrustWallet();
   const walletConnect = useWalletConnect();
   const handleClick = () => {
-
     if (type === "metamask") {
       if (create) {
         wrapWindow?.open("https://metamask.io/");
@@ -49,7 +48,6 @@ export const Wallet = ({
     }
   };
 
-  if (type === "connect") return null;
   if (wallet.network === "SOL" && type === "metamask") return null;
   if (wallet.network === "BNB" && type === "phantom") return null;
 

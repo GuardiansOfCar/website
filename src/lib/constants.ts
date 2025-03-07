@@ -6,4 +6,11 @@ export const EVM_ADDRESS = "0x5aFa6a2cF4024A31B73EE3a20c383E5919aE0fCa";
 
 export const SOL_ADDRESS = "DvF3L7FxEn5BUZf8mBeJ4v5HsvTw6gYE6LRFYNGso67p";
 
-export const wrapWindow = typeof window === "undefined" ? undefined : window as any;
+export const wrapWindow =
+  typeof window === "undefined" ? undefined : (window as any);
+
+export const ETH_USDT_CONTRACT = "0xdac17f958d2ee523a2206206994597c13d831ec7";
+
+export const SOL_USDT_CONTRACT = "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB";
+
+export const BNB_USDT_CONTRACT = "0x55d398326f99059ff775485246999027b3197955";

@@ -29,7 +29,7 @@ export const Nav = () => {
   const router = useRouter();
   const handleBuyGocarClick = () => {
     if (wallet.address) {
-      wallet.clear();
+      wallet.disconnect();
     } else {
       router.push("/");
     }

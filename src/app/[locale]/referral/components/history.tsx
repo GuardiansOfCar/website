@@ -7,7 +7,7 @@ import { Button } from "@/components/button";
 import { useWallet } from "@/lib/use-wallet";
 import { WalletManagePopup } from "@/components/wallet-manage-popup";
 import { shortenAddress } from "@/lib/utils";
-import {API_BASE_URL, wrapWindow} from "@/lib/constants";
+import { API_BASE_URL, wrapWindow } from "@/lib/constants";
 import Image from "next/image";
 import { useRouter } from "@/i18n/routing";
 
@@ -54,7 +54,7 @@ export const ReferralHistory = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        wallet.sync();
+        router.refresh();
       })
       .catch((e) => {
         alert("Failed to create referral code.");
