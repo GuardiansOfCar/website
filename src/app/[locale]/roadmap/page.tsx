@@ -105,6 +105,7 @@ export default function RoadmapPage() {
             <p className={"text-body-2b text-primary-10"}>GOCAR</p>
           </div>
         </div>
+
         <div className={"flex flex-col space-y-10"}>
           <RoadmapSection title={t("roadmap.b1")}>
             {t("roadmap.b2")}
@@ -128,6 +129,12 @@ export default function RoadmapPage() {
             <br />
             {t("roadmap.e3")}
           </RoadmapSection>
+        </div>
+
+        <div>
+          <div className={"w-[500px] h-[500px] absolute"}>
+            <Image src={"/images/roadmap.png"} alt={"staking"} fill />
+          </div>
         </div>
       </div>
 

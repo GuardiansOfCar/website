@@ -341,14 +341,10 @@ export default function StakingPage() {
             <div className={"flex-1"}>
               <StakingSupply />
             </div>
-            <div className={"w-[20%] self-end"}>
-              <Image
-                className={"mx-auto"}
-                src={"/images/staking.png"}
-                alt={"staking"}
-                width={150}
-                height={422}
-              />
+            <div className={"w-[20%]"}>
+              <div className={"w-[500px] h-[500px] absolute -translate-x-[30%]"}>
+                <Image src={"/images/staking.png"} alt={"staking"} fill />
+              </div>
             </div>
           </div>
         </div>

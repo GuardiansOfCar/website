@@ -41,10 +41,10 @@ export default function HowToBuyPage() {
               </HowtobuySection>
             </div>
 
-            <div className={"flex flex-col space-y-10 items-center"}>
+            <div className={"flex flex-col items-center"}>
               <div
                 className={
-                  "bg-primary-80 border-neutral-0 border-4 py-3 px-6 flex flex-col items-center space-y-4"
+                  "bg-primary-80 border-neutral-0 border-4 pt-3 px-6 flex flex-col items-center space-y-4"
                 }
               >
                 <span className={"text-header-3"}>{t("howToBuy.e1")}</span>
@@ -67,8 +67,8 @@ export default function HowToBuyPage() {
               <Image
                 src={"/images/howtobuy.png"}
                 alt={"how to buy"}
-                width={340}
-                height={250}
+                width={404}
+                height={500}
               />
             </div>
           </div>
