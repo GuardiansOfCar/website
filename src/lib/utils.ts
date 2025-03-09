@@ -1,3 +1,10 @@
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { Coin } from "@/lib/use-wallet-store";
 
@@ -24,9 +31,9 @@ export const getCoinLabel = (net: Coin) => {
 };
 
 export function shortenAddress(
-  address: string,
-  startLength: number = 6,
-  endLength: number = 4,
+    address: string,
+    startLength: number = 6,
+    endLength: number = 4,
 ) {
   if (!address || address.length < startLength + endLength) return address;
   return `${address.slice(0, startLength)}...${address.slice(-endLength)}`;
