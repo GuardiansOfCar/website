@@ -21,8 +21,10 @@ export interface LoginFormData {
 // @ts-ignore
 export function LoginForm({
   rootRef,
+  pending,
   onSubmit,
 }: {
+  pending?: boolean;
   onSubmit: SubmitHandler<LoginFormData>;
   rootRef?: React.ComponentProps<"div">;
 }) {
@@ -54,7 +56,7 @@ export function LoginForm({
                   required
                 />
               </div>
-              <Button type="submit" className="w-full">
+              <Button disabled={pending} type="submit" className="w-full">
                 로그인
               </Button>
             </div>
