@@ -3,13 +3,16 @@
 import { useWallet } from "@/lib/use-wallet";
 import { useSolanaTx } from "@/lib/use-solana-tx";
 import { useEvmTx } from "@/lib/use-evm-tx";
-import { wrapWindow } from "@/lib/constants";
+import { useSyncProviders } from "@/lib/use-ethereum-store";
+import { useMemo } from "react";
 
 export function useTrustWallet() {
   const wallet = useWallet();
 
-  const provider = wrapWindow?.ethereum?.providers?.find(
-    (x: any) => x.isTrustWallet,
+  const providers = useSyncProviders();
+  const provider = useMemo(
+    () => providers.find((x) => x.info.name === "Trust Wallet")?.provider,
+    [providers],
   );
 
   const handleConnect = async () => {
@@ -24,11 +27,10 @@ export function useTrustWallet() {
     }
 
     if (wallet.network === "ETH") {
-      address = (
-        await provider.request({
-          method: "eth_requestAccounts",
-        })
-      )[0];
+      const accounts = (await provider.request({
+        method: "eth_requestAccounts",
+      })) as string[];
+      address = accounts[0];
     }
 
     wallet.set(address, "trustwallet");

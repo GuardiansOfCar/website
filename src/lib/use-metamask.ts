@@ -1,15 +1,16 @@
 "use client";
 
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useWallet } from "@/lib/use-wallet";
 import { useEvmTx } from "@/lib/use-evm-tx";
-import { wrapWindow } from "@/lib/constants";
+import { useSyncProviders } from "@/lib/use-ethereum-store";
 
 export function useMetaMask() {
   const wallet = useWallet();
-
-  const provider = wrapWindow?.ethereum?.providers?.find(
-    (x: any) => x.isMetaMask && !x.isTrustWallet,
+  const providers = useSyncProviders();
+  const provider = useMemo(
+    () => providers.find((x) => x.info.name === "MetaMask")?.provider,
+    [providers],
   );
 
   useEffect(() => {
@@ -19,10 +20,13 @@ export function useMetaMask() {
       wallet.set(accounts[0], "metamask");
     }
 
-    provider.on("accountsChanged", handleAccountsChanged);
+    (provider as any).on("accountsChanged", handleAccountsChanged);
 
     return () => {
-      provider.removeListener("accountsChanged", handleAccountsChanged);
+      (provider as any).removeListener(
+        "accountsChanged",
+        handleAccountsChanged,
+      );
     };
   }, [wallet.provider]);
 
@@ -31,9 +35,9 @@ export function useMetaMask() {
       return alert("Metamask not installed.");
     }
 
-    const accounts = await provider.request({
+    const accounts = (await provider.request({
       method: "eth_requestAccounts",
-    });
+    })) as string[];
 
     wallet.set(accounts[0], "metamask");
   }, []);
