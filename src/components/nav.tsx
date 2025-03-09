@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import clsx from "clsx";
+import NextLink from "next/link";
 import { Link, usePathname, useRouter } from "@/i18n/routing";
 import Image from "next/image";
 import { useState } from "react";
@@ -153,9 +154,11 @@ export const Nav = () => {
             />
           </a>
 
-          <Button size={"sm"} className={"!bg-neutral-60"}>
-            {t("home.whitepaper1")}
-          </Button>
+          <NextLink href={"/whitepaper.pdf"} target={"_blank"}>
+            <Button size={"sm"} className={"!bg-neutral-60"}>
+              {t("home.whitepaper1")}
+            </Button>
+          </NextLink>
 
           <Button onClick={handleBuyGocarClick} size={"sm"} className={""}>
             {wallet.address

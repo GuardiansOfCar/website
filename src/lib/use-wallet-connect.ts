@@ -26,7 +26,15 @@ export function useWalletConnect() {
 
   useEffect(() => {
     if (address && isConnected) {
-      wallet.set(address, "walletconnect");
+      wallet.set(
+        address,
+        "walletconnect",
+        caipNetworkId?.startsWith("solana")
+          ? "SOL"
+          : wallet.network === "BNB"
+            ? "BNB"
+            : "ETH",
+      );
     }
   }, [address, isConnected, wallet.provider]);
 

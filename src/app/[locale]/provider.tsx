@@ -118,6 +118,9 @@ export const OtpPopup = () => {
 
           <input
             {...form.register("code")}
+            type={"number"}
+            max={6}
+            maxLength={6}
             className={"py-3 px-2 bg-[#CDE7E5] text-body-2 rounded-none"}
           />
 

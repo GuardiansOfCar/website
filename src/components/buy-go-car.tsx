@@ -50,6 +50,10 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
     if (r) {
       referralStore.setValue(r);
     }
+    const a = sp.get("amount");
+    if (a && !Number.isNaN(a)) {
+      form.setValue("amount", a);
+    }
   }, [sp]);
 
   useEffect(() => {
@@ -88,11 +92,6 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
   const router = useRouter();
 
   const handlePurchaseClick = async () => {
-    if (wallet.id)
-      return alert(
-        "This is a wallet that has already participated in the ICO. Participation is limited to once per wallet.",
-      );
-
     if (parseFloat(amount) <= 0) {
       return alert("Amount must be greater than zero.");
     }
