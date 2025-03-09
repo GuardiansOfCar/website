@@ -416,7 +416,7 @@ export default function StakingPage() {
         </Popup>
       )}
 
-      <Main leftHref={"/howtobuy"} rightHref={"/faq"}>
+      <Main leftHref={"/faq"} rightHref={"/referral"}>
         <div className={"flex flex-col space-y-8 items-start px-10"}>
           <div className={"flex flex-col space-y-4"}>
             <h2 className={"text-header-2 text-primary"}>{t("staking.a1")}</h2>

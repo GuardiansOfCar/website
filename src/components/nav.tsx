@@ -32,6 +32,7 @@ export const Nav = () => {
     if (wallet.address) {
       wallet.disconnect();
     } else {
+      alert(t("home.cw"));
       router.push("/");
     }
   };

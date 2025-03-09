@@ -176,7 +176,9 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
       .then((res) => res.json())
       .then((result) => {
         const activeStep = result.data.find((x: any) => x.active);
-        setActiveSetting(activeStep);
+        if (activeStep) {
+          setActiveSetting(activeStep);
+        }
       });
   }, []);
 
