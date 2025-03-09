@@ -18,6 +18,8 @@ import { API_BASE_URL } from "@/lib/constants";
 import { useContext, useEffect } from "react";
 import dayjs from "dayjs";
 import { TokenContext } from "@/app/admin/(dashboard)/provider";
+import { Underkdollar } from "@/components/underkdollar";
+import { SettlementSelect } from "@/components/settlement-select";
 
 interface EstimatedFormData {
   reward: string;
@@ -79,16 +81,13 @@ export default function AdminStaking() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">+2350</div>
-                <Separator className={"my-2"} />
-                <Label>지갑주소</Label>
-                <p className={"font-medium mt-1"}>wdwdwd</p>
               </CardContent>
             </Card>
             <div className={"grid grid-cols-2 gap-4"}>
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">
-                    지급 Rewards
+                    Total Rewards
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -146,10 +145,17 @@ export default function AdminStaking() {
           </form>
         </div>
 
-        <div className={"flex flex-col space-y-2"}>
-          <h3 className={"text-lg font-bold"}>스테이킹 목록</h3>
-          <DataTable data={[]} columns={[]} />
-        </div>
+        <DataTable
+          title={"스테이킹 목록"}
+          data={[]}
+          columns={[]}
+          toolbar={
+            <>
+              <Underkdollar value={true} setValue={() => {}} />
+              <SettlementSelect />
+            </>
+          }
+        />
       </div>
     </main>
   );
