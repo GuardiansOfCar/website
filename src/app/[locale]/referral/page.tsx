@@ -21,7 +21,7 @@ export default function ReferralPage() {
   }, []);
 
   return (
-    <Main leftHref={"/howtobuy"} rightHref={"/faq"}>
+    <Main leftHref={"/staking"} rightHref={"/g2e"}>
       <h2 className={"text-header-2 text-primary mx-10 mb-4"}>
         {t("referral.b1", { 0: rate })}
       </h2>

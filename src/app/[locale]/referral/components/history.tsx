@@ -103,7 +103,8 @@ export const ReferralHistory = () => {
             >
               <th>SOL</th>
               <th>ETH</th>
-              <th className={"w-[60%]"}>BNB</th>
+              <th>BNB</th>
+              <th>USDT</th>
             </tr>
           </thead>
           <tbody>
@@ -115,6 +116,7 @@ export const ReferralHistory = () => {
               <td>{data.icoSolAmount}</td>
               <td>{data.icoEthAmount}</td>
               <td>{data.icoBnbAmount}</td>
+              <td>{data.icoUSDTAmount}</td>
             </tr>
           </tbody>
         </table>
@@ -139,7 +141,7 @@ export const ReferralHistory = () => {
             <div
               onClick={handleCreateReferral}
               className={
-                "bg-[#CDE7E5] text-title-1 px-4 py-[18px] flex-1 text-[#646464] cursor-pointer"
+                "bg-[#CDE7E5] text-title-1 px-4 py-[18px] flex-1 text-neutral-0 cursor-pointer"
               }
             >
               {t("referral.a2")}

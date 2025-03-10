@@ -44,7 +44,7 @@ export default function HowToBuyPage() {
             <div className={"flex flex-col items-center"}>
               <div
                 className={
-                  "bg-primary-80 border-neutral-0 border-4 pt-3 px-6 flex flex-col items-center space-y-4"
+                  "bg-primary-80 border-neutral-0 border-4 pt-3 px-6 flex flex-col items-center space-y-4 pb-4"
                 }
               >
                 <span className={"text-header-3"}>{t("howToBuy.e1")}</span>
