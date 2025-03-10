@@ -94,7 +94,7 @@
         "presalePurchase6": "초",
         "presalePurchase7": "구매한 $GOCAR",
         "presalePurchase8": "스테이킹 가능한 $GOCAR",
-        "presalePurchase9": "이더리움으로 결제",
+        "presalePurchase9": "{0} 결제",
         "whitepaper1": "백서"
     },
     "howToBuy": {
@@ -111,7 +111,7 @@
     },
     "referral": {
         "a1": "내가 초대한 사람",
-        "a2": "추천 코드 생성",
+        "a2": "추천 코드 입력",
         "a3": "지갑 연결",
         "b1": "친구를 초대하고 {0}% 보상 받으세요",
         "c1": "$GOCAR 출시 후"

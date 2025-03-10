@@ -94,7 +94,7 @@
         "presalePurchase6": "Seconds",
         "presalePurchase7": "YOUR PURCHASED $GOCAR",
         "presalePurchase8": "YOUR STAKEABLE $GOCAR",
-        "presalePurchase9": "PAY WITH ETHEREUM",
+        "presalePurchase9": "PAY WITH {0}",
         "whitepaper1": "WHITEPAPER"
     },
     "howToBuy": {
@@ -111,7 +111,7 @@
     },
     "referral": {
         "a1": "MY INVITED",
-        "a2": "Create referral code",
+        "a2": "Enter referral code",
         "a3": "Connect Wallet",
         "b1": "INVITE YOUR FRIENDS AND EARN {0}%",
         "c1": "After Launch in $GOCAR"

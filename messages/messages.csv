@@ -89,7 +89,7 @@ home.presalePurchase5,Dakika,Minutes,분,دقائق
 home.presalePurchase6,Saniye,Seconds,초,ثوانٍ
 home.presalePurchase7,SATIN ALDIĞINIZ $GOCAR,YOUR PURCHASED $GOCAR,구매한 $GOCAR,$GOCAR الذي اشتريته،
 home.presalePurchase8,STAKING YAPILABİLİR $GOCAR,YOUR STAKEABLE $GOCAR,스테이킹 가능한 $GOCAR,$GOCAR القابل للتخزين
-home.presalePurchase9,ETHEREUM İLE ÖDE,PAY WITH ETHEREUM,이더리움으로 결제,ادفع باستخدام إيثريوم
+home.presalePurchase9,{0} İLE ÖDE,PAY WITH {0},{0} 결제,دفع {0}
 home.whitepaper1,WHITEPAPER,WHITEPAPER,백서,الورقة البيضاء
 howToBuy.a1,GOCAR Token Nasıl Satın Alınır?,How To Buy GOCAR Token,GOCAR 토큰 구매 방법,كيفية شراء رمز $GOCAR
 howToBuy.b1,Cüzdan Edinin,Get Wallet,지갑 생성하기,احصل على محفظة
