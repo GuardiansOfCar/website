@@ -85,10 +85,10 @@ export function useEvmTx(provider: any | undefined) {
       from: address,
       to,
       value,
-      gas: "0x7530",
+      gas: "0xF423",
       gasPrice,
       nonce,
-      chainId: network === "BNB" ? "0x38" : "0x1",
+      chainId: network === "BNB" ? "0pnx38" : "0x1",
       data:
         coin === "USDT"
           ? "0xa9059cbb" +
