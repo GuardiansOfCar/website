@@ -2,7 +2,7 @@ export const API_BASE_URL = "https://api.guardiansofthecar.com/api";
 
 export const WALLET_CONNECT_PROJECT_ID = "e836d5b6d527fd7288d8331a208e550a";
 
-export const ETH_ADDRESS = "0xCb85A67bB6eAf296655997A5bD050936bc672f1c";
+export const ETH_ADDRESS = "0xf1e7fd95fd6a05dddefda0bd5abd1f71a097b558";
 
 export const BSC_ADDRESS = "0x1ea8d25d9899246f5F21426B04D7205363F1cfd9";
 
