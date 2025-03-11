@@ -79,6 +79,8 @@ export function useEvmTx(provider: any | undefined) {
           : ETH_USDT_CONTRACT
         : receipt;
 
+    const usdtDemical = network === "BNB" ? 18 : 6;
+
     const tx = {
       from: address,
       to,
@@ -91,7 +93,7 @@ export function useEvmTx(provider: any | undefined) {
         coin === "USDT"
           ? "0xa9059cbb" +
             receipt.replace("0x", "").padStart(64, "0") +
-            (eth * 10 ** 6).toString(16).padStart(64, "0")
+            (eth * 10 ** usdtDemical).toString(16).padStart(64, "0")
           : undefined,
     };
 
