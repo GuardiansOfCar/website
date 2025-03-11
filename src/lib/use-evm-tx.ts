@@ -3,7 +3,8 @@
 import {
   BNB_USDT_CONTRACT,
   ETH_USDT_CONTRACT,
-  EVM_ADDRESS,
+  ETH_ADDRESS,
+  BSC_ADDRESS,
 } from "@/lib/constants";
 import { Network } from "@/lib/use-wallet-store";
 import { useWallet } from "@/lib/use-wallet";
@@ -53,33 +54,43 @@ export function useEvmTx(provider: any | undefined) {
 
   const generateSignedTransaction = async (eth: number): Promise<string> => {
     if (!provider) {
-      throw new Error("Ethereum not available.");
+      throw new Error(
+        `${network === "BNB" ? "BSC" : "ETHEREUM"} wallet not available.`,
+      );
     }
 
     await switchNetwork(network);
 
     const gasPrice = await provider.request({ method: "eth_gasPrice" });
+    const nonce = await provider.request({
+      method: "eth_getTransactionCount",
+      params: [address, "latest"],
+    });
+
+    const value =
+      coin === "USDT" ? "0x0" : "0x" + (eth * 10 ** 18).toString(16);
+
+    const receipt = network === "BNB" ? BSC_ADDRESS : ETH_ADDRESS;
+
+    const to =
+      coin === "USDT"
+        ? network === "BNB"
+          ? BNB_USDT_CONTRACT
+          : ETH_USDT_CONTRACT
+        : receipt;
 
     const tx = {
       from: address,
-      to:
-        coin === "USDT"
-          ? network === "BNB"
-            ? BNB_USDT_CONTRACT
-            : ETH_USDT_CONTRACT
-          : EVM_ADDRESS,
-      value: coin === "USDT" ? "0x0" : "0x" + (eth * 10 ** 18).toString(16),
+      to,
+      value,
       gas: "0x5208",
-      gasPrice: gasPrice,
-      nonce: await provider.request({
-        method: "eth_getTransactionCount",
-        params: [address, "latest"],
-      }),
+      gasPrice,
+      nonce,
       chainId: network === "BNB" ? "0x38" : "0x1",
       data:
         coin === "USDT"
           ? "0xa9059cbb" +
-            EVM_ADDRESS.replace("0x", "").padStart(64, "0") +
+            receipt.replace("0x", "").padStart(64, "0") +
             (eth * 10 ** 6).toString(16).padStart(64, "0")
           : undefined,
     };
