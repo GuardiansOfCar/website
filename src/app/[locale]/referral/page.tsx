@@ -15,8 +15,11 @@ export default function ReferralPage() {
     fetch(`${API_BASE_URL}/v1/rewards/list`)
       .then((res) => res.json())
       .then((result) => {
-        const r = result.data.find((x: any) => x.type === "REF");
-        setRate(r?.rate || 0);
+        setRate(
+          result.data
+            .filter((x: any) => x.type === "REF")
+            .reduce((a: any, b: any) => a + b.rate, 0.0) || 0,
+        );
       });
   }, []);
 

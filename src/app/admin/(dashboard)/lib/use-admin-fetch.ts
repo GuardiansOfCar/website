@@ -10,7 +10,7 @@ export function useAdminFetch() {
     options?: {
       query?: NodeJS.Dict<any>;
       data?: object;
-      method?: "POST" | "PUT" | "GET" | "PATCH";
+      method?: "POST" | "PUT" | "GET" | "PATCH" | "DELETE";
     },
   ) => {
     const { query, data, method = "GET" } = options ?? {};
@@ -18,7 +18,10 @@ export function useAdminFetch() {
     const res = await fetch(
       `${API_BASE_URL}${path}${query ? "?" + stringify(query) : ""}`,
       {
-        body: method !== "GET" ? JSON.stringify(data || {}) : undefined,
+        body:
+          method !== "GET" && method !== "DELETE"
+            ? JSON.stringify(data || {})
+            : undefined,
         method,
         headers: {
           "Content-Type": "application/json",
