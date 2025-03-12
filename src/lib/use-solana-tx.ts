@@ -44,22 +44,19 @@ export function useSolanaTx(solana: any | undefined) {
           }),
     );
 
-    const res = await solana.signAndSendTransaction(transaction);
-    return res?.signature || res;
-    /*
-        const signedTransaction = await solana.signTransaction(transaction);
-    
-        const txRes = await fetch(`/api/solana`, {
-          method: "POST",
-          body: JSON.stringify({ payload: signedTransaction.serialize() }),
-        });
-    
-        if (txRes.status != 200 && txRes.status !== 201) {
-          throw new Error("Failed to broadcast transaction.");
-        }
-    
-        const { tx } = await txRes.json();
-        return tx;*/
+    const signedTransaction = await solana.signTransaction(transaction);
+
+    const txRes = await fetch(`/api/solana`, {
+      method: "POST",
+      body: JSON.stringify({ payload: signedTransaction.serialize() }),
+    });
+
+    if (txRes.status != 200 && txRes.status !== 201) {
+      throw new Error("Failed to broadcast transaction.");
+    }
+
+    const { tx } = await txRes.json();
+    return tx;
   }
 
   return {
