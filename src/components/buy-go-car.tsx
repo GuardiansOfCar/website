@@ -593,7 +593,7 @@ const RewardList = ({
       <div className={"text-body-2 self-start"}>
         TOTAL BONUS: {totalRate.toFixed(2)}%{" "}
         <span className={"text-primary-10"}>
-          (+{(expectIcoGocar * totalRate).toFixed(2)} GOCAR)
+          (+{(expectIcoGocar * (totalRate / 100)).toFixed(2)} GOCAR)
         </span>
       </div>
     </>
