@@ -63,6 +63,7 @@ export default function AdminRewardId() {
       },
     })
       .then(() => {
+        alert("저장되었습니다.")
         router.back();
       })
       .catch((e) => {

@@ -42,7 +42,7 @@ export default function AdminReward() {
 
       <div className={"flex flex-col space-y-10"}>
         <DataTable
-          onRowClick={(x) => router.push(`/admin/reward/${x.id}`)}
+          onRowClick={(x) => router.push(`/admin/reward/${(x as any).id}`)}
           title={""}
           total={listStakings.data?.total || 0}
           data={listStakings.data?.data ?? []}

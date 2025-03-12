@@ -1,5 +1,6 @@
 export type BalacneSortValue = "under" | null;
 export type SettlementSort = "all" | "done" | "not";
+export type TypeSort = "pub" | "pri";
 
 export interface ListRequest {
   page: number;
@@ -7,6 +8,7 @@ export interface ListRequest {
   search: string;
   balanceSort: BalacneSortValue;
   settlementSort: SettlementSort;
+  typeSort: TypeSort;
 }
 
 export const listRequest: ListRequest = {
@@ -15,6 +17,7 @@ export const listRequest: ListRequest = {
   search: "",
   balanceSort: null,
   settlementSort: "all",
+  typeSort: "pub",
 };
 
 export interface ListResponse {}

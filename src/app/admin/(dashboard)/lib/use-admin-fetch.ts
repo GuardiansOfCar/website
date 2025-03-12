@@ -31,7 +31,7 @@ export function useAdminFetch() {
     );
 
     if (res.status >= 400) {
-      throw new Error("오류입니다.");
+      throw await res.json();
     }
 
     try {

@@ -75,7 +75,9 @@ export default function AdminReferral() {
         </div>
 
         <DataTable
-          onRowClick={(x) => router.push(`/admin/referral/${x.userWalletId}?sid=${x.id}`)}
+          onRowClick={(x) =>
+            router.push(`/admin/referral/${x.userWalletId}?sid=${x.id}`)
+          }
           title={"리퍼럴 목록"}
           total={listStakings.data?.total || 0}
           data={listStakings.data?.data ?? []}
@@ -95,11 +97,13 @@ export default function AdminReferral() {
                 />
               ),
               cell: ({ row }) => (
-                <Checkbox
-                  checked={row.getIsSelected()}
-                  onCheckedChange={(value) => row.toggleSelected(!!value)}
-                  aria-label="Select row"
-                />
+                <div onClick={(e) => e.stopPropagation()}>
+                  <Checkbox
+                    checked={row.getIsSelected()}
+                    onCheckedChange={(value) => row.toggleSelected(!!value)}
+                    aria-label="Select row"
+                  />
+                </div>
               ),
             },
             { accessorKey: "icoWalletAddress", header: "지갑주소" },
