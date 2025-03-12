@@ -33,7 +33,7 @@ export default function AdminReferral() {
   const pathname = usePathname();
 
   const listStakings = useSWR(
-    [`/v1/referrals/settlement/list`, request],
+    [`/v1/referrals/settement/list`, request],
     (args) => fetch(args[0], { query: args[1] }),
   );
 
@@ -75,8 +75,8 @@ export default function AdminReferral() {
         </div>
 
         <DataTable
-          onRowClick={(x) => router.push(`/admin/referral/${x.userWalletId}`)}
-          title={"스테이킹 목록"}
+          onRowClick={(x) => router.push(`/admin/referral/${x.userWalletId}?sid=${x.id}`)}
+          title={"리퍼럴 목록"}
           total={listStakings.data?.total || 0}
           data={listStakings.data?.data ?? []}
           columns={[

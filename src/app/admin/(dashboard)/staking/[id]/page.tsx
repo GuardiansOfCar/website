@@ -58,9 +58,9 @@ export default function AdminStakingId() {
               <CardTitle className="text-sm font-medium">지갑 주소</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">
-                {stakingDetail.data?.solanaAddress}
-              </div>
+              <div className="font-bold">
+                  {stakingDetail.data?.solanaAddress}
+                </div>
             </CardContent>
           </Card>
 
