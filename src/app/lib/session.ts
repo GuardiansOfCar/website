@@ -7,6 +7,7 @@ interface SessionPayload {
   id: number;
   nickname: string;
   role: string;
+  token: string;
 }
 
 const secretKey = "Z8Dy1NTdrdiTXkq0zNDQ3NNgAEwkrmnCc09kw1fnwEo=";
@@ -18,7 +19,11 @@ export async function deleteSession() {
 }
 
 export async function createSession(token: string, profile: SessionPayload) {
-  const session = await encrypt({ ...profile, sub: profile.id.toString() });
+  const session = await encrypt({
+    ...profile,
+    sub: profile.id.toString(),
+    token,
+  });
 
   const cookieStore = await cookies();
 
@@ -42,7 +47,7 @@ export async function decrypt(session: string | undefined = "") {
     const { payload } = await jwtVerify(session, encodedKey, {
       algorithms: ["HS256"],
     });
-    return payload;
+    return payload as unknown as  SessionPayload;
   } catch (error) {
     console.log("Failed to verify session", error);
   }

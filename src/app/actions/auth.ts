@@ -1,8 +1,13 @@
 "use server";
 
-import { createSession } from "@/app/lib/session";
+import { createSession, deleteSession } from "@/app/lib/session";
 import { API_BASE_URL } from "@/lib/constants";
 import { redirect } from "next/navigation";
+
+export async function logout() {
+  await deleteSession();
+  redirect("/admin/login");
+}
 
 export async function login(data: any) {
   const res = await fetch(`${API_BASE_URL}/v1/auth/login/admin`, {

@@ -11,7 +11,6 @@ import {
   getFacetedRowModel,
   getFacetedUniqueValues,
   getFilteredRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
@@ -24,20 +23,28 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-import { DataTablePagination } from "./data-table-pagination";
 import { ReactNode } from "react";
+import { Button } from "@/components/ui/button";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+
+  data?: TData[];
+  total?: number;
+  rowActionButtons?: {
+    label: string;
+    onClick: (data: TData[]) => Promise<void>;
+  }[];
+  onRowClick?: (data: TData) => void;
   toolbar?: ReactNode;
   title?: string;
 }
 
 export function DataTable<TData, TValue>({
   columns,
-  data,
+  data = [],
+  rowActionButtons,
+  onRowClick,
   toolbar,
   title,
 }: DataTableProps<TData, TValue>) {
@@ -65,7 +72,6 @@ export function DataTable<TData, TValue>({
     onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
@@ -75,7 +81,26 @@ export function DataTable<TData, TValue>({
     <div className="space-y-4">
       <div className={"flex items-center justify-between"}>
         <h3 className={"text-lg font-bold"}>{title}</h3>
+
         <div className={"flex items-center space-x-4"}>{toolbar}</div>
+      </div>
+      <div className={"flex items-center space-x-2"}>
+        {rowActionButtons?.map((button, idx) => (
+          <Button
+            key={idx}
+            onClick={() => {
+              button
+                .onClick(
+                  table.getSelectedRowModel().rows.map((x) => x.original),
+                )
+                .then(() => {
+                  table.toggleAllPageRowsSelected(false);
+                });
+            }}
+          >
+            {button.label}
+          </Button>
+        ))}
       </div>
       <div className="rounded-md border">
         <Table>
@@ -101,6 +126,11 @@ export function DataTable<TData, TValue>({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
+                  onClick={() => {
+                    if (onRowClick) {
+                      onRowClick(row.original);
+                    }
+                  }}
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
@@ -127,7 +157,6 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <DataTablePagination table={table} />
     </div>
   );
 }

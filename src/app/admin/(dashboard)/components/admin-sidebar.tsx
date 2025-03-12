@@ -13,8 +13,9 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { Label } from "@/components/ui/label";
 import { usePathname } from "next/navigation";
+import {Button} from "@/components/ui/button";
+import {logout} from "@/app/actions/auth";
 
 const data = {
   versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
@@ -74,6 +75,7 @@ export function AdminSidebar({
             </SidebarGroupContent>
           </SidebarGroup>
         ))}
+        <Button className={"m-5 mt-auto bg-neutral-30"}  onClick={logout}>로그아웃</Button>
       </SidebarContent>
       <SidebarRail />
     </Sidebar>

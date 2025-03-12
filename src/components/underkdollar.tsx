@@ -1,16 +1,19 @@
 import { Checkbox } from "@/components/ui/checkbox";
-import { ReactNode } from "react";
+import { BalacneSortValue } from "@/app/admin/(dashboard)/lib/api";
 
 export const Underkdollar = ({
   value,
   setValue,
 }: {
-  value: boolean;
-  setValue: (value: boolean) => void;
+  value: BalacneSortValue;
+  setValue: (value: BalacneSortValue) => void;
 }) => {
   return (
     <div className="flex items-center space-x-2">
-      <Checkbox checked={value} onCheckedChange={setValue} />
+      <Checkbox
+        checked={value === "under"}
+        onCheckedChange={(a) => setValue(a ? "under" : null)}
+      />
       <label
         htmlFor="terms"
         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"

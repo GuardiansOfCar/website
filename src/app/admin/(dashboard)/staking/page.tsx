@@ -1,70 +1,52 @@
 "use client";
 
 import { Separator } from "@/components/ui/separator";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardFooter,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
-import { DataTable } from "@/components/data-table";
-import { API_BASE_URL } from "@/lib/constants";
-import { useContext, useEffect } from "react";
-import dayjs from "dayjs";
-import { TokenContext } from "@/app/admin/(dashboard)/provider";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Underkdollar } from "@/components/underkdollar";
 import { SettlementSelect } from "@/components/settlement-select";
-
-interface EstimatedFormData {
-  reward: string;
-  start: string;
-  end: string;
-}
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { listRequest } from "@/app/admin/(dashboard)/lib/api";
+import useSWR from "swr";
+import { AdminStakingEstimated } from "@/app/admin/(dashboard)/staking/components/estimated";
+import { DataTable } from "@/components/data-table";
+import { useAdminFetch } from "@/app/admin/(dashboard)/lib/use-admin-fetch";
+import { useMemo, useState } from "react";
+import { stringify } from "querystring";
+import { DataTablePagination } from "@/components/data-table-pagination";
+import * as React from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function AdminStaking() {
-  const estimatedForm = useForm<EstimatedFormData>();
-  const token = useContext(TokenContext);
-  useEffect(() => {
-    fetchEstimated();
-  }, []);
+  const searchParams = useSearchParams();
 
-  const fetchEstimated = () => {
-    fetch(`${API_BASE_URL}/v1/stakings/status/estimated`).then(async (res) => {
-      const data = await res.json();
-      estimatedForm.reset({
-        reward: data.annualRate,
-        end: dayjs(new Date(data.endTime)).format("YYYY-MM-DDTHH:mm"),
-        start: dayjs(new Date(data.startTime)).format("YYYY-MM-DDTHH:mm"),
-      });
-    });
-  };
+  const request = useMemo(
+    () => ({
+      ...listRequest,
+      ...Object.fromEntries(searchParams.entries()),
+    }),
+    [searchParams.entries()],
+  );
 
-  const onEstimatedSubmit = async (data: EstimatedFormData) => {
-    const res = await fetch(`${API_BASE_URL}/v1/stakings/estimated/update`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      method: "POST",
-      body: JSON.stringify({
-        rate: data.reward,
-        startTime: dayjs(new Date(data.start)).toDate(),
-        endTime: dayjs(new Date(data.end)).toDate(),
-      }),
-    });
+  const fetch = useAdminFetch();
+  const router = useRouter();
+  const pathname = usePathname();
 
-    if (res.status >= 300) {
-      return alert("다시 시도해 주세요.");
-    }
-    fetchEstimated();
-  };
-  console.log(typeof estimatedForm.watch("start"));
+  const listStakings = useSWR([`/v1/stakings/list`, request], (args) =>
+    fetch(args[0], { query: args[1] }),
+  );
+
+  const stakingRewardStatus = useSWR([`/v1/stakings/reward/status/0`], (args) =>
+    fetch(args[0]),
+  );
+
+  const stakingTotal = useSWR([`/v1/stakings/status/total/me/0`], (args) =>
+    fetch(args[0]),
+  );
+
+  const [text, setText] = useState(request.search || "");
+
   return (
     <main className={"mx-auto p-10 flex flex-col w-full"}>
       <h1 className={"text-2xl font-bold"}>스테이킹 관리</h1>
@@ -80,7 +62,9 @@ export default function AdminStaking() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">+2350</div>
+                <div className="text-2xl font-bold">
+                  {stakingTotal.data?.totalStaked}
+                </div>
               </CardContent>
             </Card>
             <div className={"grid grid-cols-2 gap-4"}>
@@ -91,7 +75,9 @@ export default function AdminStaking() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">+2350</div>
+                  <div className="text-2xl font-bold">
+                    {stakingRewardStatus.data?.totalReward}
+                  </div>
                 </CardContent>
               </Card>
               <Card>
@@ -101,60 +87,104 @@ export default function AdminStaking() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">+2350</div>
+                  <div className="text-2xl font-bold">
+                    {stakingRewardStatus.data?.unclaimedReward}
+                  </div>
                 </CardContent>
               </Card>
             </div>
           </div>
-          <form onSubmit={estimatedForm.handleSubmit(onEstimatedSubmit)}>
-            <Card>
-              <CardHeader className="space-y-1">
-                <CardTitle className="text-2xl">Estimated 설정</CardTitle>
-                <CardDescription>요율과 기간을 설정해 주세요</CardDescription>
-              </CardHeader>
-              <CardContent className="grid gap-4">
-                <Separator />
-
-                <div className="grid gap-2">
-                  <Label htmlFor="email">요율</Label>
-                  <Input
-                    {...estimatedForm.register("reward")}
-                    type={"number"}
-                  />
-                </div>
-
-                <div className="grid gap-2">
-                  <Label htmlFor="password">시작일시</Label>
-                  <Input
-                    {...estimatedForm.register("start")}
-                    type="datetime-local"
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="password">종료일시</Label>
-                  <Input
-                    {...estimatedForm.register("end")}
-                    type="datetime-local"
-                  />
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Button className="w-full">저장하기</Button>
-              </CardFooter>
-            </Card>
-          </form>
+          <AdminStakingEstimated />
         </div>
 
         <DataTable
+          onRowClick={(x) => router.push(`/admin/staking/${x.userWalletId}`)}
           title={"스테이킹 목록"}
-          data={[]}
-          columns={[]}
+          total={listStakings.data?.total || 0}
+          data={listStakings.data?.data ?? []}
+          columns={[
+            {
+              id: "select",
+              header: ({ table }) => (
+                <Checkbox
+                  checked={
+                    table.getIsAllPageRowsSelected() ||
+                    (table.getIsSomePageRowsSelected() && "indeterminate")
+                  }
+                  onCheckedChange={(value) =>
+                    table.toggleAllPageRowsSelected(!!value)
+                  }
+                  aria-label="Select all"
+                />
+              ),
+              cell: ({ row }) => (
+                <Checkbox
+                  checked={row.getIsSelected()}
+                  onCheckedChange={(value) => row.toggleSelected(!!value)}
+                  aria-label="Select row"
+                />
+              ),
+            },
+            { accessorKey: "solanaAddress", header: "지갑주소" },
+            { accessorKey: "stakingAmount", header: "스테이킹 수량" },
+            { accessorKey: "totalRewardAmount", header: "총 Rewards" },
+            { accessorKey: "doneRewardAmount", header: "지급 Rewards" },
+            { accessorKey: "notRewardAmount", header: "미지급 Rewards" },
+          ]}
+          rowActionButtons={[
+            {
+              label: "정산",
+              onClick: async (data: any[]) => {
+                fetch(`/v1/stakings/settlement/reward`, {
+                  method: "POST",
+                  data: {
+                    ids: data.map((x) => x.userWalletId),
+                  },
+                }).then(listStakings.mutate);
+              },
+            },
+          ]}
           toolbar={
             <>
-              <Underkdollar value={true} setValue={() => {}} />
-              <SettlementSelect />
+              <div className={"flex space-x-2 items-center"}>
+                <Input
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  placeholder={"지갑 주소 입력"}
+                  className={"w-[400px]"}
+                />
+                <Button
+                  onClick={() => {
+                    router.push(
+                      `${pathname}?${stringify({ ...request, search: text, page: 1 })}`,
+                    );
+                  }}
+                >
+                  검색
+                </Button>
+              </div>
+              <Underkdollar
+                value={request.balanceSort}
+                setValue={(balanceSort) => {
+                  router.push(
+                    `${pathname}?${stringify({ ...request, balanceSort, page: 1 })}`,
+                  );
+                }}
+              />
+              <SettlementSelect
+                value={request.settlementSort}
+                onChange={(settlementSort) => {
+                  router.push(
+                    `${pathname}?${stringify({ ...request, settlementSort, page: 1 })}`,
+                  );
+                }}
+              />
             </>
           }
+        />
+        <DataTablePagination
+          request={request}
+          total={listStakings.data?.total || 0}
         />
       </div>
     </main>
