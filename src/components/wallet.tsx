@@ -62,13 +62,14 @@ export const Wallet = ({
         }
       >
         <p className={"text-title-1 text-left shadow-text text-neutral-100"}>
-          {type === "phantom"
-            ? "PHANTOM"
-            : type === "metamask"
+          {
+            //type === "phantom" ? "PHANTOM" :
+            type === "metamask"
               ? "METAMASK"
               : type === "trust"
                 ? "TRUST WALLET"
-                : "WALLET CONNECT"}
+                : "WALLET CONNECT"
+          }
         </p>
       </div>
 
@@ -76,13 +77,12 @@ export const Wallet = ({
         <Image
           className={"object-cover"}
           src={
-            type === "phantom"
-              ? "/images/phantom.png"
-              : type === "metamask"
-                ? "/images/metamask.png"
-                : type === "trust"
-                  ? "/images/trustwallet.png"
-                  : "/images/walletconnect.png"
+            //type === "phantom" ? "/images/phantom.png" :
+            type === "metamask"
+              ? "/images/metamask.png"
+              : type === "trust"
+                ? "/images/trustwallet.png"
+                : "/images/walletconnect.png"
           }
           alt={"Wallet Icon"}
           fill

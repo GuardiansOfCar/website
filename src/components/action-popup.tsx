@@ -41,7 +41,7 @@ export const ActionPopup = ({
               "bg-[#CDE7E5] text-title-1 px-4 py-[18px] flex-1 placeholder:text-[#646464]"
             }
           />
-          <Button className={"w-[240px]"}>SUBMIT</Button>
+          <Button className={"w-[240px]"} onClick={onClose}>SUBMIT</Button>
         </div>
       </div>
     </div>

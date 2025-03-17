@@ -5,12 +5,26 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/button";
 import { Main } from "@/components/main";
+import { useSearchParams } from "next/navigation";
+import { ActionPopup } from "@/components/action-popup";
+import { useRouter } from "@/i18n/routing";
 
 export default function Home() {
   const t = useTranslations();
-
+  const sp = useSearchParams();
+  const sms = sp.get("sms") === "sms";
+  const router = useRouter();
   return (
     <>
+      {sms && (
+        <ActionPopup
+          placeholder={"SOLANA WALLET ADDRESS"}
+          onClose={() => {
+            router.replace("/");
+          }}
+          title={"SUBMIT SOLANA WALLET ADDRESS"}
+        />
+      )}
       <Main leftHref={""} rightHref={"/chapters"}>
         <div className={"py-10 pl-14 flex items-center"}>
           <div className={"flex space-x-6 items-start"}>
