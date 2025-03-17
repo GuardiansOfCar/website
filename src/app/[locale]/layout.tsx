@@ -24,7 +24,7 @@ export default async function LocaleLayout(props: PropsWithChildren) {
 
   return (
     <html lang={locale}>
-      <body className={`${grandstander.className} antialiased bg-hero`}>
+      <body className={`${grandstander.className} antialiased`}>
         <div className={"relative z-[10]"}>
           <NextIntlClientProvider messages={messages}>
             <LocaleProvider>

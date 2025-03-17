@@ -8,6 +8,7 @@ import { Main } from "@/components/main";
 import { useSearchParams } from "next/navigation";
 import { ActionPopup } from "@/components/action-popup";
 import { useRouter } from "@/i18n/routing";
+import { BorderText } from "@/components/border-text";
 
 export default function Home() {
   const t = useTranslations();
@@ -15,7 +16,7 @@ export default function Home() {
   const sms = sp.get("sms") === "sms";
   const router = useRouter();
   return (
-    <>
+    <div className={"relative flex flex-col"}>
       {sms && (
         <ActionPopup
           placeholder={"SOLANA WALLET ADDRESS"}
@@ -104,25 +105,45 @@ export default function Home() {
                 {t("home.intro11")}
               </Button>
             </div>
-          </div>
 
-          <Image
-            className={"absolute right-0"}
-            src={"/images/actor.png"}
-            alt={"actor"}
-            width={664}
-            height={664}
-          />
+            <Image
+              className={"self-start mt-[10%]"}
+              src={"/images/actor.gif"}
+              alt={"actor"}
+              width={550}
+              height={413}
+            />
+          </div>
         </div>
 
-        <Image
-          src={"/images/cs.png"}
-          alt={"cs"}
-          width={1250}
-          className="mx-auto"
-          height={320}
-        />
+        <div className={"px-14 py-10 flex flex-col space-y-4"}>
+          <BorderText size={"sm"}>Featured In</BorderText>
+          <div className={"grid gap-x-6 gap-y-4 grid-cols-6"}>
+            {["", "", "", "", "", "", "", "", "", "", ""].map((x, i) => (
+              <Image
+                key={`featured-${i + 1}`}
+                src={`/images/featured-${i + 1}.png`}
+                alt={`featured-${i + 1}`}
+                width={188}
+                height={64}
+              />
+            ))}
+          </div>
+        </div>
       </Main>
-    </>
+
+      <div className={"absolute left-0 right-0 top-0 z-[1] flex"}>
+        <div className={"w-full max-w-[var(--max-width)] mx-auto"}>
+          <Image
+            className={"-translate-y-1/5"}
+            src={"/images/main-bg.gif"}
+            alt={"gif"}
+            objectFit={"cover"}
+            width={1440}
+            height={1660}
+          />
+        </div>
+      </div>
+    </div>
   );
 }

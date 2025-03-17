@@ -5,7 +5,7 @@ import clsx, { ClassValue } from "clsx";
 
 export const BorderText = (
   props: PropsWithChildren<{
-    size: "sm" | "md" | "lg";
+    size: "sm" | "md" | "lg"
   }>,
 ) => {
   let className = "";

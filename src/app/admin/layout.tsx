@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default async function AdminLayout(props: PropsWithChildren) {
   return (
     <html lang={"ko"}>
-      <body className={`antialiased bg-hero`}>{props.children}</body>
+      <body className={`antialiased`}>{props.children}</body>
     </html>
   );
 }
