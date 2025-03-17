@@ -24,9 +24,7 @@ export function useTrustWallet() {
     if (wallet.network === "SOL") {
       const resp = await provider.solana.connect();
       address = resp.publicKey.toString();
-    }
-
-    if (wallet.network === "ETH") {
+    } else {
       const accounts = (await provider.request({
         method: "eth_requestAccounts",
       })) as string[];

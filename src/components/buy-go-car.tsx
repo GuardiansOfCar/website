@@ -15,7 +15,7 @@ import duration from "dayjs/plugin/duration";
 import { useSearchParams } from "next/navigation";
 import { getCoinLabel, getReferral } from "@/lib/utils";
 import { WalletManagePopup } from "@/components/wallet-manage-popup";
-import { Coin, Network } from "@/lib/use-wallet-store";
+import { Coin, Network, useWalletStore } from "@/lib/use-wallet-store";
 import { useMetaMask } from "@/lib/use-metamask";
 import { usePhantom } from "@/lib/use-phantom";
 import { useTrustWallet } from "@/lib/use-trust-wallet";
@@ -91,6 +91,7 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
   const [rewaredIds, setRewaredIds] = useState<number[]>([]);
   const router = useRouter();
 
+  const setWalletInfo = useWalletStore((s) => s.setInfo);
   const handlePurchaseClick = async () => {
     if (parseFloat(amount) <= 0) {
       return alert("Amount must be greater than zero.");
@@ -144,7 +145,11 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
         throw new Error("Failed to server request.");
       }
 
-      router.replace("/");
+      fetch(
+        `${API_BASE_URL}/v1/wallets/info?icoWalletAddress=${wallet.address}&icoNetwork=${wallet.network}`,
+      )
+        .then((r) => r.json())
+        .then(setWalletInfo);
     } catch (error: unknown) {
       console.error(error);
       alert("Failed to sign transaction.");

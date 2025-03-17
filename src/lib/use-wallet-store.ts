@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
+import { API_BASE_URL } from "@/lib/constants";
 
 export type Network = "ETH" | "BNB" | "SOL";
 export type Coin = "ETH" | "BNB" | "SOL" | "USDT";
@@ -33,7 +34,7 @@ export const useWalletStore = create<WalletStore>()(
     address: "",
     provider: null,
 
-      info: undefined,
+    info: undefined,
     setInfo: (info) => set({ info }),
 
     setProvider: (provider) => set({ provider }),
