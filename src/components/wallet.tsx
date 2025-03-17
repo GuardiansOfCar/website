@@ -49,7 +49,7 @@ export const Wallet = ({
   };
 
   if (wallet.network === "SOL" && type === "metamask") return null;
-  if (wallet.network === "BNB" && type === "phantom") return null;
+  if (type === "phantom") return null;
 
   return (
     <button
