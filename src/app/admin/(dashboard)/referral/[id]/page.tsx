@@ -43,7 +43,7 @@ export default function AdminReferralId() {
 
   return (
     <main className={"mx-auto p-10 flex flex-col w-full"}>
-      <h1 className={"text-2xl font-bold"}>스테이킹 상세</h1>
+      <h1 className={"text-2xl font-bold"}>리퍼럴 상세</h1>
       <Separator className={"my-4"} />
 
       <div className={"flex flex-col space-y-10"}>

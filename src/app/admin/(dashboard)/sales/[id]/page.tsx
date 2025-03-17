@@ -68,7 +68,9 @@ export default function AdminSalesId() {
         icoAmount: rewardDetail.data.amount,
         gocarAmount: rewardDetail.data.gocar_amount,
         ico_type: rewardDetail.data.icoType,
-        lock_release_date: rewardDetail.data.lockReleaseDate,
+        lock_release_date: rewardDetail.data.lockReleaseDate
+          ? dayjs(rewardDetail.data.lockReleaseDate).format("YYYY-MM-DDTHH:mm")
+          : "",
       });
     }
   }, [rewardDetail.data]);
@@ -240,6 +242,9 @@ export default function AdminSalesId() {
               required
               disabled={isPublic}
             />
+            <p className={"text-sm text-neutral-30"}>
+              UTC 기준으로 설정해 주세요.
+            </p>
           </div>
 
           {!isPublic && (

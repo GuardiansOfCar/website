@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/select";
 import Link from "next/link";
 import dayjs from "dayjs";
+import { SettlementSelect } from "@/components/settlement-select";
 
 export default function AdminSales() {
   const searchParams = useSearchParams();
@@ -213,6 +214,14 @@ export default function AdminSales() {
                 setValue={(balanceSort) => {
                   router.push(
                     `${pathname}?${stringify({ ...request, balanceSort, page: 1 })}`,
+                  );
+                }}
+              />
+              <SettlementSelect
+                value={request.settlementSort}
+                onChange={(settlementSort) => {
+                  router.push(
+                    `${pathname}?${stringify({ ...request, settlementSort, page: 1 })}`,
                   );
                 }}
               />
