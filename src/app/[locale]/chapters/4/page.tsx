@@ -9,24 +9,29 @@ import { BuyGoCar } from "@/components/buy-go-car";
 export default function ChaptersFourPage() {
   const t = useTranslations();
   return (
-    <Main leftHref={"/chapters/3"} rightHref={"/howtobuy"}>
-      <div className={"flex space-x-6 items-start px-10"}>
-        <ChaptersSection
-          section={t("chapter.chapterFour1")}
-          title={t("chapter.chapterFour2")}
-        >
-          {t("chapter.chapterFour3")}
-        </ChaptersSection>
+    <>
+      <Main leftHref={"/chapters/3"} rightHref={"/howtobuy"}>
+        <div className={"flex space-x-6 items-start px-10"}>
+          <ChaptersSection
+            section={t("chapter.chapterFour1")}
+            title={t("chapter.chapterFour2")}
+          >
+            {t("chapter.chapterFour3")}
+          </ChaptersSection>
 
+          <div className={"w-[400px]"} />
+
+          <BuyGoCar />
+        </div>
+      </Main>
+      <div className={"absolute bottom-0 left-0 z-[1]"}>
         <Image
-          src={"/images/chapter4.png"}
-          alt={"c2"}
-          width={400}
-          height={400}
+          src={"/images/chapter4.gif"}
+          alt={"c1"}
+          width={1012}
+          height={720}
         />
-
-        <BuyGoCar />
       </div>
-    </Main>
+    </>
   );
 }

@@ -33,7 +33,7 @@ export default async function LocaleLayout(props: PropsWithChildren) {
                 <Banner />
               </header>
               <div className={"min-w-[var(--max-width)]"}>{props.children}</div>
-              <footer className={"min-w-[var(--max-width)]"}>
+              <footer className={"min-w-[var(--max-width)] z-[3] relative"}>
                 <Footer />
               </footer>
             </LocaleProvider>
