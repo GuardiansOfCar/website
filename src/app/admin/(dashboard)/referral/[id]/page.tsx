@@ -123,7 +123,7 @@ export default function AdminReferralId() {
               <CardContent>
                 <div className="text-2xl font-bold">
                   {(
-                    stakingRewardStatus.data?.totalAmount || "0"
+                      stakingDetail.data?.totalAmount || "0"
                   ).toLocaleString()}
                 </div>
               </CardContent>
@@ -138,7 +138,7 @@ export default function AdminReferralId() {
               <CardContent>
                 <div className="text-2xl font-bold">
                   {(
-                    stakingRewardStatus.data?.doneAmount || "0"
+                      stakingDetail.data?.doneAmount || "0"
                   ).toLocaleString()}
                 </div>
               </CardContent>
@@ -153,7 +153,7 @@ export default function AdminReferralId() {
               <CardContent>
                 <div className="text-2xl font-bold">
                   {(
-                    stakingRewardStatus.data?.notAmount || "0"
+                      stakingDetail.data?.notAmount || "0"
                   ).toLocaleString()}
                 </div>
               </CardContent>

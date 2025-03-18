@@ -28,7 +28,7 @@ export default async function LocaleLayout(props: PropsWithChildren) {
         <div className={"relative z-[10]"}>
           <NextIntlClientProvider messages={messages}>
             <LocaleProvider>
-              <header className={"min-w-[var(--max-width)]"}>
+              <header className={"min-w-[var(--max-width)] z-[4] relative"}>
                 <Nav />
                 <Banner />
               </header>
@@ -39,8 +39,6 @@ export default async function LocaleLayout(props: PropsWithChildren) {
             </LocaleProvider>
           </NextIntlClientProvider>
         </div>
-
-
       </body>
     </html>
   );

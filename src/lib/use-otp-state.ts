@@ -44,7 +44,7 @@ export function useOtpState() {
     return () => {
       clearInterval(i);
     };
-  }, []);
+  }, [walletStore.info?.walletId]);
 
   return state;
 }

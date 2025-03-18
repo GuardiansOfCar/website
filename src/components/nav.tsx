@@ -37,7 +37,7 @@ export const Nav = () => {
     }
   };
   return (
-    <div className={"w-full text-neutral-100"}>
+    <div className={"w-full text-neutral-100 relative z-10"}>
       <nav
         className={
           "w-full max-w-[var(--max-width)] h-[72px] mx-auto flex items-center justify-between px-10"
@@ -89,10 +89,10 @@ export const Nav = () => {
                       <div
                         ref={chapterRef}
                         className={
-                          "bg-black z-10 absolute top-[100%] left-0 right-0"
+                          "bg-black z-[9999] absolute top-[100%] left-0 right-0"
                         }
                       >
-                        <div className={"w-full flex flex-col items-center"}>
+                        <div className={"w-full flex flex-col items-center relative z-[10]"}>
                           {[1, 2, 3, 4].map((chapter) => {
                             return (
                               <Link
