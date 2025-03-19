@@ -190,6 +190,10 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
   const walletManageRef = useRef<any>(null);
   const referral = form.watch("referral");
 
+  const handleMaxClick = async () => {
+    form.setValue("amount", String(await wallet.getAmount()));
+  };
+
   return (
     <>
       <WalletManagePopup ref={walletManageRef} />
@@ -280,7 +284,9 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
                     {t("home.presalePurchase9", { 0: getCoinLabel("USDT") })}
                   </option>
                 </select>
-                <p>{t("home.presalePurchase10")}</p>
+                <button onClick={handleMaxClick}>
+                  {t("home.presalePurchase10")}
+                </button>
               </div>
               <div className={"bg-[#CDE7E5] p-2 flex items-center space-x-2"}>
                 <Image

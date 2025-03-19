@@ -115,13 +115,34 @@ export default function FaqsPage() {
           </div>
           <BuyGoCar />
         </div>
-        <Image
-          src={"/images/cs.png"}
-          alt={"cs"}
-          width={1250}
-          className="mx-auto"
-          height={320}
-        />
+        <div
+          className={
+            "w-[1250px] h-[320px] relative flex items-center justify-between"
+          }
+        >
+          <Image
+            className={"self-start"}
+            src={"/images/faq-left.gif"}
+            alt={"cs"}
+            width={600}
+            height={300}
+          />
+
+          <Image
+            src={"/images/faq.png"}
+            alt={"cs"}
+            width={320}
+            className="absolute  left-1/2  -translate-x-1/2"
+            height={320}
+          />
+          <Image
+            className={"self-end -scale-x-100"}
+            src={"/images/faq-left.gif"}
+            alt={"cs"}
+            width={600}
+            height={300}
+          />
+        </div>
       </Main>
     </div>
   );

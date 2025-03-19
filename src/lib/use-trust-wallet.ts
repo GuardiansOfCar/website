@@ -4,7 +4,8 @@ import { useWallet } from "@/lib/use-wallet";
 import { useSolanaTx } from "@/lib/use-solana-tx";
 import { useEvmTx } from "@/lib/use-evm-tx";
 import { useSyncProviders } from "@/lib/use-ethereum-store";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { useWalletStore } from "@/lib/use-wallet-store";
 
 export function useTrustWallet() {
   const wallet = useWallet();
@@ -14,6 +15,7 @@ export function useTrustWallet() {
     () => providers.find((x) => x.info.name === "Trust Wallet")?.provider,
     [providers],
   );
+  const evmTx = useEvmTx(provider);
 
   const handleConnect = async () => {
     if (provider === undefined) {
@@ -25,17 +27,17 @@ export function useTrustWallet() {
       const resp = await provider.solana.connect();
       address = resp.publicKey.toString();
     } else {
+      await evmTx.switchNetwork(wallet.network);
       const accounts = (await provider.request({
         method: "eth_requestAccounts",
       })) as string[];
       address = accounts[0];
     }
 
-    wallet.set(address, "trustwallet");
+    wallet.set(address, "trustwallet", undefined,wallet.network === "SOL" ? provider?.solana : provider);
   };
 
   const solanaTx = useSolanaTx(provider?.solana);
-  const evmTx = useEvmTx(provider);
 
   const generateTx = async (amount: number) => {
     return wallet.network === "SOL"

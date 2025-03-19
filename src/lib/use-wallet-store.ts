@@ -22,8 +22,11 @@ interface WalletStore {
   provider: Provider | null;
   coin: Coin;
   setCoin: (coin: Coin) => void;
+
+  providerObj: any;
   setProvider: (Provider: Provider) => void;
 
+  setProviderObj: (provider: any) => void;
   setAddress: (address: string) => void;
   setNetwork: (network: Network) => void;
   clear: () => void;
@@ -35,6 +38,9 @@ export const useWalletStore = create<WalletStore>()(
     provider: null,
 
     info: undefined,
+    providerObj: undefined,
+    setProviderObj: (providerObj) => set({ providerObj }),
+
     setInfo: (info) => set({ info }),
 
     setProvider: (provider) => set({ provider }),

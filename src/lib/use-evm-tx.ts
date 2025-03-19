@@ -107,5 +107,6 @@ export function useEvmTx(provider: any | undefined) {
 
   return {
     generateSignedTransaction: generateSignedTransaction,
+    switchNetwork,
   };
 }
