@@ -35,13 +35,6 @@ export default function AdminStakingId() {
     fetch(args[0]),
   );
 
-  const stakingRewardStatus = useSWR(
-    stakingDetail.data?.solanaAddress
-      ? [`/v1/stakings/reward/status/${stakingDetail.data.solanaAddress}`]
-      : null,
-    (args) => fetch(args[0]),
-  );
-
   const stakingTotal = useSWR([`/v1/stakings/status/total/me/${id}`], (args) =>
     fetch(args[0]),
   );
@@ -59,8 +52,8 @@ export default function AdminStakingId() {
             </CardHeader>
             <CardContent>
               <div className="font-bold">
-                  {stakingDetail.data?.solanaAddress}
-                </div>
+                {stakingDetail.data?.solanaAddress}
+              </div>
             </CardContent>
           </Card>
 
@@ -72,7 +65,7 @@ export default function AdminStakingId() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                {stakingTotal.data?.totalStaked}
+                {stakingTotal.data?.totalStaked || "-"}
               </div>
             </CardContent>
           </Card>
@@ -84,7 +77,7 @@ export default function AdminStakingId() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                {stakingRewardStatus.data?.claimedReward}
+                {stakingDetail.data?.doneRewardAmount?.toFixed(4)}
               </div>
             </CardContent>
           </Card>
@@ -96,14 +89,14 @@ export default function AdminStakingId() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                {stakingRewardStatus.data?.unclaimedReward}
+                {stakingDetail.data?.notRewardAmount?.toFixed(4)}
               </div>
             </CardContent>
           </Card>
         </div>
 
         <DataTable
-          title={"리워드 현황"}
+          title={"스테이킹 현황"}
           total={listStakings.data?.total || 0}
           data={listStakings.data?.data ?? []}
           columns={[
