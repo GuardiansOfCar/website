@@ -5,9 +5,11 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { BuyGoCar } from "@/components/buy-go-car";
 import { FaqSection } from "@/app/[locale]/faq/components/section";
+import { useState } from "react";
 
 export default function FaqsPage() {
   const t = useTranslations();
+  const [openIndex, setOpenIndex] = useState<undefined | number>(0);
 
   return (
     <div className={"bg-hero"}>
@@ -20,37 +22,73 @@ export default function FaqsPage() {
 
             <div className={"flex space-x-6 items-start px-10"}>
               <div className={"flex flex-col space-y-4"}>
-                <FaqSection defaultOpened title={t("faqs.b1")}>
+                <FaqSection
+                  open={openIndex === 0}
+                  onOpen={(t) => {
+                    setOpenIndex(t ? 0 : undefined);
+                  }}
+                  title={t("faqs.b1")}
+                >
                   {t("faqs.b2")}
                   <br />
                   <br />
                   {t("faqs.b3")}
                 </FaqSection>
-                <FaqSection title={t("faqs.c1")}>
+                <FaqSection
+                  open={openIndex === 1}
+                  onOpen={(t) => {
+                    setOpenIndex(t ? 1 : undefined);
+                  }}
+                  title={t("faqs.c1")}
+                >
                   {t("faqs.c2")}
                   <br />
                   <br />
                   {t("faqs.c3")}
                 </FaqSection>
-                <FaqSection title={t("faqs.d1")}>
+                <FaqSection
+                  open={openIndex === 2}
+                  onOpen={(t) => {
+                    setOpenIndex(t ? 2 : undefined);
+                  }}
+                  title={t("faqs.d1")}
+                >
                   {t("faqs.d2")}
                   <br />
                   <br />
                   {t("faqs.d3")}
                 </FaqSection>
-                <FaqSection title={t("faqs.e1")}>
+                <FaqSection
+                  open={openIndex === 3}
+                  onOpen={(t) => {
+                    setOpenIndex(t ? 3 : undefined);
+                  }}
+                  title={t("faqs.e1")}
+                >
                   {t("faqs.e2")}
                   <br />
                   <br />
                   {t("faqs.e3")}
                 </FaqSection>
-                <FaqSection title={t("faqs.f1")}>
+                <FaqSection
+                  open={openIndex === 4}
+                  onOpen={(t) => {
+                    setOpenIndex(t ? 4 : undefined);
+                  }}
+                  title={t("faqs.f1")}
+                >
                   {t("faqs.f2")}
                   <br />
                   <br />
                   {t("faqs.f3")}
                 </FaqSection>
-                <FaqSection title={t("faqs.g1")}>
+                <FaqSection
+                  open={openIndex === 5}
+                  onOpen={(t) => {
+                    setOpenIndex(t ? 5 : undefined);
+                  }}
+                  title={t("faqs.g1")}
+                >
                   {t("faqs.g2")}
                   <br />
                   <br />

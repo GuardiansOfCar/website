@@ -96,7 +96,7 @@
         "presalePurchase6": "วินาที",
         "presalePurchase7": "$GOCAR ที่คุณซื้อ",
         "presalePurchase8": "$GOCAR ที่คุณสเตคได้",
-        "presalePurchase9": "ชำระด้วย ETHEREUM",
+        "presalePurchase9": "ชำระด้วย {0}",
         "whitepaper1": "ไวท์เปเปอร์"
     },
     "howToBuy": {

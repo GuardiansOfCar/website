@@ -96,7 +96,7 @@
         "presalePurchase6": "Giây",
         "presalePurchase7": "$GOCAR BẠN ĐÃ MUA,",
         "presalePurchase8": "$GOCAR CÓ THỂ ĐÓNG CỌC",
-        "presalePurchase9": "THANH TOÁN VỚI ETHEREUM",
+        "presalePurchase9": "THANH TOÁN VỚI {0}",
         "whitepaper1": "WHITEPAPER"
     },
     "howToBuy": {

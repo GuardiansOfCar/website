@@ -18,6 +18,7 @@ import { SolanaAdapter } from "@reown/appkit-adapter-solana/react";
 import { createAppKit } from "@reown/appkit/react";
 import { EthersAdapter } from "@reown/appkit-adapter-ethers";
 import { useWalletStore } from "@/lib/use-wallet-store";
+import useSWR from "swr";
 
 const metadata = {
   name: "Guardians of the car",
@@ -52,15 +53,20 @@ export default function LocaleProvider({ children }: { children: ReactNode }) {
 export const Updater = () => {
   const walletStore = useWalletStore();
 
-  useEffect(() => {
-    if (walletStore.address) {
+  useSWR(
+    walletStore.address && walletStore.network
+      ? ["walletsInfo", walletStore.address]
+      : null,
+    () =>
       fetch(
         `${API_BASE_URL}/v1/wallets/info?icoWalletAddress=${walletStore.address}&icoNetwork=${walletStore.network}`,
-      )
-        .then((r) => r.json())
-        .then(walletStore.setInfo);
-    }
-  }, [walletStore.address]);
+      ).then((r) => r.json()),
+    {
+      onSuccess: (data) => {
+        walletStore.setInfo(data);
+      },
+    },
+  );
 
   return null;
 };
@@ -89,7 +95,7 @@ export const OtpPopup = () => {
     if (!data.code)
       return alert("Please enter your valid OTP code with 6 digits.");
 
-    const res = await fetch(`${API_BASE_URL}/v1/wallets/update/otp`, {
+    const res = await fetch(`${API_BASE_URL}/v1/wallets/update`, {
       headers: { "Content-Type": "application/json" },
       method: "PUT",
       body: JSON.stringify({
@@ -119,7 +125,6 @@ export const OtpPopup = () => {
           <input
             {...form.register("code")}
             type={"number"}
-            max={6}
             maxLength={6}
             className={"py-3 px-2 bg-[#CDE7E5] text-body-2 rounded-none"}
           />

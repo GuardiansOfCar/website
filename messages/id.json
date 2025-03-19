@@ -96,7 +96,7 @@
         "presalePurchase6": "Detik",
         "presalePurchase7": "$GOCAR YANG TELAH ANDA BELI",
         "presalePurchase8": "$GOCAR YANG DAPAT ANDA STAKE",
-        "presalePurchase9": "BAYAR DENGAN ETHEREUM",
+        "presalePurchase9": "BAYAR DENGAN {0}",
         "whitepaper1": "WHITEPAPER"
     },
     "howToBuy": {

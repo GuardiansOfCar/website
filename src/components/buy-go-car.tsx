@@ -21,6 +21,7 @@ import { usePhantom } from "@/lib/use-phantom";
 import { useTrustWallet } from "@/lib/use-trust-wallet";
 import { useRouter } from "@/i18n/routing";
 import { useWalletConnect } from "@/lib/use-wallet-connect";
+import useSWR, { useSWRConfig } from "swr";
 
 dayjs.extend(duration);
 
@@ -145,11 +146,9 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
         throw new Error("Failed to server request.");
       }
 
-      fetch(
-        `${API_BASE_URL}/v1/wallets/info?icoWalletAddress=${wallet.address}&icoNetwork=${wallet.network}`,
-      )
-        .then((r) => r.json())
-        .then(setWalletInfo);
+      mutate(["icosalesCumulativeStatus"]);
+      mutate(["stakingsStatusMe"]);
+      mutate("walletsInfo");
     } catch (error: unknown) {
       console.error(error);
       alert("Failed to sign transaction.");
@@ -170,6 +169,7 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
 
   const referralDisalbed = !!referralStore.value;
 
+  const { mutate } = useSWRConfig();
   const [activeSetting, setActiveSetting] = useState<{
     endDate: string;
     gocarAmount: number;
@@ -199,15 +199,6 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
           "flex border-4 border-black flex-col text-neutral-0 bg-[#EEF6FC] w-[400px] relative"
         }
       >
-        {props.rewards && (
-          <Image
-            src={"/images/rewards.png"}
-            alt={"rewards"}
-            width={191}
-            height={117}
-            className={"absolute -top-[90px] -left-[95px]"}
-          />
-        )}
         <div className={"flex items-center justify-center pt-5 pb-4"}>
           <p className={"text-header-3"}>{t("home.presalePurchase1")}</p>
         </div>
@@ -423,25 +414,32 @@ const PresaleCountdown = ({ endDate }: { endDate: string }) => {
 };
 
 const ICOState = ({}: {}) => {
-  const t = useTranslations();
-  const [accum, setAccum] = useState(0);
-  const [total, setTotal] = useState(0);
-  useEffect(() => {
-    fetch(`${API_BASE_URL}/v1/icosales/cumulative/status`)
-      .then((res) => res.json())
-      .then((result) => {
-        setAccum(parseFloat(result.accum));
-        setTotal(parseFloat(result.total));
-      });
-  }, []);
+  const { data, error } = useSWR(
+    ["icosalesCumulativeStatus"],
+    (args) =>
+      fetch(`${API_BASE_URL}/v1/icosales/cumulative/status`)
+        .then((res) => res.json())
+        .then(async (result) => {
+          return {
+            accum: parseFloat(result.accum),
+            total: parseFloat(result.total),
+          };
+        }),
+    {
+      fallbackData: {
+        accum: 0.0,
+        total: 0.0,
+      },
+    },
+  );
 
-  const a = (accum / total) * 100;
+  const a = (data?.accum / data?.total) * 100;
 
   return (
     <>
       <div>
         <p className={"text-label-1"}>
-          ${accum.toFixed(2)} / ${total.toFixed(2)}
+          ${data?.accum?.toFixed(2)} / ${data?.total?.toFixed(2)}
         </p>
       </div>
 
@@ -461,13 +459,7 @@ const MyICOInfo = () => {
   const t = useTranslations();
   const wallet = useWallet();
 
-  const [result, setResult] = useState({
-    stakedBalance: 0,
-    availableBalance: 0,
-  });
-
-  useEffect(() => {
-    if (!wallet.id) return;
+  const { data, error } = useSWR(["stakingsStatusMe"], (args) =>
     fetch(
       `${API_BASE_URL}/v1/stakings/status/me/${wallet.id}?userWalletId=${wallet.id}`,
     ).then(async (res) => {
@@ -476,17 +468,17 @@ const MyICOInfo = () => {
           stakedBalance: number;
           availableBalance: number;
         };
-        setResult(data);
+        return data;
       }
-    });
-  }, [wallet.id]);
+    }),
+  );
 
   return (
     <div className={"flex flex-col space-y-1"}>
       <div className={"flex items-center space-x-2"}>
         <p className={"text-label-1"}>
           {t("home.presalePurchase7")} ={" "}
-          {result.stakedBalance + result.availableBalance}{" "}
+          {(data?.stakedBalance ?? 0) + (data?.availableBalance ?? 0)}{" "}
         </p>
         <Image
           src={"/images/tooltip.png"}
@@ -498,7 +490,7 @@ const MyICOInfo = () => {
 
       <div className={"flex items-center space-x-2"}>
         <p className={"text-label-1"}>
-          {t("home.presalePurchase8")} = {result.stakedBalance}
+          {t("home.presalePurchase8")} = {data?.stakedBalance ?? 0}
         </p>
         <Image
           src={"/images/tooltip.png"}

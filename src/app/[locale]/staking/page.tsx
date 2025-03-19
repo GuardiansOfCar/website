@@ -123,20 +123,6 @@ export default function StakingPage() {
     if (!wallet.id) return;
     fetchRewardMe();
   }, [wallet.id]);
-
-  const handleClaim = async () => {
-    fetch(`${API_BASE_URL}/`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userWalletId: wallet.id,
-        amount: reward,
-        otpCode: "string",
-      }),
-    });
-  };
-
   const router = useRouter();
   const stakeForm = useForm<{
     amount: string;
@@ -210,7 +196,7 @@ export default function StakingPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         userWalletId: wallet.id,
-        amount: status.stakedBalance,
+        amount: parseFloat(reward),
         otpCode: claimForm.getValues("otp"),
       }),
     });
@@ -257,7 +243,7 @@ export default function StakingPage() {
   };
 
   return (
-    <>
+    <div className={"bg-hero"}>
       {buyPopup && (
         <Popup onClose={handleBuyPopupClose} title={t("staking.c4")}>
           <div className={"flex flex-col space-y-3"}>
@@ -533,6 +519,6 @@ export default function StakingPage() {
           </div>
         </div>
       </Main>
-    </>
+    </div>
   );
 }

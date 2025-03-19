@@ -96,7 +96,7 @@
         "presalePurchase6": "secondi",
         "presalePurchase7": "IL TUO $GOCAR ACQUISTATO",
         "presalePurchase8": "LA TUA $GOCAR PUÒ ESSERE PUNTATA",
-        "presalePurchase9": "PAGA CON ETHEREUM",
+        "presalePurchase9": "PAGA CON {0}",
         "whitepaper1": "CARTA BIANCA"
     },
     "howToBuy": {

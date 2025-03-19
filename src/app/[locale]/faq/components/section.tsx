@@ -7,16 +7,16 @@ import clsx, { ClassValue } from "clsx";
 export const FaqSection = ({
   title,
   children,
-  defaultOpened = false,
+  onOpen,
+  open,
 }: {
-  defaultOpened?: boolean;
   children: ReactNode;
   title: string;
+  open: boolean;
+  onOpen: (open: boolean) => void;
 }) => {
-  const [open, setOpen] = useState(defaultOpened);
-
   const handleOpenClick = () => {
-    setOpen((prev) => !prev);
+    onOpen(!open);
   };
 
   return (

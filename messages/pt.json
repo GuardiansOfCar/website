@@ -96,7 +96,7 @@
         "presalePurchase6": "Segundos",
         "presalePurchase7": "SEU $GOCAR COMPRADO",
         "presalePurchase8": "SEU $GOCAR PARA STAKING",
-        "presalePurchase9": "PAGUE COM ETHEREUM",
+        "presalePurchase9": "PAGUE COM {0}",
         "whitepaper1": "WHITEPAPER"
     },
     "howToBuy": {

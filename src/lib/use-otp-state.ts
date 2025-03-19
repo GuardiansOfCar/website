@@ -2,6 +2,7 @@ import { useWalletStore } from "@/lib/use-wallet-store";
 import { useEffect } from "react";
 import { API_BASE_URL } from "@/lib/constants";
 import { useOtpStore } from "@/lib/use-otp-store";
+import useSWR from "swr";
 
 export function useOtpState() {
   const walletStore = useWalletStore();

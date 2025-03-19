@@ -101,7 +101,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <Button className={"!text-header-3"} size={"lg"}>
+              <Button className={"!text-header-3 !cursor-default"} size={"lg"}>
                 {t("home.intro11")}
               </Button>
             </div>
