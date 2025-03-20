@@ -496,7 +496,7 @@ const MyICOInfo = () => {
 
       <div className={"flex items-center space-x-2"}>
         <p className={"text-label-1"}>
-          {t("home.presalePurchase8")} = {data?.stakedBalance ?? 0}
+          {t("home.presalePurchase8")} = {data?.availableBalance ?? 0}
         </p>
         <Image
           src={"/images/tooltip.png"}

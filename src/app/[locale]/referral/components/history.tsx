@@ -10,6 +10,7 @@ import { shortenAddress } from "@/lib/utils";
 import { API_BASE_URL, wrapWindow } from "@/lib/constants";
 import Image from "next/image";
 import { useRouter } from "@/i18n/routing";
+import { useSWRConfig } from "swr";
 
 interface Stats {
   icoEthAmount: number;
@@ -35,7 +36,7 @@ export const ReferralHistory = () => {
   });
 
   const walletManageRef = useRef<any>(null);
-
+  const { mutate } = useSWRConfig();
   const handleCreateReferral = () => {
     if (!wallet.address) return alert("Please connect your wallet first.");
     if (!wallet.id)
@@ -54,7 +55,7 @@ export const ReferralHistory = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        router.refresh();
+        mutate(["walletsInfo"]);
       })
       .catch((e) => {
         alert("Failed to create referral code.");

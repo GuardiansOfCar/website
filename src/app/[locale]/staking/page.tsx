@@ -225,7 +225,7 @@ export default function StakingPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         icoWalletAddress: wallet.icoAddress,
-        amount: Number.parseInt(stakeAmount),
+        amount: Number.parseFloat(stakeAmount),
         otpCode: stakeForm.getValues("otp"),
       }),
     });
@@ -313,7 +313,7 @@ export default function StakingPage() {
               />
             </div>
 
-            <Button onClick={handleWithdrawal}>WITHDRAWAL</Button>
+            <Button onClick={handleWithdrawal} disabled>WITHDRAWAL</Button>
             <Button
               onClick={handleUnstakePopupClose}
               className={"!bg-neutral-40"}
@@ -391,7 +391,7 @@ export default function StakingPage() {
               />
             </div>
 
-            <Button onClick={handleClaimClick}>CLAIM</Button>
+            <Button disabled onClick={handleClaimClick}>CLAIM</Button>
             <Button
               onClick={handleClaimPopupClose}
               className={"!bg-neutral-40"}
