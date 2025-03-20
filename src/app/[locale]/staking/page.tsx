@@ -257,9 +257,9 @@ export default function StakingPage() {
 
             <div className={"space-y-1"}>
               <div className={"flex items-center justify-between"}>
-                <p className={"text-body-3"}>{t("staking.c6")}</p>
+                <p className={"text-body-3"}>{t("staking.c7")}</p>
                 <button onClick={handleAllClick} className={"text-body-3b"}>
-                  {t("staking.c7")}
+                  {t("staking.c6")}
                 </button>
               </div>
               <div className={"bg-[#CDE7E5] flex"}>
@@ -313,7 +313,9 @@ export default function StakingPage() {
               />
             </div>
 
-            <Button onClick={handleWithdrawal} disabled>WITHDRAWAL</Button>
+            <Button onClick={handleWithdrawal} disabled>
+              WITHDRAWAL
+            </Button>
             <Button
               onClick={handleUnstakePopupClose}
               className={"!bg-neutral-40"}
@@ -391,7 +393,9 @@ export default function StakingPage() {
               />
             </div>
 
-            <Button disabled onClick={handleClaimClick}>CLAIM</Button>
+            <Button disabled onClick={handleClaimClick}>
+              CLAIM
+            </Button>
             <Button
               onClick={handleClaimPopupClose}
               className={"!bg-neutral-40"}

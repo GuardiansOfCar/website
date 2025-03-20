@@ -132,15 +132,19 @@ export default function Home() {
         </div>
       </Main>
 
-      <Image
-        className={"absolute bottom-0 w-full h-auto z-[1]"}
-        src={"/images/main-bg.gif"}
-        alt={"gif"}
-        objectFit={"cover"}
-        width={0}
-        sizes={"100vw"}
-        height={0}
-      />
+      <div className={"z-[2] bottom-0 absolute left-0 right-0"}>
+        <div className={"w-full max-w-[var(--max-width)] mx-auto relative"}>
+          <Image
+            className={"absolute bottom-0 w-full h-auto z-[1]"}
+            src={"/images/main-bg.gif"}
+            alt={"gif"}
+            objectFit={"cover"}
+            width={0}
+            sizes={"100vw"}
+            height={0}
+          />
+        </div>
+      </div>
     </div>
   );
 }

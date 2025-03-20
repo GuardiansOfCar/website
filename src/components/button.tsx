@@ -23,8 +23,8 @@ export const Button = ({
       disabled={disabled}
       onClick={onClick}
       className={clsx(
-        "shadow-text",
-        "bg-primary border-neutral-0 border-4 text-neutral-100 text-title-1 px-3 text-center flex items-center justify-center",
+        "flex items-center justify-center",
+        "bg-primary border-neutral-0 border-4  px-3",
         "disabled:!bg-[#8D8D8D]",
         size === "sm" && "h-[49px]",
         size === "md" && "h-[56px]",
@@ -32,7 +32,11 @@ export const Button = ({
         className,
       )}
     >
-      {children}
+      <span
+        className={"shadow-text text-neutral-100 text-title-1 translate-y-0.5"}
+      >
+        {children}
+      </span>
     </button>
   );
 };

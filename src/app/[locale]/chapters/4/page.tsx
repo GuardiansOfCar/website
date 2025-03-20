@@ -9,7 +9,7 @@ import { BuyGoCar } from "@/components/buy-go-car";
 export default function ChaptersFourPage() {
   const t = useTranslations();
   return (
-    <>
+    <div className={"relative"}>
       <Main leftHref={"/chapters/3"} rightHref={"/howtobuy"}>
         <div className={"flex space-x-6 items-start px-10"}>
           <ChaptersSection
@@ -24,14 +24,17 @@ export default function ChaptersFourPage() {
           <BuyGoCar />
         </div>
       </Main>
-      <div className={"absolute bottom-0 left-0 z-[1]"}>
-        <Image
-          src={"/images/chapter4.gif"}
-          alt={"c1"}
-          width={1012}
-          height={720}
-        />
+
+      <div className={"z-[2] bottom-0 absolute left-0 right-0"}>
+        <div className={"w-full max-w-[var(--max-width)] mx-auto"}>
+          <Image
+            src={"/images/chapter4.gif"}
+            alt={"c1"}
+            width={1012}
+            height={720}
+          />
+        </div>
       </div>
-    </>
+    </div>
   );
 }

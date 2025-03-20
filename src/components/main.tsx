@@ -52,6 +52,8 @@ export const Main = (
       >
         {props.rightHref ? <Link href={props.rightHref}>{ricon}</Link> : ricon}
       </div>
+
+
     </main>
   );
 };

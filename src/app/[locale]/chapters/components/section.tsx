@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, Children, Fragment } from "react";
 
 export const ChaptersSection = ({
   title,
@@ -16,7 +16,17 @@ export const ChaptersSection = ({
         <div className={"border-primary-0 border-b-4 px-3 py-4 bg-primary-90"}>
           <p className={"text-body-1b "}>{title}</p>
         </div>
-        <div className={"bg-neutral-100 text-body-3 px-4 py-5"}>{children}</div>
+        <div className={"bg-neutral-100 text-body-3 px-4 py-5"}>
+          {Children.map(children, (child, index) => {
+            if (
+              (child as any)?.type === "br" &&
+              !Children.toArray(children)[index - 1]
+            )
+              return null;
+
+            return <Fragment key={index}> {child}</Fragment>;
+          })}
+        </div>
       </section>
     </div>
   );
