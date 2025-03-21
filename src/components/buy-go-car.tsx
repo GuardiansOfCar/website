@@ -465,26 +465,28 @@ const MyICOInfo = () => {
   const t = useTranslations();
   const wallet = useWallet();
 
-  const { data, error } = useSWR(["stakingsStatusMe"], (args) =>
-    fetch(
-      `${API_BASE_URL}/v1/stakings/status/me/${wallet.id}?userWalletId=${wallet.id}`,
-    ).then(async (res) => {
-      if (res.status === 200 || res.status === 201) {
-        const data = (await res.json()) as {
-          stakedBalance: number;
-          availableBalance: number;
-        };
-        return data;
-      }
-    }),
+  const { data, error } = useSWR(
+    wallet.id ? ["stakingsStatusMe"] : null,
+    (args) =>
+      fetch(
+        `${API_BASE_URL}/v1/stakings/status/me/${wallet.id}?userWalletId=${wallet.id}`,
+      ).then(async (res) => {
+        if (res.status === 200 || res.status === 201) {
+          const data = (await res.json()) as {
+            stakedBalance: number;
+            availableBalance: number;
+            totalBalance: number;
+          };
+          return data;
+        }
+      }),
   );
 
   return (
-    <div className={"flex flex-col space-y-1"}>
+    <div className={"flex flex-col space-y-1 items-center"}>
       <div className={"flex items-center space-x-2"}>
         <p className={"text-label-1"}>
-          {t("home.presalePurchase7")} ={" "}
-          {(data?.stakedBalance ?? 0) + (data?.availableBalance ?? 0)}{" "}
+          {t("home.presalePurchase7")} = {data?.totalBalance ?? 0}
         </p>
         <Image
           src={"/images/tooltip.png"}

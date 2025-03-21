@@ -8,7 +8,7 @@ export default function ChapterLayout({ children }: { children: ReactNode }) {
   return (
     <div className={"bg-hero"}>
       {children}
-      <div className={"flex flex-col items-center justify-start mt-10 z-[10] relative"}>
+      <div className={"flex flex-col items-center justify-start mt-10 mx-5 z-[10] relative"}>
         <p className={"text-body-1b text-neutral-100"}>
           {t("chapter.disclaimer")}
         </p>

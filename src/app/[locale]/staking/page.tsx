@@ -407,13 +407,13 @@ export default function StakingPage() {
       )}
 
       <Main leftHref={"/faq"} rightHref={"/referral"}>
-        <div className={"flex flex-col space-y-8 items-start px-10"}>
+        <div className={"flex flex-col space-y-8 items-start"}>
           <div className={"flex flex-col space-y-4"}>
             <h2 className={"text-header-2 text-primary"}>{t("staking.a1")}</h2>
             <p className={"text-body-3 text-neutral-100"}>{t("staking.a2")}</p>
           </div>
 
-          <div className={"grid grid-cols-4 gap-x-5 self-stretch"}>
+          <div className={"grid grid-cols-4 gap-x-5 self-stretch max-tablet:flex max-tablet:flex-col max-tablet:space-y-4"}>
             <StakingSection
               title={t("staking.c1")}
               headerBorder
@@ -509,13 +509,13 @@ export default function StakingPage() {
             </StakingSection>
           </div>
 
-          <div className={"flex self-stretch"}>
-            <div className={"flex-1"}>
+          <div className={"flex self-stretch max-tablet:flex-col"}>
+            <div className={"flex-1 overflow-x-scroll scrollbar-custom max-tablet:pb-2"}>
               <StakingSupply />
             </div>
-            <div className={"w-[20%]"}>
+            <div className={"w-[20%] max-tablet:w-auto"}>
               <div
-                className={"w-[500px] h-[500px] absolute -translate-x-[30%]"}
+                className={"w-[500px] h-[500px] absolute max-tablet:relative -translate-x-[30%] max-tablet:translate-x-0 max-tablet:w-full max-tablet:h-[100vw]"}
               >
                 <Image src={"/images/staking.png"} alt={"staking"} fill />
               </div>

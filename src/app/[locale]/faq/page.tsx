@@ -14,13 +14,17 @@ export default function FaqsPage() {
   return (
     <div className={"bg-hero"}>
       <Main leftHref={"/roadmap"} rightHref={"/staking"}>
-        <div className={"flex space-x-6"}>
+        <div
+          className={
+            "grid grid-cols-3 gap-6 max-laptop:flex max-laptop:flex-col w-full"
+          }
+        >
           <div className={"flex flex-col"}>
-            <h2 className={"text-header-2 text-primary mx-10 mb-4"}>
+            <h2 className={"text-header-2 text-primary mb-4"}>
               {t("faqs.a1")}
             </h2>
 
-            <div className={"flex space-x-6 items-start px-10"}>
+            <div className={"flex space-x-6 items-start"}>
               <div className={"flex flex-col space-y-4"}>
                 <FaqSection
                   open={openIndex === 0}
@@ -95,29 +99,53 @@ export default function FaqsPage() {
                   {t("faqs.g3")}
                 </FaqSection>
               </div>
+            </div>
+          </div>
 
+          <div className={"flex-col flex"}>
+            <div
+              className={
+                "flex ml-auto w-[240px] -rotate-[20deg] mt-auto mb-10  max-laptop:ml-10 max-laptop:mt-10"
+              }
+            >
               <div
                 className={
-                  "w-[400px] flex-col flex justify-end items-end h-full self-stretch"
+                  "bg-neutral-100 p-4 border-neutral-0 border-4 flex-col items-center flex"
                 }
               >
-                <div className={"flex ml-auto w-[240px] -rotate-[20deg] "}>
-                  <div
-                    className={
-                      "bg-neutral-100 p-4 border-neutral-0 border-4 flex-col items-center flex"
-                    }
-                  >
-                    <p className={"text-body-1"}>{t("faqs.h1")}</p>
-                  </div>
-                </div>
+                <p className={"text-body-1"}>{t("faqs.h1")}</p>
               </div>
             </div>
           </div>
+
+          <div
+            className={
+              "relative items-end mt-10 justify-between hidden max-laptop:flex"
+            }
+          >
+            <Image
+              className={"self-start"}
+              src={"/images/faq-left.gif"}
+              alt={"cs"}
+              width={280}
+              height={130}
+            />
+            s
+            <Image
+              src={"/images/faq.png"}
+              alt={"cs"}
+              width={200}
+              className="absolute  right-0"
+              height={200}
+            />
+          </div>
+
           <BuyGoCar />
         </div>
+
         <div
           className={
-            "w-[1250px] h-[320px] relative flex items-center justify-between"
+            "w-[1250px] h-[320px] relative flex items-center justify-between max-laptop:hidden"
           }
         >
           <Image

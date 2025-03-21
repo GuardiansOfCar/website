@@ -16,10 +16,10 @@ export const RoadmapSection = ({
   title: string;
 }) => {
   return (
-      <div className={"w-[400px] flex flex-col"}>
+      <div className={"flex flex-col"}>
         <section
             className={clsx(
-                "w-[328px] border-neutral-0 border-4 flex flex-col bg-neutral-100 py-4 px-5 space-y-3",
+                "w-[83%] max-desktop:w-auto border-neutral-0 border-4 flex flex-col bg-neutral-100 py-4 px-5 space-y-3",
                 right ? "ml-auto" : "mr-auto",
             )}
         >

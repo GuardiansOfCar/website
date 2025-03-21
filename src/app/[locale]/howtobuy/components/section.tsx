@@ -22,7 +22,7 @@ export const HowtobuySection = ({
   };
 
   return (
-      <section className={"w-[400px] border-neutral-0 border-4 flex flex-col"}>
+      <section className={"border-neutral-0 border-4 flex flex-col"}>
         <button
             onClick={handleOpenClick}
             className={clsx(

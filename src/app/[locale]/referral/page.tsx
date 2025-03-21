@@ -26,11 +26,11 @@ export default function ReferralPage() {
   return (
     <div className={"bg-hero"}>
       <Main leftHref={"/staking"} rightHref={"/g2e"}>
-        <h2 className={"text-header-2 text-primary mx-10 mb-4"}>
+        <h2 className={"text-header-2 text-primary mb-4"}>
           {t("referral.b1", { 0: rate })}
         </h2>
 
-        <div className={"flex flex-col space-y-8 items-start px-10"}>
+        <div className={"flex flex-col space-y-8 items-start max-tablet:items-stretch "}>
           <ReferralSection title={t("referral.c1")}>{rate}%</ReferralSection>
           <ReferralHistory />
         </div>

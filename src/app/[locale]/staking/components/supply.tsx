@@ -59,7 +59,7 @@ export const StakingSupply = () => {
   return (
     <div
       className={
-        "border-neutral-0 border-4 bg-neutral-100 p-9 flex flex-col space-y-6"
+        "border-neutral-0 border-4 bg-neutral-100 p-9 flex flex-col space-y-6 min-w-[994px]"
       }
     >
       <p className={"text-header-3"}>TOTAL SUPPLY</p>

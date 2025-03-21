@@ -11,7 +11,11 @@ export default function ChaptersThreePage() {
   return (
     <>
       <Main leftHref={"/chapters/2"} rightHref={"/chapters/4"}>
-        <div className={"flex space-x-6 items-start px-10"}>
+        <div
+          className={
+            "grid grid-cols-3 gap-6 max-laptop:flex max-laptop:flex-col"
+          }
+        >
           <ChaptersSection
             section={t("chapter.chapterThree1")}
             title={t("chapter.chapterThree2")}
@@ -22,13 +26,29 @@ export default function ChaptersThreePage() {
             {t("chapter.chapterThree4")}
           </ChaptersSection>
 
-          <div className={"w-[400px]"} />
+
+          <div className={"max-laptop:hidden"} />
+
+          <div className={"hidden max-laptop:block relative w-full"}>
+              <Image
+                  src={"/images/chapter3.gif"}
+                  alt={"c1"}
+                  width={0}
+                  height={0}
+                  sizes={"100vw"}
+                  className={"w-full h-auto"}
+                  objectFit={"cover"}
+              />
+          </div>
 
           <BuyGoCar />
         </div>
       </Main>
-      <div className={"absolute bottom-0 left-0 z-[1] flex flex-col right-0"}>
-        <div className={"w-full relative z-[3]"}>
+
+      <div
+        className={"z-[2] bottom-0 absolute left-0 right-0 max-laptop:hidden"}
+      >
+        <div className={"w-full max-w-[var(--max-width)] mx-auto"}>
           <Image
             src={"/images/chapter3.gif"}
             alt={"c1"}

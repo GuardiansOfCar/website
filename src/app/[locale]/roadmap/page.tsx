@@ -11,15 +11,13 @@ export default function RoadmapPage() {
   return (
     <div className={"bg-hero"}>
       <Main leftHref={"/howtobuy"} rightHref={"/faq"}>
-        <h2 className={"text-header-2 text-primary mx-10 mb-4"}>
-          {t("roadmap.a1")}
-        </h2>
+        <h2 className={"text-header-2 text-primary mb-4"}>{t("roadmap.a1")}</h2>
 
-        <div className={"flex space-x-6 items-start px-10 relative"}>
+        <div className={"grid grid-cols-3 gap-6 items-start relative overflow-hidden max-desktop:flex max-desktop:flex-col max-desktop:items-stretch"}>
           <div className={"flex flex-col space-y-4"}>
             <div
               className={
-                "border-4 border-neutral-0 bg-neutral-100 flex items-end p-9 space-x-[14px]"
+                "border-4 border-neutral-0 bg-neutral-100 flex items-end justify-center p-9 space-x-[14px] max-desktop:p-5"
               }
             >
               <div className={"flex flex-col items-center space-y-2"}>
@@ -128,7 +126,7 @@ export default function RoadmapPage() {
               </div>
             </div>
             <div
-              className={"relative w-[400px] flex items-center justify-center"}
+              className={"relative flex items-center justify-center"}
             >
               <p
                 className={
@@ -148,7 +146,7 @@ export default function RoadmapPage() {
             </div>
           </div>
 
-          <div className={"flex flex-col space-y-10"}>
+          <div className={"flex flex-col space-y-10 relative z-[2]"}>
             <RoadmapSection title={t("roadmap.b1")}>
               {t("roadmap.b2")}
             </RoadmapSection>
@@ -173,8 +171,9 @@ export default function RoadmapPage() {
             </RoadmapSection>
           </div>
 
+          <div></div>
           <Image
-            className={"w-[1243px] h-[884px] absolute right-0 translate-x-1/3"}
+            className={"z-[1] w-[1243px] h-[884px] absolute right-0 translate-x-1/3 max-desktop:relative max-w-none  max-desktop:w-full object-contain max-tablet:-translate-x-[23%] max-desktop:min-w-[720px] max-desktop:-translate-x-0 max-desktop:h-[530px]"}
             src={"/images/roadmap.gif"}
             alt={"staking"}
             width={1243}

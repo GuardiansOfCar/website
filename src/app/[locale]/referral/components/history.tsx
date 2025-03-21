@@ -86,16 +86,37 @@ export const ReferralHistory = () => {
 
   const router = useRouter();
 
+  const columns = [
+    { label: "SOL", key: "icoSolAmount" },
+    { label: "ETH", key: "icoEthAmount" },
+    { label: "BNB", key: "icoBnbAmount" },
+    { label: "USDT", key: "icoUSDTAmount" },
+  ];
+
   return (
     <>
       <div
         className={
-          "bg-neutral-100 p-9 border-neutral-0 border-4 flex flex-col space-y-6 self-stretch"
+          "bg-neutral-100 p-9 border-neutral-0 border-4 flex flex-col space-y-6 self-stretch max-tablet:p-5"
         }
       >
         <p className={"text-neutral-0 text-header-3"}>{t("referral.a1")}</p>
 
-        <table>
+        <div className={"max-tablet:block hidden flex flex-col space-y-6"}>
+          {columns.map((c) => (
+            <div key={c.key} className={"flex flex-col"}>
+              <div className={"px-4 pb-3 text-title-1b text-neutral-30"}>
+                {c.label}
+              </div>
+              <div className={"border-y border-y-[#D9D9D9] p-4"}>
+                <span className={"text-neutral-0 text-header-4"}>
+                  {(data as any)[c.key]}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+        <table className={"max-tablet:hidden"}>
           <thead>
             <tr
               className={clsx(
@@ -122,7 +143,9 @@ export const ReferralHistory = () => {
           </tbody>
         </table>
 
-        <div className={"flex w-full space-x-8"}>
+        <div
+          className={"flex w-full gap-8 max-tablet:flex-col max-tablet:gap-6"}
+        >
           {wallet.referral ? (
             <div
               onClick={handleCopyReferral}
@@ -156,7 +179,7 @@ export const ReferralHistory = () => {
               router.push("/");
             }}
             disabled={!!wallet.address}
-            className={"w-[240px]"}
+            className={"min-w-[240px]"}
           >
             {wallet.address ? shortenAddress(wallet.address) : t("referral.a3")}
           </Button>

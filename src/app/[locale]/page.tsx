@@ -12,26 +12,16 @@ import { BorderText } from "@/components/border-text";
 
 export default function Home() {
   const t = useTranslations();
-  const sp = useSearchParams();
-  const sms = sp.get("sms") === "sms";
-  const router = useRouter();
+
   return (
     <>
-      {sms && (
-        <ActionPopup
-          placeholder={"SOLANA WALLET ADDRESS"}
-          onClose={() => {
-            router.replace("/");
-          }}
-          title={"SUBMIT SOLANA WALLET ADDRESS"}
-        />
-      )}
+
 
       <div className={"relative flex flex-col"}>
         <Main leftHref={""} rightHref={"/chapters"}>
           <div
             className={
-              "grid grid-cols-3 gap-6 items-start w-full max-w-[calc(1200px+72px)] mx-auto max-desktop:flex max-desktop:flex-col max-desktop:items-center"
+              "grid grid-cols-3 gap-6 items-start w-full mx-auto max-desktop:flex max-desktop:flex-col max-desktop:items-stretch"
             }
           >
             <BuyGoCar rewards />
@@ -143,7 +133,7 @@ export default function Home() {
 
           <div className={"py-10 max-desktop:py-8 max-desktop:px-0 flex flex-col space-y-4"}>
             <BorderText size={"sm"}>Featured In</BorderText>
-            <div className={"grid gap-x-6 gap-y-4 grid-cols-6 max-desktop:gap-x-4 max-desktop:grid-cols-2"}>
+            <div className={"grid gap-x-6 gap-y-4 grid-cols-6 max-desktop:gap-x-4 max-desktop:grid-cols-4 max-tablet:grid-cols-2"}>
               {["", "", "", "", "", "", "", "", "", "", ""].map((x, i) => (
                 <Image
                   key={`featured-${i + 1}`}
