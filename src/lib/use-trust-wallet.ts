@@ -4,8 +4,7 @@ import { useWallet } from "@/lib/use-wallet";
 import { useSolanaTx } from "@/lib/use-solana-tx";
 import { useEvmTx } from "@/lib/use-evm-tx";
 import { useSyncProviders } from "@/lib/use-ethereum-store";
-import { useEffect, useMemo } from "react";
-import { useWalletStore } from "@/lib/use-wallet-store";
+import { useMemo } from "react";
 
 export function useTrustWallet() {
   const wallet = useWallet();
@@ -34,7 +33,12 @@ export function useTrustWallet() {
       address = accounts[0];
     }
 
-    wallet.set(address, "trustwallet", undefined,wallet.network === "SOL" ? provider?.solana : provider);
+    wallet.set(
+      address,
+      "trustwallet",
+      undefined,
+      wallet.network === "SOL" ? provider?.solana : provider,
+    );
   };
 
   const solanaTx = useSolanaTx(provider?.solana);

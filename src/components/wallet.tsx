@@ -17,7 +17,7 @@ export const Wallet = ({
 }) => {
   const wallet = useWallet();
   const metaMask = useMetaMask();
-  const phantom = usePhantom();
+  // const phantom = usePhantom();
   const trustWallet = useTrustWallet();
   const walletConnect = useWalletConnect();
   const handleClick = () => {
@@ -27,13 +27,13 @@ export const Wallet = ({
       } else {
         metaMask.connect();
       }
-    } else if (type === "phantom") {
+    } /*else if (type === "phantom") {
       if (create) {
         wrapWindow?.open("https://phantom.com/");
       } else {
         phantom.connect();
       }
-    } else if (type === "trust") {
+    }*/ else if (type === "trust") {
       if (create) {
         wrapWindow?.open("https://trustwallet.com/");
       } else {

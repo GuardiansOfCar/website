@@ -1,18 +1,21 @@
 "use client";
 
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect } from "react";
 import { useWallet } from "@/lib/use-wallet";
 import { useEvmTx } from "@/lib/use-evm-tx";
-import { useSyncProviders } from "@/lib/use-ethereum-store";
-import { useWalletStore } from "@/lib/use-wallet-store";
+
+import { MetaMaskSDK } from "@metamask/sdk";
+
+const MMSDK = new MetaMaskSDK({
+  dappMetadata: {
+    name: "GUARDIANS OF THE CAR",
+    url: "https://guardiansofthecar.com",
+  },
+});
 
 export function useMetaMask() {
   const wallet = useWallet();
-  const providers = useSyncProviders();
-  const provider = useMemo(
-    () => providers.find((x) => x.info.name === "MetaMask")?.provider,
-    [providers],
-  );
+  const provider = MMSDK.getProvider();
   const evmTx = useEvmTx(provider);
 
   useEffect(() => {

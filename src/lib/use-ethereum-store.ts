@@ -5,8 +5,7 @@ declare global {
   }
 }
 
-import { useSyncExternalStore } from "react"
-
+import { useSyncExternalStore } from "react";
 
 // Array that stores detected wallet providers and their details.
 let providers: EIP6963ProviderDetail[] = [];
