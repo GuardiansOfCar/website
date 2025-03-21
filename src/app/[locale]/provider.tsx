@@ -114,6 +114,7 @@ export const OtpPopup = () => {
 
   const t = useTranslations();
   const code = form.watch("code");
+  if (!open) return null;
 
   return (
     <Popup onClose={handleOtpPopupClose} title={t("otp.t4")}>
