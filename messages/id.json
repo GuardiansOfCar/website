@@ -113,7 +113,7 @@
     },
     "referral": {
         "a1": "UNDANGAN SAYA",
-        "a2": "Masukkan kode referal",
+        "a2": "Buat kode referal",
         "a3": "Hubungkan Dompet",
         "b1": "UNDANG TEMAN-TEMANMU DAN DAPATKAN 5%",
         "c1": "Setelah Peluncuran di $GOCAR"
@@ -166,5 +166,20 @@
         "f3": "KLAIM $GOCAR",
         "f4": "Anda akan mengklaim jumlah $GOCAR yang ditampilkan di atas. Apakah Anda ingin melanjutkan?",
         "f5": "*Klaim akan diproses dalam waktu 3 hari sejak permintaan Anda."
+    },
+    "otp": {
+        "t1": "Terima kasih telah menjadi Guardian!\nDemi keamanan, silakan buat OTP numerik 6 digit.",
+        "t2": "OTP ini akan digunakan untuk staking dan klaim token.",
+        "t3": "Jika Anda kehilangannya, silakan hubungi gocar@guardiansofthecar.com.",
+        "t4": ""
+    },
+    "submit": {
+        "t1": "",
+        "t2": "",
+        "t3": ""
+    },
+    "common": {
+        "submit": "",
+        "cancel": ""
     }
 }

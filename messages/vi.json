@@ -113,7 +113,7 @@
     },
     "referral": {
         "a1": "CÁC MỐI QUAN HỆ CỦA TÔI",
-        "a2": "Nhập mã giới thiệu",
+        "a2": "Tạo mã giới thiệu",
         "a3": "Liên kết ví",
         "b1": "MỜI BẠN BÈ VÀ KIẾM 5%",
         "c1": "SAU KHI RA MẮT $GOCAR"
@@ -166,5 +166,20 @@
         "f3": "NHẬN $GOCAR",
         "f4": "Bạn sắp nhận số lượng $GOCAR hiển thị ở trên. Bạn có muốn tiếp tục không?",
         "f5": "*Yêu cầu nhận thưởng sẽ được xử lý trong vòng 3 ngày kể từ ngày yêu cầu."
+    },
+    "otp": {
+        "t1": "Cảm ơn bạn đã tham gia làm Vệ Binh!\nVì lý do bảo mật, vui lòng tạo một mã OTP gồm 6 chữ số.",
+        "t2": "Mã OTP này sẽ được sử dụng cho việc staking và yêu cầu token.",
+        "t3": "Nếu bạn làm mất, vui lòng liên hệ gocar@guardiansofthecar.com.",
+        "t4": ""
+    },
+    "submit": {
+        "t1": "",
+        "t2": "",
+        "t3": ""
+    },
+    "common": {
+        "submit": "",
+        "cancel": ""
     }
 }

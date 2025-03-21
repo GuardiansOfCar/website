@@ -113,7 +113,7 @@
     },
     "referral": {
         "a1": "MES INVITÉS",
-        "a2": "Entrez le code de parrainage",
+        "a2": "Générer le code de parrainage",
         "a3": "Connecter le portefeuille",
         "b1": "INVITEZ VOS AMIS ET GAGNEZ 5%",
         "c1": "Après le lancement de $GOCAR"
@@ -166,5 +166,20 @@
         "f3": "RÉCUPÉRER $GOCAR",
         "f4": "Vous êtes sur le point de récupérer le montant de $GOCAR indiqué ci-dessus. Voulez-vous continuer ?",
         "f5": "*Les demandes de récupération seront traitées dans un délai de 3 jours à compter de votre demande"
+    },
+    "otp": {
+        "t1": "Merci d’être devenu un Guardian !\nPour des raisons de sécurité, veuillez créer un OTP numérique à 6 chiffres.",
+        "t2": "Cet OTP sera utilisé pour le staking et les demandes de jetons.",
+        "t3": "Si vous le perdez, veuillez contacter gocar@guardiansofthecar.com.",
+        "t4": ""
+    },
+    "submit": {
+        "t1": "",
+        "t2": "",
+        "t3": ""
+    },
+    "common": {
+        "submit": "",
+        "cancel": ""
     }
 }

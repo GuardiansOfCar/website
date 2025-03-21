@@ -113,7 +113,7 @@
     },
     "referral": {
         "a1": "MEUS CONVIDADOS",
-        "a2": "Insira o código de indicação",
+        "a2": "Gerar código de indicação",
         "a3": "Conectar Carteira",
         "b1": "CONVIDE SEUS AMIGOS E GANHE 5%!",
         "c1": "Após o Lançamento do $GOCAR"
@@ -166,5 +166,20 @@
         "f3": "RESGATAR $GOCAR",
         "f4": "Você está prestes a resgatar o valor de $GOCAR mostrado acima. Deseja continuar?",
         "f5": "*Os resgates serão processados dentro de 3 dias após a sua solicitação."
+    },
+    "otp": {
+        "t1": "Obrigado por se tornar um Guardian!\nPor motivos de segurança, crie um OTP numérico de 6 dígitos.",
+        "t2": "Este OTP será usado para staking e reivindicação de tokens.",
+        "t3": "Se você perdê-lo, entre em contato com gocar@guardiansofthecar.com.",
+        "t4": ""
+    },
+    "submit": {
+        "t1": "",
+        "t2": "",
+        "t3": ""
+    },
+    "common": {
+        "submit": "",
+        "cancel": ""
     }
 }

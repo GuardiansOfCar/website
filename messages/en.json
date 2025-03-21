@@ -113,7 +113,7 @@
     },
     "referral": {
         "a1": "MY INVITED",
-        "a2": "Enter referral code",
+        "a2": "Generate referral code",
         "a3": "Connect Wallet",
         "b1": "INVITE YOUR FRIENDS AND EARN 5%",
         "c1": "After Launch in $GOCAR"
@@ -166,5 +166,20 @@
         "f3": "CLAIM $GOCAR",
         "f4": "You're about to claim the $GOCAR amount shown above. Would you like to proceed?",
         "f5": "*Claims will be processed within 3 days of your request."
+    },
+    "otp": {
+        "t1": "Thank you for becoming a Guardian! \nFor security purposes, please create a 6-digit numeric OTP.",
+        "t2": "This OTP will be used for staking and token claims.",
+        "t3": "If you lose it, please contact gocar@guardiansofthecar.com.",
+        "t4": "OTP Authentication"
+    },
+    "submit": {
+        "t1": "",
+        "t2": "",
+        "t3": ""
+    },
+    "common": {
+        "submit": "SUBMIT",
+        "cancel": "CANCEL"
     }
 }

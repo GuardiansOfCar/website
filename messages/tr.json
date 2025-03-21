@@ -113,7 +113,7 @@
     },
     "referral": {
         "a1": "DAVET ETTİKLERİM",
-        "a2": "Referans kodunu gir",
+        "a2": "Referans kodu oluştur",
         "a3": "Cüzdanı Bağla",
         "b1": "ARKADAŞLARINI DAVET ET VE %5 KAZAN!",
         "c1": "$GOCAR Lansmanından Sonra"
@@ -166,5 +166,20 @@
         "f3": "$GOCAR TALEP ET",
         "f4": "Yukarıda gösterilen $GOCAR miktarını talep etmek üzeresiniz. Devam etmek istiyor musunuz?",
         "f5": "Ödeme talepleri, başvurunuzdan itibaren 3 gün içinde işleme alınacaktır."
+    },
+    "otp": {
+        "t1": "GUARDIAN’A KATILdığınız için teşekkür ederiz!\nGüvenlik amacıyla lütfen 6 haneli bir sayısal OTP oluşturun.",
+        "t2": "Bu OTP, Stakeleme ve token talepleri için kullanılacaktır.",
+        "t3": "Eğer kaybederseniz, lütfen gocar@guardiansofthecar.com ile iletişime geçin.",
+        "t4": ""
+    },
+    "submit": {
+        "t1": "",
+        "t2": "",
+        "t3": ""
+    },
+    "common": {
+        "submit": "",
+        "cancel": ""
     }
 }

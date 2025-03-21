@@ -113,7 +113,7 @@
     },
     "referral": {
         "a1": "MIJN UITGENODIGDEN",
-        "a2": "Voer de referentiecode in",
+        "a2": "Genereer de referentiecode",
         "a3": "Verbind wallet",
         "b1": "Nodig je vrienden uit en verdien 5%",
         "c1": "Na de lancering in $GOCAR"
@@ -166,5 +166,20 @@
         "f3": "CLAIM $GOCAR",
         "f4": "Je staat op het punt om het hierboven weergegeven $GOCAR-bedrag te claimen. Wil je doorgaan?",
         "f5": "*Claims worden binnen 3 dagen na je aanvraag verwerkt."
+    },
+    "otp": {
+        "t1": "Bedankt dat je een Guardian bent geworden!\nVoor beveiligingsdoeleinden, maak een 6-cijferige numerieke OTP aan.",
+        "t2": "Deze OTP wordt gebruikt voor staking en tokenclaims.",
+        "t3": "Als je het verliest, neem dan contact op met gocar@guardiansofthecar.com.",
+        "t4": ""
+    },
+    "submit": {
+        "t1": "",
+        "t2": "",
+        "t3": ""
+    },
+    "common": {
+        "submit": "",
+        "cancel": ""
     }
 }

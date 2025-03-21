@@ -19,6 +19,7 @@ import { createAppKit } from "@reown/appkit/react";
 import { EthersAdapter } from "@reown/appkit-adapter-ethers";
 import { useWalletStore } from "@/lib/use-wallet-store";
 import useSWR from "swr";
+import { useTranslations } from "next-intl";
 
 const metadata = {
   name: "Guardians of the car",
@@ -111,16 +112,14 @@ export const OtpPopup = () => {
     setState("registered");
   };
 
+  const t = useTranslations();
   const code = form.watch("code");
-  if (!open) return null;
 
   return (
-    <Popup onClose={handleOtpPopupClose} title={"OTP Authentication"}>
+    <Popup onClose={handleOtpPopupClose} title={t("otp.t4")}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className={"flex flex-col space-y-3"}>
-          <p className={"text-center"}>
-            Enter the code to verify your identity
-          </p>
+          <p className={"text-center"}>{t("otp.t1")}</p>
 
           <input
             {...form.register("code")}
@@ -130,7 +129,7 @@ export const OtpPopup = () => {
           />
 
           <Button disabled={!code} className={clsx("disabled:bg-neutral-30")}>
-            CONTINUE
+            {t("common.submit")}
           </Button>
 
           <Button
@@ -138,8 +137,15 @@ export const OtpPopup = () => {
             className={"!bg-neutral-40"}
             type={"button"}
           >
-            CANCEL
+            {t("common.cancel")}
           </Button>
+
+          <div
+            className={"flex flex-col items-center text-body-3  space-y-1 py-4"}
+          >
+            <p>{t("otp.t2")}</p>
+            <p>{t("otp.t3")}</p>
+          </div>
         </div>
       </form>
     </Popup>

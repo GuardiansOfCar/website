@@ -113,7 +113,7 @@
     },
     "referral": {
         "a1": "I MIEI OSPITI",
-        "a2": "Inserisci il codice di riferimento",
+        "a2": "Genera il codice di riferimento",
         "a3": "Collega il portafoglio",
         "b1": "INVITA I TUOI AMICI E GUADAGNA IL 5%.",
         "c1": "Dopo il lancio in $GOCAR"
@@ -166,5 +166,20 @@
         "f3": "RICHIEDI $GOCAR",
         "f4": "Stai per richiedere l'importo di $GOCAR indicato sopra. Vuoi procedere?",
         "f5": "*Le richieste di rimborso verranno elaborate entro 3 giorni dalla richiesta."
+    },
+    "otp": {
+        "t1": "Grazie per essere diventato un Guardiano!\nPer motivi di sicurezza, crea un OTP numerico a 6 cifre.",
+        "t2": "Questo OTP verrà utilizzato per lo staking e il reclamo dei token.",
+        "t3": "Se lo perdi, contatta gocar@guardiansofthecar.com.",
+        "t4": ""
+    },
+    "submit": {
+        "t1": "",
+        "t2": "",
+        "t3": ""
+    },
+    "common": {
+        "submit": "",
+        "cancel": ""
     }
 }
