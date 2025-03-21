@@ -213,7 +213,7 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
         </div>
         <div className={"space-y-4 py-4 flex flex-col items-center px-4"}>
           <PresaleCountdown endDate={activeSetting.endDate} />
-          <div className={"flex items-center space-x-2 self-center"}>
+          <div className={"flex items-center space-x-2 self-stretch"}>
             {[
               ["ETH", "eth.png", "ETH"],
               ["SOL", "sol.png", "SOL"],
@@ -223,7 +223,7 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
                 key={item[2]}
                 onClick={handleCoinClick(item[2] as any)}
                 className={clsx(
-                  "flex items-center px-[30px] py-2 space-x-2 ",
+                  "flex items-center px-[30px] py-2 space-x-2 max-tablet:px-2 flex-1",
                   network === item[2] ? "bg-neutral-0" : "bg-neutral-80",
                 )}
               >
