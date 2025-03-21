@@ -28,12 +28,12 @@ export default async function LocaleLayout(props: PropsWithChildren) {
         <div className={"relative z-[10]"}>
           <NextIntlClientProvider messages={messages}>
             <LocaleProvider>
-              <header className={"min-w-[var(--max-width)] z-[4] relative"}>
+              <header className={" z-[4] relative"}>
                 <Nav />
                 <Banner />
               </header>
-              <div className={"min-w-[var(--max-width)]"}>{props.children}</div>
-              <footer className={"min-w-[var(--max-width)] z-[3] relative"}>
+              <div className={""}>{props.children}</div>
+              <footer className={"z-[3] relative"}>
                 <Footer />
               </footer>
             </LocaleProvider>

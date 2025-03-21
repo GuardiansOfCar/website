@@ -200,7 +200,7 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
 
       <div
         className={
-          "flex border-4 border-black flex-col text-neutral-0 bg-[#EEF6FC] w-[400px] relative"
+          "flex border-4 border-black flex-col text-neutral-0 bg-[#EEF6FC] relative"
         }
       >
         <div className={"flex items-center justify-center pt-5 pb-4"}>
