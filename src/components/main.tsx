@@ -40,7 +40,9 @@ export const Main = (
       }
     >
       <div
-        className={"fixed top-1/2 -translate-y-1/2 left-0 z-10 max-laptop:hidden max-desktop:!left-0"}
+        className={
+          "fixed top-1/2 -translate-y-1/2 left-0 z-10 max-laptop:hidden max-desktop:!left-0"
+        }
         style={{
           left: "calc((100vw - 1440px) / 2 - 40px)",
         }}
@@ -48,7 +50,7 @@ export const Main = (
         {props.leftHref ? <Link href={props.leftHref}>{icon}</Link> : icon}
       </div>
 
-      {props.children}
+      <div className={"relative z-[1]"}>{props.children}</div>
 
       <div
         className="fixed top-1/2 right-0 z-10 -translate-y-1/2 max-laptop:hidden max-desktop:!right-0"

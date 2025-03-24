@@ -10,7 +10,7 @@ export default function ChaptersOnePage() {
   const t = useTranslations();
 
   return (
-    <>
+    <div className={""}>
       <Main leftHref={"/"} rightHref={"/chapters/2"}>
         <div
           className={
@@ -60,6 +60,6 @@ export default function ChaptersOnePage() {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -8,14 +8,15 @@ export default {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    screens: {
-      'tablet': '640px',
 
-      'laptop': '1024px',
-
-      'desktop': '1440px',
-    },
     extend: {
+      screens: {
+        'tablet': '640px',
+
+        'laptop': '1024px',
+
+        'desktop': '1440px',
+      },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",

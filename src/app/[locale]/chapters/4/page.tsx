@@ -9,7 +9,7 @@ import { BuyGoCar } from "@/components/buy-go-car";
 export default function ChaptersFourPage() {
   const t = useTranslations();
   return (
-    <div className={"relative"}>
+    <div className={""}>
       <Main leftHref={"/chapters/3"} rightHref={"/howtobuy"}>
         <div  className={
             "grid grid-cols-3 gap-6 max-laptop:flex max-laptop:flex-col"

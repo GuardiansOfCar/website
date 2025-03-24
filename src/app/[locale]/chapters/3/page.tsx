@@ -9,7 +9,7 @@ import { BuyGoCar } from "@/components/buy-go-car";
 export default function ChaptersThreePage() {
   const t = useTranslations();
   return (
-    <>
+    <div className={""}>
       <Main leftHref={"/chapters/2"} rightHref={"/chapters/4"}>
         <div
           className={
@@ -60,6 +60,6 @@ export default function ChaptersThreePage() {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 }

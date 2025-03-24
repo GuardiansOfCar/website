@@ -1,7 +1,6 @@
 "use client";
 
 import { Main } from "@/components/main";
-import Image from "next/image";
 import { ActionPopup } from "@/components/action-popup";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "@/i18n/routing";
@@ -13,26 +12,6 @@ export default function G2E() {
 
   return (
     <>
-      <div className={"bg-hero"}>
-        <Main leftHref={"/referral"} rightHref={""}>
-          <div
-            className={
-              "flex items-center z-10 relative h-[750px]  max-h-screen justify-center"
-            }
-          >
-            <Image
-              className={"absolute"}
-              src={"/images/mockup.png"}
-              alt={"m"}
-              width={200}
-              height={400}
-            />
-            <h1 className={"text-primary text-header-1 relative z-10"}>
-              COMING SOON...
-            </h1>
-          </div>
-        </Main>
-      </div>
       {sms && (
         <ActionPopup
           onClose={() => {
@@ -40,6 +19,20 @@ export default function G2E() {
           }}
         />
       )}
+      <div className={"bg-hero"}>
+        <Main leftHref={"/referral"} rightHref={""}>
+          <div
+            className={
+              "flex items-center z-10 relative h-[750px]  max-h-screen justify-center"
+            }
+          >
+            <video width="300" height="400" autoPlay={true} loop>
+              <source src="/videos/g2e.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </Main>
+      </div>
     </>
   );
 }
