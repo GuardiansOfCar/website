@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, ReactNode } from "react";
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
 
@@ -6,6 +6,7 @@ export const Main = (
   props: PropsWithChildren<{
     leftHref: string;
     rightHref: string;
+    absoluteComponent?: ReactNode;
   }>,
 ) => {
   const icon = (
@@ -51,7 +52,7 @@ export const Main = (
       </div>
 
       <div className={"relative z-[1]"}>{props.children}</div>
-
+      {props.absoluteComponent && props.absoluteComponent}
       <div
         className="fixed top-1/2 right-0 z-10 -translate-y-1/2 max-laptop:hidden max-desktop:!right-0"
         style={{ right: "calc((100vw - 1440px) / 2 - 40px)" }}
