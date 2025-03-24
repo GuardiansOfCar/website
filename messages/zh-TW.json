@@ -96,7 +96,7 @@
         "presalePurchase6": "秒",
         "presalePurchase7": "您已購買的 $GOCAR",
         "presalePurchase8": "您可質押的 $GOCAR",
-        "presalePurchase9": "使用以太幣支付",
+        "presalePurchase9": "使用 {0} 支付",
         "whitepaper1": "白皮書"
     },
     "howToBuy": {
@@ -113,7 +113,7 @@
     },
     "referral": {
         "a1": "我的邀請",
-        "a2": "輸入推薦碼",
+        "a2": "生成推薦碼",
         "a3": "連接錢包",
         "b1": "邀請你的朋友並賺取5%獎勵",
         "c1": "在 $GOCAR 上市後"
@@ -166,5 +166,19 @@
         "f3": "領取 $GOCAR",
         "f4": "您即將領取上方顯示的 $GOCAR 金額。是否繼續進行？",
         "f5": "*報酬支付將在申請後3天內處理完成。"
+    },
+    "otp": {
+        "t1": "感謝您成為守護者！\n為了安全起見，請創建一個6位數字的OTP。",
+        "t2": "此OTP將用於質押和代幣領取。",
+        "t3": "如果丟失，請聯繫 gocar@guardiansofthecar.com。"
+    },
+    "submit": {
+        "t1": "提交 SOLANA 錢包地址",
+        "t2": "連接您的錢包以繼續",
+        "t3": "提交",
+        "t4": "*輸入時請注意大小寫。",
+        "t5": "• 如果您是透過 ETH、BNB 網路參與的，為了領取 $GOCAR，需輸入 SOL 網路地址。",
+        "t6": "• 請透過支援SOL 網路的錢包（例如 Trust wallet ）建立 SOL 地址後輸入。",
+        "t7": "請輸入 Solana 地址"
     }
 }

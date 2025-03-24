@@ -170,16 +170,15 @@
     "otp": {
         "t1": "Cảm ơn bạn đã tham gia làm Vệ Binh!\nVì lý do bảo mật, vui lòng tạo một mã OTP gồm 6 chữ số.",
         "t2": "Mã OTP này sẽ được sử dụng cho việc staking và yêu cầu token.",
-        "t3": "Nếu bạn làm mất, vui lòng liên hệ gocar@guardiansofthecar.com.",
-        "t4": ""
+        "t3": "Nếu bạn làm mất, vui lòng liên hệ gocar@guardiansofthecar.com."
     },
     "submit": {
-        "t1": "",
-        "t2": "",
-        "t3": ""
-    },
-    "common": {
-        "submit": "",
-        "cancel": ""
+        "t1": "GỬI ĐỊA CHỈ VÍ SOLANA",
+        "t2": "Liên kết ví của bạn để tiếp tục",
+        "t3": "GỬI",
+        "t4": "*Vui lòng nhập chính xác chữ in hoa và chữ in thường.",
+        "t5": "• Nếu bạn tham gia qua mạng ETH hoặc BNB, bạn cần nhập địa chỉ mạng SOL để có thể nhận $GOCAR.",
+        "t6": "• Vui lòng tạo địa chỉ SOL thông qua wallet (ví) có hỗ trợ mạng SOL như Trust wallet, sau đó nhập vào.",
+        "t7": "Nhập địa chỉ Solana"
     }
 }

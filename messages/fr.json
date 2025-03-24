@@ -170,16 +170,15 @@
     "otp": {
         "t1": "Merci d’être devenu un Guardian !\nPour des raisons de sécurité, veuillez créer un OTP numérique à 6 chiffres.",
         "t2": "Cet OTP sera utilisé pour le staking et les demandes de jetons.",
-        "t3": "Si vous le perdez, veuillez contacter gocar@guardiansofthecar.com.",
-        "t4": ""
+        "t3": "Si vous le perdez, veuillez contacter gocar@guardiansofthecar.com."
     },
     "submit": {
-        "t1": "",
-        "t2": "",
-        "t3": ""
-    },
-    "common": {
-        "submit": "",
-        "cancel": ""
+        "t1": "SOUMETTRE L'ADRESSE DU PORTEFEUILLE SOLANA",
+        "t2": "Connectez votre portefeuille pour continuer",
+        "t3": "SOUMETTRE",
+        "t4": "*Veillez à la saisir exactement comme elle apparaît, en faisant attention aux majuscules et aux minuscules.",
+        "t5": "• Si vous avez participé via le réseau ETH ou BNB, vous devez saisir votre adresse sur le réseau SOL afin de réclamer votre $GOCAR.",
+        "t6": "• Veuillez créer une adresse SOL à l'aide d'un portefeuille qui prend en charge le réseau SOL, tel que Trust wallet, puis saisissez-la.",
+        "t7": "Entrez l'adresse de Solana"
     }
 }

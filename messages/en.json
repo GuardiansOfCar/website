@@ -170,16 +170,15 @@
     "otp": {
         "t1": "Thank you for becoming a Guardian! \nFor security purposes, please create a 6-digit numeric OTP.",
         "t2": "This OTP will be used for staking and token claims.",
-        "t3": "If you lose it, please contact gocar@guardiansofthecar.com.",
-        "t4": "OTP Authentication"
+        "t3": "If you lose it, please contact gocar@guardiansofthecar.com."
     },
     "submit": {
-        "t1": "",
-        "t2": "",
-        "t3": ""
-    },
-    "common": {
-        "submit": "SUBMIT",
-        "cancel": "CANCEL"
+        "t1": "SUBMIT SOLANA WALLET ADDRESS",
+        "t2": "Connect your wallet to proceed",
+        "t3": "SUBMIT",
+        "t4": "*Make sure to enter it exactly as it appears, paying attention to uppercase and lowercase letters.",
+        "t5": "• If you participated via the ETH or BNB network, you must enter your SOL network address in order to claim your $GOCAR.",
+        "t6": "• Please create a SOL address using a wallet that supports the SOL network, such as Trust wallet, and then enter it.",
+        "t7": "Enter Solana address"
     }
 }

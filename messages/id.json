@@ -170,16 +170,15 @@
     "otp": {
         "t1": "Terima kasih telah menjadi Guardian!\nDemi keamanan, silakan buat OTP numerik 6 digit.",
         "t2": "OTP ini akan digunakan untuk staking dan klaim token.",
-        "t3": "Jika Anda kehilangannya, silakan hubungi gocar@guardiansofthecar.com.",
-        "t4": ""
+        "t3": "Jika Anda kehilangannya, silakan hubungi gocar@guardiansofthecar.com."
     },
     "submit": {
-        "t1": "",
-        "t2": "",
-        "t3": ""
-    },
-    "common": {
-        "submit": "",
-        "cancel": ""
+        "t1": "PENGAJUAN ALAMAT DOMPET SOLANA",
+        "t2": "Hubungkan dompet Anda untuk melanjutkan",
+        "t3": "Kirim",
+        "t4": "Harap masukkan dengan memperhatikan huruf besar dan kecil",
+        "t5": "Jika Anda berpartisipasi melalui jaringan ETH atau BNB, Anda harus memasukkan alamat jaringan SOL untuk mengklaim $GOCAR",
+        "t6": "Buat alamat SOL melalui dompet yang mendukung jaringan SOL, seperti Trust Wallet, lalu masukkan alamat tersebut",
+        "t7": "Masukkan alamat Solana Anda"
     }
 }
