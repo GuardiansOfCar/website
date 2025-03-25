@@ -15,7 +15,7 @@ export default function G2E() {
       {sms && (
         <ActionPopup
           onClose={() => {
-            router.replace("/");
+            router.back()
           }}
         />
       )}

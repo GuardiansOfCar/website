@@ -2,7 +2,6 @@ import { useWalletStore } from "@/lib/use-wallet-store";
 import { useEffect } from "react";
 import { API_BASE_URL } from "@/lib/constants";
 import { useOtpStore } from "@/lib/use-otp-store";
-import useSWR from "swr";
 
 export function useOtpState() {
   const walletStore = useWalletStore();
@@ -22,30 +21,23 @@ export function useOtpState() {
   };
 
   useEffect(() => {
-    const i = setInterval(() => {
-      if (
-        walletStore.info?.walletId &&
-        walletStore.info?.icoAddress &&
-        walletStore.info?.icoNetwork &&
-        state !== "registered"
-      ) {
-        fetchOtp();
-      }
-    }, 5000);
-
     if (
-      walletStore.info?.walletId &&
-      walletStore.info?.icoAddress &&
-      walletStore.info?.icoNetwork &&
-      state !== "registered"
-    ) {
+      !walletStore.info?.walletId ||
+      !walletStore.address ||
+      state === "registered"
+    )
+      return;
+
+    const i = setInterval(() => {
       fetchOtp();
-    }
+    }, 3000);
+
+    fetchOtp();
 
     return () => {
       clearInterval(i);
     };
-  }, [walletStore.info?.walletId]);
+  }, [walletStore.info?.walletId, state, walletStore.address]);
 
   return state;
 }

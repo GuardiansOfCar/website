@@ -2,13 +2,17 @@
 
 import { useClickAway, useLockBodyScroll } from "@uidotdev/usehooks";
 import { Button } from "@/components/button";
+import { useTranslations } from "next-intl";
+import { useWallet } from "@/lib/use-wallet";
 
 export const ActionPopup = ({ onClose }: { onClose: () => void }) => {
   const ref = useClickAway<HTMLDivElement>(() => {
     onClose();
   });
 
+  const t = useTranslations();
   useLockBodyScroll();
+  const wallet = useWallet();
 
   return (
     <div
@@ -25,30 +29,33 @@ export const ActionPopup = ({ onClose }: { onClose: () => void }) => {
         <div
           className={"py-8 max-laptop:py-6 flex items-center justify-center "}
         >
-          <span className={"text-header-3"}>SUBMIT SOLANA WALLET ADDRESS</span>
+          <span className={"text-header-3"}>{t("submit.t1")}</span>
         </div>
         <div
           className={"flex w-full gap-8 max-laptop:flex-col max-laptop:gap-6"}
         >
           <input
-            placeholder={"Connect your wallet to proceed"}
+            disabled={!wallet.address}
+            placeholder={wallet.address ? t("submit.t7") : t("submit.t2")}
             className={
-              "bg-[#CDE7E5] text-title-1 px-4 py-[18px] flex-1 placeholder:text-[#646464]"
+              "bg-[#CDE7E5] text-title-1 px-4 py-[18px] flex-1 placeholder:text-[#646464] disabled:bg-[#F0F0F0]"
             }
           />
-          <Button className={"min-w-[240px]"} onClick={onClose}>
-            SUBMIT
+          <Button
+            disabled={!wallet.address}
+            className={"min-w-[240px]"}
+            onClick={onClose}
+          >
+            {t("submit.t3")}
           </Button>
         </div>
 
         <div className={"text-body-3 text-[#646464] mt-8"}>
-          * Please enter it exactly as it appears, including upper and lower
-          case.
+          {t("submit.t4")}
           <br />
-          • If you participated using the ETH or BNB network, you need to enter
-          an SOL network address to claim $GOCAR.
-          <br />• Please create an SOL address using a wallet that supports the
-          SOL network, such as Trust Wallet, and then enter it.
+          {t("submit.t5")}
+          <br />
+          {t("submit.t6")}
         </div>
       </div>
     </div>
