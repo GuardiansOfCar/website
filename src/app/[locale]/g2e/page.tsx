@@ -1,24 +1,10 @@
 "use client";
 
 import { Main } from "@/components/main";
-import { ActionPopup } from "@/components/action-popup";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "@/i18n/routing";
 
 export default function G2E() {
-  const sp = useSearchParams();
-  const sms = sp.get("sms") === "sms";
-  const router = useRouter();
-
   return (
     <>
-      {sms && (
-        <ActionPopup
-          onClose={() => {
-            router.back()
-          }}
-        />
-      )}
       <div className={"bg-hero"}>
         <Main leftHref={"/referral"} rightHref={""}>
           <div

@@ -4,8 +4,16 @@ import { useClickAway, useLockBodyScroll } from "@uidotdev/usehooks";
 import { Button } from "@/components/button";
 import { useTranslations } from "next-intl";
 import { useWallet } from "@/lib/use-wallet";
+import { useState } from "react";
+import { PublicKey } from "@solana/web3.js";
 
-export const ActionPopup = ({ onClose }: { onClose: () => void }) => {
+export const ActionPopup = ({
+  onClose,
+  onSubmit,
+}: {
+  onClose: () => void;
+  onSubmit: (a: string) => void;
+}) => {
   const ref = useClickAway<HTMLDivElement>(() => {
     onClose();
   });
@@ -13,6 +21,19 @@ export const ActionPopup = ({ onClose }: { onClose: () => void }) => {
   const t = useTranslations();
   useLockBodyScroll();
   const wallet = useWallet();
+
+  const [value, setValue] = useState("");
+
+  const handleClick = () => {
+    let solanaAddress: string = "";
+    try {
+      solanaAddress = new PublicKey(value).toString();
+    } catch (e) {
+      alert(t("submit.t7"));
+      return;
+    }
+    onSubmit(solanaAddress);
+  };
 
   return (
     <div
@@ -35,6 +56,8 @@ export const ActionPopup = ({ onClose }: { onClose: () => void }) => {
           className={"flex w-full gap-8 max-laptop:flex-col max-laptop:gap-6"}
         >
           <input
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
             disabled={!wallet.address}
             placeholder={wallet.address ? t("submit.t7") : t("submit.t2")}
             className={
@@ -44,7 +67,7 @@ export const ActionPopup = ({ onClose }: { onClose: () => void }) => {
           <Button
             disabled={!wallet.address}
             className={"min-w-[240px]"}
-            onClick={onClose}
+            onClick={handleClick}
           >
             {t("submit.t3")}
           </Button>

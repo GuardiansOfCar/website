@@ -75,6 +75,7 @@ export function useWallet() {
     },
     address: walletStore.address,
     id: walletStore.info?.walletId,
+    solanaAddress: walletStore.info?.solanaAddress,
     provider: walletStore.provider,
     referral: walletStore.info?.referralCode,
     icoAddress: walletStore.info?.icoAddress,
