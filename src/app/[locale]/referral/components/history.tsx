@@ -35,7 +35,6 @@ export const ReferralHistory = () => {
     totalGocarAmount: 0,
   });
 
-  const walletManageRef = useRef<any>(null);
   const { mutate } = useSWRConfig();
   const handleCreateReferral = () => {
     if (!wallet.address) return alert("Please connect your wallet first.");
@@ -186,7 +185,7 @@ export const ReferralHistory = () => {
         </div>
       </div>
 
-      <WalletManagePopup ref={walletManageRef} />
+      <WalletManagePopup />
     </>
   );
 };
