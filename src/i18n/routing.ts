@@ -18,6 +18,7 @@ export const routing = defineRouting({
     "ru",
     "th",
     "vi",
+    "zh",
     "zh-CN",
     "zh-TW",
   ],
