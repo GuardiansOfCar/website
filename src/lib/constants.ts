@@ -16,3 +16,6 @@ export const ETH_USDT_CONTRACT = "0xdac17f958d2ee523a2206206994597c13d831ec7";
 export const SOL_USDT_CONTRACT = "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB";
 
 export const BNB_USDT_CONTRACT = "0x55d398326f99059ff775485246999027b3197955";
+export const AUDIT_LINK = "https://x.com/gocar_official";
+
+export const FEATURES = ["", "", "", "", "", "", "", "", "", "", ""]

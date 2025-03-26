@@ -6,23 +6,21 @@ import NextLink from "next/link";
 import { Link, usePathname, useRouter } from "@/i18n/routing";
 import Image from "next/image";
 import { useState } from "react";
-import { useClickAway, useLockBodyScroll } from "@uidotdev/usehooks";
+import { useLockBodyScroll } from "@uidotdev/usehooks";
 import { Button } from "@/components/button";
 import { useWallet } from "@/lib/use-wallet";
 import { shortenAddress } from "@/lib/utils";
+import { AUDIT_LINK } from "@/lib/constants";
 
 export const Nav = () => {
   const t = useTranslations();
   const pathname = usePathname();
   const [chapterOpened, setChapterOpened] = useState(false);
-  const chapterRef = useClickAway<HTMLDivElement>(() => {
-    setChapterOpened(false);
-  });
 
   const wallet = useWallet();
 
   const handleChapterClick = () => {
-    console.log("dw")
+    console.log("dw");
     setChapterOpened(!chapterOpened);
   };
 
@@ -97,7 +95,7 @@ export const Nav = () => {
                           <Link
                             onClick={() => {
                               setChapterOpened(false);
-                              setMenuOpen(false)
+                              setMenuOpen(false);
                             }}
                             key={chapter}
                             href={`${nav.href}/${chapter}`}
@@ -120,9 +118,9 @@ export const Nav = () => {
 
             {nav.href !== "/chapters" && (
               <Link
-                  onClick={() => {
-                    setMenuOpen(false)
-                  }}
+                onClick={() => {
+                  setMenuOpen(false);
+                }}
                 href={nav.href}
                 className={clsx(
                   "block py-3 px-2 text-body-1b cursor-pointer",
@@ -146,12 +144,39 @@ export const Nav = () => {
       }
     >
       <a
+        className={
+          "cursor-pointer w-12 h-12 max-desktop:h-[50px] relative max-desktop:w-full max-desktop:bg-[rgb(66,127,134)] max-desktop:border-4 max-desktop:border-black items-center justify-center max-desktop:flex"
+        }
+        target={"_blank"}
+        href={AUDIT_LINK}
+      >
+        <Image
+          className={"max-desktop:hidden"}
+          src={"/images/audit.png"}
+          fill
+          alt={"audit"}
+        />
+        <span className={"text-xl shadow-text hidden max-desktop:block"}>
+          AUDIT
+        </span>
+      </a>
+      <a
         className={"cursor-pointer w-12 h-12 relative max-desktop:w-full"}
         target={"_blank"}
         href={"https://x.com/gocar_official"}
       >
-        <Image className={"max-desktop:hidden"} src={"/images/x.png"} fill alt={"x"} />
-        <Image className={"hidden max-desktop:block"} src={"/images/x2.png"} fill alt={"x"} />
+        <Image
+          className={"max-desktop:hidden"}
+          src={"/images/x.png"}
+          fill
+          alt={"x"}
+        />
+        <Image
+          className={"hidden max-desktop:block"}
+          src={"/images/x2.png"}
+          fill
+          alt={"x"}
+        />
       </a>
 
       <a
@@ -159,8 +184,18 @@ export const Nav = () => {
         target={"_blank"}
         href={"https://t.me/Gocar_Official"}
       >
-        <Image className={"max-desktop:hidden"} src={"/images/telegram.png"} fill alt={"telegram"} />
-        <Image className={"hidden max-desktop:block"} src={"/images/tel2.png"} fill alt={"x"} />
+        <Image
+          className={"max-desktop:hidden"}
+          src={"/images/telegram.png"}
+          fill
+          alt={"telegram"}
+        />
+        <Image
+          className={"hidden max-desktop:block"}
+          src={"/images/tel2.png"}
+          fill
+          alt={"x"}
+        />
       </a>
 
       <NextLink href={"/whitepaper.pdf"} target={"_blank"}>
@@ -169,7 +204,11 @@ export const Nav = () => {
         </Button>
       </NextLink>
 
-      <Button onClick={handleBuyGocarClick} size={"sm"} className={""}>
+      <Button
+        onClick={handleBuyGocarClick}
+        size={"sm"}
+        className={"max-desktop:col-span-2"}
+      >
         {wallet.address ? shortenAddress(wallet.address) : t("home.buyToken1")}
       </Button>
     </div>
@@ -227,5 +266,5 @@ export const Nav = () => {
 
 const A = () => {
   useLockBodyScroll();
-  return null
+  return null;
 };

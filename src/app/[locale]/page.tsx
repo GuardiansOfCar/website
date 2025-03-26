@@ -9,14 +9,13 @@ import { useSearchParams } from "next/navigation";
 import { ActionPopup } from "@/components/action-popup";
 import { useRouter } from "@/i18n/routing";
 import { BorderText } from "@/components/border-text";
+import { FEATURES } from "@/lib/constants";
 
 export default function Home() {
   const t = useTranslations();
 
   return (
     <>
-
-
       <div className={"relative flex flex-col"}>
         <Main leftHref={""} rightHref={"/chapters"}>
           <div
@@ -31,7 +30,7 @@ export default function Home() {
                 "flex gap-6 col-span-2 max-desktop:flex-col-reverse relative max-desktop:items-center"
               }
             >
-              <div className={"flex-1 flex flex-col space-y-4 " }>
+              <div className={"flex-1 flex flex-col space-y-4 "}>
                 <div className={"relative pl-8 flex items-center"}>
                   <Image
                     src={"/images/gocar-coin.png"}
@@ -131,17 +130,26 @@ export default function Home() {
             </div>
           </div>
 
-          <div className={"py-10 max-desktop:py-8 max-desktop:px-0 flex flex-col space-y-4"}>
+          <div
+            className={
+              "py-10 max-desktop:py-8 max-desktop:px-0 flex flex-col space-y-4"
+            }
+          >
             <BorderText size={"sm"}>Featured In</BorderText>
-            <div className={"grid gap-x-6 gap-y-4 grid-cols-6 max-desktop:gap-x-4 max-desktop:grid-cols-4 max-tablet:grid-cols-2"}>
-              {["", "", "", "", "", "", "", "", "", "", ""].map((x, i) => (
-                <Image
-                  key={`featured-${i + 1}`}
-                  src={`/images/featured-${i + 1}.png`}
-                  alt={`featured-${i + 1}`}
-                  width={188}
-                  height={64}
-                />
+            <div
+              className={
+                "grid gap-x-6 gap-y-4 grid-cols-6 max-desktop:gap-x-4 max-desktop:grid-cols-4 max-tablet:grid-cols-2"
+              }
+            >
+              {FEATURES.map((x, i) => (
+                <a key={`featured-${i + 1}`} target={"_blank"} href={x}>
+                  <Image
+                    src={`/images/featured-${i + 1}.png`}
+                    alt={`featured-${i + 1}`}
+                    width={188}
+                    height={64}
+                  />
+                </a>
               ))}
             </div>
           </div>
