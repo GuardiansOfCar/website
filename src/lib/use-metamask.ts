@@ -38,9 +38,9 @@ export function useMetaMask() {
   const handleConnect = useCallback(async () => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     if (isMobile) {
-      return window.open(
-        "https://metamask.app.link/dapp/guardiansofthecar.com",
-      );
+      //return window.open(
+      //        "https://metamask.app.link/dapp/guardiansofthecar.com",
+      ///    );
       return alert(
         "If you are using a mobile device, please access it through the metamask app.",
       );
