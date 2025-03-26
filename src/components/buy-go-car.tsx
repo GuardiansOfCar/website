@@ -22,6 +22,7 @@ import { useTrustWallet } from "@/lib/use-trust-wallet";
 import { useRouter } from "@/i18n/routing";
 import { useWalletConnect } from "@/lib/use-wallet-connect";
 import useSWR, { useSWRConfig } from "swr";
+import { useWalletConnectorStore } from "@/lib/use-wallet-connector-store";
 
 dayjs.extend(duration);
 
@@ -81,8 +82,10 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
     wallet.setNetwork(net);
   };
 
+  const walletConnectorStore = useWalletConnectorStore();
+
   const handleCreateWalletClick = () => {
-    walletManageRef.current.openCreate();
+    walletConnectorStore.setCreate(true);
   };
 
   const meta = useMetaMask();
@@ -156,7 +159,7 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
   };
 
   const handleCollectWalletClick = () => {
-    walletManageRef.current.openConnect();
+    walletConnectorStore.setConnect(true);
   };
 
   useEffect(() => {
@@ -187,7 +190,6 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
       });
   }, []);
 
-  const walletManageRef = useRef<any>(null);
   const referral = form.watch("referral");
 
   const handleMaxClick = async () => {
@@ -196,8 +198,6 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
 
   return (
     <>
-      <WalletManagePopup ref={walletManageRef} />
-
       <div
         className={
           "flex border-4 border-black flex-col text-neutral-0 bg-[#EEF6FC] relative"

@@ -20,7 +20,7 @@ import { EthersAdapter } from "@reown/appkit-adapter-ethers";
 import { useWalletStore } from "@/lib/use-wallet-store";
 import useSWR from "swr";
 import { useTranslations } from "next-intl";
-import { ActionPopup } from "@/components/action-popup";
+import {WalletManagePopup} from "@/components/wallet-manage-popup";
 
 const metadata = {
   name: "Guardians of the car",
@@ -48,7 +48,7 @@ export default function LocaleProvider({ children }: { children: ReactNode }) {
       {children}
       <Updater />
       <OtpPopup />
-      <SubmitAddressPopup />
+      <WalletManagePopup />
     </>
   );
 }
@@ -72,71 +72,6 @@ export const Updater = () => {
   );
 
   return null;
-};
-
-export const SubmitAddressPopup = () => {
-  const [open, setOpen] = useState(false);
-
-  const wallet = useWallet();
-
-  const checkOpening = async () => {
-    const res = await fetch(
-      `${API_BASE_URL}/v1/stakings/status/me/${wallet.id}`,
-      {
-        headers: { "Content-Type": "application/json" },
-        method: "GET",
-      },
-    );
-
-    const data = await res.json();
-
-    if (parseFloat(data.totalBalance) > 0) {
-      setOpen(true);
-    }
-
-    setOpen(true);
-  };
-
-  useEffect(() => {
-    if (!wallet.id || open || wallet.solanaAddress) return;
-
-    // Only check once a time
-    checkOpening();
-  }, [wallet.id, open, wallet.solanaAddress]);
-
-  const handleSubmit = async (solanaAddress: string) => {
-    const res = await fetch(`${API_BASE_URL}/v1/wallets/update`, {
-      headers: { "Content-Type": "application/json" },
-      method: "PUT",
-      body: JSON.stringify({
-        icoWalletAddress: wallet.icoAddress,
-        solanaAddress,
-      }),
-    });
-
-    if (res.status !== 200) {
-      return alert("Failed to update Solana Address");
-    }
-
-    setOpen(false);
-  };
-
-  if (!open) return null;
-
-  return (
-    <ActionPopup
-      onSubmit={handleSubmit}
-      onClose={() => {
-        if (
-          confirm(
-            "Solana address update has not been completed. If you want to update, please visit the site again.",
-          )
-        ) {
-          setOpen(false);
-        }
-      }}
-    />
-  );
 };
 
 export const OtpPopup = () => {

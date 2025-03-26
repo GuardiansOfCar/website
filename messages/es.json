@@ -170,7 +170,8 @@
     "otp": {
         "t1": "¡Gracias por convertirte en un Guardian!\nPor razones de seguridad, por favor crea un OTP numérico de 6 dígitos.",
         "t2": "Este OTP se utilizará para el staking y las reclamaciones de tokens.",
-        "t3": "Si lo pierdes, por favor contacta con gocar@guardiansofthecar.com."
+        "t3": "Si lo pierdes, por favor contacta con gocar@guardiansofthecar.com.",
+        "t4": ""
     },
     "submit": {
         "t1": "ENVIAR DIRECCIÓN DE SOLANA WALLET",
@@ -180,5 +181,9 @@
         "t5": "• Si ingresó a través de una red ETH o BNB, debe ingresar su dirección de red SOL para reclamar sus $GOCAR.",
         "t6": "• Por favor, Cree una dirección SOL, utilizando una wallet que soporte la red SOL, tale como una Trust wallet, e ingrésela.",
         "t7": "Introduzca la dirección de Solana"
+    },
+    "common": {
+        "submit": "",
+        "cancel": ""
     }
 }

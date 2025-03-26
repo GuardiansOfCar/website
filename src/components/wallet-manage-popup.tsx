@@ -3,14 +3,18 @@
 import { Popup } from "@/components/popup";
 import { Wallet } from "@/components/wallet";
 import { Button } from "@/components/button";
-import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useWallet } from "@/lib/use-wallet";
+import clsx from "clsx";
+import Image from "next/image";
+import { Network } from "@/lib/use-wallet-store";
+import { useWalletConnectorStore } from "@/lib/use-wallet-connector-store";
 
-export const WalletManagePopup = forwardRef((props, ref) => {
-  const [create, setCreate] = useState(false);
-  const [connect, setConnect] = useState(false);
+export const WalletManagePopup = () => {
   const t = useTranslations();
+
+  const { connect, create, setCreate, setConnect } = useWalletConnectorStore();
 
   const wallet = useWallet();
 
@@ -22,14 +26,9 @@ export const WalletManagePopup = forwardRef((props, ref) => {
     }
   }, [wallet.address, connect]);
 
-  useImperativeHandle(
-    ref,
-    () => ({
-      openConnect: () => setConnect(true),
-      openCreate: () => setCreate(true),
-    }),
-    [],
-  );
+  const handleCoinClick = (net: Network) => () => {
+    wallet.setNetwork(net);
+  };
 
   return (
     <>
@@ -43,6 +42,43 @@ export const WalletManagePopup = forwardRef((props, ref) => {
           <div className={"flex flex-col space-y-3"}>
             <p className={"text-center"}>{t("home.presaleJoin3")}</p>
             <p className={"text-center"}>{t("home.presaleJoin4")}</p>
+
+            <div
+              className={"flex items-center space-x-2 self-stretch pt-5 pb-2"}
+            >
+              {[
+                ["ETH", "eth.png", "ETH"],
+                ["SOL", "sol.png", "SOL"],
+                ["BNB", "bnb.png", "BNB"],
+              ].map((item) => (
+                <button
+                  key={item[2]}
+                  onClick={handleCoinClick(item[2] as any)}
+                  className={clsx(
+                    "flex items-center px-[30px] py-2 space-x-2 max-tablet:px-2 flex-1",
+                    wallet.network === item[2]
+                      ? "bg-neutral-0"
+                      : "bg-neutral-80",
+                  )}
+                >
+                  <Image
+                    src={`/images/${item[1]}`}
+                    alt={item[2]}
+                    width={24}
+                    height={24}
+                  />
+                  <span
+                    className={clsx(
+                      "text-body-3",
+                      wallet.network === item[2] && "text-neutral-100",
+                    )}
+                  >
+                    {item[0]}
+                  </span>
+                </button>
+              ))}
+            </div>
+
             <Wallet type={"connect"} />
             <Wallet type={"phantom"} />
             <Wallet type={"trust"} />
@@ -87,4 +123,4 @@ export const WalletManagePopup = forwardRef((props, ref) => {
       )}
     </>
   );
-});
+};

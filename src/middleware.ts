@@ -22,7 +22,7 @@ export default async function middleware(req: NextRequest) {
     }
   }
 
-  if (RegExp(/^\/(en|ko|tr|ar)(\/.*)?$|^\/$/).test(path)) {
+  if (!/^\/(en|ko|tr|ar|de|es|fr|id|it|ja|nl|pt|ru|th|vi|zh|zh-CN|zh-TW)(\/.*)?$|^\/$/.test(path)) {
     return intlMiddleware(req);
   }
 

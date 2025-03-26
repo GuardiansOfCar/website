@@ -170,7 +170,8 @@
     "otp": {
         "t1": "GUARDIAN’A KATILdığınız için teşekkür ederiz!\nGüvenlik amacıyla lütfen 6 haneli bir sayısal OTP oluşturun.",
         "t2": "Bu OTP, Stakeleme ve token talepleri için kullanılacaktır.",
-        "t3": "Eğer kaybederseniz, lütfen gocar@guardiansofthecar.com ile iletişime geçin."
+        "t3": "Eğer kaybederseniz, lütfen gocar@guardiansofthecar.com ile iletişime geçin.",
+        "t4": ""
     },
     "submit": {
         "t1": "SOLANA cüzdan adresinizi gönderin",
@@ -180,5 +181,9 @@
         "t5": "• ETH veya BNB ağı üzerinden katıldıysanız, $GOCAR talebi için SOL ağına ait adresinizi girmeniz gerekmektedir.",
         "t6": "• Trust wallet gibi SOL ağını destekleyen bir cüzdan aracılığıyla bir SOL adresi oluşturduktan sonra giriniz.",
         "t7": "Solana adresini girin"
+    },
+    "common": {
+        "submit": "",
+        "cancel": ""
     }
 }

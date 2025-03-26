@@ -5,12 +5,13 @@ import clsx from "clsx";
 import NextLink from "next/link";
 import { Link, usePathname, useRouter } from "@/i18n/routing";
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useLockBodyScroll } from "@uidotdev/usehooks";
 import { Button } from "@/components/button";
 import { useWallet } from "@/lib/use-wallet";
 import { shortenAddress } from "@/lib/utils";
 import { AUDIT_LINK } from "@/lib/constants";
+import { useWalletConnectorStore } from "@/lib/use-wallet-connector-store";
 
 export const Nav = () => {
   const t = useTranslations();
@@ -26,13 +27,12 @@ export const Nav = () => {
 
   const chapterFocused = chapterOpened || pathname.startsWith("/chapters");
 
-  const router = useRouter();
+  const walletManageRef = useRef<any>(null);
   const handleBuyGocarClick = () => {
     if (wallet.address) {
       wallet.disconnect();
     } else {
-      alert(t("home.cw"));
-      router.push("/");
+      walletConnectorStore.setConnect(true);
     }
   };
 
@@ -209,12 +209,15 @@ export const Nav = () => {
         size={"sm"}
         className={"max-desktop:col-span-2"}
       >
-        {wallet.address ? shortenAddress(wallet.address) : t("home.buyToken1")}
+        {wallet.address
+          ? shortenAddress(wallet.address)
+          : t("home.presaleJoin2")}
       </Button>
     </div>
   );
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const walletConnectorStore = useWalletConnectorStore();
 
   const handleMenuClick = () => {
     setMenuOpen((p) => !p);

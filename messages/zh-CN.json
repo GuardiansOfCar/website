@@ -170,7 +170,8 @@
     "otp": {
         "t1": "感谢您成为守护者！\n为了安全起见，请创建一个6位数字的OTP。",
         "t2": "此OTP将用于质押和代币领取。",
-        "t3": "如果丢失，请联系 gocar@guardiansofthecar.com。"
+        "t3": "如果丢失，请联系 gocar@guardiansofthecar.com。",
+        "t4": ""
     },
     "submit": {
         "t1": "提交 SOLANA 钱包地址",
@@ -180,5 +181,9 @@
         "t5": "• 如果您是通过 ETH、BNB 网络参与的，为了领取 $GOCAR，需输入 SOL 网络地址。",
         "t6": "• 请通过支持SOL 网络的钱包（例如 Trust wallet ）创建 SOL 地址后输入。",
         "t7": "请输入 Solana 地址"
+    },
+    "common": {
+        "submit": "",
+        "cancel": ""
     }
 }
