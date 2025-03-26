@@ -20,8 +20,10 @@ export default async function middleware(req: NextRequest) {
         return NextResponse.redirect(new URL("/admin/login", req.nextUrl));
       }
     }
+    return NextResponse.next();
   }
 
+  return intlMiddleware(req);
   if (!/^\/(en|ko|tr|ar|de|es|fr|id|it|ja|nl|pt|ru|th|vi|zh|zh-CN|zh-TW)(\/.*)?$|^\/$/.test(path)) {
     return intlMiddleware(req);
   }

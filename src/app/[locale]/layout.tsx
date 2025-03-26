@@ -8,7 +8,6 @@ import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { Banner } from "@/components/banner";
 import LocaleProvider from "@/app/[locale]/provider";
-import Image from "next/image";
 
 const grandstander = localFont({
   src: "../../../public/fonts/Grandstander.ttf",
