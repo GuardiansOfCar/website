@@ -6,7 +6,6 @@ import { useTrustWallet } from "@/lib/use-trust-wallet";
 import { useWalletConnect } from "@/lib/use-wallet-connect";
 import { useWallet } from "@/lib/use-wallet";
 import { wrapWindow } from "@/lib/constants";
-import { useRef } from "react";
 
 export const Wallet = ({
   type,
@@ -20,10 +19,6 @@ export const Wallet = ({
   // const phantom = usePhantom();
   const trustWallet = useTrustWallet();
   const walletConnect = useWalletConnect();
-
-  const isMobile = useRef(
-    /iPhone|iPad|iPod|Android/i.test(navigator.userAgent),
-  ).current;
 
   const handleClick = () => {
     if (type === "metamask") {
@@ -55,7 +50,6 @@ export const Wallet = ({
 
   if (wallet.network === "SOL" && type === "metamask") return null;
   if (type === "phantom") return null;
-  if (isMobile && type == "trust") return null;
 
   return (
     <button

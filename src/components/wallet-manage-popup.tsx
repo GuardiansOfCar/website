@@ -3,7 +3,7 @@
 import { Popup } from "@/components/popup";
 import { Wallet } from "@/components/wallet";
 import { Button } from "@/components/button";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { useWallet } from "@/lib/use-wallet";
 import clsx from "clsx";
@@ -29,6 +29,10 @@ export const WalletManagePopup = () => {
   const handleCoinClick = (net: Network) => () => {
     wallet.setNetwork(net);
   };
+
+  const isMobile = useRef(
+    /iPhone|iPad|iPod|Android/i.test(navigator.userAgent),
+  ).current;
 
   return (
     <>
@@ -80,8 +84,8 @@ export const WalletManagePopup = () => {
             </div>
 
             <Wallet type={"connect"} />
-            <Wallet type={"phantom"} />
-            <Wallet type={"trust"} />
+            {!isMobile && <Wallet type={"phantom"} />}
+            {!isMobile && <Wallet type={"trust"} />}
             <Wallet type={"metamask"} />
             <Button
               className={"!bg-neutral-40"}
@@ -104,20 +108,40 @@ export const WalletManagePopup = () => {
           title={t("home.noWallet2")}
         >
           <div className={"flex flex-col space-y-3"}>
-            <p className={"text-body-3 text-center"}>
-              {t("home.noWallet3")}
-              <br />
-              <br />
-              {t("home.noWallet4")}
-              <br />
-              {t("home.noWallet5")}
-              <br />
-              {t("home.noWallet6")}
-            </p>
-            <Wallet create type={"connect"} />
-            <Wallet create type={"phantom"} />
-            <Wallet create type={"trust"} />
-            <Wallet create type={"metamask"} />
+            {isMobile && (
+              <p className={"text-body-3 text-center"}>
+                {t("home.noWallet3")}
+                <br />
+                <br />
+                {t("home.noWallet4")}
+                <br />
+                {t("home.noWallet5")}
+                <br />
+                {t("home.noWallet6")}
+              </p>
+            )}
+            {!isMobile && (
+              <p className={"text-body-3 text-center"}>
+                Create a wallet and purchase GOCAR tokens.
+              </p>
+            )}
+            {isMobile && <Wallet create type={"trust"} />}
+            {!isMobile && (
+              <>
+                <Wallet create type={"connect"} />
+                <Wallet create type={"phantom"} />
+                <Wallet create type={"trust"} />
+                <Wallet create type={"metamask"} />
+              </>
+            )}
+            <Button
+              className={"!bg-neutral-40"}
+              onClick={() => {
+                setCreate(false);
+              }}
+            >
+              CLOSE
+            </Button>
           </div>
         </Popup>
       )}

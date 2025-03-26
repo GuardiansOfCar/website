@@ -93,9 +93,7 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
   const trustwallet = useTrustWallet();
   const walletConnect = useWalletConnect();
   const [rewaredIds, setRewaredIds] = useState<number[]>([]);
-  const router = useRouter();
 
-  const setWalletInfo = useWalletStore((s) => s.setInfo);
   const handlePurchaseClick = async () => {
     if (parseFloat(amount) <= 0) {
       return alert("Amount must be greater than zero.");
@@ -193,7 +191,7 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
   const referral = form.watch("referral");
 
   const handleMaxClick = async () => {
-    form.setValue("amount", String(await wallet.getAmount()));
+    form.setValue("amount", String(Math.floor(await wallet.getAmount())));
   };
 
   return (
@@ -439,7 +437,7 @@ const ICOState = ({}: {}) => {
     },
   );
 
-  const a = (data?.accum / data?.total) * 100;
+  const a = Math.floor((data?.accum / data?.total) * 100);
 
   return (
     <>
@@ -453,7 +451,7 @@ const ICOState = ({}: {}) => {
         <div
           className={"h-full  bg-primary"}
           style={{
-            width: `${a}%`,
+            width: `${Math.min(a, 100)}%`,
           }}
         />
       </div>
@@ -486,7 +484,7 @@ const MyICOInfo = () => {
     <div className={"flex flex-col space-y-1 items-center"}>
       <div className={"flex items-center space-x-2"}>
         <p className={"text-label-1"}>
-          {t("home.presalePurchase7")} = {data?.totalBalance ?? 0}
+          {t("home.presalePurchase7")} = {(data?.totalBalance ?? 0.0).toFixed(4)}
         </p>
         <Image
           src={"/images/tooltip.png"}
@@ -498,7 +496,7 @@ const MyICOInfo = () => {
 
       <div className={"flex items-center space-x-2"}>
         <p className={"text-label-1"}>
-          {t("home.presalePurchase8")} = {data?.availableBalance ?? 0}
+          {t("home.presalePurchase8")} = {(data?.availableBalance ?? 0).toFixed(4)}
         </p>
         <Image
           src={"/images/tooltip.png"}
