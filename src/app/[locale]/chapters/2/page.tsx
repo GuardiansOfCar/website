@@ -16,7 +16,7 @@ export default function ChaptersTwoPage() {
         absoluteComponent={
           <div
             className={
-              "w-[200px] h-[400px] absolute -bottom-[160] right-0 z-[4] max-laptop:w-[100px] max-laptop:h-[200px] max-laptop:-bottom-[80]"
+              "w-[200px] h-[400px] absolute -bottom-[160px] right-0 z-[4] max-laptop:w-[100px] max-laptop:h-[200px] max-laptop:-bottom-[80px]"
             }
           >
             <Image src={"/images/chapter2-2.png"} alt={"c1"} fill className={"object-contain"} />
