@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useMetaMask } from "@/lib/use-metamask";
-import { usePhantom } from "@/lib/use-phantom";
 import { useTrustWallet } from "@/lib/use-trust-wallet";
 import { useWalletConnect } from "@/lib/use-wallet-connect";
 import { useWallet } from "@/lib/use-wallet";
@@ -54,11 +53,11 @@ export const Wallet = ({
   return (
     <button
       onClick={handleClick}
-      className={"border-neutral-0 border-4 h-[56px] flex"}
+      className={"border-neutral-0 border-4 h-[56px] flex relative"}
     >
       <div
         className={
-          "flex-1 flex items-center px-3 bg-primary border-r-neutral-0 border-r-4 "
+          "flex-1 flex items-center px-3 bg-primary border-r-neutral-0 border-r-4  w-full h-full"
         }
       >
         <p className={"text-title-1 text-left shadow-text text-neutral-100"}>

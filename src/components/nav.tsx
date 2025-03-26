@@ -253,7 +253,7 @@ export const Nav = () => {
         <div
           className={clsx(
             menuOpen ? "block" : "hidden",
-            "fixed top-[76px] right-0 left-0 bottom-0 z-[50] bg-[rgba(0,0,0,0.5)]",
+            "fixed top-[76px] right-0 left-0 bottom-0 z-[50] bg-[rgba(0,0,0,0.5)] pb-[100px]",
           )}
         >
           {menuOpen && <A />}

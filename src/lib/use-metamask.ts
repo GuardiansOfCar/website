@@ -36,6 +36,13 @@ export function useMetaMask() {
   }, [wallet.provider]);
 
   const handleConnect = useCallback(async () => {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      return alert(
+        "If you are using a mobile device, please access it through the metamask app.",
+      );
+    }
+
     if (provider === undefined) {
       return alert("Metamask not installed.");
     }

@@ -17,7 +17,14 @@ export function useTrustWallet() {
   const evmTx = useEvmTx(provider);
 
   const handleConnect = async () => {
-    if (provider === undefined) {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      return alert("Trust Wallet does not support direct connection from mobile devices. Please connect via Wallet Connect.");
+    }
+
+
+
+      if (provider === undefined) {
       return alert("Trust Wallet is not installed.");
     }
 
