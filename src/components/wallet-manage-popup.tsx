@@ -56,15 +56,7 @@ export const WalletManagePopup = () => {
               </>
             )}
 
-            {isMobile && (
-              <Image
-                className={"object-contain mx-auto"}
-                src={"/images/mta.png"}
-                alt={"mt"}
-                width={256}
-                height={102}
-              />
-            )}
+
             <div className={"flex items-center space-x-2 self-stretch pb-2"}>
               {[
                 ["ETH", "eth.png", "ETH"],
@@ -99,6 +91,15 @@ export const WalletManagePopup = () => {
               ))}
             </div>
 
+            {isMobile && (
+                <Image
+                    className={"object-contain mx-auto"}
+                    src={"/images/mta.png"}
+                    alt={"mt"}
+                    width={256}
+                    height={102}
+                />
+            )}
             <Wallet type={"connect"} />
             {!isMobile && <Wallet type={"phantom"} />}
             {!isMobile && <Wallet type={"trust"} />}
