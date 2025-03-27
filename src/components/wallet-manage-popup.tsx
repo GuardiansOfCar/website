@@ -49,12 +49,23 @@ export const WalletManagePopup = () => {
           title={t("home.presaleJoin2")}
         >
           <div className={"flex flex-col space-y-3"}>
-            <p className={"text-center"}>{t("home.presaleJoin3")}</p>
-            <p className={"text-center"}>{t("home.presaleJoin4")}</p>
+            {!isMobile && (
+              <>
+                <p className={"text-center"}>{t("home.presaleJoin3")}</p>
+                <p className={"text-center"}>{t("home.presaleJoin4")}</p>
+              </>
+            )}
 
-            <div
-              className={"flex items-center space-x-2 self-stretch pt-5 pb-2"}
-            >
+            {isMobile && (
+              <Image
+                className={"object-contain mx-auto"}
+                src={"/images/mta.png"}
+                alt={"mt"}
+                width={256}
+                height={102}
+              />
+            )}
+            <div className={"flex items-center space-x-2 self-stretch pb-2"}>
               {[
                 ["ETH", "eth.png", "ETH"],
                 ["SOL", "sol.png", "SOL"],
@@ -91,7 +102,7 @@ export const WalletManagePopup = () => {
             <Wallet type={"connect"} />
             {!isMobile && <Wallet type={"phantom"} />}
             {!isMobile && <Wallet type={"trust"} />}
-            <Wallet type={"metamask"} />
+            {!isMobile && <Wallet type={"metamask"} />}
             <Button
               className={"!bg-neutral-40"}
               onClick={() => {
