@@ -58,7 +58,7 @@ export const Wallet = ({
     >
       <div
         className={
-          "flex-1 flex items-center px-3 bg-primary border-r-neutral-0 border-r-4  w-full h-full"
+          "flex-1 flex items-center px-3 bg-primary border-r-neutral-0 border-r-4   h-full"
         }
       >
         <p className={"text-title-1 text-left shadow-text text-neutral-100"}>
@@ -73,7 +73,7 @@ export const Wallet = ({
         </p>
       </div>
 
-      <div className={"bg-white w-[52px] relative"}>
+      <div className={"bg-white w-[52px] h-full relative"}>
         <Image
           className={"object-cover"}
           src={

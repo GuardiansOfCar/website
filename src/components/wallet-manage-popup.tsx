@@ -3,7 +3,7 @@
 import { Popup } from "@/components/popup";
 import { Wallet } from "@/components/wallet";
 import { Button } from "@/components/button";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useWallet } from "@/lib/use-wallet";
 import clsx from "clsx";
@@ -30,9 +30,14 @@ export const WalletManagePopup = () => {
     wallet.setNetwork(net);
   };
 
-  const isMobile = useRef(
-    /iPhone|iPad|iPod|Android/i.test(navigator.userAgent),
-  ).current;
+  const [isMobile, setisMobile] = useState(false);
+  useEffect(() => {
+    setisMobile(
+      typeof window !== undefined
+        ? /iPhone|iPad|iPod|Android/i.test(window.navigator.userAgent)
+        : false,
+    );
+  }, []);
 
   return (
     <>
