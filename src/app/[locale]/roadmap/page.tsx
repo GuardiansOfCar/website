@@ -116,7 +116,7 @@ export default function RoadmapPage() {
                   />
                   <Image
                     className={"absolute z-10"}
-                    src={"/images/pepe.png"}
+                    src={"/images/gocar.png"}
                     alt={"t"}
                     width={34}
                     height={34}
