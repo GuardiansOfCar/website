@@ -5,7 +5,6 @@ import { API_BASE_URL, WALLET_CONNECT_PROJECT_ID } from "@/lib/constants";
 import { Popup } from "@/components/popup";
 import { Button } from "@/components/button";
 import clsx from "clsx";
-import { useOtpState } from "@/lib/use-otp-state";
 import { useForm } from "react-hook-form";
 import { useWallet } from "@/lib/use-wallet";
 import { useOtpStore } from "@/lib/use-otp-store";
@@ -20,7 +19,7 @@ import { EthersAdapter } from "@reown/appkit-adapter-ethers";
 import { useWalletStore } from "@/lib/use-wallet-store";
 import useSWR from "swr";
 import { useTranslations } from "next-intl";
-import {WalletManagePopup} from "@/components/wallet-manage-popup";
+import { WalletManagePopup } from "@/components/wallet-manage-popup";
 
 const metadata = {
   name: "Guardians of the car",
@@ -55,6 +54,7 @@ export default function LocaleProvider({ children }: { children: ReactNode }) {
 
 export const Updater = () => {
   const walletStore = useWalletStore();
+  const otpStore = useOtpStore();
 
   useSWR(
     walletStore.address && walletStore.network
@@ -66,6 +66,7 @@ export const Updater = () => {
       ).then((r) => r.json()),
     {
       onSuccess: (data) => {
+        otpStore.setState(data.isRegisteredOtp ? "registered" : "unregistered");
         walletStore.setInfo(data);
       },
     },
@@ -79,13 +80,13 @@ export const OtpPopup = () => {
 
   const wallet = useWallet();
 
+  const { setState, state } = useOtpStore();
+
   const handleOtpPopupClose = () => {
     if (state === "unregistered") return alert("Please register your OTP.");
     setOpen(false);
   };
 
-  const { setState } = useOtpStore();
-  const state = useOtpState();
   useEffect(() => {
     setOpen(state === "unregistered");
   }, [state]);
