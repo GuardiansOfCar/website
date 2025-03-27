@@ -57,9 +57,7 @@ export const Updater = () => {
   const otpStore = useOtpStore();
 
   useSWR(
-    walletStore.address && walletStore.network
-      ? ["walletsInfo", walletStore.address]
-      : null,
+    walletStore.address && walletStore.network ? ["walletsInfo"] : null,
     () =>
       fetch(
         `${API_BASE_URL}/v1/wallets/info?icoWalletAddress=${walletStore.address}&icoNetwork=${walletStore.network}`,

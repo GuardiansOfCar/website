@@ -147,9 +147,9 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
         throw new Error("Failed to server request.");
       }
 
+      mutate(["walletsInfo"]);
       mutate(["icosalesCumulativeStatus"]);
       mutate(["stakingsStatusMe"]);
-      mutate(["walletsInfo"]);
     } catch (error: unknown) {
       console.error(error);
       alert("Failed to sign transaction.");
