@@ -149,7 +149,7 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
 
       mutate(["icosalesCumulativeStatus"]);
       mutate(["stakingsStatusMe"]);
-      mutate("walletsInfo");
+      mutate(["walletsInfo"]);
     } catch (error: unknown) {
       console.error(error);
       alert("Failed to sign transaction.");
