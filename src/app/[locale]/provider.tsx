@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode } from "react";
 import { API_BASE_URL, WALLET_CONNECT_PROJECT_ID } from "@/lib/constants";
 import { Popup } from "@/components/popup";
 import { Button } from "@/components/button";
@@ -66,8 +66,12 @@ export const Updater = () => {
       ).then((r) => r.json()),
     {
       onSuccess: (data) => {
-        otpStore.setState(data.isRegisteredOtp ? "registered" : "unregistered");
-        walletStore.setInfo(data);
+        if (data.walletId) {
+          otpStore.setState(
+            data.isRegisteredOtp ? "registered" : "unregistered",
+          );
+          walletStore.setInfo(data);
+        }
       },
     },
   );
@@ -76,20 +80,13 @@ export const Updater = () => {
 };
 
 export const OtpPopup = () => {
-  const [open, setOpen] = useState(false);
-
   const wallet = useWallet();
-
   const { setState, state } = useOtpStore();
 
   const handleOtpPopupClose = () => {
-    if (state === "unregistered") return alert("Please register your OTP.");
-    setOpen(false);
+    if (state === "unregistered")
+      return alert("Please register your OTP code.");
   };
-
-  useEffect(() => {
-    setOpen(state === "unregistered");
-  }, [state]);
 
   const form = useForm<{
     code: string;
@@ -117,8 +114,8 @@ export const OtpPopup = () => {
 
   const t = useTranslations();
   const code = form.watch("code");
-  if (!open) return null;
-
+  if (state !== "unregistered") return null;
+  console.log(state);
   return (
     <Popup onClose={handleOtpPopupClose} title={t("otp.t4")}>
       <form onSubmit={form.handleSubmit(onSubmit)}>

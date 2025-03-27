@@ -19,12 +19,12 @@ export function useTrustWallet() {
   const handleConnect = async () => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     if (isMobile) {
-      return alert("Trust Wallet does not support direct connection from mobile devices. Please connect via Wallet Connect.");
+      return alert(
+        "Trust Wallet does not support direct connection from mobile devices. Please connect via Wallet Connect.",
+      );
     }
 
-
-
-      if (provider === undefined) {
+    if (provider === undefined) {
       return alert("Trust Wallet is not installed.");
     }
 
@@ -33,6 +33,7 @@ export function useTrustWallet() {
       const resp = await provider.solana.connect();
       address = resp.publicKey.toString();
     } else {
+      console.log(wallet.network,provider)
       await evmTx.switchNetwork(wallet.network);
       const accounts = (await provider.request({
         method: "eth_requestAccounts",
