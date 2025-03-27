@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useWallet } from "@/lib/use-wallet";
 import {
   useAccount,
@@ -20,29 +20,18 @@ import { parseEther } from "ethers";
 export function useMetaMask() {
   const wallet = useWallet();
 
-  const { address, isConnected } = useAccount();
-  const { connectors, connect, isPending } = useConnect();
-  const { switchChainAsync } = useSwitchChain();
-
-  const { disconnect } = useDisconnect();
-
-  const connectRequested = useRef(false);
-  const needUpdateAccount = useRef(false);
+  const { isConnected } = useAccount();
+  const { connectors, connectAsync } = useConnect();
+  const { switchChain } = useSwitchChain();
+  const { disconnectAsync } = useDisconnect();
 
   useEffect(() => {
-    if (isPending) {
-      needUpdateAccount.current = true;
+    if (isConnected && (wallet.network === "BNB" || wallet.network === "ETH")) {
+      switchChain({
+        chainId: wallet.network === "BNB" ? 56 : 1,
+      });
     }
-  }, [isPending]);
-
-  useEffect(() => {
-    if (address && isConnected) {
-      if (needUpdateAccount.current) {
-        needUpdateAccount.current = false;
-        wallet.set(address, "metamask");
-      }
-    }
-  }, [address, isConnected]);
+  }, [wallet.network, isConnected]);
 
   const wagmiConnect = async () => {
     const connector = connectors.find((x) => x.id === "metaMaskSDK");
@@ -50,25 +39,13 @@ export function useMetaMask() {
       return alert("Metamask not installed.");
     }
 
-    await switchChainAsync({
-      chainId: wallet.network === "BNB" ? 56 : 1,
-    });
-
     if (isConnected) {
-      disconnect();
-      connectRequested.current = true;
-    } else {
-      connect({ connector });
+      await disconnectAsync();
     }
-  };
 
-  useEffect(() => {
-    if (!isConnected && connectRequested.current) {
-      const connector = connectors.find((x) => x.id === "metaMaskSDK")!!;
-      connectRequested.current = false;
-      connect({ connector });
-    }
-  }, [isConnected]);
+    const { accounts } = await connectAsync({ connector });
+    wallet.set(accounts[0], "metamask");
+  };
 
   const { sendTransactionAsync } = useSendTransaction();
 
