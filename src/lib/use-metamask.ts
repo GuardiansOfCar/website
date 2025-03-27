@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useWallet } from "@/lib/use-wallet";
 import {
   useAccount,
+  useChainId,
   useConnect,
   useDisconnect,
   useSendTransaction,
@@ -24,14 +25,19 @@ export function useMetaMask() {
   const { connectors, connectAsync } = useConnect();
   const { switchChain } = useSwitchChain();
   const { disconnectAsync } = useDisconnect();
+  const chainId = useChainId();
 
   useEffect(() => {
-    if (isConnected && (wallet.network === "BNB" || wallet.network === "ETH")) {
+    if (wallet.address && wallet.network === "BNB" && chainId !== 56) {
       switchChain({
-        chainId: wallet.network === "BNB" ? 56 : 1,
+        chainId: 56,
+      });
+    } else if (wallet.address && wallet.network === "ETH" && chainId !== 1) {
+      switchChain({
+        chainId: 1,
       });
     }
-  }, [wallet.network, isConnected]);
+  }, [wallet.network, wallet.address, chainId]);
 
   const wagmiConnect = async () => {
     const connector = connectors.find((x) => x.id === "metaMaskSDK");
