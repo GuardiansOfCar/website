@@ -33,7 +33,7 @@ export function useTrustWallet() {
       const resp = await provider.solana.connect();
       address = resp.publicKey.toString();
     } else {
-      console.log(wallet.network,provider)
+      console.log(wallet.network, provider);
       await evmTx.switchNetwork(wallet.network);
       const accounts = (await provider.request({
         method: "eth_requestAccounts",
@@ -41,12 +41,7 @@ export function useTrustWallet() {
       address = accounts[0];
     }
 
-    wallet.set(
-      address,
-      "trustwallet",
-      undefined,
-      wallet.network === "SOL" ? provider?.solana : provider,
-    );
+    wallet.set(address, "trustwallet");
   };
 
   const solanaTx = useSolanaTx(provider?.solana);

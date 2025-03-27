@@ -37,7 +37,7 @@ export function usePhantom() {
       pb = provider.ethereum;
     }
 
-    wallet.set(address, "phantom", undefined, pb);
+    wallet.set(address, "phantom");
   };
 
   const solanaTx = useSolanaTx(provider?.solana);

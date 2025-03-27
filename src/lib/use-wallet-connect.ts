@@ -13,7 +13,6 @@ import { bsc, mainnet, solana } from "@reown/appkit/networks";
 import { appKit } from "@/app/[locale]/provider";
 import { useSolanaTx } from "@/lib/use-solana-tx";
 import { useEvmTx } from "@/lib/use-evm-tx";
-import { useWalletStore } from "@/lib/use-wallet-store";
 
 export function useWalletConnect() {
   const { open } = useAppKit();
@@ -35,7 +34,6 @@ export function useWalletConnect() {
           : wallet.network === "BNB"
             ? "BNB"
             : "ETH",
-        wallet.network === "SOL" ? solanaWalletProvider : walletProvider,
       );
     }
   }, [address, isConnected, wallet.provider]);

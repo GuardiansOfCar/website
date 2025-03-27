@@ -190,10 +190,6 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
 
   const referral = form.watch("referral");
 
-  const handleMaxClick = async () => {
-    form.setValue("amount", String(Math.floor(await wallet.getAmount())));
-  };
-
   return (
     <>
       <div
@@ -314,7 +310,7 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
                   height={24}
                 />
                 <p className={"text-right w-full max-w-full overflow-x-auto "}>
-                  {expectIcoGocar.toFixed(2)}
+                  {expectIcoGocar.toFixed(4)}
                 </p>
               </div>
             </div>
@@ -444,7 +440,7 @@ const ICOState = ({}: {}) => {
     <>
       <div>
         <p className={"text-label-1"}>
-          ${data?.accum?.toFixed(2)} / ${data?.total?.toFixed(2)}
+          ${data?.accum?.toFixed(4)} / ${data?.total?.toFixed(4)}
         </p>
       </div>
 
@@ -599,7 +595,7 @@ const RewardList = ({
       <div className={"text-body-2 self-start"}>
         TOTAL BONUS: {totalRate.toFixed(2)}%{" "}
         <span className={"text-primary-10"}>
-          (+{(expectIcoGocar * (totalRate / 100)).toFixed(2)} GOCAR)
+          (+{(expectIcoGocar * (totalRate / 100)).toFixed(4)} GOCAR)
         </span>
       </div>
     </>
