@@ -282,9 +282,10 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
                     {t("home.presalePurchase9", { 0: getCoinLabel("USDT") })}
                   </option>
                 </select>
-                <button onClick={handleMaxClick}>
-                  {t("home.presalePurchase10")}
-                </button>
+                {/*
+                                  <button onClick={handleMaxClick}>
+                                    {t("home.presalePurchase10")}
+                                  </button>*/}
               </div>
               <div className={"bg-[#CDE7E5] p-2 flex items-center space-x-2"}>
                 <Image
@@ -484,7 +485,8 @@ const MyICOInfo = () => {
     <div className={"flex flex-col space-y-1 items-center"}>
       <div className={"flex items-center space-x-2"}>
         <p className={"text-label-1"}>
-          {t("home.presalePurchase7")} = {(data?.totalBalance ?? 0.0).toFixed(4)}
+          {t("home.presalePurchase7")} ={" "}
+          {(data?.totalBalance ?? 0.0).toFixed(4)}
         </p>
         <Image
           src={"/images/tooltip.png"}
@@ -496,7 +498,8 @@ const MyICOInfo = () => {
 
       <div className={"flex items-center space-x-2"}>
         <p className={"text-label-1"}>
-          {t("home.presalePurchase8")} = {(data?.availableBalance ?? 0).toFixed(4)}
+          {t("home.presalePurchase8")} ={" "}
+          {(data?.availableBalance ?? 0).toFixed(4)}
         </p>
         <Image
           src={"/images/tooltip.png"}
