@@ -16,17 +16,7 @@ const MMSDK = new MetaMaskSDK({
 export function useMetaMask() {
   const wallet = useWallet();
 
-  const [provider, setProvider] = useState<SDKProvider | null | undefined>(
-    null,
-  );
-
-  useEffect(() => {
-    const isMobile =
-      typeof window !== undefined
-        ? /iPhone|iPad|iPod|Android/i.test(window.navigator.userAgent)
-        : false;
-    setProvider(isMobile ? MMSDK.getMobileProvider() : MMSDK.getProvider());
-  }, []);
+  const provider =  MMSDK.getProvider()
 
   const evmTx = useEvmTx(provider);
 
