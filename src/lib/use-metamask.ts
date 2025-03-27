@@ -1,10 +1,10 @@
 "use client";
 
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useWallet } from "@/lib/use-wallet";
 import { useEvmTx } from "@/lib/use-evm-tx";
 
-import { MetaMaskSDK } from "@metamask/sdk";
+import { MetaMaskSDK, SDKProvider } from "@metamask/sdk";
 
 const MMSDK = new MetaMaskSDK({
   dappMetadata: {
@@ -15,11 +15,23 @@ const MMSDK = new MetaMaskSDK({
 
 export function useMetaMask() {
   const wallet = useWallet();
-  const provider = MMSDK.getProvider();
+
+  const [provider, setProvider] = useState<SDKProvider | null | undefined>(
+    null,
+  );
+
+  useEffect(() => {
+    const isMobile =
+      typeof window !== undefined
+        ? /iPhone|iPad|iPod|Android/i.test(window.navigator.userAgent)
+        : false;
+    setProvider(isMobile ? MMSDK.getMobileProvider() : MMSDK.getProvider());
+  }, []);
+
   const evmTx = useEvmTx(provider);
 
   useEffect(() => {
-    if (wallet.provider !== "metamask") return;
+    if (wallet.provider !== "metamask" || !provider) return;
 
     function handleAccountsChanged(accounts: string[]) {
       wallet.set(accounts[0], "metamask");
@@ -33,31 +45,21 @@ export function useMetaMask() {
         handleAccountsChanged,
       );
     };
-  }, [wallet.provider]);
+  }, [wallet.provider, provider]);
 
-  const handleConnect = useCallback(async () => {
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    if (isMobile) {
-      //return window.open(
-      //        "https://metamask.app.link/dapp/guardiansofthecar.com",
-      ///    );
-      return alert(
-        "If you are using a mobile device, please access it through the metamask app.",
-      );
-    }
-
+  const handleConnect = async () => {
     if (provider === undefined) {
       return alert("Metamask not installed.");
     }
 
     await evmTx.switchNetwork(wallet.network);
 
-    const accounts = (await provider.request({
+    const accounts = (await provider!!.request({
       method: "eth_requestAccounts",
     })) as string[];
 
     wallet.set(accounts[0], "metamask", undefined, provider);
-  }, []);
+  };
 
   const generateTx = async (eth: number) => {
     return await evmTx.generateSignedTransaction(eth);

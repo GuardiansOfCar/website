@@ -102,7 +102,7 @@ export const WalletManagePopup = () => {
             <Wallet type={"connect"} />
             {!isMobile && <Wallet type={"phantom"} />}
             {!isMobile && <Wallet type={"trust"} />}
-            {!isMobile && <Wallet type={"metamask"} />}
+            <Wallet type={"metamask"} />
             <Button
               className={"!bg-neutral-40"}
               onClick={() => {
