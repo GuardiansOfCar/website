@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useWallet } from "@/lib/use-wallet";
 import {
   useAccount,
@@ -43,7 +43,10 @@ export function useMetaMask() {
     }
   }, [wallet.network, wallet.address, chainId]);
 
+  const isConneting = useRef(false);
   const wagmiConnect = async () => {
+    if (isConneting.current) return;
+    isConneting.current = true;
     if (isConnected) {
       await disconnectAsync();
     }
@@ -52,6 +55,7 @@ export function useMetaMask() {
 
     const { accounts } = await connectAsync({ connector });
     wallet.set(accounts[0], "metamask");
+    isConneting.current = false;
   };
 
   const { sendTransactionAsync } = useSendTransaction();
