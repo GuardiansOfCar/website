@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import clsx from "clsx";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Checkbox } from "@/components/checkbox";
 import { Button } from "@/components/button";
 import { useWallet } from "@/lib/use-wallet";
@@ -14,12 +14,10 @@ import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import { useSearchParams } from "next/navigation";
 import { getCoinLabel, getReferral } from "@/lib/utils";
-import { WalletManagePopup } from "@/components/wallet-manage-popup";
-import { Coin, Network, useWalletStore } from "@/lib/use-wallet-store";
+import { Coin, Network } from "@/lib/use-wallet-store";
 import { useMetaMask } from "@/lib/use-metamask";
 import { usePhantom } from "@/lib/use-phantom";
 import { useTrustWallet } from "@/lib/use-trust-wallet";
-import { useRouter } from "@/i18n/routing";
 import { useWalletConnect } from "@/lib/use-wallet-connect";
 import useSWR, { useSWRConfig } from "swr";
 import { useWalletConnectorStore } from "@/lib/use-wallet-connector-store";
@@ -98,31 +96,8 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
     if (parseFloat(amount) <= 0) {
       return alert("Amount must be greater than zero.");
     }
-    let tx: string = "";
+    // 1. Submit request payload first to server for batch checking.
     try {
-      switch (wallet.provider) {
-        case "metamask":
-          tx = await meta.generateTx(parseFloat(amount));
-          break;
-        case "phantom":
-          if (wallet.network === "BNB")
-            return alert(
-              `Unsupport ${wallet.network} network for this wallet.`,
-            );
-
-          tx = await phantom.generateTx(parseFloat(amount));
-          break;
-        case "trustwallet":
-          tx = await trustwallet.generateTx(parseFloat(amount));
-          break;
-
-        case "walletconnect":
-          tx = await walletConnect.generateTx(parseFloat(amount));
-          break;
-      }
-
-      if (!tx) throw new Error("no tx");
-
       const res = await fetch(`${API_BASE_URL}/v1/icosales/participate`, {
         method: "POST",
         headers: {
@@ -138,7 +113,6 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
           ico_type: "PUBLIC",
           lock_release_date: "",
           referral_code: referral,
-          txid: tx,
           bonus_reward_ids: rewaredIds,
         }),
       });
@@ -151,8 +125,32 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
       mutate(["icosalesCumulativeStatus"]);
       mutate(["stakingsStatusMe"]);
     } catch (error: unknown) {
-      console.error(error);
-      alert("Failed to sign transaction.");
+      console.error("Failed to participate ico sales.", error);
+      return alert("Failed to sign transaction.");
+    }
+
+    // 2. And request generate transaction
+    try {
+      switch (wallet.provider) {
+        case "metamask":
+          await meta.generateTx(parseFloat(amount));
+          break;
+        case "phantom":
+          if (wallet.network === "BNB") {
+            throw new Error("Unsupported bsc network for phantom wallet.");
+          }
+          await phantom.generateTx(parseFloat(amount));
+          break;
+        case "trustwallet":
+          await trustwallet.generateTx(parseFloat(amount));
+          break;
+
+        case "walletconnect":
+          await walletConnect.generateTx(parseFloat(amount));
+          break;
+      }
+    } catch (error: unknown) {
+      console.error("Failed to sign ico purchase transaction.", error);
     }
   };
 
