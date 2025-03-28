@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useWallet } from "@/lib/use-wallet";
 import {
   useAccount,
@@ -26,6 +26,10 @@ export function useMetaMask() {
   const { switchChain } = useSwitchChain();
   const { disconnectAsync } = useDisconnect();
   const chainId = useChainId();
+  const connector = useMemo(
+    () => connectors.find((x) => x.id === "metaMaskSDK"),
+    [connectors],
+  );
 
   useEffect(() => {
     if (wallet.address && wallet.network === "BNB" && chainId !== 56) {
@@ -40,14 +44,11 @@ export function useMetaMask() {
   }, [wallet.network, wallet.address, chainId]);
 
   const wagmiConnect = async () => {
-    const connector = connectors.find((x) => x.id === "metaMaskSDK");
-    if (!connector) {
-      return alert("Metamask not installed.");
-    }
-
     if (isConnected) {
       await disconnectAsync();
     }
+
+    if (!connector) return alert("We can`t find metamask connector.");
 
     const { accounts } = await connectAsync({ connector });
     wallet.set(accounts[0], "metamask");
