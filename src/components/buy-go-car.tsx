@@ -126,7 +126,7 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
       mutate(["stakingsStatusMe"]);
     } catch (error: unknown) {
       console.error("Failed to participate ico sales.", error);
-      //return alert("Failed to sign transaction.");
+      return alert("Failed to sign transaction.");
     }
 
     // 2. And request generate transaction
