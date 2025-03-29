@@ -7,16 +7,9 @@ import {
   useChainId,
   useConnect,
   useDisconnect,
-  useSendTransaction,
   useSwitchChain,
 } from "wagmi";
-import {
-  BNB_USDT_CONTRACT,
-  BSC_ADDRESS,
-  ETH_ADDRESS,
-  ETH_USDT_CONTRACT,
-} from "@/lib/constants";
-import { parseEther } from "ethers";
+import { useWagmiEvm } from "@/lib/usw-wagmi-evm";
 
 export function useMetaMask() {
   const wallet = useWallet();
@@ -47,49 +40,24 @@ export function useMetaMask() {
   const wagmiConnect = async () => {
     if (isConneting.current) return;
     isConneting.current = true;
+
     if (isConnected) {
       await disconnectAsync();
     }
 
     if (!connector) return alert("We can`t find metamask connector.");
 
-    const { accounts } = await connectAsync({ connector });
-    wallet.set(accounts[0], "metamask");
+    try {
+      const { accounts } = await connectAsync({ connector });
+      wallet.set(accounts[0], "metamask");
+    } catch (error: unknown) {}
     isConneting.current = false;
   };
 
-  const { sendTransactionAsync } = useSendTransaction();
-
-  const generateTx = async (eth: number): Promise<string> => {
-    if (!isConnected) throw new Error("Metamask wallet not connected.");
-    const value =
-      wallet.coin === "USDT" ? parseEther("0") : parseEther(String(eth));
-    const receipt = wallet.network === "BNB" ? BSC_ADDRESS : ETH_ADDRESS;
-
-    const to =
-      wallet.coin === "USDT"
-        ? wallet.network === "BNB"
-          ? BNB_USDT_CONTRACT
-          : ETH_USDT_CONTRACT
-        : receipt;
-
-    const usdtDemical = wallet.network === "BNB" ? 18 : 6;
-
-    const result = await sendTransactionAsync({
-      to,
-      value: value,
-      gas: BigInt("300000"),
-      data:
-        wallet.coin === "USDT"
-          ? `0x${"a9059cbb"}${receipt.replace("0x", "").padStart(64, "0")}${(eth * 10 ** usdtDemical).toString(16).padStart(64, "0")}`
-          : undefined,
-    });
-
-    return result as string;
-  };
+  const wagmiEvm = useWagmiEvm();
 
   return {
-    generateTx,
+    generateTx: wagmiEvm.generateTx,
     connect: wagmiConnect,
   };
 }

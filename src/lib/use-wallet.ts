@@ -7,14 +7,9 @@ export function useWallet() {
   const { disconnect } = useDisconnect();
 
   return {
-    set: (address: string, provider: Provider, network?: Network) => {
-      if (!address) return alert("You don't have wallet to set.");
-
+    set: (address: string, provider: Provider) => {
       walletStore.setAddress(address);
       walletStore.setProvider(provider);
-      if (network !== undefined) {
-        walletStore.setNetwork(network);
-      }
     },
     address: walletStore.address,
     id: walletStore.info?.walletId,

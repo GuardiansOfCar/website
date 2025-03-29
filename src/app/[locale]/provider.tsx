@@ -8,21 +8,19 @@ import clsx from "clsx";
 import { useForm } from "react-hook-form";
 import { useWallet } from "@/lib/use-wallet";
 import { useOtpStore } from "@/lib/use-otp-store";
-import { solana, mainnet, bsc } from "@reown/appkit/networks";
-import {
-  PhantomWalletAdapter,
-  TrustWalletAdapter,
-} from "@solana/wallet-adapter-wallets";
+import { solana, mainnet, AppKitNetwork, bsc } from "@reown/appkit/networks";
 import { SolanaAdapter } from "@reown/appkit-adapter-solana/react";
 import { createAppKit } from "@reown/appkit/react";
-import { EthersAdapter } from "@reown/appkit-adapter-ethers";
 import { useWalletStore } from "@/lib/use-wallet-store";
 import useSWR from "swr";
 import { useTranslations } from "next-intl";
 import { WalletManagePopup } from "@/components/wallet-manage-popup";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { wagmiConfig } from "@/lib/wagmi";
-import { WagmiProvider } from "wagmi";
+import { http, WagmiProvider } from "wagmi";
+import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
+import { metaMask, walletConnect } from "wagmi/connectors";
+
+const networks: [AppKitNetwork, ...AppKitNetwork[]] = [mainnet, bsc, solana];
 
 const metadata = {
   name: "Guardians of the car",
@@ -31,15 +29,16 @@ const metadata = {
   icons: [""],
 };
 
-// 4. Create a AppKit instance
-export const appKit = createAppKit({
-  adapters: [
-    new EthersAdapter(),
-    new SolanaAdapter({
-      wallets: [new PhantomWalletAdapter(), new TrustWalletAdapter()],
-    }),
-  ],
-  networks: [mainnet, solana, bsc],
+const wagmiAdapter = new WagmiAdapter({
+  ssr: true,
+  projectId: WALLET_CONNECT_PROJECT_ID,
+  networks,
+  connectors: [metaMask()],
+});
+
+createAppKit({
+  adapters: [wagmiAdapter, new SolanaAdapter()],
+  networks,
   metadata,
   projectId: WALLET_CONNECT_PROJECT_ID,
 });
@@ -48,7 +47,7 @@ const client = new QueryClient();
 
 export default function LocaleProvider({ children }: { children: ReactNode }) {
   return (
-    <WagmiProvider config={wagmiConfig}>
+    <WagmiProvider config={wagmiAdapter.wagmiConfig}>
       <QueryClientProvider client={client}>
         {children}
         <Updater />
