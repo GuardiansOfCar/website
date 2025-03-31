@@ -18,4 +18,16 @@ export const SOL_USDT_CONTRACT = "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB";
 export const BNB_USDT_CONTRACT = "0x55d398326f99059ff775485246999027b3197955";
 export const AUDIT_LINK = "https://coinsult.net/projects/guardiansofthecar/";
 
-export const FEATURES = ["", "", "", "", "", "", "", "", "", "", ""]
+export const FEATURES = [
+  "https://99bitcoins.com/guides-and-tutorials/how-to-buy-guardians-of-the-car/",
+  "https://www.valuewalk.com/cryptocurrency/guardians-of-the-car-gocar-price-prediction/",
+  "https://icobench.com/cryptocurrency/cryptos-with-potential/",
+  "",
+  "",
+  "",
+  "https://bitcoinmagazine.nl/crypto/beste-ico-crypto",
+  "",
+  "https://cryptonews.com/news/best-crypto-icos.htm",
+  "",
+  "",
+];

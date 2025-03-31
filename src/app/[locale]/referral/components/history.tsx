@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useRef, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import clsx from "clsx";
 import { Button } from "@/components/button";
 import { useWallet } from "@/lib/use-wallet";
@@ -63,12 +63,12 @@ export const ReferralHistory = () => {
 
   const referralLink = useMemo(
     () =>
-      `${wrapWindow?.location.protocol}://${wrapWindow?.location.host}?r=${wallet.referral}`,
+      `${wrapWindow?.location.protocol}//${wrapWindow?.location.host}?r=${wallet.referral}`,
     [wallet.referral],
   );
   const handleCopyReferral = () => {
     wrapWindow?.navigator.clipboard.writeText(referralLink);
-    alert("Copied referral link.");
+    alert("Copied your link.");
   };
 
   useEffect(() => {
