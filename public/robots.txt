@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://guardiansofthecar.com/
+
+# Sitemaps
+Sitemap: https://guardiansofthecar.com/sitemap.xml
