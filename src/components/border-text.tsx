@@ -5,7 +5,7 @@ import clsx, { ClassValue } from "clsx";
 
 export const BorderText = (
   props: PropsWithChildren<{
-    size: "sm" | "md" | "lg"
+    size: "sm" | "md" | "lg"|"sm-fw"
   }>,
 ) => {
   let className = "";
@@ -14,6 +14,10 @@ export const BorderText = (
     case "sm":
       className = "w-[105px] h-[41px]";
       viewBox = "0 0 105 41";
+      break;
+    case "sm-fw":
+      className = "w-[1248px] h-[41px] max-w-full";
+      viewBox = "0 0 1248 41";
       break;
     case "md":
       className = "w-[360px] h-[48px]";

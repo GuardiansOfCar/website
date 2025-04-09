@@ -3,31 +3,35 @@
 import { useTranslations } from "next-intl";
 import clsx from "clsx";
 import NextLink from "next/link";
-import { Link, usePathname, useRouter } from "@/i18n/routing";
+import { Link, usePathname } from "@/i18n/routing";
 import Image from "next/image";
-import { useRef, useState } from "react";
-import { useLockBodyScroll } from "@uidotdev/usehooks";
+import { useEffect, useState } from "react";
+import { useClickAway, useLockBodyScroll } from "@uidotdev/usehooks";
 import { Button } from "@/components/button";
 import { useWallet } from "@/lib/use-wallet";
 import { shortenAddress } from "@/lib/utils";
-import { AUDIT_LINK } from "@/lib/constants";
+import { AUDIT_LINK, LANGUAGES } from "@/lib/constants";
 import { useWalletConnectorStore } from "@/lib/use-wallet-connector-store";
+import { useParams } from "next/navigation";
 
 export const Nav = () => {
   const t = useTranslations();
   const pathname = usePathname();
-  const [chapterOpened, setChapterOpened] = useState(false);
 
   const wallet = useWallet();
 
+  const [chapterOpened, setChapterOpened] = useState(false);
   const handleChapterClick = () => {
-    console.log("dw");
     setChapterOpened(!chapterOpened);
   };
 
   const chapterFocused = chapterOpened || pathname.startsWith("/chapters");
 
-  const walletManageRef = useRef<any>(null);
+  const [langOpened, setLangOpened] = useState(false);
+  const handleLangClick = () => {
+    setLangOpened(!langOpened);
+  };
+
   const handleBuyGocarClick = () => {
     if (wallet.address) {
       wallet.disconnect();
@@ -137,7 +141,87 @@ export const Nav = () => {
     </ul>
   );
 
+  const params = useParams();
+  const selected = params.locale;
+
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const renderLanguage = (isMobile?:boolean) => {
+    return (
+      <div className={"relative max-desktop:w-full"}>
+        <button
+          onClick={handleLangClick}
+          className={clsx(
+            "py-2 px-0 text-body-1b flex items-center gap-x-2",
+            langOpened && "!text-primary",
+            "max-desktop:px-5 max-desktop:py-5 max-desktop:justify-between max-desktop:w-full",
+          )}
+        >
+          {String(selected).toUpperCase()}
+          <Image
+            width={12}
+            height={6}
+            src={
+              langOpened
+                ? "/images/chervon-down-primary.png"
+                : "/images/chervon-down.png"
+            }
+            alt={"chervon-down.png"}
+          />
+        </button>
+        {langOpened && (
+          <div
+            style={ isMobile? {}:{
+              right: "calc((100% - 1440px) / 2 - 20px)",
+              top: isScrolled ? 0 : 64,
+            }}
+            className={
+              "bg-black z-[9999] fixed  max-desktop:!relative max-desktop:top-0"
+            }
+          >
+            <div
+              className={"w-full flex flex-col items-center relative z-[10]"}
+            >
+              {LANGUAGES.map((chapter) => {
+                return (
+                  <NextLink
+                    onClick={() => {
+                      setLangOpened(false);
+                      setMenuOpen(false);
+                    }}
+                    key={chapter.key}
+                    href={`/${chapter.key}`}
+                    className={clsx(
+                      "text-center flex py-2 text-body-1b text-white hover:text-primary cursor-pointer",
+                      pathname.endsWith(`/${chapter.key}`) && "!text-primary",
+                      "max-desktop:px-8 max-desktop:py-4 max-desktop:w-full",
+                    )}
+                  >
+                    {chapter.label}
+                  </NextLink>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
   const listTools = (
+      <div>
+        <div className={"hidden max-desktop:flex"}>
+          {renderLanguage(true)}
+        </div>
     <div
       className={
         "flex space-x-3 max-desktop:grid max-desktop:grid-cols-2 max-desktop:space-x-0 max-desktop:gap-3 max-desktop:px-5 max-desktop:py-4 border-b-primary  max-desktop:border-b-[4px]"
@@ -163,7 +247,7 @@ export const Nav = () => {
       <a
         className={"cursor-pointer w-12 h-12 relative max-desktop:w-full"}
         target={"_blank"}
-        href={"https://x.com/gocar_official"}
+        href={"https://x.com/gotcar_official"}
       >
         <Image
           className={"max-desktop:hidden"}
@@ -182,7 +266,7 @@ export const Nav = () => {
       <a
         className={"cursor-pointer w-12 h-12 relative max-desktop:w-full"}
         target={"_blank"}
-        href={"https://t.me/Gocar_Official"}
+        href={"https://t.me/GOTCAR_Official"}
       >
         <Image
           className={"max-desktop:hidden"}
@@ -213,7 +297,12 @@ export const Nav = () => {
           ? shortenAddress(wallet.address)
           : t("home.presaleJoin2")}
       </Button>
+
+      <div className={"max-desktop:hidden flex items-center"}>
+      {renderLanguage()}
+      </div>
     </div>
+      </div>
   );
 
   const [menuOpen, setMenuOpen] = useState(false);
@@ -226,12 +315,15 @@ export const Nav = () => {
     <div className={"w-full text-neutral-100 relative z-10"}>
       <nav
         className={
-          "w-full max-w-[var(--max-width)] h-[72px] mx-auto flex items-center justify-between px-10 max-desktop:px-5"
+          "w-full max-w-[var(--max-width)] h-[72px] mx-auto flex items-center justify-between px-5"
         }
       >
         <Link href={"/"}>
           <h1 className={clsx("text-header-3 text-primary")}>
-            GUARDIANS OF THE CAR
+            <span className={"text-[#D9F222]"}>G</span>
+            UARDIANS <span className={"text-[#D9F222]"}>O</span>F{" "}
+            <span className={"text-[#D9F222]"}>T</span>HE{" "}
+            <span className={"text-[#D9F222]"}>CAR</span>
           </h1>
         </Link>
         <div className={"max-desktop:hidden"}>{listNav}</div>
