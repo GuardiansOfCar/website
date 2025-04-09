@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@formatjs/intl-localematcher": "^0.6.1",
     "@metamask/sdk": "^0.32.0",
     "@phantom/wallet-sdk": "^0.0.21",
     "@radix-ui/react-checkbox": "^1.1.4",
@@ -36,6 +37,7 @@
     "ethers": "^6.13.5",
     "jose": "^6.0.8",
     "lucide-react": "^0.479.0",
+    "negotiator": "^1.0.0",
     "next": "15.1.7",
     "next-intl": "^3.26.5",
     "pnpm": "^10.7.0",
@@ -53,6 +55,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/negotiator": "^0.6.3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

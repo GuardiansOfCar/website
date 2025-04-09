@@ -206,11 +206,14 @@ export const Nav = () => {
                     key={chapter.key}
                     href={`/${chapter.key}`}
                     className={clsx(
-                      "text-center flex py-2 text-body-1b text-white hover:text-primary cursor-pointer",
+                      "flex text-left w-full py-3 text-body-1b text-white hover:text-primary cursor-pointer",
                       pathname.endsWith(`/${chapter.key}`) && "!text-primary",
-                      "max-desktop:px-8 max-desktop:py-4 max-desktop:w-full",
+                      "px-4 max-desktop:px-8 max-desktop:py-4 max-desktop:w-full",
                     )}
                   >
+                    <span className={"mr-2 block"}>
+                      {chapter.code}
+                    </span>
                     {chapter.label}
                   </NextLink>
                 );
@@ -325,10 +328,10 @@ export const Nav = () => {
       >
         <Link href={"/"}>
           <h1 className={clsx("text-header-3 text-primary")}>
-            <span className={"text-[#D9F222]"}>G</span>
-            UARDIANS <span className={"text-[#D9F222]"}>O</span>F{" "}
-            <span className={"text-[#D9F222]"}>T</span>HE{" "}
-            <span className={"text-[#D9F222]"}>CAR</span>
+            <span className={"text-[#FDE500]"}>G</span>
+            UARDIANS <span className={"text-[#FDE500]"}>O</span>F{" "}
+            <span className={"text-[#FDE500]"}>T</span>HE{" "}
+            <span className={"text-[#FDE500]"}>CAR</span>
           </h1>
         </Link>
         <div className={"max-desktop:hidden"}>{listNav}</div>

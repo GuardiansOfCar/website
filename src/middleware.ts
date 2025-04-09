@@ -3,6 +3,22 @@ import { routing } from "./i18n/routing";
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { decrypt } from "@/app/lib/session";
+import Negotiator from 'negotiator'
+import { match } from '@formatjs/intl-localematcher'
+
+const locales = routing.locales;
+const defaultLocale = routing.defaultLocale;
+
+function detectLocale(request: NextRequest): string {
+  const negotiatorHeaders: Record<string, string> = {};
+  request.headers.forEach((value, key) => {
+    negotiatorHeaders[key] = value;
+  });
+
+  const languages = new Negotiator({ headers: negotiatorHeaders }).languages();
+  return match(languages, locales, defaultLocale);
+}
+
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -22,6 +38,19 @@ export default async function middleware(req: NextRequest) {
     }
     return NextResponse.next();
   }
+
+
+  // 2. locale prefix가 없는 경우 리디렉션
+  const pathnameParts = path.split("/");
+  const firstSegment = pathnameParts[1];
+  const hasLocale = locales.includes(firstSegment as any);
+
+  if (!hasLocale) {
+    const detectedLocale = detectLocale(req);
+    const newUrl = new URL(`/${detectedLocale}${path}`, req.url);
+    return NextResponse.redirect(newUrl);
+  }
+
 
   return intlMiddleware(req);
 }

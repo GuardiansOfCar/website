@@ -9,7 +9,16 @@ export const G2EContainer = () => {
             "flex items-center z-10 relative h-[750px]  max-h-screen justify-center"
           }
         >
-          <video width="300" height="400" autoPlay={true} loop>
+          <video
+            width="300"
+            height="400"
+            autoPlay={true}
+            loop
+            playsInline
+            webkit-playsinline="true"
+            controls={false}
+            muted
+          >
             <source src="/videos/g2e.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
