@@ -122,7 +122,7 @@ export default function RoadmapPage() {
                     height={34}
                   />
                 </div>
-                <p className={"text-body-2b text-primary-10"}>GOCAR</p>
+                <p className={"text-body-2b text-primary-10"}>GOTCAR</p>
               </div>
             </div>
             <div

@@ -138,7 +138,7 @@ export const WalletManagePopup = () => {
             )}
             {!isMobile && (
               <p className={"text-body-3 text-center"}>
-                Create a wallet and purchase GOCAR tokens.
+                Create a wallet and purchase GOTCAR tokens.
               </p>
             )}
             {isMobile && <Wallet create type={"trust"} />}

@@ -198,7 +198,7 @@ export default function AdminSalesId() {
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="text">구매 $GOCAR 수량</Label>
+            <Label htmlFor="text">구매 $GOTCAR 수량</Label>
             <Input
               {...form.register("gocarAmount")}
               required

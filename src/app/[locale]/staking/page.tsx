@@ -173,7 +173,7 @@ export default function StakingPage() {
     });
 
     if (res.status !== 200 && res.status !== 201) {
-      return alert("Failed to unstake your $GOCAR. Please retry again.");
+      return alert("Failed to unstake your $GOTCAR. Please retry again.");
     }
 
     setUnstakePopup(false);
@@ -202,7 +202,7 @@ export default function StakingPage() {
     });
 
     if (res.status !== 200 && res.status !== 201) {
-      return alert("Failed to unstake your $GOCAR. Please retry again.");
+      return alert("Failed to unstake your $GOTCAR. Please retry again.");
     }
 
     setClaimPopup(false);
@@ -231,7 +231,7 @@ export default function StakingPage() {
     });
 
     if (res.status !== 200 && res.status !== 201) {
-      return alert("Failed to stake your $GOCAR. Please retry again.");
+      return alert("Failed to stake your $GOTCAR. Please retry again.");
     }
 
     setStakePopup(false);
@@ -251,7 +251,7 @@ export default function StakingPage() {
               <p className={"text-center text-body-3"}>{t("staking.c2")}</p>
               <span className={"text-header-3"}>
                 {status.availableBalance.toLocaleString()}{" "}
-                <span className={"text-header-3 text-primary-10"}>$GOCAR</span>
+                <span className={"text-header-3 text-primary-10"}>$GOTCAR</span>
               </span>
             </div>
 
@@ -270,7 +270,7 @@ export default function StakingPage() {
                   }
                 />
                 <span className={"m-4 text-title-1 text-primary-0"}>
-                  $GOCAR
+                  $GOTCAR
                 </span>
               </div>
             </div>
@@ -292,7 +292,7 @@ export default function StakingPage() {
               <p className={"text-center text-body-3"}>{t("staking.c1")}</p>
               <span className={"text-header-3"}>
                 {status.stakedBalance.toLocaleString()}{" "}
-                <span className={"text-header-3 text-primary-10"}>$GOCAR</span>
+                <span className={"text-header-3 text-primary-10"}>$GOTCAR</span>
               </span>
             </div>
 
@@ -333,7 +333,7 @@ export default function StakingPage() {
               <p className={"text-center text-body-3"}>{t("staking.c2")}</p>
               <span className={"text-header-3"}>
                 {stakeAmount.toLocaleString()}{" "}
-                <span className={"text-header-3 text-primary-10"}>$GOCAR</span>
+                <span className={"text-header-3 text-primary-10"}>$GOTCAR</span>
               </span>
             </div>
 
@@ -371,7 +371,7 @@ export default function StakingPage() {
             <div className={"flex flex-col items-center"}>
               <span className={"text-header-3"}>
                 {reward}{" "}
-                <span className={"text-header-3 text-primary-10"}>$GOCAR</span>
+                <span className={"text-header-3 text-primary-10"}>$GOTCAR</span>
               </span>
             </div>
 
@@ -421,7 +421,7 @@ export default function StakingPage() {
                 <>
                   <span>
                     {status.stakedBalance.toLocaleString()}{" "}
-                    <span className={"text-primary-10"}>$GOCAR</span>
+                    <span className={"text-primary-10"}>$GOTCAR</span>
                   </span>
                 </>
               }
@@ -431,7 +431,7 @@ export default function StakingPage() {
                 <div className={"text-title-1b"}>
                   <span>
                     {status.availableBalance.toLocaleString()}{" "}
-                    <span className={"text-primary-10"}>$GOCAR</span>
+                    <span className={"text-primary-10"}>$GOTCAR</span>
                   </span>
                 </div>
               </div>
@@ -458,7 +458,7 @@ export default function StakingPage() {
                 <div className={"text-title-1b"}>
                   <span>
                     {total.totalStaked.toLocaleString()}{" "}
-                    <span className={"text-primary-10"}>$GOCAR</span>
+                    <span className={"text-primary-10"}>$GOTCAR</span>
                   </span>
                 </div>
               </div>
@@ -487,7 +487,7 @@ export default function StakingPage() {
               description={
                 <>
                   <span>
-                    {reward} <span className={"text-primary-10"}>$GOCAR</span>
+                    {reward} <span className={"text-primary-10"}>$GOTCAR</span>
                   </span>
                 </>
               }

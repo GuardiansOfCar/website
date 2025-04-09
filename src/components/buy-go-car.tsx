@@ -246,7 +246,7 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
           >
             <span className={"w-full h-[1px] bg-neutral-60 absolute"} />
             <p className={"text-label-1 absolute bg-[#EEF6FC] px-2"}>
-              1 $GOCAR = ${activeSetting.gocarPrice}
+              1 $GOTCAR = ${activeSetting.gocarPrice}
             </p>
           </div>
           <div className={"flex items-center space-x-4 w-full"}>
@@ -593,7 +593,7 @@ const RewardList = ({
       <div className={"text-body-2 self-start"}>
         TOTAL BONUS: {totalRate.toFixed(2)}%{" "}
         <span className={"text-primary-10"}>
-          (+{(expectIcoGocar * (totalRate / 100)).toFixed(4)} GOCAR)
+          (+{(expectIcoGocar * (totalRate / 100)).toFixed(4)} GOTCAR)
         </span>
       </div>
     </>

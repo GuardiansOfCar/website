@@ -176,7 +176,7 @@ export default function AdminReferralId() {
             { accessorKey: "icoWalletAddress", header: "지갑주소" },
             { accessorKey: "icoTokenSymbol", header: "토큰유형" },
             { accessorKey: "icoAmount", header: "수량" },
-            { accessorKey: "gocarAmount", header: "환산 $GOCAR" },
+            { accessorKey: "gocarAmount", header: "환산 $GOTCAR" },
             { accessorKey: "rewardAmount", header: "REWARDS 수량" },
           ]}
         />

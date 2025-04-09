@@ -109,7 +109,7 @@ export default function AdminSales() {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">
-                  지급 $GOCAR
+                  지급 $GOTCAR
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -121,7 +121,7 @@ export default function AdminSales() {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">
-                  미지급 $GOCAR
+                  미지급 $GOTCAR
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -175,7 +175,7 @@ export default function AdminSales() {
             { accessorKey: "icoWalletAddress", header: "참여 지갑주소" },
             { accessorKey: "icoTokenSymbol", header: "토큰" },
             { accessorKey: "amount", header: "수량" },
-            { accessorKey: "gocar_amount", header: "환산 $GOCAR" },
+            { accessorKey: "gocar_amount", header: "환산 $GOTCAR" },
           ]}
           rowActionButtons={[
             {

@@ -52,7 +52,7 @@ export function AdminSidebar({
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <h1 className={"text-lg px-2 pt-3 font-medium"}>GOCAR 관리자</h1>
+        <h1 className={"text-lg px-2 pt-3 font-medium"}>GOTCAR 관리자</h1>
       </SidebarHeader>
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}
