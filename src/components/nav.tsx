@@ -53,14 +53,19 @@ export const Nav = () => {
         {
           label: t("home.nav4"),
           href: "/roadmap",
+          hideMaxDesktop:true
         },
-        { label: t("home.nav5"), href: "/faq" },
+        { label: t("home.nav5"), href: "/faq" ,
+          hideMaxDesktop:true
+        },
         { label: t("home.nav6"), href: "/staking" },
         { label: t("home.nav7"), href: "/referral" },
-        { label: t("home.nav8"), href: "/g2e" },
+        { label: t("home.nav8"), href: "/g2e" ,
+          hideMaxDesktop:true
+        },
       ].map((nav, index) => {
         return (
-          <li key={index}>
+          <li key={index} className={clsx(nav.hideMaxDesktop && 'max-desktop:hidden')}>
             {nav.href === "/chapters" && (
               <div className={"relative"}>
                 <button
