@@ -96,7 +96,7 @@
         "presalePurchase6": "秒",
         "presalePurchase7": "購入した $GOTCAR",
         "presalePurchase8": "ステーキング可能な $GOTCAR",
-        "presalePurchase9": "イーサリアムで支払い",
+        "presalePurchase9": "{0}で支払い",
         "whitepaper1": "ホワイトペーパー"
     },
     "howToBuy": {

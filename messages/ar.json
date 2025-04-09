@@ -96,7 +96,7 @@
         "presalePurchase6": "ثوانٍ",
         "presalePurchase7": "$GOTCAR الذي اشتريته،",
         "presalePurchase8": "$GOTCAR القابل للتخزين",
-        "presalePurchase9": "ادفع باستخدام إيثريوم",
+        "presalePurchase9": "ادفع باستخدام {0}",
         "whitepaper1": "الورقة البيضاء"
     },
     "howToBuy": {

@@ -96,7 +96,7 @@
         "presalePurchase6": "Seconden",
         "presalePurchase7": "JE GEKOCHTE $GOTCAR,",
         "presalePurchase8": "JE STAKEBARE $GOTCAR",
-        "presalePurchase9": "BETAAL MET ETHEREUM",
+        "presalePurchase9": "BETAAL MET {0}",
         "whitepaper1": "WHITEPAPER"
     },
     "howToBuy": {

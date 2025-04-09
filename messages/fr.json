@@ -96,7 +96,7 @@
         "presalePurchase6": "Secondes",
         "presalePurchase7": "VOTRE $GOTCAR ACHETÉ,",
         "presalePurchase8": "VOTRE $GOTCAR STAKABLE",
-        "presalePurchase9": "PAYER AVEC ETHEREUM",
+        "presalePurchase9": "PAYER AVEC {0}",
         "whitepaper1": "WHITEPAPER"
     },
     "howToBuy": {

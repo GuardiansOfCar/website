@@ -96,7 +96,7 @@
         "presalePurchase6": "Sekunden",
         "presalePurchase7": "DEIN GEKAUFTES $GOTCAR,",
         "presalePurchase8": "DEIN STAKEFÄHIGES $GOTCAR",
-        "presalePurchase9": "ZAHLUNG MIT ETHEREUM",
+        "presalePurchase9": "ZAHLUNG MIT {0}",
         "whitepaper1": "WHITEPAPER"
     },
     "howToBuy": {

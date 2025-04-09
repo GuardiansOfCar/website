@@ -96,7 +96,7 @@
         "presalePurchase6": "Секунды",
         "presalePurchase7": "$GOTCAR, КОТОРЫЕ ВЫ ПРИОБРЕЛИ",
         "presalePurchase8": "$GOTCAR, НА СТЕЙКАХ",
-        "presalePurchase9": "ОПЛАЧИВАЙТЕ С ПОМОЩЬЮ ETHEREUM",
+        "presalePurchase9": "ОПЛАЧИВАЙТЕ С ПОМОЩЬЮ {0}",
         "whitepaper1": "1-1)\nWHITEPAPER"
     },
     "howToBuy": {

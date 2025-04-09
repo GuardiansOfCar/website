@@ -96,7 +96,7 @@
         "presalePurchase6": "초",
         "presalePurchase7": "구매한 $GOTCAR",
         "presalePurchase8": "스테이킹 가능한 $GOTCAR",
-        "presalePurchase9": "이더리움으로 결제",
+        "presalePurchase9": "{0}으로 결제",
         "whitepaper1": "백서"
     },
     "howToBuy": {

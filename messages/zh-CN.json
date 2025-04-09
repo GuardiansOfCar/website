@@ -96,7 +96,7 @@
         "presalePurchase6": "秒",
         "presalePurchase7": "您已购买的 $GOTCAR",
         "presalePurchase8": "您可质押的 $GOTCAR",
-        "presalePurchase9": "使用以太币支付",
+        "presalePurchase9": "使用{0}支付",
         "whitepaper1": "白皮书"
     },
     "howToBuy": {
