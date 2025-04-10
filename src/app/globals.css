@@ -29,23 +29,30 @@ input[type='number'] {
 }
 
 
-
 @layer components {
     /* tailwind.css 또는 글로벌 CSS 파일 */
     .scrollbar-custom::-webkit-scrollbar {
-        @apply w-3; /* 스크롤바 너비 */
+        @apply w-3;
+        /* 스크롤바 너비 */
     }
 
     .scrollbar-custom::-webkit-scrollbar-track {
-        @apply bg-[#646464]; /* 트랙 배경 */
+        @apply bg-[#646464];
+        /* 트랙 배경 */
     }
 
     .scrollbar-custom::-webkit-scrollbar-thumb {
-        @apply bg-primary; /* 스크롤바 색상 및 모양 */
+        @apply bg-primary;
+        /* 스크롤바 색상 및 모양 */
     }
 
     .scrollbar-custom::-webkit-scrollbar-thumb:hover {
-        @apply bg-primary; /* 호버 시 색상 변경 */
+        @apply bg-primary;
+        /* 호버 시 색상 변경 */
+    }
+
+    .emoji-font {
+        font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
     }
 
     .bg-hero {
@@ -163,9 +170,8 @@ body {
 }
 
 
-
 @layer base {
-  :root {
+    :root {
         --background: 0 0% 100%;
         --foreground: 0 0% 3.9%;
         --card: 0 0% 100%;
@@ -200,7 +206,8 @@ body {
         --sidebar-border: 220 13% 91%;
         --sidebar-ring: 217.2 91.2% 59.8%;
     }
-  .dark {
+
+    .dark {
         --background: 0 0% 3.9%;
         --foreground: 0 0% 98%;
         --card: 0 0% 3.9%;
@@ -237,13 +244,13 @@ body {
 }
 
 
-
 @layer base {
-  * {
-    @apply border-border;
+    * {
+        @apply border-border;
     }
-  body {
-    @apply bg-background text-foreground;
+
+    body {
+        @apply bg-background text-foreground;
     }
 }
 
