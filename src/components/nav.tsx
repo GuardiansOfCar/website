@@ -211,7 +211,7 @@ export const Nav = () => {
                       "px-4 max-desktop:px-8 max-desktop:py-4 max-desktop:w-full",
                     )}
                   >
-                    <span className={"mr-2 block emoji-font"}>
+                    <span className={"mr-2 block emoji-font !font-normal"}>
                       {chapter.code}
                     </span>
                     {chapter.label}
