@@ -26,7 +26,7 @@ export async function generateMetadata(
   const { locale } = await params;
 
   let { metadata } = JSON.parse(
-    readFileSync(`./messages/${locale}.json`, "utf-8"),
+    readFileSync(`../../../messages/${locale}.json`, "utf-8"),
   );
 
   if (!metadata?.title) {
