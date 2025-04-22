@@ -138,7 +138,9 @@ export default function Home() {
                 "py-10 max-desktop:py-8 max-desktop:px-0 flex flex-col space-y-4"
               }
             >
-              <BorderText size={"sm"}>Featured In</BorderText>
+              <BorderText className={"text-[24px]/[32px]"}>
+                Featured In
+              </BorderText>
               <div
                 className={
                   "grid gap-x-6 gap-y-4 grid-cols-6 max-desktop:gap-x-4 max-desktop:grid-cols-4 max-tablet:grid-cols-2"

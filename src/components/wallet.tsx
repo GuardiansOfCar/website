@@ -6,6 +6,7 @@ import { useTrustWallet } from "@/lib/use-trust-wallet";
 import { useWalletConnect } from "@/lib/use-wallet-connect";
 import { useWallet } from "@/lib/use-wallet";
 import { wrapWindow } from "@/lib/constants";
+import {BorderText} from "@/components/border-text";
 
 export const Wallet = ({
   type,
@@ -61,7 +62,7 @@ export const Wallet = ({
           "flex-1 flex items-center px-3 bg-primary border-r-neutral-0 border-r-4   h-full"
         }
       >
-        <p className={"text-title-1 text-left shadow-text text-neutral-100"}>
+        <BorderText className={"text-title-1 text-left font-[700]"}>
           {
             //type === "phantom" ? "PHANTOM" :
             type === "metamask"
@@ -70,7 +71,7 @@ export const Wallet = ({
                 ? "TRUST WALLET"
                 : "WALLET CONNECT"
           }
-        </p>
+        </BorderText>
       </div>
 
       <div className={"bg-white w-[52px] h-full relative"}>

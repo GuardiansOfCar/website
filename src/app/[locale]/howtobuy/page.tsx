@@ -6,6 +6,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import { BuyGoCar } from "@/components/buy-go-car";
 import { HowtobuySection } from "@/app/[locale]/howtobuy/components/section";
+import { BorderText } from "@/components/border-text";
 
 export default function HowToBuyPage() {
   const t = useTranslations();
@@ -61,22 +62,24 @@ export default function HowToBuyPage() {
                 <div className={"text-header-2 text-center"}>
                   {t("howToBuy.e2")
                     .split(" ")
-                    .map((i, idx) => (
-                      <span
-                        key={i}
-                        className={clsx(
-                          idx === 0 && "text-neutral-100 shadow-text",
-                        )}
-                      >
-                        {idx !== 0 && " "}
-                        {i}
-                      </span>
-                    ))}
+                    .map((i, idx) => {
+                      if (idx === 0) {
+                        return <BorderText key={i}>{i}</BorderText>;
+                      }
+                      return (
+                        <span key={i}>
+                          {idx !== 0 && " "}
+                          {i}
+                        </span>
+                      );
+                    })}
                 </div>
               </div>
             </div>
 
-            <div className={"relative flex flex-col items-center justify-center"}>
+            <div
+              className={"relative flex flex-col items-center justify-center"}
+            >
               <div className={"absolute right-0 -top-[26%] z-[1]"}>
                 <div className={"relative flex items-center justify-center"}>
                   <Image

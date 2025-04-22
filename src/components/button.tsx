@@ -2,6 +2,7 @@
 
 import clsx, { ClassValue } from "clsx";
 import { PropsWithChildren } from "react";
+import { BorderText } from "@/components/border-text";
 
 export const Button = ({
   size = "md",
@@ -32,11 +33,9 @@ export const Button = ({
         className,
       )}
     >
-      <span
-        className={"shadow-text text-neutral-100 text-title-1 translate-y-0.5"}
-      >
-        {children}
-      </span>
+      <BorderText className={"text-title-1 translate-y-0.5 font-[700]"}>
+        {children as string}
+      </BorderText>
     </button>
   );
 };

@@ -62,17 +62,6 @@ input[type='number'] {
         background-position: center top; /* 중앙 정렬 */
     }
 
-    .shadow-text {
-        text-shadow: 2px 2px 0px #000000,
-        -2px 2px 0px #000000,
-        2px -2px 0px #000000,
-        -2px -2px 0px #000000,
-        0px 2px 0px #000000,
-        2px 0px 0px #000000,
-        -2px 0px 0px #000000,
-        0px -2px 0px #000000;
-    }
-
     .animate-marquee {
         display: flex;
         animation: marquee 20s linear infinite;

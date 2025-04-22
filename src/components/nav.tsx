@@ -13,6 +13,7 @@ import { shortenAddress } from "@/lib/utils";
 import { AUDIT_LINK, LANGUAGES } from "@/lib/constants";
 import { useWalletConnectorStore } from "@/lib/use-wallet-connector-store";
 import { useParams } from "next/navigation";
+import {BorderText} from "@/components/border-text";
 
 export const Nav = () => {
   const t = useTranslations();
@@ -248,9 +249,9 @@ export const Nav = () => {
           fill
           alt={"audit"}
         />
-        <span className={"text-xl shadow-text hidden max-desktop:block"}>
+        <BorderText className={"text-xl font-[500] hidden max-desktop:block"}>
           AUDIT
-        </span>
+        </BorderText>
       </a>
       <a
         className={"cursor-pointer w-12 h-12 relative max-desktop:w-full"}

@@ -4,6 +4,7 @@ import { ReactNode, useState } from "react";
 import Image from "next/image";
 
 import clsx, { ClassValue } from "clsx";
+import { BorderText } from "@/components/border-text";
 
 export const ReferralSection = ({
   title,
@@ -19,7 +20,9 @@ export const ReferralSection = ({
       }
     >
       <p className={"text-header-3"}>{title}</p>
-      <p className={"text-neutral-100 text-[64px] shadow-text"}>{children}</p>
+      <BorderText className={"text-[64px]/[64px] font-[700]"}>
+        {children as string}
+      </BorderText>
     </section>
   );
 };

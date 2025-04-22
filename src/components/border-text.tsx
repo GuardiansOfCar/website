@@ -1,53 +1,103 @@
 "use client";
+import React, { useEffect, useRef, useState } from "react";
 
-import { PropsWithChildren } from "react";
-import clsx, { ClassValue } from "clsx";
+interface BorderTextProps {
+  children: string;
+  className?: string;
+}
 
-export const BorderText = (
-  props: PropsWithChildren<{
-    size: "sm" | "md" | "lg"|"sm-fw"
-  }>,
-) => {
-  let className = "";
-  let viewBox = "";
-  switch (props.size) {
-    case "sm":
-      className = "w-[105px] h-[41px]";
-      viewBox = "0 0 105 41";
-      break;
-    case "sm-fw":
-      className = "w-[1248px] h-[41px] max-w-full";
-      viewBox = "0 0 1248 41";
-      break;
-    case "md":
-      className = "w-[360px] h-[48px]";
-      viewBox = "0 0 360 48";
-      break;
-    case "lg":
-      className = "w-[392px] h-[56px]";
-      viewBox = "0 0 392 56";
-      break;
-  }
+export const BorderText: React.FC<BorderTextProps> = ({
+                                                        children,
+                                                        className,
+                                                      }) => {
+  const spanRef = useRef<HTMLSpanElement>(null);
+  const [size, setSize] = useState<{
+    width: number;
+    height: number;
+    fontSize: number;
+  } | null>(null);
+
+  useEffect(() => {
+    const span = spanRef.current;
+    if (!span) return;
+
+    const updateSize = () => {
+      const style = window.getComputedStyle(span);
+      const fontSize = parseFloat(style.fontSize);
+      setSize({
+        width: span.offsetWidth,
+        height: span.offsetHeight,
+        fontSize: fontSize,
+      });
+    };
+
+    updateSize();
+  }, [children, className]);
+
+  const strokeWidth = 4;
+
+  if (!size)
+    return (
+        <span
+            ref={spanRef}
+            className={`${className}`}
+            style={{
+              position: "absolute",
+              visibility: "hidden",
+              whiteSpace: "nowrap",
+              pointerEvents: "none",
+            }}
+        >
+        {children}
+      </span>
+    );
+
+  const padding = strokeWidth * 2;
+  const svgWidth = size.width + padding;
+  const svgHeight = size.height + padding;
+
+  const centerX = svgWidth / 2;
+  const centerY = svgHeight / 2;
+  const fontSize = size.fontSize;
 
   return (
-    <svg
-      className={clsx(className)}
-      viewBox={viewBox}
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <text
-        x={"50%"}
-        fontSize={"100%"}
-        y={"50%"}
-        textAnchor="middle"
-        dominantBaseline="middle"
-        fill="#FCFCFC"
-        stroke={"#000000"}
-        strokeWidth="3"
-        paintOrder="stroke"
+      <svg
+          width={svgWidth}
+          height={svgHeight}
+          viewBox={`0 0 ${svgWidth} ${svgHeight}`}
+          xmlns="http://www.w3.org/2000/svg"
+          style={{ display: "block" }}
       >
-        {props.children}
-      </text>
-    </svg>
+        {/* Outer Stroke Text */}
+        <text
+            x={centerX}
+            y={centerY}
+            dominantBaseline="middle"
+            textAnchor="middle"
+            fontSize={fontSize}
+            fontWeight="bold"
+            className={className}
+            stroke="#000"
+            strokeWidth={strokeWidth}
+            fill="none"
+        >
+          {children}
+        </text>
+
+        {/* Fill Text */}
+        <text
+            x={centerX}
+            y={centerY}
+            dominantBaseline="middle"
+            textAnchor="middle"
+            fontSize={fontSize}
+            fontWeight="bold"
+            className={className}
+            stroke="none"
+            fill="white"
+        >
+          {children}
+        </text>
+      </svg>
   );
 };
