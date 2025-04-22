@@ -25,12 +25,24 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { locale } = await params;
 
-  let { metadata } = JSON.parse(
-    readFileSync(`../../../messages/${locale}.json`, "utf-8"),
-  );
+  let metadata = {
+    title: "Guardians Of The Car | GOTCAR",
+    openGraphTitle: "GOTCAR Official Site",
+    openGraphDescription:
+      "Guardians Of The Car. First AI Base Drive to Earn Project",
+  };
 
-  if (!metadata?.title) {
-    metadata = JSON.parse(readFileSync(`./messages/ko.json`, "utf-8")).metadata;
+  try {
+    metadata = JSON.parse(
+      readFileSync(`./messages/${locale}.json`, "utf-8"),
+    ).metadata;
+    if (!metadata?.title) {
+      metadata = JSON.parse(
+        readFileSync(`./messages/ko.json`, "utf-8"),
+      ).metadata;
+    }
+  } catch (e: unknown) {
+    console.error("Error to read messages json");
   }
 
   return {
