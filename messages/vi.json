@@ -185,5 +185,10 @@
     "common": {
         "submit": "",
         "cancel": ""
+    },
+    "metadata": {
+        "title": "",
+        "openGraphTitle": "",
+        "openGraphDescription": ""
     }
 }

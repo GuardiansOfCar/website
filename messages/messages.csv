@@ -770,3 +770,6 @@ submit.t7,Solana adresini girin,Enter Solana address,Solana 주소를 입력하�
 common.submit,,SUBMIT,제출,,,,,,,,,,,,,,
 common.cancel,,CANCEL,취소,,,,,,,,,,,,,,
 otp.t4,,OTP Authentication,OTP 인증,,,,,,,,,,,,,,
+metadata.title,,,GOTCAR(갓카) 공식 페이지,,,,,,,,,,,,,,
+metadata.openGraphTitle,,,최초의 차량 밈 코인,,,,,,,,,,,,,,
+metadata.openGraphDescription,,,"GOTCAT(갓카) - ""최초의 차량 밈 코인""",,,,,,,,,,,,,,

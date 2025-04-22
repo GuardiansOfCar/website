@@ -185,5 +185,10 @@
     "common": {
         "submit": "제출",
         "cancel": "취소"
+    },
+    "metadata": {
+        "title": "GOTCAR(갓카) 공식 페이지",
+        "openGraphTitle": "최초의 차량 밈 코인",
+        "openGraphDescription": "GOTCAT(갓카) - \"최초의 차량 밈 코인\""
     }
 }
