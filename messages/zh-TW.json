@@ -171,7 +171,7 @@
         "t1": "感謝您成為守護者！\n為了安全起見，請創建一個6位數字的OTP。",
         "t2": "此OTP將用於質押和代幣領取。",
         "t3": "如果丟失，請聯繫 admin@guardiansofthecar.com。",
-        "t4": ""
+        "t4": "OTP 驗證"
     },
     "submit": {
         "t1": "提交 SOLANA 錢包地址",
@@ -183,12 +183,12 @@
         "t7": "請輸入 Solana 地址"
     },
     "common": {
-        "submit": "",
-        "cancel": ""
+        "submit": "提交",
+        "cancel": "取消"
     },
     "metadata": {
-        "title": "",
-        "openGraphTitle": "",
-        "openGraphDescription": ""
+        "title": "GOTCAR 官方頁面",
+        "openGraphTitle": "首個汽車梗幣",
+        "openGraphDescription": "GOTCAR - “首個汽車梗幣”"
     }
 }

@@ -171,7 +171,7 @@
         "t1": "GUARDIAN’A KATILdığınız için teşekkür ederiz!\nGüvenlik amacıyla lütfen 6 haneli bir sayısal OTP oluşturun.",
         "t2": "Bu OTP, Stakeleme ve token talepleri için kullanılacaktır.",
         "t3": "Eğer kaybederseniz, lütfen admin@guardiansofthecar.com ile iletişime geçin.",
-        "t4": ""
+        "t4": "OTP Doğrulama"
     },
     "submit": {
         "t1": "SOLANA cüzdan adresinizi gönderin",
@@ -183,12 +183,12 @@
         "t7": "Solana adresini girin"
     },
     "common": {
-        "submit": "",
-        "cancel": ""
+        "submit": "GÖNDER",
+        "cancel": "İPTAL"
     },
     "metadata": {
-        "title": "",
-        "openGraphTitle": "",
-        "openGraphDescription": ""
+        "title": "GOTCAR Resmi Sayfası",
+        "openGraphTitle": "İlk araç temalı meme coin",
+        "openGraphDescription": "GOTCAR - \"İlk araç temalı meme coin\""
     }
 }

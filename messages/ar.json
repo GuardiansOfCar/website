@@ -171,7 +171,7 @@
         "t1": "شكرًا لانضمامك إلى Guardian! لأغراض الأمان، يرجى إنشاء كلمة مرور لمرة واحدة (OTP) مكونة من 6 أرقام.",
         "t2": "سيتم استخدام هذه الكلمة في التخزين ومطالبات التوكن.",
         "t3": "إذا فقدتها، يرجى التواصل مع admin@guardiansofthecar.com.",
-        "t4": ""
+        "t4": "مصادقة OTP"
     },
     "submit": {
         "t1": "قدّم عنوان محفظة SOLANA",
@@ -183,12 +183,12 @@
         "t7": "أدخل عنوان Solana"
     },
     "common": {
-        "submit": "",
-        "cancel": ""
+        "submit": "إرسال",
+        "cancel": "إلغاء"
     },
     "metadata": {
-        "title": "",
-        "openGraphTitle": "",
-        "openGraphDescription": ""
+        "title": "الصفحة الرسمية لـ GOTCAR",
+        "openGraphTitle": "أول عملة ميم للسيارات",
+        "openGraphDescription": "GOTCAR - \"أول عملة ميم للسيارات\""
     }
 }
