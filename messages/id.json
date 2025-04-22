@@ -171,7 +171,7 @@
         "t1": "Terima kasih telah menjadi Guardian!\nDemi keamanan, silakan buat OTP numerik 6 digit.",
         "t2": "OTP ini akan digunakan untuk staking dan klaim token.",
         "t3": "Jika Anda kehilangannya, silakan hubungi admin@guardiansofthecar.com.",
-        "t4": ""
+        "t4": "OTENTIKASI OTP"
     },
     "submit": {
         "t1": "PENGAJUAN ALAMAT DOMPET SOLANA",
@@ -183,8 +183,8 @@
         "t7": "Masukkan alamat Solana Anda"
     },
     "common": {
-        "submit": "",
-        "cancel": ""
+        "submit": "KIRIM",
+        "cancel": "BATAL"
     },
     "metadata": {
         "title": "Halaman Resmi GOTCAR",

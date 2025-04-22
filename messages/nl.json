@@ -171,7 +171,7 @@
         "t1": "Bedankt dat je een Guardian bent geworden!\nVoor beveiligingsdoeleinden, maak een 6-cijferige numerieke OTP aan.",
         "t2": "Deze OTP wordt gebruikt voor staking en tokenclaims.",
         "t3": "Als je het verliest, neem dan contact op met admin@guardiansofthecar.com.",
-        "t4": ""
+        "t4": "OTP-VERIFICATIE"
     },
     "submit": {
         "t1": "DIEN JE SOLANA WALLET-ADRES IN",
@@ -183,8 +183,8 @@
         "t7": "Voer Solana-adres in"
     },
     "common": {
-        "submit": "",
-        "cancel": ""
+        "submit": "INDIENEN",
+        "cancel": "ANNULEREN"
     },
     "metadata": {
         "title": "Officiële pagina van GOTCAR",

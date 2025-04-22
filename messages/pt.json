@@ -171,7 +171,7 @@
         "t1": "Obrigado por se tornar um Guardian!\nPor motivos de segurança, crie um OTP numérico de 6 dígitos.",
         "t2": "Este OTP será usado para staking e reivindicação de tokens.",
         "t3": "Se você perdê-lo, entre em contato com admin@guardiansofthecar.com.",
-        "t4": ""
+        "t4": "AUTENTICAÇÃO OTP"
     },
     "submit": {
         "t1": "INSERIR ENDEREÇO DA CARTEIRA SOLANA",
@@ -183,8 +183,8 @@
         "t7": "Introduz o endereço Solana"
     },
     "common": {
-        "submit": "",
-        "cancel": ""
+        "submit": "SUBMETER",
+        "cancel": "CANCELAR"
     },
     "metadata": {
         "title": "Página oficial do GOTCAR",
