@@ -249,7 +249,13 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
               1 $GOTCAR = ${activeSetting.gocarPrice}
             </p>
           </div>
-          <div className={"flex items-center space-x-4 w-full"}>
+
+          {/** */}
+          <div
+            className={
+              "flex items-center space-x-4 w-full max-md:flex-col max-md:space-x-0 max-md:space-y-4 max-md:items-stretch"
+            }
+          >
             <div className={"flex flex-col space-y-1 flex-1"}>
               <div className={"flex items-center justify-between text-label-1"}>
                 <select
