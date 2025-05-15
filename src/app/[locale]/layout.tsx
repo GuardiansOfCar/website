@@ -9,6 +9,7 @@ import { Footer } from "@/components/footer";
 import { Banner } from "@/components/banner";
 import LocaleProvider from "@/app/[locale]/provider";
 import { readFileSync } from "fs";
+ import { GoogleAnalytics } from '@next/third-parties/google'
 
 const grandstander = localFont({
   src: "../../../public/fonts/Grandstander.ttf",
@@ -76,6 +77,7 @@ export default async function LocaleLayout(props: PropsWithChildren) {
           </NextIntlClientProvider>
         </div>
       </body>
+     <GoogleAnalytics gaId="G-J4MM2WMN55" />
     </html>
   );
 }
