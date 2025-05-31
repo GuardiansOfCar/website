@@ -12,6 +12,7 @@ import { API_BASE_URL } from "@/lib/constants";
 import { useWallet } from "@/lib/use-wallet";
 import { useRouter } from "@/i18n/routing";
 import { useForm } from "react-hook-form";
+import {useSWRConfig} from "swr";
 
 export default function StakingPage() {
   const t = useTranslations();
@@ -52,8 +53,12 @@ export default function StakingPage() {
     id: 0,
     annualRate: "",
   });
+  
+  const { mutate } = useSWRConfig();
 
   useEffect(() => {
+    mutate(["walletsInfo"]);
+    
     fetch(`${API_BASE_URL}/v1/stakings/status/estimated`).then(async (res) => {
       if (res.status === 200 || res.status === 201) {
         const data = (await res.json()) as {

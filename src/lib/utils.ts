@@ -13,7 +13,7 @@ export const getReferral = (searchParms: ReadonlyURLSearchParams) => {
   if (r) {
     return r;
   } else {
-    return "";
+    return "gotcar";
   }
 };
 

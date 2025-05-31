@@ -119,7 +119,7 @@ export const OtpPopup = () => {
   const t = useTranslations();
   const code = form.watch("code");
   if (state !== "unregistered") return null;
-  console.log(state);
+
   return (
     <Popup onClose={handleOtpPopupClose} title={t("otp.t4")}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
