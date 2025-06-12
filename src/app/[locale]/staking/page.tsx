@@ -506,8 +506,9 @@ export default function StakingPage() {
               </Button>
               <Button
                 onClick={() => {
-                  setClaimPopup(true);
+                  setClaimPopup(false);
                 }}
+                disabled={true}
               >
                 {t("staking.f2")}
               </Button>
