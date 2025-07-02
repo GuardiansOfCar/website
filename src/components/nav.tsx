@@ -291,6 +291,7 @@ export const Nav = () => {
         />
       </a>
 
+      {/* https://drive.google.com/drive/folders/1SDReRdC0g3baTCxB2jekpwWJcE6vF3iQ?usp=sharing */}
       <NextLink href={"/whitepaper.pdf"} target={"_blank"}>
         <Button size={"sm"} className={"!bg-neutral-60 max-desktop:w-full"}>
           {t("home.whitepaper1")}
