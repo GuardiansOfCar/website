@@ -11,6 +11,7 @@
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.6.1",
     "@metamask/sdk": "^0.32.0",
+    "@next/third-parties": "15.1.7",
     "@phantom/wallet-sdk": "^0.0.21",
     "@radix-ui/react-checkbox": "^1.1.4",
     "@radix-ui/react-dialog": "^1.1.6",
@@ -39,7 +40,6 @@
     "lucide-react": "^0.479.0",
     "negotiator": "^1.0.0",
     "next": "15.1.7",
-    "@next/third-parties": "15.1.7",
     "next-intl": "^3.26.5",
     "pnpm": "^10.7.0",
     "prettier": "^3.5.2",
