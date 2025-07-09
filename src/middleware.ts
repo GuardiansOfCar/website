@@ -33,7 +33,7 @@ export async function middleware(req: NextRequest) {
         const geoData = await geoRes.json();
         const countryCode = geoData.country_code;
 
-        if (['US', 'KR', 'CN'].includes(countryCode)) {
+        if (['US',  'CN'].includes(countryCode)) {
             const deniedUrl = req.nextUrl.clone();
             deniedUrl.pathname = '/en/denied';
             return NextResponse.rewrite(deniedUrl);
