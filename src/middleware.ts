@@ -24,22 +24,21 @@ const intlMiddleware = createMiddleware(routing);
 export async function middleware(req: NextRequest) {
     const path = req.nextUrl.pathname;
 
-    const ip =
-        req.headers.get('x-forwarded-for')?.split(',')[0]
+    // const ip =
+    //     req.headers.get('x-forwarded-for')?.split(',')[0]
 
-    if (ip) {
-        // 외부 Geo IP API 호출 (예: ipapi.co, ipinfo.io 등)
-        const geoRes = await fetch(`https://ipapi.co/${ip}/json/`);
-        const geoData = await geoRes.json();
-        const countryCode = geoData.country_code;
+    // if (ip) {
+    //     // 외부 Geo IP API 호출 (예: ipapi.co, ipinfo.io 등)
+    //     const geoRes = await fetch(`https://ipapi.co/${ip}/json/`);
+    //     const geoData = await geoRes.json();
+    //     const countryCode = geoData.country_code;
 
-        if (['US',  'CN'].includes(countryCode)) {
-            const deniedUrl = req.nextUrl.clone();
-            deniedUrl.pathname = '/en/denied';
-            return NextResponse.rewrite(deniedUrl);
-        }
-
-    }
+    //     if (['US',  'CN'].includes(countryCode)) {
+    //         const deniedUrl = req.nextUrl.clone();
+    //         deniedUrl.pathname = '/en/denied';
+    //         return NextResponse.rewrite(deniedUrl);
+    //     }
+    // }
 
 
     if (path.startsWith("/admin")) {
