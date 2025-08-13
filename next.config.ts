@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
     // 로컬에서 충분히 타입을 검증해야 합니다.
     ignoreBuildErrors: true,
   },
+  productionBrowserSourceMaps: false,
   webpack(config) {
     config.externals.push("pino-pretty", "lokijs", "encoding");
     config.module.rules.push({
