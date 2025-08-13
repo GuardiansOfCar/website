@@ -1,10 +1,11 @@
 "use client";
 
 import { Editor } from "@toast-ui/react-editor";
-import "@toast-ui/editor/dist/toastui-editor.css";
-import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
-import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
-import "tui-color-picker/dist/tui-color-picker.css";
+import "@toast-ui/editor/dist/toastui-editor-only.css";
+// color-syntax 플러그인은 locale 에러를 일으키므로 제거
+// import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
+// import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
+// tui-color-picker CSS는 구식 문법으로 인해 파싱 에러가 발생하므로 제거
 
 import { ForwardedRef, forwardRef } from "react";
 
@@ -22,7 +23,7 @@ const TuiEditor = forwardRef(
         initialEditType="wysiwyg"
         useCommandShortcut={true}
         language="ko-KR"
-        plugins={[colorSyntax]} // 글자색 변경 플러그인 추가
+        // plugins={[colorSyntax]} // color-syntax 플러그인 제거
         toolbarItems={[
           // 모든 툴바 기능 포함
           ["heading", "bold", "italic", "strike"],

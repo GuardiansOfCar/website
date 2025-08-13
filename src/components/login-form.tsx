@@ -35,7 +35,7 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", rootRef?.className)} {...rootRef}>
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">고카 관리자 로그인</CardTitle>
+          <CardTitle className="text-2xl">GOTCAR 관리자 로그인</CardTitle>
           <CardDescription>아이디를 입력해 주세요.</CardDescription>
         </CardHeader>
         <CardContent>
@@ -56,7 +56,12 @@ export function LoginForm({
                   required
                 />
               </div>
-              <Button disabled={pending} type="submit" className="w-full">
+              <Button
+                disabled={pending}
+                type="submit"
+                className="w-full"
+                color="black"
+              >
                 로그인
               </Button>
             </div>

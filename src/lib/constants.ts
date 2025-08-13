@@ -1,13 +1,13 @@
-export const API_BASE_URL = "https://api.guardiansofthecar.com/api";
-// export const API_BASE_URL = "http://localhost:5000/api";
+// export const API_BASE_URL = "https://api.guardiansofthecar.com/api";
+export const API_BASE_URL = "http://localhost:5000/api";
 
 export const WALLET_CONNECT_PROJECT_ID = "e836d5b6d527fd7288d8331a208e550a";
 
-export const ETH_ADDRESS = "0x1B1Be90668742Cf43BBdcbE553860aa38Fe116A4";
+export const ETH_ADDRESS = "0xCb85A67bB6eAf296655997A5bD050936bc672f1c";
 
-export const BSC_ADDRESS = "0x1ea8d25d9899246f5F21426B04D7205363F1cfd9";
+export const BSC_ADDRESS = "0xab80cCa34664BFa834AC36FAb190F53FE7E56a74";
 
-export const SOL_ADDRESS = "DvF3L7FxEn5BUZf8mBeJ4v5HsvTw6gYE6LRFYNGso67p";
+export const SOL_ADDRESS = "2Go34zys9Lh7JhihkVCmD4weAxBdpFJEvCgHH7tgjjhk";
 
 export const wrapWindow =
   typeof window === "undefined" ? undefined : (window as any);

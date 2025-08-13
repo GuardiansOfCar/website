@@ -10,7 +10,6 @@ import { Calendar as CalendarIcon, Edit } from "lucide-react";
 import { DateRange } from "react-day-picker";
 
 import { cn } from "@/lib/utils";
-import { defaultNoticeListRequest, NoticeListRequest } from "@/app/admin/(dashboard)/lib/api";
 import { useAdminFetch } from "@/app/admin/(dashboard)/lib/use-admin-fetch";
 
 import { Separator } from "@/components/ui/separator";
@@ -28,6 +27,34 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar";
 import { DataTable } from "@/components/data-table";
 import { DataTablePagination } from "@/components/data-table-pagination";
+
+// 알림 카테고리 옵션
+const notificationCategories = [
+  { value: 'ALL', label: '전체' },
+  { value: 'points_earned', label: '포인트 획득' },
+  { value: 'g2e_submission', label: 'G2E 제출' },
+  { value: 'event_rewards', label: '이벤트 보상' },
+  { value: 'points_exchange', label: '포인트 교환' },
+  { value: 'news', label: 'News' },
+  { value: 'updates', label: 'Updates' },
+  { value: 'profile_updates', label: '프로필 변경' },
+  { value: 'password_change', label: '비밀번호 변경' },
+  { value: 'login_activity', label: '로그인 활동' },
+];
+
+// 발송 상태 옵션
+const sendStatusOptions = [
+  { value: 'ALL', label: '전체' },
+  { value: 'true', label: '발송 완료' },
+  { value: 'false', label: '발송 대기' },
+];
+
+// 타겟 유형 옵션
+const targetTypeOptions = [
+  { value: 'ALL', label: '전체' },
+  { value: 'ALL_USERS', label: '전체 사용자' },
+  { value: 'USER', label: '특정 사용자' },
+];
 
 /**
  * HTML 문자열에서 태그를 제거하고, 지정된 길이로 잘라 미리보기 텍스트를 생성합니다.
@@ -50,8 +77,8 @@ const createHtmlPreview = (htmlString: string, maxLength: number = 50): string =
   return plainText;
 };
 
-// 공지사항 조회 페이지 컴포넌트
-export default function NoticeListPage() {
+// 푸시 알림 조회 페이지 컴포넌트
+export default function PushAlertListPage() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -59,7 +86,15 @@ export default function NoticeListPage() {
   // URL 파라미터를 기반으로 API 요청 객체 생성
   const request = useMemo(
     () => ({
-      ...defaultNoticeListRequest,
+      page: 1,
+      limit: 10,
+      startDate: undefined,
+      endDate: undefined,
+      category: "ALL",
+      isSent: "ALL",
+      targetType: "ALL",
+      query: "",
+      orderBy: "RECENT",
       ...Object.fromEntries(searchParams.entries()),
     }),
     [searchParams],
@@ -67,19 +102,20 @@ export default function NoticeListPage() {
 
   // 필터 상태 관리
   const [date, setDate] = useState<DateRange | undefined>({
-    from: request.start_date ? dayjs(request.start_date).toDate() : undefined,
-    to: request.end_date ? dayjs(request.end_date).toDate() : undefined,
+    from: request.startDate ? dayjs(request.startDate).toDate() : undefined,
+    to: request.endDate ? dayjs(request.endDate).toDate() : undefined,
   });
-  const [postType, setPostType] = useState(request.type || "ALL");
-  const [importanceType, setImportanceType] = useState(request.importance_type || "ALL");
+  const [category, setCategory] = useState(request.category || "ALL");
+  const [isSent, setIsSent] = useState(request.isSent || "ALL");
+  const [targetType, setTargetType] = useState(request.targetType || "ALL");
   const [query, setQuery] = useState(request.query || "");
-  const [orderBy, setOrderBy] = useState(request.order_by || "RECENT");
+  const [orderBy, setOrderBy] = useState(request.orderBy || "RECENT");
 
   const fetch = useAdminFetch();
 
-  // 공지사항 목록 데이터 요청
+  // 푸시 알림 목록 데이터 요청
   const { data: listData, isLoading } = useSWR(
-    [`/v1/admin-news/list`, request],
+    [`/v1/admin-notification/list`, request],
     (args) => fetch(args[0], { query: args[1] }),
   );
 
@@ -90,22 +126,22 @@ export default function NoticeListPage() {
       page: 1,
       startDate: date?.from ? dayjs(date.from).format("YYYY-MM-DD") : undefined,
       endDate: date?.to ? dayjs(date.to).format("YYYY-MM-DD") : undefined,
-      type: postType === "ALL" ? undefined : postType,
-      importance_type: importanceType === "ALL" ? undefined : importanceType,
+      category: category === "ALL" ? undefined : category,
+      isSent: isSent === "ALL" ? undefined : isSent,
+      targetType: targetType === "ALL" ? undefined : targetType,
       query: query || undefined,
-      order_by: orderBy,
+      orderBy: orderBy,
     };
-    console.log("@@@@@@@@@@@@")
-    console.log(params)
-    console.log("@@@@@@@@@@@@")
+    
     router.push(`${pathname}?${stringify(params)}`);
   };
 
   // 초기화 핸들러
   const handleReset = () => {
     setDate(undefined);
-    setPostType("ALL");
-    setImportanceType("ALL");
+    setCategory("ALL");
+    setIsSent("ALL");
+    setTargetType("ALL");
     setQuery("");
     setOrderBy("RECENT");
     router.push(pathname);
@@ -119,7 +155,7 @@ export default function NoticeListPage() {
   return (
     <main className="mx-auto flex w-full flex-col space-y-6 p-10">
       <div>
-        <p className="text-sm text-muted-foreground">공지사항 &gt; 공지사항 조회</p>
+        <p className="text-sm text-muted-foreground">Push 알림 &gt; Push 알림 조회</p>
         <h1 className="text-2xl font-bold">조회</h1>
       </div>
       <Separator />
@@ -128,9 +164,9 @@ export default function NoticeListPage() {
       <Card>
         <CardContent className="p-6">
           <div className="grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2">
-            {/* 게시일자 필터 */}
+            {/* 발송일자 필터 */}
             <div className="flex items-center space-x-2">
-              <span className="w-24 shrink-0 font-semibold">게시일자</span>
+              <span className="w-24 shrink-0 font-semibold">발송일자</span>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
@@ -159,45 +195,60 @@ export default function NoticeListPage() {
                 </PopoverContent>
               </Popover>
               <div className="flex items-center space-x-1">
-                 <Button variant="ghost" size="sm" onClick={() => setDate(undefined)}>전체</Button>
-                 <Button variant="ghost" size="sm" onClick={() => setDate({from: new Date(), to: new Date()})}>오늘</Button>
-                 <Button variant="ghost" size="sm" onClick={() => setDatePreset('week', 1)}>1주일</Button>
-                 <Button variant="ghost" size="sm" onClick={() => setDatePreset('month', 1)}>1개월</Button>
+                <Button variant="ghost" size="sm" onClick={() => setDate(undefined)}>전체</Button>
+                <Button variant="ghost" size="sm" onClick={() => setDate({from: new Date(), to: new Date()})}>오늘</Button>
+                <Button variant="ghost" size="sm" onClick={() => setDatePreset('week', 1)}>1주일</Button>
+                <Button variant="ghost" size="sm" onClick={() => setDatePreset('month', 1)}>1개월</Button>
               </div>
             </div>
             <div></div>
 
-            {/* 공지 유형, 노출 상태 필터 */}
+            {/* 알림 카테고리 필터 */}
             <div className="flex items-center space-x-2">
-              <span className="w-24 shrink-0 font-semibold">유형</span>
-              <Select value={postType} onValueChange={(value) => setPostType(value as "ALL" | "EVENT" | "ANNOUNCEMENT")}>
+              <span className="w-24 shrink-0 font-semibold">알림 유형</span>
+              <Select value={category} onValueChange={setCategory}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="ALL">전체</SelectItem>
-                  <SelectItem value="EVENT">이벤트</SelectItem>
-                  <SelectItem value="ANNOUNCEMENT">공지</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="flex items-center space-x-2">
-              <span className="w-24 shrink-0 font-semibold">노출 상태</span>
-              <Select value={importanceType} onValueChange={(value) => setImportanceType(value as "ALL" | "IMPORTANT" | "NORMAL")}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="ALL">전체</SelectItem>
-                  <SelectItem value="IMPORTANT">중요</SelectItem>
-                  <SelectItem value="NORMAL">일반</SelectItem>
+                  {notificationCategories.map(cat => (
+                    <SelectItem key={cat.value} value={cat.value}>{cat.label}</SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
 
-            {/* 공지 제목/내용 검색 */}
+            {/* 발송 상태 필터 */}
+            <div className="flex items-center space-x-2">
+              <span className="w-24 shrink-0 font-semibold">발송 상태</span>
+              <Select value={isSent} onValueChange={setIsSent}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  {sendStatusOptions.map(option => (
+                    <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* 타겟 유형 필터 */}
+            <div className="flex items-center space-x-2">
+              <span className="w-24 shrink-0 font-semibold">발송 대상</span>
+              <Select value={targetType} onValueChange={setTargetType}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  {targetTypeOptions.map(option => (
+                    <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* 알림 제목/내용 검색 */}
             <div className="flex items-center space-x-2 md:col-span-2">
               <span className="w-24 shrink-0 font-semibold">검색</span>
               <Input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="공지 제목 및 내용으로 검색"
+                placeholder="알림 제목 및 내용으로 검색"
               />
             </div>
           </div>
@@ -210,43 +261,64 @@ export default function NoticeListPage() {
 
       {/* 데이터 테이블 섹션 */}
       <DataTable
-        title="뉴스 목록"
-        total={listData?.total || 0}
-        data={listData?.posts ?? []} // 'data' -> 'posts'
+        title="푸시 알림 목록"
+        total={listData?.count_data || 0}
+        data={listData?.data ?? []}
         toolbar={
-          // ✨ 3. 정렬 Select 컴포넌트와 상태를 DTO에 맞게 수정
           <Select value={orderBy} onValueChange={(value) => {
             setOrderBy(value as 'RECENT' | 'OLDEST');
-            // 정렬 변경 시 바로 검색을 실행하려면 아래 handleSearch() 호출
-            handleSearch(); // 필요 시 주석 해제
           }}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="정렬" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="LATEST">날짜: 최신 순</SelectItem>
-              <SelectItem value="RECENT">날짜: 오래된 순</SelectItem>
+              <SelectItem value="RECENT">날짜: 최신 순</SelectItem>
+              <SelectItem value="OLDEST">날짜: 오래된 순</SelectItem>
             </SelectContent>
           </Select>
         }
         columns={[
-          { 
-            accessorKey: "created_at", 
-            header: "게시일자",
-            cell: ({ row }) => dayjs(row.original.created_at).format("YYYY.MM.DD HH:mm")
-          },
           { accessorKey: "id", header: "ID" },
-          { accessorKey: "title", header: "제목" },
           { 
-            accessorKey: "contents", 
-            header: "내용",
-            // ✨ cell 렌더링 시 createHtmlPreview 함수를 사용합니다.
-            cell: ({ row }) => createHtmlPreview(row.original.contents, 50) // 50자로 제한
+            accessorKey: "publishAt", 
+            header: "발송일자",
+            cell: ({ row }) => row.original.publishAt ? dayjs(row.original.publishAt).format("YYYY.MM.DD HH:mm") : "-"
           },
-          { accessorKey: "post_type", header: "공지 유형" },
           { 
-            accessorKey: "importance", 
-            header: "중요도",
+            accessorKey: "category", 
+            header: "알림유형",
+            cell: ({ row }) => {
+              const category = notificationCategories.find(cat => cat.value === row.original.category);
+              return category?.label || row.original.category;
+            }
+          },
+          { 
+            accessorKey: "title", 
+            header: "제목",
+            cell: ({ row }) => createHtmlPreview(row.original.title, 30)
+          },
+          { 
+            accessorKey: "body", 
+            header: "내용",
+            cell: ({ row }) => createHtmlPreview(row.original.body, 50)
+          },
+          { 
+            accessorKey: "targetType", 
+            header: "발송 대상",
+            cell: ({ row }) => {
+              const targetType = targetTypeOptions.find(option => option.value === row.original.targetType);
+              return targetType?.label || row.original.targetType;
+            }
+          },
+          { 
+            accessorKey: "userCount", 
+            header: "대상자 수",
+            cell: ({ row }) => row.original.userCount || 0
+          },
+          { 
+            accessorKey: "isSent", 
+            header: "발송 상태",
+            cell: ({ row }) => row.original.isSent ? "발송 완료" : "발송 대기"
           },
           {
             id: "edit",
@@ -255,7 +327,7 @@ export default function NoticeListPage() {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => router.push(`/admin/news/${row.original.id}`)} // 경로 수정
+                onClick={() => router.push(`/admin/push-alert/edit/${row.original.id}`)}
               >
                 <Edit className="h-4 w-4" />
               </Button>
@@ -263,7 +335,7 @@ export default function NoticeListPage() {
           },
         ]}
       />
-      <DataTablePagination request={request as any} total={listData?.total || 0} />
+      <DataTablePagination request={request as any} total={listData?.count_data || 0} />
     </main>
   );
 }
