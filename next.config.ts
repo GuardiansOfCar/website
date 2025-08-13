@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   webpack(config) {
+    config.externals.push("pino-pretty", "lokijs", "encoding");
     config.module.rules.push({
       test: /\.(mp4|webm|ogg|mp3|wav|flac|aac|rtf|doc|docx)$/,
       use: {
