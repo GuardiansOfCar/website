@@ -7,7 +7,7 @@ frontend:
         - pnpm install --no-frozen-lockfile
     build:
       commands:
-        - pnpm build
+        - NODE_OPTIONS=--max-old-space-size=14336 pnpm build
   artifacts:
     baseDirectory: .next
     files:
