@@ -15,7 +15,6 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
-
 buildImage:
   env:
     COMPUTE_TYPE: 'LARGE'
