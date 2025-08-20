@@ -12,12 +12,13 @@ import { useWallet } from "@/lib/use-wallet";
 import { shortenAddress } from "@/lib/utils";
 import { AUDIT_LINK, LANGUAGES } from "@/lib/constants";
 import { useWalletConnectorStore } from "@/lib/use-wallet-connector-store";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import {BorderText} from "@/components/border-text";
 
 export const Nav = () => {
   const t = useTranslations();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const wallet = useWallet();
 
@@ -198,6 +199,10 @@ export const Nav = () => {
               className={"w-full flex flex-col items-center relative z-[10]"}
             >
               {LANGUAGES.map((chapter) => {
+                // 현재 URL 파라미터를 유지하면서 언어만 변경
+                const currentSearch = searchParams.toString();
+                const newHref = `/${chapter.key}${currentSearch ? `?${currentSearch}` : ''}`;
+                
                 return (
                   <NextLink
                     onClick={() => {
@@ -205,7 +210,7 @@ export const Nav = () => {
                       setMenuOpen(false);
                     }}
                     key={chapter.key}
-                    href={`/${chapter.key}`}
+                    href={newHref}
                     className={clsx(
                       "flex text-left w-full py-3 text-body-1b text-white hover:text-primary cursor-pointer",
                       pathname.endsWith(`/${chapter.key}`) && "!text-primary",

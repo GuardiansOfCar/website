@@ -8,10 +8,12 @@ export function cn(...inputs: ClassValue[]) {
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { Coin } from "@/lib/use-wallet-store";
 
-export const getReferral = (searchParms: ReadonlyURLSearchParams) => {
+export const getReferral = (searchParms: ReadonlyURLSearchParams, fallbackValue?: string) => {
   const r = searchParms.get("r");
   if (r) {
     return r;
+  } else if (fallbackValue) {
+    return fallbackValue;
   } else {
     return "gotcar";
   }

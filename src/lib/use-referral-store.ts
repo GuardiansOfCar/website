@@ -7,8 +7,15 @@ interface ReferralStore {
 }
 
 export const useReferralStore = create<ReferralStore>()(
-  devtools((set) => ({
-    value: "",
-    setValue: (value: string) => set({ value }),
-  })),
+  devtools(
+    persist(
+      (set) => ({
+        value: "gotcar", // 기본값을 gotcar로 설정
+        setValue: (value: string) => set({ value }),
+      }),
+      {
+        name: 'referral-storage', // localStorage에 저장될 키 이름
+      }
+    )
+  )
 );

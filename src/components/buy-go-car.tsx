@@ -46,15 +46,28 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
 
     const sp = useSearchParams();
     useEffect(() => {
-        const r = getReferral(sp);
-        if (r) {
-            referralStore.setValue(r);
+        // URL에서 referral 코드를 확인하고, 없으면 저장된 값을 사용
+        const urlReferral = getReferral(sp);
+        const savedReferral = referralStore.value;
+        
+        let finalReferral = urlReferral;
+        
+        // URL에 referral이 있으면 저장
+        if (sp.get("r")) {
+            referralStore.setValue(urlReferral);
+        } else if (savedReferral) {
+            // URL에 없지만 저장된 값이 있으면 사용
+            finalReferral = savedReferral;
         }
+        
+        // form에 referral 값 설정
+        form.setValue("referral", finalReferral);
+        
         const a = sp.get("amount");
         if (a && !Number.isNaN(a)) {
             form.setValue("amount", a);
         }
-    }, [sp]);
+    }, [sp, referralStore.value]);
 
     useEffect(() => {
         if (!wallet.coin) return setNetworkPerGoCar(0);
@@ -68,13 +81,6 @@ export const BuyGoCar = (props: { rewards?: boolean }) => {
     useEffect(() => {
         setExpectIcoGocar(networkPerGocar * parseFloat(amount || "0.0"));
     }, [networkPerGocar, amount]);
-
-    useEffect(() => {
-        const r = getReferral(searchParams);
-        if (r) {
-            form.setValue("referral", r);
-        }
-    }, [searchParams]);
 
     const handleCoinClick = (net: Network) => () => {
         wallet.setNetwork(net);
