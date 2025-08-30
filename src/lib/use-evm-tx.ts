@@ -8,6 +8,7 @@ import {
 } from "@/lib/constants";
 import { Network } from "@/lib/use-wallet-store";
 import { useWallet } from "@/lib/use-wallet";
+import { trackPurchase } from "@/lib/utils";
 
 export function useEvmTx(provider: any | undefined) {
   const { coin, network, address } = useWallet();
@@ -101,6 +102,11 @@ export function useEvmTx(provider: any | undefined) {
       method: "eth_sendTransaction",
       params: [tx],
     });
+
+    // Track purchase for Google Analytics with automatic USD conversion
+    // Uses the actual coin type and amount for accurate USD calculation
+    const coinType = coin === "USDT" ? "USDT" : (network === "BNB" ? "BNB" : "ETH");
+    await trackPurchase(txHash, eth, coinType);
 
     return txHash!! as string;
   };

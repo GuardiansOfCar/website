@@ -6,6 +6,7 @@ import { useEvmTx } from "@/lib/use-evm-tx";
 import { wrapWindow } from "@/lib/constants";
 import { useWalletStore } from "@/lib/use-wallet-store";
 import { useEffect } from "react";
+import { trackWalletConnect } from "@/lib/utils";
 
 export function usePhantom() {
   const wallet = useWallet();
@@ -38,6 +39,9 @@ export function usePhantom() {
     }
 
     wallet.set(address, "phantom");
+    
+    // Track wallet connection for Google Analytics
+    trackWalletConnect();
   };
 
   const solanaTx = useSolanaTx(provider?.solana);

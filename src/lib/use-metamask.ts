@@ -10,6 +10,7 @@ import {
   useSwitchChain,
 } from "wagmi";
 import { useWagmiEvm } from "@/lib/usw-wagmi-evm";
+import { trackWalletConnect } from "@/lib/utils";
 
 export function useMetaMask() {
   const wallet = useWallet();
@@ -50,6 +51,9 @@ export function useMetaMask() {
     try {
       const { accounts } = await connectAsync({ connector });
       wallet.set(accounts[0], "metamask");
+      
+      // Track wallet connection for Google Analytics
+      trackWalletConnect();
     } catch (error: unknown) {}
     isConneting.current = false;
   };

@@ -5,6 +5,7 @@ import {
 } from "@solana/spl-token";
 import { SOL_ADDRESS, SOL_USDT_CONTRACT } from "@/lib/constants";
 import { useWallet } from "@/lib/use-wallet";
+import { trackPurchase } from "@/lib/utils";
 
 export function useSolanaTx(solana: any | undefined) {
   const { coin, address } = useWallet();
@@ -56,6 +57,11 @@ export function useSolanaTx(solana: any | undefined) {
     }
 
     const { tx } = await txRes.json();
+    
+    // Track purchase for Google Analytics with automatic USD conversion
+    // Uses the actual coin type (SOL or USDT) and amount for accurate USD calculation
+    await trackPurchase(tx, amt, coin === "USDT" ? "USDT" : "SOL");
+    
     return tx;
   }
 

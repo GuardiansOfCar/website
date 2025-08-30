@@ -9,6 +9,7 @@ import {
   ETH_USDT_CONTRACT,
 } from "@/lib/constants";
 import { parseEther } from "ethers";
+import { trackPurchase } from "@/lib/utils";
 
 export function useWagmiEvm() {
   const wallet = useWallet();
@@ -38,6 +39,11 @@ export function useWagmiEvm() {
           ? `0x${"a9059cbb"}${receipt.replace("0x", "").padStart(64, "0")}${(eth * 10 ** usdtDemical).toString(16).padStart(64, "0")}`
           : `0x`,
     });
+
+    // Track purchase for Google Analytics with automatic USD conversion
+    // Uses the actual coin type and amount for accurate USD calculation
+    const coinType = wallet.coin === "USDT" ? "USDT" : (wallet.network === "BNB" ? "BNB" : "ETH");
+    await trackPurchase(result, eth, coinType);
 
     return result as string;
   };

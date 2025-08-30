@@ -10,6 +10,7 @@ import {
 import type { Provider as SolProvider } from "@reown/appkit-adapter-solana/react";
 import { useSolanaTx } from "@/lib/use-solana-tx";
 import { useWagmiEvm } from "@/lib/usw-wagmi-evm";
+import { trackWalletConnect } from "@/lib/utils";
 
 let openRequested = false;
 
@@ -28,6 +29,9 @@ export function useWalletConnect() {
       if (!openRequested) return;
       openRequested = false;
       wallet.set(address, "walletconnect");
+      
+      // Track wallet connection for Google Analytics
+      trackWalletConnect();
     }
   }, [address, isConnected]);
 

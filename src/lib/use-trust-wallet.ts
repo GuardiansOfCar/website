@@ -5,6 +5,7 @@ import { useSolanaTx } from "@/lib/use-solana-tx";
 import { useEvmTx } from "@/lib/use-evm-tx";
 import { useSyncProviders } from "@/lib/use-ethereum-store";
 import { useMemo } from "react";
+import { trackWalletConnect } from "@/lib/utils";
 
 export function useTrustWallet() {
   const wallet = useWallet();
@@ -41,6 +42,9 @@ export function useTrustWallet() {
     }
 
     wallet.set(address, "trustwallet");
+    
+    // Track wallet connection for Google Analytics
+    trackWalletConnect();
   };
 
   const solanaTx = useSolanaTx(provider?.solana);
