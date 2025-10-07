@@ -36,7 +36,7 @@ export default function AdminManagersListPage() {
       role: null,
       ...Object.fromEntries(searchParams.entries()),
     }),
-    [searchParams],
+    [searchParams]
   );
 
   // 검색 필드 상태 관리
@@ -48,7 +48,7 @@ export default function AdminManagersListPage() {
   // 관리자 목록 데이터 요청
   const { data: listData, isLoading } = useSWR(
     [`/v1/admin-members/members/manager`, request],
-    (args) => fetch(args[0], { query: args[1] }),
+    (args) => fetch(args[0], { query: args[1] })
   );
 
   // 검색 기능 핸들러
@@ -100,6 +100,11 @@ export default function AdminManagersListPage() {
             <Input
               value={adminName}
               onChange={(e) => setAdminName(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch();
+                }
+              }}
               placeholder="관리자 이름으로 검색"
               className="flex-1"
             />

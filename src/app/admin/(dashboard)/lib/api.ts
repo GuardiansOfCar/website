@@ -35,18 +35,19 @@ export interface ListResponse {}
 
 // ✅ 1. 이동 기록 조회 전용 타입 및 기본값
 export interface DrivingHistoryListRequest extends PaginationRequest {
-  startDate?: string;
-  endDate?: string;
-  time?: string;
-  day?: string;
-  type?: string;
-  name?: string;
-  sort?: string;
+  start_date?: string;
+  end_date?: string;
+  active_time_minutes?: number;
+  day_of_week?: number;
+  move_method?: string;
+  user_name?: string;
+  sort_by?: string;
 }
 
 export const defaultDrivingHistoryRequest: DrivingHistoryListRequest = {
-  ...defaultPaginationRequest, // 공통 기본값 포함
-  sort: "LATEST",
+  page: 1,
+  limit: 50,
+  sort_by: "RECENT",
 };
 
 // ✅ 2. 공지사항 조회 전용 타입 및 기본값

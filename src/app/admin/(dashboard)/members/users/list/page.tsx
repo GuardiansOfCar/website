@@ -34,10 +34,10 @@ export default function AdminUsersListPage() {
     () => ({
       ...defaultPaginationRequest,
       provider: null,
-      is_active: 'ALL',
+      is_active: "ALL",
       ...Object.fromEntries(searchParams.entries()),
     }),
-    [searchParams],
+    [searchParams]
   );
 
   // 검색 필드 상태 관리
@@ -50,7 +50,7 @@ export default function AdminUsersListPage() {
   // 사용자 목록 데이터 요청
   const { data: listData, isLoading } = useSWR(
     [`/v1/admin-members/members/user`, request],
-    (args) => fetch(args[0], { query: args[1] }),
+    (args) => fetch(args[0], { query: args[1] })
   );
 
   // 검색 기능 핸들러
@@ -116,6 +116,11 @@ export default function AdminUsersListPage() {
             <Input
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch();
+                }
+              }}
               placeholder="사용자 이름으로 검색"
               className="flex-1"
             />

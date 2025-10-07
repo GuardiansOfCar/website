@@ -26,7 +26,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar"; // shadcn/ui 캘린더 컴포넌트
 import { DataTable } from "@/components/data-table";
 import { DataTablePagination } from "@/components/data-table-pagination";
@@ -38,72 +42,92 @@ export default function DrivingHistoryPage() {
   const searchParams = useSearchParams();
 
   // URL 파라미터를 기반으로 API 요청 객체 생성
-  const request = useMemo(
-    () => ({
-      ...defaultDrivingHistoryRequest,
-      ...Object.fromEntries(searchParams.entries()),
-    }),
-    [searchParams],
-  );
+  const request = useMemo(() => {
+    const urlParams = Object.fromEntries(searchParams.entries());
+    return {
+      page: parseInt(urlParams.page) || 1,
+      limit: parseInt(urlParams.limit) || 50,
+      start_date: urlParams.start_date,
+      end_date: urlParams.end_date,
+      active_time_minutes: urlParams.active_time_minutes
+        ? parseInt(urlParams.active_time_minutes)
+        : undefined,
+      day_of_week: urlParams.day_of_week
+        ? parseInt(urlParams.day_of_week)
+        : undefined,
+      move_method: urlParams.move_method,
+      user_name: urlParams.user_name,
+      sort_by: urlParams.sort_by || "RECENT",
+    };
+  }, [searchParams]);
 
   // 필터 상태 관리
   const [date, setDate] = useState<DateRange | undefined>({
-    from: request.startDate ? dayjs(request.startDate).toDate() : undefined,
-    to: request.endDate ? dayjs(request.endDate).toDate() : undefined,
+    from: request.start_date ? dayjs(request.start_date).toDate() : undefined,
+    to: request.end_date ? dayjs(request.end_date).toDate() : undefined,
   });
-  const [drivingTime, setDrivingTime] = useState(request.time || "ALL");
-  const [dayOfWeek, setDayOfWeek] = useState(request.day || "ALL");
-  const [drivingType, setDrivingType] = useState(request.type || "ALL");
-  const [memberName, setMemberName] = useState(request.name || "");
-  const [sortBy, setSortBy] = useState(request.sort || "LATEST");
+  const [activeTimeMinutes, setActiveTimeMinutes] = useState(
+    request.active_time_minutes || 0
+  );
+  const [dayOfWeek, setDayOfWeek] = useState(request.day_of_week || 0);
+  const [moveMethod, setMoveMethod] = useState(request.move_method || "ALL");
+  const [userName, setUserName] = useState(request.user_name || "");
+  const [sortBy, setSortBy] = useState(request.sort_by || "RECENT");
 
   const fetch = useAdminFetch();
 
   // 주행 기록 데이터 요청
   const { data: listData, isLoading } = useSWR(
-    [`/v1/driving-history/list`, request], // API 엔드포인트는 실제 환경에 맞게 수정
-    (args) => fetch(args[0], { query: args[1] }),
+    [`/v1/admin-move-history/list`, request],
+    (args) => fetch(args[0], { query: args[1] })
   );
 
   // 검색 핸들러
   const handleSearch = () => {
-    const params = {
-      ...request,
+    const params: any = {
       page: 1,
-      startDate: date?.from ? dayjs(date.from).format("YYYY-MM-DD") : undefined,
-      endDate: date?.to ? dayjs(date.to).format("YYYY-MM-DD") : undefined,
-      time: drivingTime === "ALL" ? undefined : drivingTime,
-      day: dayOfWeek === "ALL" ? undefined : dayOfWeek,
-      type: drivingType === "ALL" ? undefined : drivingType,
-      name: memberName || undefined,
-      sort: sortBy,
+      limit: 50,
     };
+
+    // undefined가 아닌 값만 추가
+    if (date?.from) params.start_date = dayjs(date.from).format("YYYY-MM-DD");
+    if (date?.to) params.end_date = dayjs(date.to).format("YYYY-MM-DD");
+    if (activeTimeMinutes > 0) params.active_time_minutes = activeTimeMinutes;
+    if (dayOfWeek > 0) params.day_of_week = dayOfWeek;
+    if (moveMethod !== "ALL") params.move_method = moveMethod;
+    if (userName) params.user_name = userName;
+    if (sortBy) params.sort_by = sortBy;
+
     router.push(`${pathname}?${stringify(params)}`);
   };
 
   // 초기화 핸들러
   const handleReset = () => {
     setDate(undefined);
-    setDrivingTime("ALL");
-    setDayOfWeek("ALL");
-    setDrivingType("ALL");
-    setMemberName("");
-    setSortBy("LATEST");
+    setActiveTimeMinutes(0);
+    setDayOfWeek(0);
+    setMoveMethod("ALL");
+    setUserName("");
+    setSortBy("RECENT");
     router.push(pathname);
   };
-  
+
   // 날짜 프리셋 버튼 핸들러
-  const setDatePreset = (unit: 'day' | 'week' | 'month', amount: number) => {
+  const setDatePreset = (unit: "day" | "week" | "month", amount: number) => {
     setDate({ from: dayjs().subtract(amount, unit).toDate(), to: new Date() });
   };
 
   return (
-    <main className="mx-auto flex w-full flex-col space-y-6 p-10">
+    <main className="mx-auto flex w-full flex-col space-y-6 p-10 bg-white dark:bg-black">
       <div>
-        <p className="text-sm text-muted-foreground">주행 데이터</p>
-        <h1 className="text-2xl font-bold">조회</h1>
+        <p className="text-sm text-muted-foreground dark:text-gray-400">
+          주행 데이터
+        </p>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          조회
+        </h1>
       </div>
-      <Separator />
+      <Separator className="border-gray-200 dark:border-gray-700" />
 
       {/* 검색 필터 섹션 */}
       <Card>
@@ -118,14 +142,15 @@ export default function DrivingHistoryPage() {
                     variant={"outline"}
                     className={cn(
                       "w-[280px] justify-start text-left font-normal",
-                      !date && "text-muted-foreground",
+                      !date && "text-muted-foreground"
                     )}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
                     {date?.from ? (
                       date.to ? (
                         <>
-                          {dayjs(date.from).format("L")} - {dayjs(date.to).format("L")}
+                          {dayjs(date.from).format("L")} -{" "}
+                          {dayjs(date.to).format("L")}
                         </>
                       ) : (
                         dayjs(date.from).format("L")
@@ -145,58 +170,105 @@ export default function DrivingHistoryPage() {
                 </PopoverContent>
               </Popover>
               <div className="flex items-center space-x-1">
-                 <Button variant="ghost" size="sm" onClick={() => setDate(undefined)}>전체</Button>
-                 <Button variant="ghost" size="sm" onClick={() => setDate({from: new Date(), to: new Date()})}>오늘</Button>
-                 <Button variant="ghost" size="sm" onClick={() => setDatePreset('week', 1)}>1주일</Button>
-                 <Button variant="ghost" size="sm" onClick={() => setDatePreset('month', 1)}>1개월</Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setDate(undefined)}
+                >
+                  전체
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setDate({ from: new Date(), to: new Date() })}
+                >
+                  오늘
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setDatePreset("week", 1)}
+                >
+                  1주일
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setDatePreset("month", 1)}
+                >
+                  1개월
+                </Button>
               </div>
             </div>
             <div></div> {/* 그리드 레이아웃을 위한 빈 공간 */}
-
             {/* 주행 시간, 주행 요일 필터 */}
             <div className="flex items-center space-x-2">
-              <span className="w-24 shrink-0 font-semibold">주행 시간</span>
-              <Select value={drivingTime} onValueChange={setDrivingTime}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="ALL">전체</SelectItem>
-                  {/* 시간 옵션 추가 */}
-                </SelectContent>
-              </Select>
+              <span className="w-24 shrink-0 font-semibold">활성 시간(분)</span>
+              <Input
+                type="number"
+                value={activeTimeMinutes}
+                onChange={(e) =>
+                  setActiveTimeMinutes(parseInt(e.target.value) || 0)
+                }
+                placeholder="최소 활성 시간"
+                className="w-[120px]"
+              />
             </div>
             <div className="flex items-center space-x-2">
               <span className="w-24 shrink-0 font-semibold">주행 요일</span>
-              <Select value={dayOfWeek} onValueChange={setDayOfWeek}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
+              <Select
+                value={dayOfWeek.toString()}
+                onValueChange={(value) => setDayOfWeek(parseInt(value))}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="ALL">전체</SelectItem>
-                  {/* 요일 옵션 추가 */}
+                  <SelectItem value="0">전체</SelectItem>
+                  <SelectItem value="0">일요일</SelectItem>
+                  <SelectItem value="1">월요일</SelectItem>
+                  <SelectItem value="2">화요일</SelectItem>
+                  <SelectItem value="3">수요일</SelectItem>
+                  <SelectItem value="4">목요일</SelectItem>
+                  <SelectItem value="5">금요일</SelectItem>
+                  <SelectItem value="6">토요일</SelectItem>
                 </SelectContent>
               </Select>
             </div>
-
-            {/* 주행 타입, 회원 이름 필터 */}
+            {/* 주행 방법, 회원 이름 필터 */}
             <div className="flex items-center space-x-2">
-              <span className="w-24 shrink-0 font-semibold">주행 타입</span>
-              <Select value={drivingType} onValueChange={setDrivingType}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
+              <span className="w-24 shrink-0 font-semibold">주행 방법</span>
+              <Select value={moveMethod} onValueChange={setMoveMethod}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="ALL">전체</SelectItem>
-                  {/* 타입 옵션 추가 */}
+                  <SelectItem value="WALK">도보</SelectItem>
+                  <SelectItem value="CYCLING">자전거</SelectItem>
+                  <SelectItem value="CAR">자동차</SelectItem>
+                  <SelectItem value="OTHER">기타</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className="flex items-center space-x-2">
               <span className="w-24 shrink-0 font-semibold">회원 이름</span>
               <Input
-                value={memberName}
-                onChange={(e) => setMemberName(e.target.value)}
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleSearch();
+                  }
+                }}
                 placeholder="회원 이름으로 검색"
               />
             </div>
           </div>
           <div className="mt-6 flex justify-end space-x-2">
-            <Button variant="outline" onClick={handleReset}>초기화</Button>
+            <Button variant="outline" onClick={handleReset}>
+              초기화
+            </Button>
             <Button onClick={handleSearch}>검색</Button>
           </div>
         </CardContent>
@@ -208,36 +280,53 @@ export default function DrivingHistoryPage() {
         total={listData?.total || 0}
         data={listData?.data ?? []}
         toolbar={
-          <Select value={sortBy} onValueChange={(value) => {setSortBy(value); handleSearch();}}>
+          <Select
+            value={sortBy}
+            onValueChange={(value) => {
+              setSortBy(value);
+              handleSearch();
+            }}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="정렬" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="LATEST">날짜: 최신 순</SelectItem>
-              <SelectItem value="OLDEST">날짜: 오래된 순</SelectItem>
+              <SelectItem value="RECENT">날짜: 최신 순</SelectItem>
+              <SelectItem value="DISTANCE">거리: 긴 순</SelectItem>
+              <SelectItem value="MOVE_METHOD">주행 방법 순</SelectItem>
             </SelectContent>
           </Select>
         }
+        onRowClick={(row) => router.push(`/admin/move-history/${row.id}`)}
         columns={[
-          { accessorKey: "userName", header: "회원 이름" },
-          { 
-            accessorKey: "date", 
+          { accessorKey: "user_name", header: "회원 이름" },
+          {
+            accessorKey: "move_date",
             header: "주행 날짜",
-            cell: ({ row }) => dayjs(row.original.date).format("YYYY.MM.DD")
+            cell: ({ row }) =>
+              dayjs(row.original.move_date).format("YYYY.MM.DD"),
           },
-          { accessorKey: "time", header: "주행 시간" },
-          { accessorKey: "day", header: "주행 요일" },
-          { 
-            accessorKey: "distance", 
+          {
+            accessorKey: "active_time_seconds",
+            header: "활성 시간",
+            cell: ({ row }) =>
+              `${Math.floor(row.original.active_time_seconds / 60)}분 ${row.original.active_time_seconds % 60}초`,
+          },
+          { accessorKey: "day_of_week", header: "주행 요일" },
+          {
+            accessorKey: "distance",
             header: "주행 거리",
-            cell: ({ row }) => `${row.original.distance}Km`
+            cell: ({ row }) => `${row.original.distance}km`,
           },
-          { accessorKey: "mode", header: "주행모드" },
+          { accessorKey: "move_method", header: "주행 방법" },
         ]}
       />
 
       {/* 페이지네이션 */}
-      <DataTablePagination request={request as any} total={listData?.total || 0} />
+      <DataTablePagination
+        request={request as any}
+        total={listData?.total || 0}
+      />
     </main>
   );
 }
