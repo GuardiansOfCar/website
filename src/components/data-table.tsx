@@ -38,6 +38,7 @@ interface DataTableProps<TData, TValue> {
   onRowClick?: (data: TData) => void;
   toolbar?: ReactNode;
   title?: string;
+  className?: string;
 }
 
 export function DataTable<TData, TValue>({
@@ -47,6 +48,7 @@ export function DataTable<TData, TValue>({
   onRowClick,
   toolbar,
   title,
+  className,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
@@ -139,6 +141,7 @@ export function DataTable<TData, TValue>({
                   }}
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  className={onRowClick ? "cursor-pointer hover:bg-muted/50" : ""}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

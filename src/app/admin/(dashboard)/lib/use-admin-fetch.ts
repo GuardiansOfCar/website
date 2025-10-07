@@ -2,6 +2,7 @@ import { API_BASE_URL } from "@/lib/constants";
 import { useContext } from "react";
 import { TokenContext } from "@/app/admin/(dashboard)/provider";
 import { stringify } from "querystring";
+import { logout } from "@/app/actions/auth";
 
 export function useAdminFetch() {
   const token = useContext(TokenContext);
@@ -29,6 +30,12 @@ export function useAdminFetch() {
         },
       },
     );
+
+    // 401 에러 발생 시 자동 로그아웃 처리
+    if (res.status === 401) {
+      await logout();
+      return;
+    }
 
     if (res.status >= 400) {
       throw await res.json();

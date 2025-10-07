@@ -44,21 +44,30 @@ export default function DrivingHistoryPage() {
   // URL 파라미터를 기반으로 API 요청 객체 생성
   const request = useMemo(() => {
     const urlParams = Object.fromEntries(searchParams.entries());
-    return {
+    const params: any = {
       page: parseInt(urlParams.page) || 1,
       limit: parseInt(urlParams.limit) || 50,
-      start_date: urlParams.start_date,
-      end_date: urlParams.end_date,
-      active_time_minutes: urlParams.active_time_minutes
-        ? parseInt(urlParams.active_time_minutes)
-        : undefined,
-      day_of_week: urlParams.day_of_week
-        ? parseInt(urlParams.day_of_week)
-        : undefined,
-      move_method: urlParams.move_method,
-      user_name: urlParams.user_name,
-      sort_by: urlParams.sort_by || "RECENT",
     };
+
+    // undefined가 아닌 값만 추가 (서버에서 빈값은 '전체'로 처리)
+    if (urlParams.start_date) params.start_date = urlParams.start_date;
+    if (urlParams.end_date) params.end_date = urlParams.end_date;
+    if (urlParams.active_time_minutes && parseInt(urlParams.active_time_minutes) > 0) {
+      params.active_time_minutes = parseInt(urlParams.active_time_minutes);
+    }
+    if (urlParams.day_of_week && parseInt(urlParams.day_of_week) > 0) {
+      params.day_of_week = parseInt(urlParams.day_of_week);
+    }
+    if (urlParams.move_method && urlParams.move_method !== "ALL") {
+      params.move_method = urlParams.move_method;
+    }
+    if (urlParams.user_name) params.user_name = urlParams.user_name;
+    if (urlParams.status && urlParams.status !== "ALL") {
+      params.status = urlParams.status;
+    }
+    if (urlParams.sort_by) params.sort_by = urlParams.sort_by;
+
+    return params;
   }, [searchParams]);
 
   // 필터 상태 관리
@@ -72,6 +81,7 @@ export default function DrivingHistoryPage() {
   const [dayOfWeek, setDayOfWeek] = useState(request.day_of_week || 0);
   const [moveMethod, setMoveMethod] = useState(request.move_method || "ALL");
   const [userName, setUserName] = useState(request.user_name || "");
+  const [status, setStatus] = useState(request.status || "ALL");
   const [sortBy, setSortBy] = useState(request.sort_by || "RECENT");
 
   const fetch = useAdminFetch();
@@ -89,13 +99,14 @@ export default function DrivingHistoryPage() {
       limit: 50,
     };
 
-    // undefined가 아닌 값만 추가
+    // undefined가 아닌 값만 추가 (서버에서 빈값은 '전체'로 처리)
     if (date?.from) params.start_date = dayjs(date.from).format("YYYY-MM-DD");
     if (date?.to) params.end_date = dayjs(date.to).format("YYYY-MM-DD");
     if (activeTimeMinutes > 0) params.active_time_minutes = activeTimeMinutes;
     if (dayOfWeek > 0) params.day_of_week = dayOfWeek;
     if (moveMethod !== "ALL") params.move_method = moveMethod;
     if (userName) params.user_name = userName;
+    if (status !== "ALL") params.status = status;
     if (sortBy) params.sort_by = sortBy;
 
     router.push(`${pathname}?${stringify(params)}`);
@@ -108,6 +119,7 @@ export default function DrivingHistoryPage() {
     setDayOfWeek(0);
     setMoveMethod("ALL");
     setUserName("");
+    setStatus("ALL");
     setSortBy("RECENT");
     router.push(pathname);
   };
@@ -149,11 +161,11 @@ export default function DrivingHistoryPage() {
                     {date?.from ? (
                       date.to ? (
                         <>
-                          {dayjs(date.from).format("L")} -{" "}
-                          {dayjs(date.to).format("L")}
+                          {dayjs(date.from).format("YYYY-MM-DD")} -{" "}
+                          {dayjs(date.to).format("YYYY-MM-DD")}
                         </>
                       ) : (
-                        dayjs(date.from).format("L")
+                        dayjs(date.from).format("YYYY-MM-DD")
                       )
                     ) : (
                       <span>날짜 선택</span>
@@ -171,7 +183,7 @@ export default function DrivingHistoryPage() {
               </Popover>
               <div className="flex items-center space-x-1">
                 <Button
-                  variant="ghost"
+                  variant={!date ? "default" : "ghost"}
                   size="sm"
                   onClick={() => setDate(undefined)}
                 >
@@ -203,10 +215,10 @@ export default function DrivingHistoryPage() {
             <div></div> {/* 그리드 레이아웃을 위한 빈 공간 */}
             {/* 주행 시간, 주행 요일 필터 */}
             <div className="flex items-center space-x-2">
-              <span className="w-24 shrink-0 font-semibold">활성 시간(분)</span>
+              <span className="w-24 shrink-0 font-semibold">활성 시간(분) 이하</span>
               <Input
                 type="number"
-                value={activeTimeMinutes}
+                value={activeTimeMinutes || ""}
                 onChange={(e) =>
                   setActiveTimeMinutes(parseInt(e.target.value) || 0)
                 }
@@ -225,13 +237,13 @@ export default function DrivingHistoryPage() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="0">전체</SelectItem>
-                  <SelectItem value="0">일요일</SelectItem>
-                  <SelectItem value="1">월요일</SelectItem>
-                  <SelectItem value="2">화요일</SelectItem>
-                  <SelectItem value="3">수요일</SelectItem>
-                  <SelectItem value="4">목요일</SelectItem>
-                  <SelectItem value="5">금요일</SelectItem>
-                  <SelectItem value="6">토요일</SelectItem>
+                  <SelectItem value="1">일요일</SelectItem>
+                  <SelectItem value="2">월요일</SelectItem>
+                  <SelectItem value="3">화요일</SelectItem>
+                  <SelectItem value="4">수요일</SelectItem>
+                  <SelectItem value="5">목요일</SelectItem>
+                  <SelectItem value="6">금요일</SelectItem>
+                  <SelectItem value="7">토요일</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -248,6 +260,20 @@ export default function DrivingHistoryPage() {
                   <SelectItem value="CYCLING">자전거</SelectItem>
                   <SelectItem value="CAR">자동차</SelectItem>
                   <SelectItem value="OTHER">기타</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex items-center space-x-2">
+              <span className="w-24 shrink-0 font-semibold">승인 상태</span>
+              <Select value={status} onValueChange={setStatus}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ALL">전체</SelectItem>
+                  <SelectItem value="Pending">대기</SelectItem>
+                  <SelectItem value="Approved">승인</SelectItem>
+                  <SelectItem value="Rejected">거절</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -299,6 +325,7 @@ export default function DrivingHistoryPage() {
         }
         onRowClick={(row) => router.push(`/admin/move-history/${row.id}`)}
         columns={[
+          { accessorKey: "id", header: "ID" },
           { accessorKey: "user_name", header: "회원 이름" },
           {
             accessorKey: "move_date",
@@ -316,9 +343,32 @@ export default function DrivingHistoryPage() {
           {
             accessorKey: "distance",
             header: "주행 거리",
-            cell: ({ row }) => `${row.original.distance}km`,
+            cell: ({ row }) => `${row.original.distance.toFixed(2)}km`,
           },
           { accessorKey: "move_method", header: "주행 방법" },
+          {
+            accessorKey: "status",
+            header: "상태",
+            cell: ({ row }) => {
+              const status = row.original.status;
+              const statusLabels = {
+                'Pending': '대기',
+                'Approved': '승인',
+                'Rejected': '거절'
+              };
+              const statusColors = {
+                'Pending': 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300',
+                'Approved': 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
+                'Rejected': 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
+              };
+              
+              return (
+                <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColors[status as keyof typeof statusColors] || 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300'}`}>
+                  {statusLabels[status as keyof typeof statusLabels] || status}
+                </span>
+              );
+            },
+          },
         ]}
       />
 
