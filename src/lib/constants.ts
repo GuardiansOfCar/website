@@ -1,5 +1,5 @@
-export const API_BASE_URL = "https://api.guardiansofthecar.com/api";
-// export const API_BASE_URL = "http://localhost:5000/api";
+// export const API_BASE_URL = "https://api.guardiansofthecar.com/api";
+export const API_BASE_URL = "http://localhost:8000/api";
 
 export const WALLET_CONNECT_PROJECT_ID = "e836d5b6d527fd7288d8331a208e550a";
 
@@ -34,21 +34,21 @@ export const FEATURES = [
 ];
 
 export const LANGUAGES = [
-  { key: "en", label: "English", code: "🇺🇸" },         // US (could also be 🇬🇧 or 🌐)
-  { key: "ar", label: "Arabic", code: "🇸🇦" },          // Saudi Arabia
-  { key: "de", label: "German", code: "🇩🇪" },          // Germany
-  { key: "es", label: "Spanish", code: "🇪🇸" },         // Spain
-  { key: "fr", label: "French", code: "🇫🇷" },          // France
-  { key: "id", label: "Indonesian", code: "🇮🇩" },      // Indonesia
-  { key: "it", label: "Italian", code: "🇮🇹" },         // Italy
-  { key: "ja", label: "Japanese", code: "🇯🇵" },        // Japan
-  { key: "ko", label: "Korean", code: "🇰🇷" },          // South Korea
-  { key: "nl", label: "Dutch", code: "🇳🇱" },           // Netherlands
-  { key: "pt", label: "Portuguese", code: "🇵🇹" },      // Portugal (or 🇧🇷 for Brazilian Portuguese)
-  { key: "ru", label: "Russian", code: "🇷🇺" },         // Russia
-  { key: "th", label: "Thai", code: "🇹🇭" },            // Thailand
-  { key: "tr", label: "Turkish", code: "🇹🇷" },         // Turkey
-  { key: "vi", label: "Vietnamese", code: "🇻🇳" },      // Vietnam
+  { key: "en", label: "English", code: "🇺🇸" }, // US (could also be 🇬🇧 or 🌐)
+  { key: "ar", label: "Arabic", code: "🇸🇦" }, // Saudi Arabia
+  { key: "de", label: "German", code: "🇩🇪" }, // Germany
+  { key: "es", label: "Spanish", code: "🇪🇸" }, // Spain
+  { key: "fr", label: "French", code: "🇫🇷" }, // France
+  { key: "id", label: "Indonesian", code: "🇮🇩" }, // Indonesia
+  { key: "it", label: "Italian", code: "🇮🇹" }, // Italy
+  { key: "ja", label: "Japanese", code: "🇯🇵" }, // Japan
+  { key: "ko", label: "Korean", code: "🇰🇷" }, // South Korea
+  { key: "nl", label: "Dutch", code: "🇳🇱" }, // Netherlands
+  { key: "pt", label: "Portuguese", code: "🇵🇹" }, // Portugal (or 🇧🇷 for Brazilian Portuguese)
+  { key: "ru", label: "Russian", code: "🇷🇺" }, // Russia
+  { key: "th", label: "Thai", code: "🇹🇭" }, // Thailand
+  { key: "tr", label: "Turkish", code: "🇹🇷" }, // Turkey
+  { key: "vi", label: "Vietnamese", code: "🇻🇳" }, // Vietnam
   { key: "zh-CN", label: "Chinese (Simplified)", code: "🇨🇳" }, // China
   { key: "zh-TW", label: "Chinese (Traditional)", code: "🇹🇼" }, // Taiwan
 ];

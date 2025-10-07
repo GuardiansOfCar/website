@@ -26,7 +26,7 @@ export default function AdminStaking() {
       ...listRequest,
       ...Object.fromEntries(searchParams.entries()),
     }),
-    [searchParams.entries()],
+    [searchParams.entries()]
   );
 
   const fetch = useAdminFetch();
@@ -34,23 +34,33 @@ export default function AdminStaking() {
   const pathname = usePathname();
 
   const listStakings = useSWR([`/v1/stakings/list`, request], (args) =>
-    fetch(args[0], { query: args[1] }),
+    fetch(args[0], { query: args[1] })
   );
 
   const stakingRewardStatus = useSWR([`/v1/stakings/reward/status/0`], (args) =>
-    fetch(args[0]),
+    fetch(args[0])
   );
 
   const stakingTotal = useSWR([`/v1/stakings/status/total/me/0`], (args) =>
-    fetch(args[0]),
+    fetch(args[0])
   );
 
   const [text, setText] = useState(request.search || "");
 
+  const handleSearch = () => {
+    router.push(
+      `${pathname}?${stringify({ ...request, search: text, page: 1 })}`
+    );
+  };
+
   return (
-    <main className={"mx-auto p-10 flex flex-col w-full"}>
-      <h1 className={"text-2xl font-bold"}>스테이킹 관리</h1>
-      <Separator className={"my-4"} />
+    <main
+      className={"mx-auto p-10 flex flex-col w-full bg-white dark:bg-black"}
+    >
+      <h1 className={"text-2xl font-bold text-gray-900 dark:text-white"}>
+        스테이킹 관리
+      </h1>
+      <Separator className={"my-4 border-gray-200 dark:border-gray-700"} />
 
       <div className={"flex flex-col space-y-10"}>
         <div className={"grid grid-cols-2 gap-5"}>
@@ -152,15 +162,18 @@ export default function AdminStaking() {
                 <Input
                   value={text}
                   onChange={(e) => setText(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleSearch();
+                    }
+                  }}
                   placeholder={"지갑 주소 입력"}
                   className={"w-[400px]"}
                 />
                 <Button
-                  onClick={() => {
-                    router.push(
-                      `${pathname}?${stringify({ ...request, search: text, page: 1 })}`,
-                    );
-                  }}
+                  variant="default"
+                  className="bg-primary text-black hover:bg-primary/90 font-medium"
+                  onClick={handleSearch}
                 >
                   검색
                 </Button>
@@ -169,7 +182,7 @@ export default function AdminStaking() {
                 value={request.balanceSort}
                 setValue={(balanceSort) => {
                   router.push(
-                    `${pathname}?${stringify({ ...request, balanceSort, page: 1 })}`,
+                    `${pathname}?${stringify({ ...request, balanceSort, page: 1 })}`
                   );
                 }}
               />
@@ -177,7 +190,7 @@ export default function AdminStaking() {
                 value={request.settlementSort}
                 onChange={(settlementSort) => {
                   router.push(
-                    `${pathname}?${stringify({ ...request, settlementSort, page: 1 })}`,
+                    `${pathname}?${stringify({ ...request, settlementSort, page: 1 })}`
                   );
                 }}
               />

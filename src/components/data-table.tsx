@@ -52,7 +52,7 @@ export function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    [],
+    []
   );
   const [sorting, setSorting] = React.useState<SortingState>([]);
 
@@ -82,25 +82,31 @@ export function DataTable<TData, TValue>({
       <div className={"flex items-center justify-between"}>
         <h3 className={"text-lg font-bold"}>{title}</h3>
 
-        <div className={"flex items-center space-x-4"}>{toolbar}</div>
-      </div>
-      <div className={"flex items-center space-x-2"}>
-        {rowActionButtons?.map((button, idx) => (
-          <Button
-            key={idx}
-            onClick={() => {
-              button
-                .onClick(
-                  table.getSelectedRowModel().rows.map((x) => x.original),
-                )
-                .then(() => {
-                  table.toggleAllPageRowsSelected(false);
-                });
-            }}
-          >
-            {button.label}
-          </Button>
-        ))}
+        <div className={"flex items-center space-x-4"}>
+          {toolbar}
+          {rowActionButtons && rowActionButtons.length > 0 && (
+            <div className={"flex items-center space-x-2"}>
+              {rowActionButtons.map((button, idx) => (
+                <Button
+                  key={idx}
+                  variant="default"
+                  className="bg-primary text-black hover:bg-primary/90 font-medium"
+                  onClick={() => {
+                    button
+                      .onClick(
+                        table.getSelectedRowModel().rows.map((x) => x.original)
+                      )
+                      .then(() => {
+                        table.toggleAllPageRowsSelected(false);
+                      });
+                  }}
+                >
+                  {button.label}
+                </Button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
       <div className="rounded-md border">
         <Table>
@@ -114,7 +120,7 @@ export function DataTable<TData, TValue>({
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext(),
+                            header.getContext()
                           )}
                     </TableHead>
                   );
@@ -138,7 +144,7 @@ export function DataTable<TData, TValue>({
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext(),
+                        cell.getContext()
                       )}
                     </TableCell>
                   ))}
