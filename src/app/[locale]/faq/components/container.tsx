@@ -1,175 +1,118 @@
 "use client";
 
 import { Main } from "@/components/main";
-import { useTranslations } from "next-intl";
-import Image from "next/image";
-import { BuyGoCar } from "@/components/buy-go-car";
 import { FaqSection } from "@/app/[locale]/faq/components/section";
 import { useState } from "react";
 
-export const FaqContainer = ({ hideBuy }: { hideBuy?: boolean }) => {
-  const t = useTranslations();
-  const [openIndex, setOpenIndex] = useState<undefined | number>(0);
+const FAQ_ITEMS = [
+  {
+    question: "What makes GOTCAR unique?",
+    answer: (
+      <>
+        By utilizing open data, GOTCAR builds an AI-based precision vehicle positioning service that provides 99% cost savings compared to existing autonomous or HD map technologies.
+        <br />
+        <br />
+        Our goal is to make such advanced systems accessible to all vehicles and all environments, not limited to specific models or areas.
+      </>
+    ),
+  },
+  {
+    question: "What is the utility of the $GOTCAR token?",
+    answer: (
+      <>
+        $GOTCAR is used for mobility-related payments such as fueling, parking, charging, and insurance,
+        <br />
+        <br />
+        as well as for G2E (Guardians-to-Earn) rewards, staking, and community incentives within the ecosystem.
+      </>
+    ),
+  },
+  {
+    question: "How does GOTCAR use AI technology?",
+    answer: (
+      <>
+        The AI Agent analyzes driving behavior, road hazards, and weather conditions in real time,
+        <br />
+        <br />
+        providing lane-level navigation, indoor parking guidance, and accident alerts.
+        <br />
+        It detects and warns drivers about risks that are difficult to see or react to visually.
+      </>
+    ),
+  },
+  {
+    question: "When can I claim my $GOTCAR tokens?",
+    answer: (
+      <>
+        You can claim your tokens immediately upon the official launch.
+        <br />
+        <br />
+        The token launch and global CEX listings are planned between Q4 2025 and Q1 2026, with the claim period opening on the same schedule.
+      </>
+    ),
+  },
+  {
+    question: "How do I stake $GOTCAR?",
+    answer: (
+      <>
+        Staking begins by depositing $GOTCAR through the official website.
+        <br />
+        <br />
+        Rewards vary depending on the amount and duration of your stake.
+      </>
+    ),
+  },
+  {
+    question: "What is Guardians-to-Earn (G2E)?",
+    answer: (
+      <>
+        Drivers contribute their driving data, which the AI analyzes to assess safety and accident risks.
+        <br />
+        <br />
+        Participants are rewarded in tokens based on their contribution to traffic safety — making every driver a Guardian of the GOTCAR ecosystem.
+      </>
+    ),
+  },
+  {
+    question: "What are GOTCAR's future partnership plans?",
+    answer: (
+      <>
+        GOTCAR is pursuing integrations with global automakers such as Toyota, Hyundai, and Tesla,
+        <br />
+        as well as navigation and payment platforms like Google and Apple.
+        <br />
+        <br />
+        Our long-term goal is to deliver AI-powered safety and convenience services directly within real-world vehicle systems.
+      </>
+    ),
+  },
+];
+
+export const FaqContainer = ({ hideBuy, hideNav }: { hideBuy?: boolean; hideNav?: boolean }) => {
+  const [openIndex, setOpenIndex] = useState<number | undefined>(undefined);
 
   return (
-    <div className={"bg-hero"}>
-      <Main leftHref={"/roadmap"} rightHref={"/staking"}>
-        <div
-          className={
-            "grid grid-cols-3 gap-6 max-laptop:flex max-laptop:flex-col w-full"
-          }
-        >
-          <div className={"flex flex-col"}>
-            <h2 className={"text-header-2 text-primary mb-4"}>
-              {t("faqs.a1")}
-            </h2>
+    <div className={"bg-white"}>
+      <Main leftHref={hideNav ? "" : "/roadmap"} rightHref={hideNav ? "" : "/staking"} hideNav={hideNav}>
+        <div className={"flex flex-col items-center py-10 max-w-4xl mx-auto"}>
+          <h2 className={"text-header-2 text-[#0F0F0F] mb-8 text-center"}>
+            FAQ
+          </h2>
 
-            <div className={"flex space-x-6 items-start"}>
-              <div className={"flex flex-col space-y-4"}>
-                <FaqSection
-                  open={openIndex === 0}
-                  onOpen={(t) => {
-                    setOpenIndex(t ? 0 : undefined);
-                  }}
-                  title={t("faqs.b1")}
-                >
-                  {t("faqs.b2")}
-                  <br />
-                  <br />
-                  {t("faqs.b3")}
-                </FaqSection>
-                <FaqSection
-                  open={openIndex === 1}
-                  onOpen={(t) => {
-                    setOpenIndex(t ? 1 : undefined);
-                  }}
-                  title={t("faqs.c1")}
-                >
-                  {t("faqs.c2")}
-                  <br />
-                  <br />
-                  {t("faqs.c3")}
-                </FaqSection>
-                <FaqSection
-                  open={openIndex === 2}
-                  onOpen={(t) => {
-                    setOpenIndex(t ? 2 : undefined);
-                  }}
-                  title={t("faqs.d1")}
-                >
-                  {t("faqs.d2")}
-                  <br />
-                  <br />
-                  {t("faqs.d3")}
-                </FaqSection>
-                <FaqSection
-                  open={openIndex === 3}
-                  onOpen={(t) => {
-                    setOpenIndex(t ? 3 : undefined);
-                  }}
-                  title={t("faqs.e1")}
-                >
-                  {t("faqs.e2")}
-                  <br />
-                  <br />
-                  {t("faqs.e3")}
-                </FaqSection>
-                <FaqSection
-                  open={openIndex === 4}
-                  onOpen={(t) => {
-                    setOpenIndex(t ? 4 : undefined);
-                  }}
-                  title={t("faqs.f1")}
-                >
-                  {t("faqs.f2")}
-                  <br />
-                  <br />
-                  {t("faqs.f3")}
-                </FaqSection>
-                <FaqSection
-                  open={openIndex === 5}
-                  onOpen={(t) => {
-                    setOpenIndex(t ? 5 : undefined);
-                  }}
-                  title={t("faqs.g1")}
-                >
-                  {t("faqs.g2")}
-                  <br />
-                  <br />
-                  {t("faqs.g3")}
-                </FaqSection>
-              </div>
-            </div>
-          </div>
-
-          <div className={"flex-col flex"}>
-            <div
-              className={
-                "flex ml-auto w-[240px] -rotate-[20deg] mt-auto mb-10  max-laptop:ml-10 max-laptop:mt-10"
-              }
-            >
-              <div
-                className={
-                  "bg-neutral-100 p-4 border-neutral-0 border-4 flex-col items-center flex"
-                }
+          <div className={"w-full"}>
+            {FAQ_ITEMS.map((item, index) => (
+              <FaqSection
+                key={index}
+                open={openIndex === index}
+                onOpen={(isOpen) => {
+                  setOpenIndex(isOpen ? index : undefined);
+                }}
+                title={item.question}
               >
-                <p className={"text-body-1"}>{t("faqs.h1")}</p>
-              </div>
-            </div>
+                {item.answer}
+              </FaqSection>
+            ))}
           </div>
-
-          <div
-            className={
-              "relative items-end mt-10 justify-between hidden max-laptop:flex"
-            }
-          >
-            <Image
-              className={"self-start"}
-              src={"/images/faq-left.gif"}
-              alt={"cs"}
-              width={280}
-              height={130}
-            />
-            s
-            <Image
-              src={"/images/faq.png"}
-              alt={"cs"}
-              width={200}
-              className="absolute  right-0"
-              height={200}
-            />
-          </div>
-
-          {!hideBuy && <BuyGoCar />}
-        </div>
-
-        <div
-          className={
-            "w-[1250px] h-[320px] relative flex items-center justify-between max-laptop:hidden"
-          }
-        >
-          <Image
-            className={"self-start"}
-            src={"/images/faq-left.gif"}
-            alt={"cs"}
-            width={600}
-            height={300}
-          />
-
-          <Image
-            src={"/images/faq.png"}
-            alt={"cs"}
-            width={320}
-            className="absolute  left-1/2  -translate-x-1/2"
-            height={320}
-          />
-          <Image
-            className={"self-end -scale-x-100"}
-            src={"/images/faq-left.gif"}
-            alt={"cs"}
-            width={600}
-            height={300}
-          />
         </div>
       </Main>
     </div>

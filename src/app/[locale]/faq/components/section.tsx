@@ -1,8 +1,7 @@
 "use client";
 
-import { ReactNode, useState } from "react";
-import Image from "next/image";
-import clsx, { ClassValue } from "clsx";
+import { ReactNode } from "react";
+import clsx from "clsx";
 
 export const FaqSection = ({
   title,
@@ -20,31 +19,27 @@ export const FaqSection = ({
   };
 
   return (
-    <section className={"border-neutral-0 border-4 flex flex-col"}>
+    <div className={"border-b border-neutral-60"}>
       <button
         onClick={handleOpenClick}
         className={clsx(
-          " py-4 px-3 flex items-center justify-between bg-neutral-100",
-          open && "!bg-primary-90",
+          "w-full py-4 px-4 flex items-center justify-between text-left bg-transparent hover:bg-neutral-80 transition-colors"
         )}
       >
-        <p className={"text-body-1b text-left mr-2"}>{title}</p>
-        <Image
-          src={"/images/chervon-down-black.png"}
-          alt={"chervb"}
-          width={16}
-          height={16}
-        />
+        <p className={"text-body-1b text-[#0F0F0F] flex-1"}>{title}</p>
+        <div className={"flex-shrink-0 ml-4 w-6 h-6 flex items-center justify-center"}>
+          {open ? (
+            <span className={"text-primary text-2xl font-bold"}>−</span>
+          ) : (
+            <span className={"text-primary text-2xl font-bold"}>+</span>
+          )}
+        </div>
       </button>
       {open && (
-        <div
-          className={
-            "border-t-4 border-neutral-0 py-4 px-5 text-body-3 bg-neutral-100"
-          }
-        >
+        <div className={"py-4 px-4 text-body-3 text-[#0F0F0F] bg-transparent"}>
           {children}
         </div>
       )}
-    </section>
+    </div>
   );
 };

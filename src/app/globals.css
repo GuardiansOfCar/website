@@ -1,7 +1,9 @@
+/* Pretendard 폰트 npm 패키지 */
+@import 'pretendard/dist/web/static/pretendard.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 
 :root {
     --max-width: 1440px;
@@ -25,6 +27,15 @@ input[type='number'] {
     }
     to {
         transform: translateX(-100%);
+    }
+}
+
+@keyframes partnership-scroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-33.333%);
     }
 }
 
@@ -62,9 +73,50 @@ input[type='number'] {
         background-position: center top; /* 중앙 정렬 */
     }
 
+    /* Hero GIF 배경 최적화 - 1920px 이상일 때 그라데이션 처리 */
+    .hero-gradient-overlay {
+        position: relative;
+    }
+
+    .hero-gradient-overlay::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 200px;
+        background: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .hero-gradient-overlay::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 200px;
+        background: linear-gradient(to left, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    @media (min-width: 1920px) {
+        .hero-gradient-overlay::before,
+        .hero-gradient-overlay::after {
+            display: block;
+        }
+    }
+
     .animate-marquee {
         display: flex;
         animation: marquee 20s linear infinite;
+    }
+
+    .animate-partnership-scroll {
+        display: flex;
+        animation: partnership-scroll 10s linear infinite;
     }
 
     .text-header-1 {
@@ -154,7 +206,7 @@ input[type='number'] {
 }
 
 body {
-    font-family: Grandstander, sans-serif;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
     background-color: #000000;
 }
 
