@@ -29,7 +29,16 @@ export default function ChaptersOnePage() {
                 "absolute left-[50%] w-[570px] h-[406px] -translate-x-[50%]  max-laptop:w-[280px] max-laptop:h-[200px] max-laptop:-translate-y-10"
               }
             >
-              <Image src={"/images/chapter1.gif"} alt={"c1"} fill />
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className={"w-full h-full object-cover"}
+              >
+                <source src="/images/chapter1.mp4" type="video/mp4" />
+                <source src="/images/chapter1.gif" type="image/gif" />
+              </video>
             </div>
           </div>
 

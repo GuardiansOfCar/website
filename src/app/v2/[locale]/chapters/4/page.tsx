@@ -24,15 +24,16 @@ export default function ChaptersFourPage() {
           <div className={"max-laptop:hidden"} />
 
           <div className={"hidden max-laptop:block relative w-full"}>
-            <Image
-                src={"/images/chapter4.gif"}
-              alt={"c1"}
-              width={0}
-              height={0}
-              sizes={"100vw"}
-              className={"w-full h-auto"}
-              objectFit={"cover"}
-            />
+            <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className={"w-full h-auto"}
+            >
+                <source src="/images/chapter4.mp4" type="video/mp4" />
+                <source src="/images/chapter4.gif" type="image/gif" />
+            </video>
           </div>
 
           <BuyGoCar />
@@ -43,12 +44,17 @@ export default function ChaptersFourPage() {
         className={"z-[2] bottom-0 absolute left-0 right-0 max-laptop:hidden"}
       >
         <div className={"w-full max-w-[var(--max-width)] mx-auto"}>
-          <Image
-            src={"/images/chapter4.gif"}
-            alt={"c1"}
-            width={1012}
-            height={720}
-          />
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className={"w-full h-auto"}
+            style={{ width: '1012px', height: '720px', objectFit: 'cover' }}
+          >
+            <source src="/images/chapter4.mp4" type="video/mp4" />
+            <source src="/images/chapter4.gif" type="image/gif" />
+          </video>
         </div>
       </div>
     </div>

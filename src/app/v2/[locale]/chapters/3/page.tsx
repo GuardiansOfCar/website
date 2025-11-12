@@ -30,15 +30,16 @@ export default function ChaptersThreePage() {
           <div className={"max-laptop:hidden"} />
 
           <div className={"hidden max-laptop:block relative w-full"}>
-              <Image
-                  src={"/images/chapter3.gif"}
-                  alt={"c1"}
-                  width={0}
-                  height={0}
-                  sizes={"100vw"}
+              <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
                   className={"w-full h-auto"}
-                  objectFit={"cover"}
-              />
+              >
+                  <source src="/images/chapter3.mp4" type="video/mp4" />
+                  <source src="/images/chapter3.gif" type="image/gif" />
+              </video>
           </div>
 
           <BuyGoCar />
@@ -49,15 +50,16 @@ export default function ChaptersThreePage() {
         className={"z-[2] bottom-0 absolute left-0 right-0 max-laptop:hidden"}
       >
         <div className={"w-full max-w-[var(--max-width)] mx-auto"}>
-          <Image
-            src={"/images/chapter3.gif"}
-            alt={"c1"}
-            width={0}
-            height={0}
-            sizes={"100vw"}
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
             className={"w-full h-auto"}
-            objectFit={"cover"}
-          />
+          >
+            <source src="/images/chapter3.mp4" type="video/mp4" />
+            <source src="/images/chapter3.gif" type="image/gif" />
+          </video>
         </div>
       </div>
     </div>

@@ -51,14 +51,16 @@ export default function ChaptersTwoPage() {
           <div className={"max-laptop:hidden"} />
 
           <div className={"hidden max-laptop:block relative w-full relative"}>
-            <Image
-              src={"/images/chapter2.gif"}
-              alt={"c1"}
-              sizes={"100vw"}
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
               className={"w-full h-auto"}
-              width={0}
-              height={0}
-            />
+            >
+              <source src="/images/chapter2.mp4" type="video/mp4" />
+              <source src="/images/chapter2.gif" type="image/gif" />
+            </video>
 
             <Image
               src={"/images/chapter2-4.png"}
@@ -93,12 +95,17 @@ export default function ChaptersTwoPage() {
         className={"z-[2] bottom-0 absolute left-0 right-0 max-laptop:hidden"}
       >
         <div className={"w-full max-w-[var(--max-width)] mx-auto relative"}>
-          <Image
-            src={"/images/chapter2.gif"}
-            alt={"c1"}
-            width={1012}
-            height={720}
-          />
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className={"w-full h-auto"}
+            style={{ width: '1012px', height: '720px', objectFit: 'cover' }}
+          >
+            <source src="/images/chapter2.mp4" type="video/mp4" />
+            <source src="/images/chapter2.gif" type="image/gif" />
+          </video>
 
           <Image
             src={"/images/chapter2-4.png"}

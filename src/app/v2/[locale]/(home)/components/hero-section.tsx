@@ -8,17 +8,20 @@ export const HeroSection = () => {
 
   return (
     <div className={"relative w-full hero-gradient-overlay -mt-[94px]"}>
-      {/* Hero GIF Background - SEO 최적화 (높이 630px) */}
+      {/* Hero Video Background - 최적화된 MP4 사용 (높이 630px) */}
       <div className={"relative w-full h-[630px] z-0 bg-[#030711]"}>
-        <Image
-          src={"/images/Hero.gif"}
-          alt={"GOTCAR Hero - AI-Powered Mobility Ecosystem Background"}
-          title={"GOTCAR - Zero Accidents. Zero Doubt."}
-          fill
-          className={"object-cover object-center"}
-          priority
-          unoptimized
-        />
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className={"absolute inset-0 w-full h-full object-cover object-center"}
+          style={{ zIndex: 0 }}
+        >
+          <source src="/images/hero.mp4" type="video/mp4" />
+          {/* Fallback for browsers that don't support MP4 */}
+          <source src="/images/Hero.gif" type="image/gif" />
+        </video>
 
         {/* 그라데이션 오버레이 - 하단 페이드 */}
         <div
@@ -92,23 +95,22 @@ export const HeroSection = () => {
       >
         <div
           className={
-            "w-full max-w-[var(--max-width)] mx-auto py-20 px-24 max-desktop:py-8 max-desktop:px-5"
+            "w-full max-w-[var(--max-width)] mx-auto py-10 md:py-20 px-4 md:px-24"
           }
           style={{
-            paddingBottom: "calc(5rem + 32px)",
+            paddingBottom: "calc(2.5rem + 32px)",
           }}
         >
           <section
-            className={"flex flex-col space-y-12 py-16 pb-20"}
+            className={"flex flex-col space-y-8 md:space-y-12 py-8 md:py-16 pb-10 md:pb-20"}
             aria-labelledby="technologies-heading"
           >
             <header
-              className={"text-center flex flex-col items-center"}
-              style={{ gap: "48px" }}
+              className={"text-center flex flex-col items-center gap-6 md:gap-12"}
             >
               <h2
                 id="technologies-heading"
-                className={"text-[32px] leading-[40px] font-bold"}
+                className={"text-xl md:text-[32px] leading-tight md:leading-[40px] font-bold px-4"}
               >
                 <span className={"text-neutral-100"}>Engineering the </span>
                 <span
@@ -125,17 +127,17 @@ export const HeroSection = () => {
                 </span>
               </h2>
               {/* 서브헤딩 with 가로선 */}
-              <div className={"flex items-center justify-center gap-6"}>
+              <div className={"flex items-center justify-center gap-3 md:gap-6 w-full px-4"}>
                 <div
-                  className={"h-0 border-t"}
+                  className={"h-0 border-t flex-1 hidden md:block"}
                   style={{
-                    width: "549px",
+                    maxWidth: "549px",
                     borderColor: "rgba(0, 55, 73, 1)",
                   }}
                 />
                 <p
                   className={
-                    "text-center align-middle text-[20px] leading-[28px] font-bold whitespace-nowrap"
+                    "text-center align-middle text-base md:text-[20px] leading-6 md:leading-[28px] font-bold whitespace-nowrap shrink-0"
                   }
                   style={{
                     fontFamily: "Pretendard, sans-serif",
@@ -145,9 +147,9 @@ export const HeroSection = () => {
                   Our Technologies
                 </p>
                 <div
-                  className={"h-0 border-t"}
+                  className={"h-0 border-t flex-1 hidden md:block"}
                   style={{
-                    width: "549px",
+                    maxWidth: "549px",
                     borderColor: "rgba(0, 55, 73, 1)",
                   }}
                 />
@@ -155,8 +157,7 @@ export const HeroSection = () => {
             </header>
 
             <div
-              className={"grid grid-cols-1 md:grid-cols-3"}
-              style={{ gap: "16px" }}
+              className={"grid grid-cols-1 md:grid-cols-3 gap-4"}
             >
               {/* Card 1: Precision Positioning AI Engine */}
               <div
@@ -164,7 +165,8 @@ export const HeroSection = () => {
                 style={{
                   width: "100%",
                   maxWidth: "427px",
-                  height: "370px",
+                  height: "auto",
+                  minHeight: "370px",
                   minWidth: "283px",
                   borderRadius: "16px",
                   padding: "24px",
@@ -172,28 +174,26 @@ export const HeroSection = () => {
                 }}
               >
                 <Image
-                  src={"/images/precision-positioning-ai-engine.png"}
+                  src={"/images/precision-parking-3d-icon.png"}
                   alt={"Precision Positioning AI Engine Icon"}
                   title={
                     "Precision Positioning AI Engine - Sub-meter accuracy location tracking"
                   }
                   width={48}
                   height={48}
-                  className={"object-contain"}
-                  style={{ marginBottom: "16px" }}
+                  className={"object-contain mb-4"}
                   loading={"lazy"}
                 />
                 <h3
                   className={
-                    "font-bold text-[40px] leading-[48px] text-neutral-100"
+                    "font-bold text-2xl md:text-[40px] leading-tight md:leading-[48px] text-neutral-100 mb-6 md:mb-10"
                   }
-                  style={{ marginBottom: "40px" }}
                 >
                   Precision Positioning AI Engine
                 </h3>
                 <p
                   className={
-                    "text-[14px] leading-[22px] text-neutral-100 font-normal mt-auto"
+                    "text-sm md:text-[14px] leading-5 md:leading-[22px] text-neutral-100 font-normal mt-auto"
                   }
                 >
                   Tracks your exact location with sub-meter accuracy, even
@@ -208,7 +208,8 @@ export const HeroSection = () => {
                 style={{
                   width: "100%",
                   maxWidth: "427px",
-                  height: "370px",
+                  height: "auto",
+                  minHeight: "370px",
                   minWidth: "283px",
                   borderRadius: "16px",
                   padding: "24px",
@@ -216,28 +217,26 @@ export const HeroSection = () => {
                 }}
               >
                 <Image
-                  src={"/images/mobility-data-blockchain.png"}
+                  src={"/images/mobility-analytics-3d-icon.png"}
                   alt={"Mobility Data Blockchain Icon"}
                   title={
                     "Mobility Data Blockchain - Secure and anonymous data sharing"
                   }
                   width={48}
                   height={48}
-                  className={"object-contain"}
-                  style={{ marginBottom: "16px" }}
+                  className={"object-contain mb-4"}
                   loading={"lazy"}
                 />
                 <h3
                   className={
-                    "font-bold text-[40px] leading-[48px] text-neutral-100"
+                    "font-bold text-2xl md:text-[40px] leading-tight md:leading-[48px] text-neutral-100 mb-6 md:mb-10"
                   }
-                  style={{ marginBottom: "40px" }}
                 >
                   Mobility Data Blockchain
                 </h3>
                 <p
                   className={
-                    "text-[14px] leading-[22px] text-neutral-100 font-normal mt-auto"
+                    "text-sm md:text-[14px] leading-5 md:leading-[22px] text-neutral-100 font-normal mt-auto"
                   }
                 >
                   Uses blockchain to securely share driving data while keeping
@@ -252,7 +251,8 @@ export const HeroSection = () => {
                 style={{
                   width: "100%",
                   maxWidth: "427px",
-                  height: "370px",
+                  height: "auto",
+                  minHeight: "370px",
                   minWidth: "283px",
                   borderRadius: "16px",
                   padding: "24px",
@@ -260,28 +260,26 @@ export const HeroSection = () => {
                 }}
               >
                 <Image
-                  src={"/images/ai-mobility-agent.png"}
+                  src={"/images/ai-alert-risk-3d-icon.png"}
                   alt={"AI Mobility Agent Icon"}
                   title={
                     "AI Mobility Agent - Real-time risk prediction and smart guidance"
                   }
                   width={48}
                   height={48}
-                  className={"object-contain"}
-                  style={{ marginBottom: "16px" }}
+                  className={"object-contain mb-4"}
                   loading={"lazy"}
                 />
                 <h3
                   className={
-                    "font-bold text-[40px] leading-[48px] text-neutral-100"
+                    "font-bold text-2xl md:text-[40px] leading-tight md:leading-[48px] text-neutral-100 mb-6 md:mb-10"
                   }
-                  style={{ marginBottom: "40px" }}
                 >
                   AI Mobility Agent
                 </h3>
                 <p
                   className={
-                    "text-[14px] leading-[22px] text-neutral-100 font-normal mt-auto"
+                    "text-sm md:text-[14px] leading-5 md:leading-[22px] text-neutral-100 font-normal mt-auto"
                   }
                 >
                   Analyzes driving behavior and road conditions to predict risks
