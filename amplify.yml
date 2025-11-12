@@ -3,10 +3,17 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npm i -g pnpm
+        # Node.js 버전 확인 (Next.js 15는 Node.js 18.18.0 이상 필요)
+        - node --version
+        - npm --version
+        # pnpm 설치 (package.json의 packageManager와 일치하는 버전 사용)
+        - npm install -g pnpm@10.2.0
+        - pnpm --version
+        # 의존성 설치
         - pnpm install --no-frozen-lockfile
     build:
       commands:
+        # 빌드 실행 (메모리 할당 증가)
         - NODE_OPTIONS=--max-old-space-size=14336 pnpm build
   artifacts:
     baseDirectory: .next
@@ -15,6 +22,7 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
+      - .next/cache/**/*
 buildImage:
   env:
     COMPUTE_TYPE: 'LARGE'
