@@ -13,14 +13,6 @@ const nextConfig: NextConfig = {
   productionBrowserSourceMaps: false,
   webpack(config) {
     config.externals.push("pino-pretty", "lokijs", "encoding");
-    // Next.js 15 (webpack 5)에서는 asset modules 사용 (file-loader 대신)
-    config.module.rules.push({
-      test: /\.(mp4|webm|ogg|mp3|wav|flac|aac|rtf|doc|docx)$/,
-      type: 'asset/resource',
-      generator: {
-        filename: 'static/media/[name].[hash][ext]',
-      },
-    });
     return config;
   },
 };
