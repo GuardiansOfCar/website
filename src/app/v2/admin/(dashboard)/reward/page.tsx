@@ -1,0 +1,62 @@
+"use client";
+
+import { Separator } from "@/app/v2/components/ui/separator";
+import { useRouter, useSearchParams } from "next/navigation";
+import { listRequest } from "@/app/admin/(dashboard)/lib/api";
+import useSWR from "swr";
+import { DataTable } from "@/app/v2/components/data-table";
+import { useAdminFetch } from "@/app/admin/(dashboard)/lib/use-admin-fetch";
+import { useMemo } from "react";
+import { DataTablePagination } from "@/app/v2/components/data-table-pagination";
+import * as React from "react";
+import { Button } from "@/app/v2/components/ui/button";
+import Link from "next/link";
+
+export default function AdminReward() {
+  const searchParams = useSearchParams();
+
+  const request = useMemo(
+    () => ({
+      ...listRequest,
+      ...Object.fromEntries(searchParams.entries()),
+    }),
+    [searchParams.entries()],
+  );
+
+  const fetch = useAdminFetch();
+  const router = useRouter();
+
+  const listStakings = useSWR([`/v1/rewards/list`, request], (args) =>
+    fetch(args[0], { query: args[1] }),
+  );
+
+  return (
+    <main className={"mx-auto p-10 flex flex-col w-full"}>
+      <div className={"flex items-center justify-between"}>
+        <h1 className={"text-2xl font-bold"}>보너스 요율 관리</h1>
+        <Link href={"/admin/reward/create"}>
+          <Button>등록</Button>
+        </Link>
+      </div>
+      <Separator className={"my-4"} />
+
+      <div className={"flex flex-col space-y-10"}>
+        <DataTable
+          onRowClick={(x) => router.push(`/admin/reward/${(x as any).id}`)}
+          title={""}
+          total={listStakings.data?.total || 0}
+          data={listStakings.data?.data ?? []}
+          columns={[
+            { accessorKey: "type", header: "유형" },
+            { accessorKey: "text", header: "문구" },
+            { accessorKey: "rate", header: "요율" },
+          ]}
+        />
+        <DataTablePagination
+          request={request}
+          total={listStakings.data?.total || 0}
+        />
+      </div>
+    </main>
+  );
+}

@@ -97,7 +97,14 @@
         "presalePurchase7": "購入した $GOTCAR",
         "presalePurchase8": "ステーキング可能な $GOTCAR",
         "presalePurchase9": "{0}で支払い",
-        "whitepaper1": "ホワイトペーパー"
+        "whitepaper1": "ホワイトペーパー",
+        "docs1": "ドキュメント",
+        "partnership": {
+            "title": "メディア掲載"
+        },
+        "guardian": {
+            "title": "ガーディアンになろう — 運転、獲得、つながる。"
+        }
     },
     "howToBuy": {
         "a1": "GOTCAR トークン購入方法",

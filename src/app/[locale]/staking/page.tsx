@@ -10,7 +10,7 @@ import { Popup } from "@/components/popup";
 import { useEffect, useState } from "react";
 import { API_BASE_URL } from "@/lib/constants";
 import { useWallet } from "@/lib/use-wallet";
-import { useRouter } from "@/i18n/routing";
+import { useRouter } from "@/i18n/navigation";
 import { useForm } from "react-hook-form";
 import {useSWRConfig} from "swr";
 

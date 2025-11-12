@@ -9,7 +9,7 @@ import { WalletManagePopup } from "@/components/wallet-manage-popup";
 import { shortenAddress } from "@/lib/utils";
 import { API_BASE_URL, wrapWindow } from "@/lib/constants";
 import Image from "next/image";
-import { useRouter } from "@/i18n/routing";
+import { useRouter } from "@/i18n/navigation";
 import { useSWRConfig } from "swr";
 
 interface Stats {

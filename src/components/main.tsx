@@ -1,5 +1,5 @@
 import {PropsWithChildren, ReactNode} from "react";
-import {Link} from "@/i18n/routing";
+import {Link} from "@/i18n/navigation";
 import Image from "next/image";
 
 export const Main = (

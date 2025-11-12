@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import clsx from "clsx";
 import NextLink from "next/link";
-import { Link, usePathname } from "@/i18n/routing";
+import { Link, usePathname } from "@/i18n/navigation";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useClickAway, useLockBodyScroll } from "@uidotdev/usehooks";
@@ -13,7 +13,7 @@ import { shortenAddress } from "@/lib/utils";
 import { AUDIT_LINK, LANGUAGES } from "@/lib/constants";
 import { useWalletConnectorStore } from "@/lib/use-wallet-connector-store";
 import { useParams, useSearchParams } from "next/navigation";
-import {BorderText} from "@/components/border-text";
+import { BorderText } from "@/components/border-text";
 
 export const Nav = () => {
   const t = useTranslations();
@@ -55,19 +55,18 @@ export const Nav = () => {
         {
           label: t("home.nav4"),
           href: "/roadmap",
-          hideMaxDesktop:true
+          hideMaxDesktop: true,
         },
-        { label: t("home.nav5"), href: "/faq" ,
-          hideMaxDesktop:true
-        },
+        { label: t("home.nav5"), href: "/faq", hideMaxDesktop: true },
         { label: t("home.nav6"), href: "/staking" },
         { label: t("home.nav7"), href: "/referral" },
-        { label: t("home.nav8"), href: "/g2e" ,
-          hideMaxDesktop:true
-        },
+        { label: t("home.nav8"), href: "/g2e", hideMaxDesktop: true },
       ].map((nav, index) => {
         return (
-          <li key={index} className={clsx(nav.hideMaxDesktop && 'max-desktop:hidden')}>
+          <li
+            key={index}
+            className={clsx(nav.hideMaxDesktop && "max-desktop:hidden")}
+          >
             {nav.href === "/chapters" && (
               <div className={"relative"}>
                 <button
@@ -75,7 +74,7 @@ export const Nav = () => {
                   className={clsx(
                     "py-2 px-3 text-body-1b flex items-center gap-x-2",
                     chapterFocused && "text-primary",
-                    "max-desktop:px-5 max-desktop:py-5 max-desktop:justify-between max-desktop:w-full",
+                    "max-desktop:px-5 max-desktop:py-5 max-desktop:justify-between max-desktop:w-full"
                   )}
                 >
                   {nav.label}
@@ -114,7 +113,7 @@ export const Nav = () => {
                               "text-center flex py-2 text-body-1b text-white hover:text-primary cursor-pointer",
                               pathname.endsWith(`${nav.href}/${chapter}`) &&
                                 "!text-primary",
-                              "max-desktop:px-8 max-desktop:py-4 max-desktop:w-full",
+                              "max-desktop:px-8 max-desktop:py-4 max-desktop:w-full"
                             )}
                           >
                             {t(`chapter.chapterMenu${chapter}`)}
@@ -136,7 +135,7 @@ export const Nav = () => {
                 className={clsx(
                   "block py-3 px-2 text-body-1b cursor-pointer",
                   "max-desktop:px-5 max-desktop:py-5 max-desktop:justify-between",
-                  pathname.endsWith(nav.href) && "text-primary",
+                  pathname.endsWith(nav.href) && "text-primary"
                 )}
               >
                 {nav.label}
@@ -162,7 +161,7 @@ export const Nav = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const renderLanguage = (isMobile?:boolean) => {
+  const renderLanguage = (isMobile?: boolean) => {
     return (
       <div className={"relative max-desktop:w-full"}>
         <button
@@ -170,7 +169,7 @@ export const Nav = () => {
           className={clsx(
             "py-2 px-0 text-body-1b flex items-center gap-x-2",
             langOpened && "!text-primary",
-            "max-desktop:px-5 max-desktop:py-5 max-desktop:justify-between max-desktop:w-full",
+            "max-desktop:px-5 max-desktop:py-5 max-desktop:justify-between max-desktop:w-full"
           )}
         >
           {String(selected).toUpperCase()}
@@ -187,10 +186,14 @@ export const Nav = () => {
         </button>
         {langOpened && (
           <div
-            style={ isMobile? {}:{
-              right: "calc((100% - 1440px) / 2 - 20px)",
-              top: isScrolled ? 0 : 64,
-            }}
+            style={
+              isMobile
+                ? {}
+                : {
+                    right: "calc((100% - 1440px) / 2 - 20px)",
+                    top: isScrolled ? 0 : 64,
+                  }
+            }
             className={
               "bg-black z-[9999] fixed  max-desktop:!relative max-desktop:top-0"
             }
@@ -201,8 +204,8 @@ export const Nav = () => {
               {LANGUAGES.map((chapter) => {
                 // 현재 URL 파라미터를 유지하면서 언어만 변경
                 const currentSearch = searchParams.toString();
-                const newHref = `/${chapter.key}${currentSearch ? `?${currentSearch}` : ''}`;
-                
+                const newHref = `/${chapter.key}${currentSearch ? `?${currentSearch}` : ""}`;
+
                 return (
                   <NextLink
                     onClick={() => {
@@ -214,7 +217,7 @@ export const Nav = () => {
                     className={clsx(
                       "flex text-left w-full py-3 text-body-1b text-white hover:text-primary cursor-pointer",
                       pathname.endsWith(`/${chapter.key}`) && "!text-primary",
-                      "px-4 max-desktop:px-8 max-desktop:py-4 max-desktop:w-full",
+                      "px-4 max-desktop:px-8 max-desktop:py-4 max-desktop:w-full"
                     )}
                   >
                     <span className={"mr-2 block emoji-font !font-normal"}>
@@ -232,92 +235,90 @@ export const Nav = () => {
   };
 
   const listTools = (
-      <div>
-        <div className={"hidden max-desktop:flex"}>
-          {renderLanguage(true)}
-        </div>
-    <div
-      className={
-        "flex space-x-3 max-desktop:grid max-desktop:grid-cols-2 max-desktop:space-x-0 max-desktop:gap-3 max-desktop:px-5 max-desktop:py-4 border-b-primary  max-desktop:border-b-[4px]"
-      }
-    >
-      <a
+    <div>
+      <div className={"hidden max-desktop:flex"}>{renderLanguage(true)}</div>
+      <div
         className={
-          "cursor-pointer w-12 h-12 max-desktop:h-[50px] relative max-desktop:w-full max-desktop:bg-[rgb(66,127,134)] max-desktop:border-4 max-desktop:border-black items-center justify-center max-desktop:flex"
+          "flex space-x-3 max-desktop:grid max-desktop:grid-cols-2 max-desktop:space-x-0 max-desktop:gap-3 max-desktop:px-5 max-desktop:py-4 border-b-primary  max-desktop:border-b-[4px]"
         }
-        target={"_blank"}
-        href={AUDIT_LINK}
       >
-        <Image
-          className={"max-desktop:hidden"}
-          src={"/images/audit.png"}
-          fill
-          alt={"audit"}
-        />
-        <BorderText className={"text-xl font-[500] hidden max-desktop:block"}>
-          AUDIT
-        </BorderText>
-      </a>
-      <a
-        className={"cursor-pointer w-12 h-12 relative max-desktop:w-full"}
-        target={"_blank"}
-        href={"https://x.com/gotcar_official"}
-      >
-        <Image
-          className={"max-desktop:hidden"}
-          src={"/images/x.png"}
-          fill
-          alt={"x"}
-        />
-        <Image
-          className={"hidden max-desktop:block"}
-          src={"/images/x2.png"}
-          fill
-          alt={"x"}
-        />
-      </a>
+        <a
+          className={
+            "cursor-pointer w-12 h-12 max-desktop:h-[50px] relative max-desktop:w-full max-desktop:bg-[rgb(66,127,134)] max-desktop:border-4 max-desktop:border-black items-center justify-center max-desktop:flex"
+          }
+          target={"_blank"}
+          href={AUDIT_LINK}
+        >
+          <Image
+            className={"max-desktop:hidden"}
+            src={"/images/audit.png"}
+            fill
+            alt={"audit"}
+          />
+          <BorderText className={"text-xl font-[500] hidden max-desktop:block"}>
+            AUDIT
+          </BorderText>
+        </a>
+        <a
+          className={"cursor-pointer w-12 h-12 relative max-desktop:w-full"}
+          target={"_blank"}
+          href={"https://x.com/gotcar_official"}
+        >
+          <Image
+            className={"max-desktop:hidden"}
+            src={"/images/x.png"}
+            fill
+            alt={"x"}
+          />
+          <Image
+            className={"hidden max-desktop:block"}
+            src={"/images/x2.png"}
+            fill
+            alt={"x"}
+          />
+        </a>
 
-      <a
-        className={"cursor-pointer w-12 h-12 relative max-desktop:w-full"}
-        target={"_blank"}
-        href={"https://t.me/GOTCAR_Official"}
-      >
-        <Image
-          className={"max-desktop:hidden"}
-          src={"/images/telegram.png"}
-          fill
-          alt={"telegram"}
-        />
-        <Image
-          className={"hidden max-desktop:block"}
-          src={"/images/tel2.png"}
-          fill
-          alt={"x"}
-        />
-      </a>
+        <a
+          className={"cursor-pointer w-12 h-12 relative max-desktop:w-full"}
+          target={"_blank"}
+          href={"https://t.me/GOTCAR_Official"}
+        >
+          <Image
+            className={"max-desktop:hidden"}
+            src={"/images/telegram.png"}
+            fill
+            alt={"telegram"}
+          />
+          <Image
+            className={"hidden max-desktop:block"}
+            src={"/images/tel2.png"}
+            fill
+            alt={"x"}
+          />
+        </a>
 
-      {/* https://drive.google.com/drive/folders/1SDReRdC0g3baTCxB2jekpwWJcE6vF3iQ?usp=sharing */}
-      <NextLink href={"/whitepaper.pdf"} target={"_blank"}>
-        <Button size={"sm"} className={"!bg-neutral-60 max-desktop:w-full"}>
-          {t("home.whitepaper1")}
+        {/* https://drive.google.com/drive/folders/1SDReRdC0g3baTCxB2jekpwWJcE6vF3iQ?usp=sharing */}
+        <NextLink href={"/whitepaper.pdf"} target={"_blank"}>
+          <Button size={"sm"} className={"!bg-neutral-60 max-desktop:w-full"}>
+            {t("home.whitepaper1")}
+          </Button>
+        </NextLink>
+
+        <Button
+          onClick={handleBuyGocarClick}
+          size={"sm"}
+          className={"max-desktop:col-span-2"}
+        >
+          {wallet.address
+            ? shortenAddress(wallet.address)
+            : t("home.presaleJoin2")}
         </Button>
-      </NextLink>
 
-      <Button
-        onClick={handleBuyGocarClick}
-        size={"sm"}
-        className={"max-desktop:col-span-2"}
-      >
-        {wallet.address
-          ? shortenAddress(wallet.address)
-          : t("home.presaleJoin2")}
-      </Button>
-
-      <div className={"max-desktop:hidden flex items-center"}>
-      {renderLanguage()}
+        <div className={"max-desktop:hidden flex items-center"}>
+          {renderLanguage()}
+        </div>
       </div>
     </div>
-      </div>
   );
 
   const [menuOpen, setMenuOpen] = useState(false);
@@ -360,7 +361,7 @@ export const Nav = () => {
         <div
           className={clsx(
             menuOpen ? "block" : "hidden",
-            "fixed top-[76px] right-0 left-0 bottom-0 z-[50] bg-[rgba(0,0,0,0.5)] pb-[100px]",
+            "fixed top-[76px] right-0 left-0 bottom-0 z-[50] bg-[rgba(0,0,0,0.5)] pb-[100px]"
           )}
         >
           {menuOpen && <A />}

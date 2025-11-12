@@ -97,7 +97,14 @@
         "presalePurchase7": "YOUR PURCHASED $GOTCAR",
         "presalePurchase8": "YOUR STAKEABLE $GOTCAR",
         "presalePurchase9": "PAY WITH {0}",
-        "whitepaper1": "WHITEPAPER"
+        "whitepaper1": "WHITEPAPER",
+        "docs1": "DOCS",
+        "partnership": {
+            "title": "Featured Partnership"
+        },
+        "guardian": {
+            "title": "Be the Guardian — Drive, Earn, Connect."
+        }
     },
     "howToBuy": {
         "a1": "How To Buy GOTCAR Token",
@@ -119,7 +126,7 @@
         "c1": "After Launch in $GOTCAR"
     },
     "roadmap": {
-        "a1": "GOTCAR Roadmap",
+        "a1": "Our Roadmap",
         "b1": "Phase 1 : Audit & Presale",
         "b2": "We will ensure the integrity of the token through an audit and promote $GOTCAR to Guardians worldwide with a global marketing campaign.",
         "c1": "Phase 2 : Service Launch",

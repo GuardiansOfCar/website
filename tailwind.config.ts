@@ -25,16 +25,19 @@ export default {
   				'80': '#E8E8E8',
   				'100': '#FCFCFC'
   			},
-  			primary: {
-  				'0': '#004644',
-  				'10': '#007A77',
-  				'30': '#21F1EC',
-  				'80': '#B6F8F4',
-  				'90': '#D2FBF9',
-  				DEFAULT: '#21F1EC',
-  				foreground: 'hsl(var(--primary-foreground))'
-  			},
-  			card: {
+			primary: {
+				'0': '#004644',
+				'10': '#007A77',
+				'30': '#21F1EC',
+				'80': '#B6F8F4',
+				'90': '#D2FBF9',
+				DEFAULT: '#21F1EC',
+				foreground: 'hsl(var(--primary-foreground))'
+			},
+			'sub-primary': {
+				DEFAULT: '#00D6DD'
+			},
+			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
   			},

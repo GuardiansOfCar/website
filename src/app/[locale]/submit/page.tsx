@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useWallet } from "@/lib/use-wallet";
 import { API_BASE_URL } from "@/lib/constants";
 import { OtpPopup } from "@/components/otp-popup";
-import { useRouter } from "@/i18n/routing";
+import { useRouter } from "@/i18n/navigation";
 
 export default function SubmitPage() {
   const wallet = useWallet();
