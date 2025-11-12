@@ -15,7 +15,9 @@ export const HeroSection = () => {
           loop
           muted
           playsInline
-          className={"absolute inset-0 w-full h-full object-cover object-center"}
+          className={
+            "absolute inset-0 w-full h-full object-cover object-center"
+          }
           style={{ zIndex: 0 }}
         >
           <source src="/images/hero.mp4" type="video/mp4" />
@@ -102,15 +104,21 @@ export const HeroSection = () => {
           }}
         >
           <section
-            className={"flex flex-col space-y-8 md:space-y-12 py-8 md:py-16 pb-10 md:pb-20"}
+            className={
+              "flex flex-col space-y-8 md:space-y-12 py-8 md:py-16 pb-10 md:pb-20"
+            }
             aria-labelledby="technologies-heading"
           >
             <header
-              className={"text-center flex flex-col items-center gap-6 md:gap-12"}
+              className={
+                "text-center flex flex-col items-center gap-6 md:gap-12"
+              }
             >
               <h2
                 id="technologies-heading"
-                className={"text-xl md:text-[32px] leading-tight md:leading-[40px] font-bold px-4"}
+                className={
+                  "text-xl md:text-[32px] leading-tight md:leading-[40px] font-bold px-4"
+                }
               >
                 <span className={"text-neutral-100"}>Engineering the </span>
                 <span
@@ -127,7 +135,11 @@ export const HeroSection = () => {
                 </span>
               </h2>
               {/* 서브헤딩 with 가로선 */}
-              <div className={"flex items-center justify-center gap-3 md:gap-6 w-full px-4"}>
+              <div
+                className={
+                  "flex items-center justify-center gap-3 md:gap-6 w-full px-4"
+                }
+              >
                 <div
                   className={"h-0 border-t flex-1 hidden md:block"}
                   style={{
@@ -156,32 +168,28 @@ export const HeroSection = () => {
               </div>
             </header>
 
-            <div
-              className={"grid grid-cols-1 md:grid-cols-3 gap-4"}
-            >
+            <div className={"grid grid-cols-1 md:grid-cols-3 gap-4"}>
               {/* Card 1: Precision Positioning AI Engine */}
               <div
-                className={"bg-[#121A26] rounded-2xl flex flex-col"}
+                className={"bg-[#121A26] rounded-2xl flex flex-col p-4 md:p-6"}
                 style={{
                   width: "100%",
                   maxWidth: "427px",
                   height: "auto",
-                  minHeight: "370px",
-                  minWidth: "283px",
-                  borderRadius: "16px",
-                  padding: "24px",
                   border: "1px solid rgba(0, 40, 52, 1)",
                 }}
               >
                 <Image
-                  src={"/images/precision-parking-3d-icon.png"}
+                  src={"/images/precision-positioning-ai-engine.png"}
                   alt={"Precision Positioning AI Engine Icon"}
                   title={
                     "Precision Positioning AI Engine - Sub-meter accuracy location tracking"
                   }
                   width={48}
                   height={48}
-                  className={"object-contain mb-4"}
+                  className={
+                    "object-contain mb-3 md:mb-4 w-10 h-10 md:w-12 md:h-12"
+                  }
                   loading={"lazy"}
                 />
                 <h3
@@ -204,27 +212,25 @@ export const HeroSection = () => {
 
               {/* Card 2: Mobility Data Blockchain */}
               <div
-                className={"bg-[#121A26] rounded-2xl flex flex-col"}
+                className={"bg-[#121A26] rounded-2xl flex flex-col p-4 md:p-6"}
                 style={{
                   width: "100%",
                   maxWidth: "427px",
                   height: "auto",
-                  minHeight: "370px",
-                  minWidth: "283px",
-                  borderRadius: "16px",
-                  padding: "24px",
                   border: "1px solid rgba(0, 40, 52, 1)",
                 }}
               >
                 <Image
-                  src={"/images/mobility-analytics-3d-icon.png"}
+                  src={"/images/mobility-data-blockchain.png"}
                   alt={"Mobility Data Blockchain Icon"}
                   title={
                     "Mobility Data Blockchain - Secure and anonymous data sharing"
                   }
                   width={48}
                   height={48}
-                  className={"object-contain mb-4"}
+                  className={
+                    "object-contain mb-3 md:mb-4 w-10 h-10 md:w-12 md:h-12"
+                  }
                   loading={"lazy"}
                 />
                 <h3
@@ -247,27 +253,25 @@ export const HeroSection = () => {
 
               {/* Card 3: AI Mobility Agent */}
               <div
-                className={"bg-[#121A26] rounded-2xl flex flex-col"}
+                className={"bg-[#121A26] rounded-2xl flex flex-col p-4 md:p-6"}
                 style={{
                   width: "100%",
                   maxWidth: "427px",
                   height: "auto",
-                  minHeight: "370px",
-                  minWidth: "283px",
-                  borderRadius: "16px",
-                  padding: "24px",
                   border: "1px solid rgba(0, 40, 52, 1)",
                 }}
               >
                 <Image
-                  src={"/images/ai-alert-risk-3d-icon.png"}
+                  src={"/images/ai-mobility-agent.png"}
                   alt={"AI Mobility Agent Icon"}
                   title={
                     "AI Mobility Agent - Real-time risk prediction and smart guidance"
                   }
                   width={48}
                   height={48}
-                  className={"object-contain mb-4"}
+                  className={
+                    "object-contain mb-3 md:mb-4 w-10 h-10 md:w-12 md:h-12"
+                  }
                   loading={"lazy"}
                 />
                 <h3

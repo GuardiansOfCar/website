@@ -21,39 +21,28 @@ export const FaqSection = ({
 
   return (
     <div
+      className={clsx(
+        "w-full flex flex-col relative transition-all duration-300 rounded-2xl",
+        "p-4 md:p-8",
+        "min-h-[64px] md:min-h-[96px]",
+        open ? "h-auto" : "h-[64px] md:h-[96px]"
+      )}
       style={{
-        width: "1312px",
-        height: open ? "auto" : "96px",
-        borderRadius: "16px",
-        paddingTop: "32px",
-        paddingRight: "24px",
-        paddingBottom: "32px",
-        paddingLeft: "24px",
-        gap: "16px",
+        gap: "12px",
         borderWidth: "1px",
         backgroundColor: open ? "#002834" : "rgba(255, 255, 255, 1)",
         border: open ? "1px solid rgba(34, 34, 34, 1)" : "1px solid rgba(237, 238, 240, 1)",
-        display: "flex",
-        flexDirection: "column",
-        transition: "all 0.3s ease",
-        position: "relative",
       }}
     >
       {/* 아이콘 - 컨테이너 상단, 우측으로부터 32px */}
       <button
         onClick={handleOpenClick}
-        className={"bg-transparent border-none cursor-pointer"}
-        style={{
-          position: "absolute",
-          top: "32px",
-          right: "32px",
-          width: "24px",
-          height: "24px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          zIndex: 10,
-        }}
+        className={clsx(
+          "bg-transparent border-none cursor-pointer",
+          "absolute flex items-center justify-center z-10",
+          "top-4 right-4 w-5 h-5",
+          "md:top-8 md:right-8 md:w-6 md:h-6"
+        )}
       >
         {open ? (
           <Image
@@ -62,7 +51,7 @@ export const FaqSection = ({
             title={"Collapse"}
             width={24}
             height={24}
-            className={"object-contain"}
+            className={"object-contain w-full h-full"}
             loading={"lazy"}
           />
         ) : (
@@ -72,7 +61,7 @@ export const FaqSection = ({
             title={"Expand"}
             width={24}
             height={24}
-            className={"object-contain"}
+            className={"object-contain w-full h-full"}
             loading={"lazy"}
           />
         )}
@@ -80,23 +69,29 @@ export const FaqSection = ({
       
       <button
         onClick={handleOpenClick}
-        className={"w-full flex items-center text-left bg-transparent"}
+        className={clsx(
+          "w-full flex items-center text-left bg-transparent",
+          "pr-11 md:pr-14"
+        )}
         style={{
-          gap: "16px",
-          paddingRight: "56px", // 아이콘 영역을 피하기 위한 padding
+          gap: "12px",
         }}
       >
-        <p className={"text-body-1b flex-1"} style={{ color: open ? "#FFFFFF" : "#0F0F0F" }}>
+        <p 
+          className={clsx(
+            "flex-1 text-sm md:text-base font-medium",
+            open ? "text-white" : "text-[#0F0F0F]"
+          )}
+        >
           {title}
         </p>
       </button>
       {open && (
         <div 
-          className={"text-body-3"}
-          style={{
-            color: "#FFFFFF",
-            marginTop: "16px",
-          }}
+          className={clsx(
+            "text-xs md:text-sm leading-5 md:leading-6 text-white",
+            "mt-3 md:mt-4"
+          )}
         >
           {children}
         </div>

@@ -38,15 +38,17 @@ export const RoadmapContainer = ({ hideNav }: { hideNav?: boolean }) => {
         hideNav={hideNav}
         horizontalPadding={"px-0 max-desktop:px-5"}
       >
-        <div className={"flex flex-col space-y-8 py-10"}>
+        <div
+          className={
+            "flex flex-col space-y-6 md:space-y-8 py-6 md:py-10 px-4 md:px-0"
+          }
+        >
           <h2
-            className={"text-center"}
+            className={
+              "text-center font-bold text-2xl md:text-[40px] leading-tight md:leading-[48px] text-[#0F0F0F]"
+            }
             style={{
               fontFamily: "Pretendard, sans-serif",
-              fontWeight: 700,
-              fontSize: "40px",
-              lineHeight: "48px",
-              color: "#0F0F0F",
             }}
           >
             {t("roadmap.a1")}
@@ -54,41 +56,24 @@ export const RoadmapContainer = ({ hideNav }: { hideNav?: boolean }) => {
 
           {/* New area below Our Roadmap */}
           <div
+            className={
+              "w-full max-w-[1312px] mx-auto rounded-3xl p-4 md:p-4 mt-6 md:mt-12"
+            }
             style={{
-              width: "1312px",
-              height: "266px",
-              maxWidth: "1312px",
-              borderRadius: "24px",
-              padding: "16px",
               boxShadow: "0px 0px 8px 0px rgba(0, 0, 0, 0.04)",
               backgroundColor: "rgba(255, 255, 255, 1)",
-              marginTop: "48px",
-              marginLeft: "auto",
-              marginRight: "auto",
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                gap: "16px",
-                width: "100%",
-                height: "100%",
-              }}
-            >
+            <div className={"flex flex-col md:flex-row gap-4 md:gap-4 w-full"}>
               {ROADMAP_PHASES.map((item, index) => (
                 <div
                   key={index}
+                  className={
+                    "flex flex-col rounded-2xl gap-2 p-4 md:p-6 w-full md:w-auto md:flex-1"
+                  }
                   style={{
-                    width: "308px",
-                    height: "234px",
-                    minWidth: "212px",
-                    borderRadius: "16px",
-                    gap: "8px",
-                    padding: "24px",
                     backgroundColor: "rgba(249, 251, 251, 1)",
                     border: "1px solid rgba(237, 238, 240, 1)",
-                    display: "flex",
-                    flexDirection: "column",
                   }}
                 >
                   <div

@@ -95,26 +95,14 @@ export const FaqContainer = ({ hideBuy, hideNav }: { hideBuy?: boolean; hideNav?
     <div className={"bg-[#F9FBFB]"}>
       <Main leftHref={hideNav ? "" : "/roadmap"} rightHref={hideNav ? "" : "/staking"} hideNav={hideNav} horizontalPadding={"px-0 max-desktop:px-5"}>
         <div 
-          className={"flex flex-col items-center py-10"}
-          style={{
-            width: "1312px",
-            maxWidth: "1312px",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
+          className={"flex flex-col items-center py-6 md:py-10 w-full max-w-[1312px] mx-auto px-4 md:px-0"}
         >
-          <h2 className={"text-header-2 text-[#0F0F0F] mb-8 text-center"}>
+          <h2 className={"text-2xl md:text-header-2 text-[#0F0F0F] mb-6 md:mb-8 text-center font-bold"}>
             FAQ
           </h2>
 
           <div 
-            className={"flex flex-col"}
-            style={{
-              width: "1312px",
-              maxWidth: "1312px",
-              gap: "16px",
-              paddingBottom: "120px",
-            }}
+            className={"flex flex-col w-full gap-4 md:gap-4 pb-16 md:pb-[120px]"}
           >
             {FAQ_ITEMS.map((item, index) => (
               <FaqSection

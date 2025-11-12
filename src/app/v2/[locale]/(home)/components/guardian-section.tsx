@@ -14,10 +14,10 @@ export const GuardianSection = () => {
     return (
         <div className={"bg-white"}>
             <Main leftHref={""} rightHref={""} hideNav horizontalPadding={"px-0 max-desktop:px-5"}>
-                <div className={"flex flex-col space-y-16 py-10"}>
+                <div className={"flex flex-col space-y-8 md:space-y-16 py-6 md:py-10 px-4 md:px-0"}>
                     {/* Be the Guardian — Drive, Earn, Connect. 제목 */}
                     <div className={"text-center"}>
-                        <h2 className={"font-bold text-[40px] leading-[48px] text-center text-[#0F0F0F]"}>
+                        <h2 className={"font-bold text-2xl md:text-[40px] leading-tight md:leading-[48px] text-center text-[#0F0F0F]"}>
                             {parts.map((part, index) => 
                                 part.toLowerCase() === "guardian" ? (
                                     <span key={index} className={"text-sub-primary"}>{part}</span>
@@ -30,24 +30,22 @@ export const GuardianSection = () => {
                     
                     {/* G2E App with lines */}
                     <div
-                        className={"flex items-center justify-center"}
-                        style={{ gap: "24px", marginTop: "48px" }}
+                        className={"flex items-center justify-center mt-6 md:mt-12"}
+                        style={{ gap: "12px" }}
                     >
                         <div
-                            className={"h-0 border-t"}
+                            className={"h-0 border-t hidden md:block flex-1"}
                             style={{
-                                width: "571px",
+                                maxWidth: "571px",
                                 borderColor: "#E0E1E5",
                                 borderWidth: "1px",
                             }}
                         />
                         <p
-                            className={"text-center align-middle whitespace-nowrap"}
+                            className={"text-center align-middle whitespace-nowrap text-base md:text-[20px] leading-6 md:leading-[28px]"}
                             style={{
                                 fontFamily: "Pretendard, sans-serif",
                                 fontWeight: 700,
-                                fontSize: "20px",
-                                lineHeight: "28px",
                                 color: "#78797C",
                                 verticalAlign: "middle",
                             }}
@@ -55,9 +53,9 @@ export const GuardianSection = () => {
                             G2E App
                         </p>
                         <div
-                            className={"h-0 border-t"}
+                            className={"h-0 border-t hidden md:block flex-1"}
                             style={{
-                                width: "571px",
+                                maxWidth: "571px",
                                 borderColor: "#E0E1E5",
                                 borderWidth: "1px",
                             }}
@@ -65,15 +63,11 @@ export const GuardianSection = () => {
                     </div>
                     
                     {/* 메인 콘텐츠 영역: 스마트폰 + 설명 텍스트 */}
-                    <div className={"flex flex-col md:flex-row items-center justify-center"} style={{ gap: "40px" }}>
+                    <div className={"flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10"}>
                         {/* 왼쪽: 스마트폰 모형 */}
                         <div className={"flex-shrink-0 flex items-center justify-center"}>
                             <div 
-                                className={"relative overflow-hidden rounded-[32px] bg-white"}
-                                style={{
-                                    width: "231.79px",
-                                    height: "480px",
-                                }}
+                                className={"relative overflow-hidden rounded-[24px] md:rounded-[32px] bg-white w-[180px] h-[373px] md:w-[231.79px] md:h-[480px]"}
                             >
                                 <video
                                     autoPlay={true}
@@ -94,35 +88,25 @@ export const GuardianSection = () => {
                         
                         {/* 오른쪽: 설명 텍스트 */}
                         <div 
-                            className={"flex flex-col justify-center items-center md:items-start"}
+                            className={"flex flex-col justify-center items-center md:items-start w-full md:w-auto max-w-[400px] px-4 md:px-0"}
                             style={{
-                                width: "400px",
-                                maxWidth: "400px",
                                 paddingTop: "12px",
                                 paddingBottom: "12px",
                                 gap: "8px",
                             }}
                         >
                             <h2
+                                className={"font-bold text-lg md:text-[24px] leading-7 md:leading-[32px] text-[#00556B] text-center md:text-left"}
                                 style={{
                                     fontFamily: "Pretendard, sans-serif",
-                                    fontWeight: 700,
-                                    fontSize: "24px",
-                                    lineHeight: "32px",
-                                    color: "#00556B",
-                                    verticalAlign: "middle",
                                 }}
                             >
                                 Experience the GOTCAR App.
                             </h2>
                             <p
+                                className={"font-normal text-sm md:text-[18px] leading-5 md:leading-[26px] text-[#525252] text-center md:text-left"}
                                 style={{
                                     fontFamily: "Pretendard, sans-serif",
-                                    fontWeight: 400,
-                                    fontSize: "18px",
-                                    lineHeight: "26px",
-                                    color: "#525252",
-                                    verticalAlign: "middle",
                                 }}
                             >
                                 Drive, share, and earn in real time. Every mile you move helps build a connected, decentralized mobility ecosystem — and rewards you with tokens.
@@ -132,26 +116,13 @@ export const GuardianSection = () => {
                     
                     {/* 하단 섹션: 3개의 기능 카드 */}
                     <div 
-                        className={"grid grid-cols-1 md:grid-cols-3 mt-12"}
-                        style={{
-                            gap: "24px",
-                            width: "1312px",
-                            maxWidth: "1312px",
-                            marginLeft: "auto",
-                            marginRight: "auto",
-                        }}
+                        className={"grid grid-cols-1 md:grid-cols-3 mt-8 md:mt-12 w-full max-w-[1312px] mx-auto gap-4 md:gap-6 px-4 md:px-0"}
                     >
                         {/* Card 1: Drive */}
-                        <div className={"flex flex-col"}>
+                        <div className={"flex flex-col w-full"}>
                             {/* 이미지 영역 */}
                             <div 
-                                className={"relative overflow-hidden bg-white"}
-                                style={{
-                                    width: "421px",
-                                    height: "264px",
-                                    borderRadius: "16px",
-                                    border: "1px solid #EDEEF0",
-                                }}
+                                className={"relative overflow-hidden bg-white w-full aspect-[421/264] rounded-2xl border border-[#EDEEF0]"}
                             >
                                 <Image
                                     src={"/images/drive-3d-icon.png"}
@@ -165,26 +136,13 @@ export const GuardianSection = () => {
                             </div>
                             {/* 텍스트 영역 */}
                             <div 
-                                className={"bg-white flex flex-col"}
-                                style={{
-                                    width: "421px",
-                                    height: "192px",
-                                    borderRadius: "16px",
-                                    gap: "8px",
-                                    padding: "24px",
-                                    border: "1px solid #EDEEF0",
-                                    marginTop: "0",
-                                }}
+                                className={"bg-white flex flex-col rounded-2xl gap-2 p-4 md:p-6 border border-[#EDEEF0] mt-0"}
                             >
-                                <h3 className={"text-header-4 text-[#0F0F0F] font-bold"}>Drive</h3>
+                                <h3 className={"text-lg md:text-header-4 text-[#0F0F0F] font-bold"}>Drive</h3>
                                 <p
+                                    className={"font-normal text-sm md:text-[15px] leading-5 md:leading-[22px] text-[#5D5E60]"}
                                     style={{
                                         fontFamily: "Pretendard, sans-serif",
-                                        fontWeight: 400,
-                                        fontSize: "15px",
-                                        lineHeight: "22px",
-                                        color: "#5D5E60",
-                                        verticalAlign: "middle",
                                     }}
                                 >
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -193,16 +151,10 @@ export const GuardianSection = () => {
                         </div>
                         
                         {/* Card 2: Earn */}
-                        <div className={"flex flex-col"}>
+                        <div className={"flex flex-col w-full"}>
                             {/* 이미지 영역 */}
                             <div 
-                                className={"relative overflow-hidden bg-white"}
-                                style={{
-                                    width: "421px",
-                                    height: "264px",
-                                    borderRadius: "16px",
-                                    border: "1px solid #EDEEF0",
-                                }}
+                                className={"relative overflow-hidden bg-white w-full aspect-[421/264] rounded-2xl border border-[#EDEEF0]"}
                             >
                                 <Image
                                     src={"/images/earn-3d-icon.png"}
@@ -216,26 +168,13 @@ export const GuardianSection = () => {
                             </div>
                             {/* 텍스트 영역 */}
                             <div 
-                                className={"bg-white flex flex-col"}
-                                style={{
-                                    width: "421px",
-                                    height: "192px",
-                                    borderRadius: "16px",
-                                    gap: "8px",
-                                    padding: "24px",
-                                    border: "1px solid #EDEEF0",
-                                    marginTop: "0",
-                                }}
+                                className={"bg-white flex flex-col rounded-2xl gap-2 p-4 md:p-6 border border-[#EDEEF0] mt-0"}
                             >
-                                <h3 className={"text-header-4 text-[#0F0F0F] font-bold"}>Earn</h3>
+                                <h3 className={"text-lg md:text-header-4 text-[#0F0F0F] font-bold"}>Earn</h3>
                                 <p
+                                    className={"font-normal text-sm md:text-[15px] leading-5 md:leading-[22px] text-[#5D5E60]"}
                                     style={{
                                         fontFamily: "Pretendard, sans-serif",
-                                        fontWeight: 400,
-                                        fontSize: "15px",
-                                        lineHeight: "22px",
-                                        color: "#5D5E60",
-                                        verticalAlign: "middle",
                                     }}
                                 >
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -244,16 +183,10 @@ export const GuardianSection = () => {
                         </div>
                         
                         {/* Card 3: Connect */}
-                        <div className={"flex flex-col"}>
+                        <div className={"flex flex-col w-full"}>
                             {/* 이미지 영역 */}
                             <div 
-                                className={"relative overflow-hidden bg-white"}
-                                style={{
-                                    width: "421px",
-                                    height: "264px",
-                                    borderRadius: "16px",
-                                    border: "1px solid #EDEEF0",
-                                }}
+                                className={"relative overflow-hidden bg-white w-full aspect-[421/264] rounded-2xl border border-[#EDEEF0]"}
                             >
                                 <Image
                                     src={"/images/connect-3d-icon.png"}
@@ -267,26 +200,13 @@ export const GuardianSection = () => {
                             </div>
                             {/* 텍스트 영역 */}
                             <div 
-                                className={"bg-white flex flex-col"}
-                                style={{
-                                    width: "421px",
-                                    height: "192px",
-                                    borderRadius: "16px",
-                                    gap: "8px",
-                                    padding: "24px",
-                                    border: "1px solid #EDEEF0",
-                                    marginTop: "0",
-                                }}
+                                className={"bg-white flex flex-col rounded-2xl gap-2 p-4 md:p-6 border border-[#EDEEF0] mt-0"}
                             >
-                                <h3 className={"text-header-4 text-[#0F0F0F] font-bold"}>Connect</h3>
+                                <h3 className={"text-lg md:text-header-4 text-[#0F0F0F] font-bold"}>Connect</h3>
                                 <p
+                                    className={"font-normal text-sm md:text-[15px] leading-5 md:leading-[22px] text-[#5D5E60]"}
                                     style={{
                                         fontFamily: "Pretendard, sans-serif",
-                                        fontWeight: 400,
-                                        fontSize: "15px",
-                                        lineHeight: "22px",
-                                        color: "#5D5E60",
-                                        verticalAlign: "middle",
                                     }}
                                 >
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.

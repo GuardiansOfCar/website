@@ -13,37 +13,39 @@ export const ExperienceSection = () => {
         horizontalPadding={"px-0 max-desktop:px-5"}
       >
         <section
-          className={"flex flex-col space-y-8 py-10"}
+          className={"flex flex-col space-y-6 md:space-y-8 py-6 md:py-10"}
           aria-labelledby="experience-heading"
         >
-          <header className={"text-center space-y-2"}>
+          <header className={"text-center space-y-2 px-4"}>
             <h2
               id="experience-heading"
-              className={"font-bold text-[40px] leading-[48px] text-center"}
+              className={
+                "font-bold text-2xl md:text-[40px] leading-tight md:leading-[48px] text-center"
+              }
             >
               From Engineering to{" "}
               <span className={"text-sub-primary"}>Experience</span>
             </h2>
             {/* Our Services with lines */}
             <div
-              className={"flex items-center justify-center"}
-              style={{ gap: "24px", marginTop: "48px" }}
+              className={"flex items-center justify-center mt-6 md:mt-12"}
+              style={{ gap: "12px", marginTop: "24px" }}
             >
               <div
-                className={"h-0 border-t"}
+                className={"h-0 border-t hidden md:block flex-1"}
                 style={{
-                  width: "571px",
+                  maxWidth: "571px",
                   borderColor: "#E0E1E5",
                   borderWidth: "1px",
                 }}
               />
               <p
-                className={"text-center align-middle whitespace-nowrap"}
+                className={
+                  "text-center align-middle whitespace-nowrap text-base md:text-[20px] leading-6 md:leading-[28px]"
+                }
                 style={{
                   fontFamily: "Pretendard, sans-serif",
                   fontWeight: 700,
-                  fontSize: "20px",
-                  lineHeight: "28px",
                   color: "#78797C",
                   verticalAlign: "middle",
                 }}
@@ -51,9 +53,9 @@ export const ExperienceSection = () => {
                 Our Services
               </p>
               <div
-                className={"h-0 border-t"}
+                className={"h-0 border-t hidden md:block flex-1"}
                 style={{
-                  width: "571px",
+                  maxWidth: "571px",
                   borderColor: "#E0E1E5",
                   borderWidth: "1px",
                 }}
@@ -62,35 +64,25 @@ export const ExperienceSection = () => {
           </header>
 
           <div
-            className={"grid grid-cols-3 mt-8"}
-            style={{
-              gap: "16px",
-              width: "1312px",
-              maxWidth: "1312px",
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
+            className={
+              "grid grid-cols-1 md:grid-cols-3 mt-6 md:mt-8 w-full max-w-[1312px] mx-auto gap-4 md:gap-4 px-4 md:px-0"
+            }
           >
             {/* Left Column - Top Card */}
             <div
               className={
-                "border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative"
+                "border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6"
               }
               style={{
                 width: "100%",
                 maxWidth: "426px",
-                height: "228px",
-                minWidth: "282px",
                 borderRadius: "16px",
-                padding: "24px",
                 gap: "8px",
+                minHeight: "auto",
               }}
             >
               {/* 아이콘과 텍스트 컨테이너 */}
-              <div
-                className={"absolute"}
-                style={{ top: "24px", left: "24px", right: "24px" }}
-              >
+              <div className={"flex flex-col"}>
                 {/* 아이콘 */}
                 <Image
                   src={"/images/g23-3d-icon.png"}
@@ -102,44 +94,37 @@ export const ExperienceSection = () => {
                   }
                   width={64}
                   height={64}
-                  className={"object-contain"}
+                  className={"object-contain w-12 h-12 md:w-16 md:h-16"}
                   loading={"lazy"}
                 />
                 {/* 텍스트 - 아이콘 아래 16px 간격 */}
-                <div style={{ marginTop: "16px" }}>
+                <div className={"mt-3 md:mt-4"}>
                   <h3
+                    className={
+                      "font-bold text-base md:text-[18px] leading-6 md:leading-[26px] text-[#0F0F0F] mb-2"
+                    }
                     style={{
                       fontFamily: "Pretendard, sans-serif",
-                      fontWeight: 700,
-                      fontSize: "18px",
-                      lineHeight: "26px",
-                      color: "#0F0F0F",
-                      marginBottom: "8px",
                     }}
                   >
                     G2E (Guardians-To-Earn)
                   </h3>
                   <p
+                    className={
+                      "font-bold text-sm md:text-[15px] leading-5 md:leading-[22px] text-[#5D5E60] mb-2"
+                    }
                     style={{
                       fontFamily: "Pretendard, sans-serif",
-                      fontWeight: 700,
-                      fontSize: "15px",
-                      lineHeight: "22px",
-                      color: "#5D5E60",
-                      verticalAlign: "middle",
-                      marginBottom: "8px",
                     }}
                   >
                     Data Contribution Rewards
                   </p>
                   <p
+                    className={
+                      "font-normal text-sm md:text-[15px] leading-5 md:leading-[22px] text-[#5D5E60]"
+                    }
                     style={{
                       fontFamily: "Pretendard, sans-serif",
-                      fontWeight: 400,
-                      fontSize: "15px",
-                      lineHeight: "22px",
-                      color: "#5D5E60",
-                      verticalAlign: "middle",
                     }}
                   >
                     Earn tokens by contributing driving data and reporting road
@@ -152,44 +137,55 @@ export const ExperienceSection = () => {
             {/* Middle Card - Large */}
             <div
               className={
-                "border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col row-span-2 relative"
+                "border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col md:row-span-2 relative p-4 md:p-6"
               }
               style={{
-                width: "427px",
-                height: "472px",
-                minWidth: "283px",
+                width: "100%",
+                maxWidth: "427px",
                 borderRadius: "16px",
-                padding: "24px",
                 gap: "8px",
+                minHeight: "300px",
               }}
             >
-              {/* 타이틀 - 좌, 상단으로부터 24px 간격 */}
+              {/* 타이틀 */}
               <h3
-                className={"absolute"}
+                className={
+                  "font-bold text-base md:text-[18px] leading-6 md:leading-[26px] text-[#0F0F0F] mb-3 md:mb-4"
+                }
                 style={{
-                  top: "24px",
-                  left: "24px",
                   fontFamily: "Pretendard, sans-serif",
-                  fontWeight: 700,
-                  fontSize: "18px",
-                  lineHeight: "26px",
-                  color: "#0F0F0F",
                 }}
               >
                 AI Risk Alert
               </h3>
 
-              {/* 아이콘 - 카드 bottom으로부터 24px 간격 */}
-              <div
-                className={"absolute flex items-center justify-center"}
-                style={{
-                  bottom: "24px",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  width: "378px",
-                  height: "316px",
-                }}
-              >
+              {/* 텍스트 영역 */}
+              <div className={"mb-4 md:mb-6"}>
+                <p
+                  className={
+                    "font-bold text-sm md:text-[15px] leading-5 md:leading-[22px] text-[#5D5E60] mb-2"
+                  }
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                  }}
+                >
+                  Real-time Risk Prediction
+                </p>
+                <p
+                  className={
+                    "font-normal text-sm md:text-[15px] leading-5 md:leading-[22px] text-[#5D5E60]"
+                  }
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                  }}
+                >
+                  Detects hazards such as collisions, wrong-way driving, and
+                  severe weather conditions.
+                </p>
+              </div>
+
+              {/* 아이콘 */}
+              <div className={"flex items-center justify-center mt-auto"}>
                 <Image
                   src={"/images/ai-alert-risk-3d-icon.png"}
                   alt={"AI Risk Alert - Real-time Risk Prediction Service Icon"}
@@ -198,69 +194,29 @@ export const ExperienceSection = () => {
                   }
                   width={378}
                   height={316}
-                  className={"object-contain"}
+                  className={
+                    "object-contain w-full max-w-[280px] md:max-w-[378px] h-auto"
+                  }
                   loading={"lazy"}
                 />
-              </div>
-
-              {/* 텍스트 영역 - 타이틀 아래 */}
-              <div
-                className={"absolute"}
-                style={{
-                  top: "58px",
-                  left: "24px",
-                  right: "24px",
-                }}
-              >
-                <p
-                  style={{
-                    fontFamily: "Pretendard, sans-serif",
-                    fontWeight: 700,
-                    fontSize: "15px",
-                    lineHeight: "22px",
-                    color: "#5D5E60",
-                    verticalAlign: "middle",
-                    marginBottom: "8px",
-                  }}
-                >
-                  Real-time Risk Prediction
-                </p>
-                <p
-                  style={{
-                    fontFamily: "Pretendard, sans-serif",
-                    fontWeight: 400,
-                    fontSize: "15px",
-                    lineHeight: "22px",
-                    color: "#5D5E60",
-                    verticalAlign: "middle",
-                  }}
-                >
-                  Detects hazards such as collisions, wrong-way driving, and
-                  severe weather conditions.
-                </p>
               </div>
             </div>
 
             {/* Right Column - Top Card */}
             <div
               className={
-                "border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative"
+                "border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6"
               }
               style={{
                 width: "100%",
                 maxWidth: "426px",
-                height: "228px",
-                minWidth: "282px",
                 borderRadius: "16px",
-                padding: "24px",
                 gap: "8px",
+                minHeight: "auto",
               }}
             >
               {/* 아이콘과 텍스트 컨테이너 */}
-              <div
-                className={"absolute"}
-                style={{ top: "24px", left: "24px", right: "24px" }}
-              >
+              <div className={"flex flex-col"}>
                 {/* 아이콘 */}
                 <Image
                   src={"/images/precision-parking-3d-icon.png"}
@@ -272,44 +228,37 @@ export const ExperienceSection = () => {
                   }
                   width={64}
                   height={64}
-                  className={"object-contain"}
+                  className={"object-contain w-12 h-12 md:w-16 md:h-16"}
                   loading={"lazy"}
                 />
                 {/* 텍스트 - 아이콘 아래 16px 간격 */}
-                <div style={{ marginTop: "16px" }}>
+                <div className={"mt-3 md:mt-4"}>
                   <h3
+                    className={
+                      "font-bold text-base md:text-[18px] leading-6 md:leading-[26px] text-[#0F0F0F] mb-2"
+                    }
                     style={{
                       fontFamily: "Pretendard, sans-serif",
-                      fontWeight: 700,
-                      fontSize: "18px",
-                      lineHeight: "26px",
-                      color: "#0F0F0F",
-                      marginBottom: "8px",
                     }}
                   >
                     Precision Parking
                   </h3>
                   <p
+                    className={
+                      "font-bold text-sm md:text-[15px] leading-5 md:leading-[22px] text-[#5D5E60] mb-2"
+                    }
                     style={{
                       fontFamily: "Pretendard, sans-serif",
-                      fontWeight: 700,
-                      fontSize: "15px",
-                      lineHeight: "22px",
-                      color: "#5D5E60",
-                      verticalAlign: "middle",
-                      marginBottom: "8px",
                     }}
                   >
                     Indoor Parking Assistance
                   </p>
                   <p
+                    className={
+                      "font-normal text-sm md:text-[15px] leading-5 md:leading-[22px] text-[#5D5E60]"
+                    }
                     style={{
                       fontFamily: "Pretendard, sans-serif",
-                      fontWeight: 400,
-                      fontSize: "15px",
-                      lineHeight: "22px",
-                      color: "#5D5E60",
-                      verticalAlign: "middle",
                     }}
                   >
                     Tracks vehicle position to locate empty spots and navigate
@@ -322,23 +271,18 @@ export const ExperienceSection = () => {
             {/* Left Column - Bottom Card */}
             <div
               className={
-                "border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative"
+                "border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6"
               }
               style={{
                 width: "100%",
                 maxWidth: "426px",
-                height: "228px",
-                minWidth: "282px",
                 borderRadius: "16px",
-                padding: "24px",
                 gap: "8px",
+                minHeight: "auto",
               }}
             >
               {/* 아이콘과 텍스트 컨테이너 */}
-              <div
-                className={"absolute"}
-                style={{ top: "24px", left: "24px", right: "24px" }}
-              >
+              <div className={"flex flex-col"}>
                 {/* 아이콘 */}
                 <Image
                   src={"/images/smart-payment-3d-icon.png"}
@@ -348,44 +292,37 @@ export const ExperienceSection = () => {
                   }
                   width={64}
                   height={64}
-                  className={"object-contain"}
+                  className={"object-contain w-12 h-12 md:w-16 md:h-16"}
                   loading={"lazy"}
                 />
                 {/* 텍스트 - 아이콘 아래 16px 간격 */}
-                <div style={{ marginTop: "16px" }}>
+                <div className={"mt-3 md:mt-4"}>
                   <h3
+                    className={
+                      "font-bold text-base md:text-[18px] leading-6 md:leading-[26px] text-[#0F0F0F] mb-2"
+                    }
                     style={{
                       fontFamily: "Pretendard, sans-serif",
-                      fontWeight: 700,
-                      fontSize: "18px",
-                      lineHeight: "26px",
-                      color: "#0F0F0F",
-                      marginBottom: "8px",
                     }}
                   >
                     Smart Payment
                   </h3>
                   <p
+                    className={
+                      "font-bold text-sm md:text-[15px] leading-5 md:leading-[22px] text-[#5D5E60] mb-2"
+                    }
                     style={{
                       fontFamily: "Pretendard, sans-serif",
-                      fontWeight: 700,
-                      fontSize: "15px",
-                      lineHeight: "22px",
-                      color: "#5D5E60",
-                      verticalAlign: "middle",
-                      marginBottom: "8px",
                     }}
                   >
                     In-Vehicle Payment
                   </p>
                   <p
+                    className={
+                      "font-normal text-sm md:text-[15px] leading-5 md:leading-[22px] text-[#5D5E60]"
+                    }
                     style={{
                       fontFamily: "Pretendard, sans-serif",
-                      fontWeight: 400,
-                      fontSize: "15px",
-                      lineHeight: "22px",
-                      color: "#5D5E60",
-                      verticalAlign: "middle",
                     }}
                   >
                     Supports payments for parking, charging, and insurance
@@ -398,23 +335,18 @@ export const ExperienceSection = () => {
             {/* Right Column - Bottom Card */}
             <div
               className={
-                "border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative"
+                "border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6"
               }
               style={{
                 width: "100%",
                 maxWidth: "426px",
-                height: "228px",
-                minWidth: "282px",
                 borderRadius: "16px",
-                padding: "24px",
                 gap: "8px",
+                minHeight: "auto",
               }}
             >
               {/* 아이콘과 텍스트 컨테이너 */}
-              <div
-                className={"absolute"}
-                style={{ top: "24px", left: "24px", right: "24px" }}
-              >
+              <div className={"flex flex-col"}>
                 {/* 아이콘 */}
                 <Image
                   src={"/images/mobility-analytics-3d-icon.png"}
@@ -424,44 +356,37 @@ export const ExperienceSection = () => {
                   }
                   width={64}
                   height={64}
-                  className={"object-contain"}
+                  className={"object-contain w-12 h-12 md:w-16 md:h-16"}
                   loading={"lazy"}
                 />
                 {/* 텍스트 - 아이콘 아래 16px 간격 */}
-                <div style={{ marginTop: "16px" }}>
+                <div className={"mt-3 md:mt-4"}>
                   <h3
+                    className={
+                      "font-bold text-base md:text-[18px] leading-6 md:leading-[26px] text-[#0F0F0F] mb-2"
+                    }
                     style={{
                       fontFamily: "Pretendard, sans-serif",
-                      fontWeight: 700,
-                      fontSize: "18px",
-                      lineHeight: "26px",
-                      color: "#0F0F0F",
-                      marginBottom: "8px",
                     }}
                   >
                     Mobility Analytics
                   </h3>
                   <p
+                    className={
+                      "font-bold text-sm md:text-[15px] leading-5 md:leading-[22px] text-[#5D5E60] mb-2"
+                    }
                     style={{
                       fontFamily: "Pretendard, sans-serif",
-                      fontWeight: 700,
-                      fontSize: "15px",
-                      lineHeight: "22px",
-                      color: "#5D5E60",
-                      verticalAlign: "middle",
-                      marginBottom: "8px",
                     }}
                   >
                     B2B Data Insights
                   </p>
                   <p
+                    className={
+                      "font-normal text-sm md:text-[15px] leading-5 md:leading-[22px] text-[#5D5E60]"
+                    }
                     style={{
                       fontFamily: "Pretendard, sans-serif",
-                      fontWeight: 400,
-                      fontSize: "15px",
-                      lineHeight: "22px",
-                      color: "#5D5E60",
-                      verticalAlign: "middle",
                     }}
                   >
                     Provides analytical mobility data services for city

@@ -37,36 +37,33 @@ export const HomeContainer = () => {
 
       {/* Disclaimer 섹션 wrapper */}
       <div
+        className={"w-full"}
         style={{
           backgroundColor: "rgba(249, 251, 251, 1)",
-          width: "100%",
           marginTop: 0,
-          paddingBottom: "36px",
+          paddingBottom: "24px",
+          paddingTop: "24px",
         }}
       >
         <div
-          className={"flex flex-col"}
+          className={
+            "flex flex-col w-full max-w-[1312px] mx-auto px-4 md:px-6 py-6 md:py-6 rounded-2xl"
+          }
           style={{
-            width: "1312px",
-            height: "210px",
-            maxWidth: "1312px",
-            borderRadius: "16px",
             borderBottomWidth: "1px",
-            paddingTop: "48px",
-            paddingRight: "24px",
-            paddingBottom: "48px",
-            paddingLeft: "24px",
-            gap: "16px",
+            gap: "12px",
             backdropFilter: "blur(8px)",
             backgroundColor: "rgba(7, 20, 25, 1)",
-            marginLeft: "auto",
-            marginRight: "auto",
           }}
         >
-          <p className={"text-body-1b text-neutral-100"}>
+          <p className={"text-neutral-100 text-sm md:text-base font-medium"}>
             ⓒ 2025 GOTCAR. All Rights Reserved.
           </p>
-          <p className={"text-body-1 text-neutral-100"}>
+          <p
+            className={
+              "text-neutral-100 text-xs md:text-sm leading-5 md:leading-6"
+            }
+          >
             GOTCAR Token is not a security or investment product.
             <br />
             Cryptocurrency investments involve the risk of loss.
