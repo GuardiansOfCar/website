@@ -71,7 +71,7 @@ export const ExperienceSection = () => {
             {/* Left Column - Top Card */}
             <div
               className={
-                "border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6"
+                "border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6 animate-card-slide-in-from-left"
               }
               style={{
                 width: "100%",
@@ -79,6 +79,8 @@ export const ExperienceSection = () => {
                 borderRadius: "16px",
                 gap: "8px",
                 minHeight: "auto",
+                opacity: 0,
+                animationDelay: "0.1s",
               }}
             >
               {/* 아이콘과 텍스트 컨테이너 */}
@@ -137,7 +139,7 @@ export const ExperienceSection = () => {
             {/* Middle Card - Large */}
             <div
               className={
-                "border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col md:row-span-2 relative p-4 md:p-6"
+                "border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col md:row-span-2 relative p-4 md:p-6 animate-slide-in-from-center-bottom"
               }
               style={{
                 width: "100%",
@@ -145,6 +147,8 @@ export const ExperienceSection = () => {
                 borderRadius: "16px",
                 gap: "8px",
                 minHeight: "300px",
+                opacity: 0,
+                animationDelay: "0.2s",
               }}
             >
               {/* 타이틀 */}
@@ -205,7 +209,7 @@ export const ExperienceSection = () => {
             {/* Right Column - Top Card */}
             <div
               className={
-                "border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6"
+                "border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6 animate-card-slide-in-from-right"
               }
               style={{
                 width: "100%",
@@ -213,6 +217,8 @@ export const ExperienceSection = () => {
                 borderRadius: "16px",
                 gap: "8px",
                 minHeight: "auto",
+                opacity: 0,
+                animationDelay: "0.3s",
               }}
             >
               {/* 아이콘과 텍스트 컨테이너 */}
@@ -271,7 +277,7 @@ export const ExperienceSection = () => {
             {/* Left Column - Bottom Card */}
             <div
               className={
-                "border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6"
+                "border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6 animate-slide-in-from-left-bottom"
               }
               style={{
                 width: "100%",
@@ -279,6 +285,8 @@ export const ExperienceSection = () => {
                 borderRadius: "16px",
                 gap: "8px",
                 minHeight: "auto",
+                opacity: 0,
+                animationDelay: "0.4s",
               }}
             >
               {/* 아이콘과 텍스트 컨테이너 */}
@@ -335,7 +343,7 @@ export const ExperienceSection = () => {
             {/* Right Column - Bottom Card */}
             <div
               className={
-                "border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6"
+                "border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6 animate-slide-in-from-right-bottom"
               }
               style={{
                 width: "100%",
@@ -343,6 +351,8 @@ export const ExperienceSection = () => {
                 borderRadius: "16px",
                 gap: "8px",
                 minHeight: "auto",
+                opacity: 0,
+                animationDelay: "0.5s",
               }}
             >
               {/* 아이콘과 텍스트 컨테이너 */}

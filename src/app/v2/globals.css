@@ -39,6 +39,120 @@ input[type='number'] {
     }
 }
 
+@keyframes slide-in-from-right {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    70% {
+        transform: translateX(-5%);
+        opacity: 1;
+    }
+    85% {
+        transform: translateX(2%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slide-in-from-left {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    70% {
+        transform: translateX(5%);
+        opacity: 1;
+    }
+    85% {
+        transform: translateX(-2%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes text-reveal {
+    0% {
+        clip-path: inset(0 100% 0 0);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        clip-path: inset(0 0% 0 0);
+        opacity: 1;
+    }
+}
+
+@keyframes slide-up-fade-in {
+    0% {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slide-in-from-left-bottom {
+    0% {
+        transform: translate(-100px, 50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+}
+
+@keyframes slide-in-from-right-bottom {
+    0% {
+        transform: translate(100px, 50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+}
+
+@keyframes slide-in-from-center-bottom {
+    0% {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes card-slide-in-from-left {
+    0% {
+        transform: translateX(-80px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes card-slide-in-from-right {
+    0% {
+        transform: translateX(80px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
 
 @layer components {
     /* tailwind.css 또는 글로벌 CSS 파일 */
@@ -117,6 +231,42 @@ input[type='number'] {
     .animate-partnership-scroll {
         display: flex;
         animation: partnership-scroll 40s linear infinite;
+    }
+
+    .animate-slide-in-from-right {
+        animation: slide-in-from-right 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+    }
+
+    .animate-slide-in-from-left {
+        animation: slide-in-from-left 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+    }
+
+    .animate-text-reveal {
+        animation: text-reveal 1.5s ease-out forwards;
+    }
+
+    .animate-slide-up-fade-in {
+        animation: slide-up-fade-in 0.8s ease-out forwards;
+    }
+
+    .animate-slide-in-from-left-bottom {
+        animation: slide-in-from-left-bottom 0.8s ease-out forwards;
+    }
+
+    .animate-slide-in-from-right-bottom {
+        animation: slide-in-from-right-bottom 0.8s ease-out forwards;
+    }
+
+    .animate-slide-in-from-center-bottom {
+        animation: slide-in-from-center-bottom 0.8s ease-out forwards;
+    }
+
+    .animate-card-slide-in-from-left {
+        animation: card-slide-in-from-left 0.8s ease-out forwards;
+    }
+
+    .animate-card-slide-in-from-right {
+        animation: card-slide-in-from-right 0.8s ease-out forwards;
     }
 
     .text-header-1 {

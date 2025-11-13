@@ -67,9 +67,21 @@ export const HeroSection = () => {
               "font-bold text-[72px] leading-[80px] text-center text-neutral-100"
             }
           >
-            <span className={"text-primary"}>Zero</span> Accidents.
+            <span
+              className={
+                "text-primary inline-block animate-slide-in-from-right"
+              }
+            >
+              Zero
+            </span>{" "}
+            Accidents.
             <br />
-            <span className={"text-primary"}>Zero</span> Doubt.
+            <span
+              className={"text-primary inline-block animate-slide-in-from-left"}
+            >
+              Zero
+            </span>{" "}
+            Doubt.
           </h1>
           <p
             className={
@@ -122,13 +134,15 @@ export const HeroSection = () => {
               >
                 <span className={"text-neutral-100"}>Engineering the </span>
                 <span
-                  className={"inline-block"}
+                  className={"inline-block animate-text-reveal"}
                   style={{
                     background:
                       "radial-gradient(ellipse 134.33% 152.08% at 0.16% -11.46%, #007F83 0%, #21EAF1 58.65%, #007F83 100%)",
                     WebkitBackgroundClip: "text",
                     backgroundClip: "text",
                     color: "transparent",
+                    animationDelay: "0.3s",
+                    opacity: 0,
                   }}
                 >
                   Next Mobility Era
@@ -171,12 +185,16 @@ export const HeroSection = () => {
             <div className={"grid grid-cols-1 md:grid-cols-3 gap-4"}>
               {/* Card 1: Precision Positioning AI Engine */}
               <div
-                className={"bg-[#121A26] rounded-2xl flex flex-col p-4 md:p-6"}
+                className={
+                  "bg-[#121A26] rounded-2xl flex flex-col p-4 md:p-6 animate-slide-up-fade-in"
+                }
                 style={{
                   width: "100%",
                   maxWidth: "427px",
                   height: "auto",
                   border: "1px solid rgba(0, 40, 52, 1)",
+                  animationDelay: "0.2s",
+                  opacity: 0,
                 }}
               >
                 <Image
@@ -212,12 +230,16 @@ export const HeroSection = () => {
 
               {/* Card 2: Mobility Data Blockchain */}
               <div
-                className={"bg-[#121A26] rounded-2xl flex flex-col p-4 md:p-6"}
+                className={
+                  "bg-[#121A26] rounded-2xl flex flex-col p-4 md:p-6 animate-slide-up-fade-in"
+                }
                 style={{
                   width: "100%",
                   maxWidth: "427px",
                   height: "auto",
                   border: "1px solid rgba(0, 40, 52, 1)",
+                  animationDelay: "0.4s",
+                  opacity: 0,
                 }}
               >
                 <Image
@@ -253,12 +275,16 @@ export const HeroSection = () => {
 
               {/* Card 3: AI Mobility Agent */}
               <div
-                className={"bg-[#121A26] rounded-2xl flex flex-col p-4 md:p-6"}
+                className={
+                  "bg-[#121A26] rounded-2xl flex flex-col p-4 md:p-6 animate-slide-up-fade-in"
+                }
                 style={{
                   width: "100%",
                   maxWidth: "427px",
                   height: "auto",
                   border: "1px solid rgba(0, 40, 52, 1)",
+                  animationDelay: "0.6s",
+                  opacity: 0,
                 }}
               >
                 <Image
