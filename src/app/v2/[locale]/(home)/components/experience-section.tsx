@@ -2,8 +2,46 @@
 
 import { Main } from "@/app/v2/components/main";
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 export const ExperienceSection = () => {
+  const cardsRef = useRef<HTMLDivElement>(null);
+  const [opacity, setOpacity] = useState(0);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          // intersectionRatio를 사용하여 스크롤 위치에 따라 opacity 계산
+          // 0.2 (20%) 보일 때부터 시작해서 0.5 (50%) 보일 때 완전히 나타남
+          const ratio = entry.intersectionRatio;
+          if (ratio < 0.2) {
+            setOpacity(0);
+          } else if (ratio >= 0.5) {
+            setOpacity(1);
+          } else {
+            // 0.2 ~ 0.5 사이에서 부드럽게 전환
+            setOpacity((ratio - 0.2) / 0.3);
+          }
+        });
+      },
+      {
+        threshold: Array.from({ length: 101 }, (_, i) => i / 100), // 0부터 1까지 0.01 단위
+        rootMargin: "0px 0px -100px 0px",
+      }
+    );
+
+    if (cardsRef.current) {
+      observer.observe(cardsRef.current);
+    }
+
+    return () => {
+      if (cardsRef.current) {
+        observer.unobserve(cardsRef.current);
+      }
+    };
+  }, []);
+
   return (
     <div className={"bg-white"}>
       <Main
@@ -64,6 +102,7 @@ export const ExperienceSection = () => {
           </header>
 
           <div
+            ref={cardsRef}
             className={
               "grid grid-cols-1 md:grid-cols-3 mt-6 md:mt-8 w-full max-w-[1312px] mx-auto gap-4 md:gap-4 px-4 md:px-0"
             }
@@ -71,7 +110,7 @@ export const ExperienceSection = () => {
             {/* Left Column - Top Card */}
             <div
               className={
-                "border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6 animate-card-slide-in-from-left"
+                `border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6 transition-all duration-300 ease-out`
               }
               style={{
                 width: "100%",
@@ -79,8 +118,8 @@ export const ExperienceSection = () => {
                 borderRadius: "16px",
                 gap: "8px",
                 minHeight: "auto",
-                opacity: 0,
-                animationDelay: "0.1s",
+                opacity: opacity,
+                transform: `translateX(${-30 * (1 - opacity)}px) translateY(${20 * (1 - opacity)}px)`,
               }}
             >
               {/* 아이콘과 텍스트 컨테이너 */}
@@ -139,7 +178,7 @@ export const ExperienceSection = () => {
             {/* Middle Card - Large */}
             <div
               className={
-                "border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col md:row-span-2 relative p-4 md:p-6 animate-slide-in-from-center-bottom"
+                `border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col md:row-span-2 relative p-4 md:p-6 transition-all duration-300 ease-out`
               }
               style={{
                 width: "100%",
@@ -147,8 +186,9 @@ export const ExperienceSection = () => {
                 borderRadius: "16px",
                 gap: "8px",
                 minHeight: "300px",
-                opacity: 0,
-                animationDelay: "0.2s",
+                opacity: opacity,
+                transform: `translateY(${30 * (1 - opacity)}px)`,
+                transitionDelay: "0.1s",
               }}
             >
               {/* 타이틀 */}
@@ -209,7 +249,7 @@ export const ExperienceSection = () => {
             {/* Right Column - Top Card */}
             <div
               className={
-                "border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6 animate-card-slide-in-from-right"
+                `border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6 transition-all duration-300 ease-out`
               }
               style={{
                 width: "100%",
@@ -217,8 +257,9 @@ export const ExperienceSection = () => {
                 borderRadius: "16px",
                 gap: "8px",
                 minHeight: "auto",
-                opacity: 0,
-                animationDelay: "0.3s",
+                opacity: opacity,
+                transform: `translateX(${30 * (1 - opacity)}px) translateY(${20 * (1 - opacity)}px)`,
+                transitionDelay: "0.15s",
               }}
             >
               {/* 아이콘과 텍스트 컨테이너 */}
@@ -277,7 +318,7 @@ export const ExperienceSection = () => {
             {/* Left Column - Bottom Card */}
             <div
               className={
-                "border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6 animate-slide-in-from-left-bottom"
+                `border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6 transition-all duration-300 ease-out`
               }
               style={{
                 width: "100%",
@@ -285,8 +326,9 @@ export const ExperienceSection = () => {
                 borderRadius: "16px",
                 gap: "8px",
                 minHeight: "auto",
-                opacity: 0,
-                animationDelay: "0.4s",
+                opacity: opacity,
+                transform: `translateX(${-30 * (1 - opacity)}px) translateY(${-20 * (1 - opacity)}px)`,
+                transitionDelay: "0.2s",
               }}
             >
               {/* 아이콘과 텍스트 컨테이너 */}
@@ -343,7 +385,7 @@ export const ExperienceSection = () => {
             {/* Right Column - Bottom Card */}
             <div
               className={
-                "border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6 animate-slide-in-from-right-bottom"
+                `border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6 transition-all duration-300 ease-out`
               }
               style={{
                 width: "100%",
@@ -351,8 +393,9 @@ export const ExperienceSection = () => {
                 borderRadius: "16px",
                 gap: "8px",
                 minHeight: "auto",
-                opacity: 0,
-                animationDelay: "0.5s",
+                opacity: opacity,
+                transform: `translateX(${30 * (1 - opacity)}px) translateY(${-20 * (1 - opacity)}px)`,
+                transitionDelay: "0.25s",
               }}
             >
               {/* 아이콘과 텍스트 컨테이너 */}

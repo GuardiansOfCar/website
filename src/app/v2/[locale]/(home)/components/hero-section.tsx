@@ -2,9 +2,46 @@
 
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 export const HeroSection = () => {
   const t = useTranslations();
+  const cardsRef = useRef<HTMLDivElement>(null);
+  const [opacity, setOpacity] = useState(0);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          // intersectionRatio를 사용하여 스크롤 위치에 따라 opacity 계산
+          // 0.2 (20%) 보일 때부터 시작해서 0.5 (50%) 보일 때 완전히 나타남
+          const ratio = entry.intersectionRatio;
+          if (ratio < 0.2) {
+            setOpacity(0);
+          } else if (ratio >= 0.5) {
+            setOpacity(1);
+          } else {
+            // 0.2 ~ 0.5 사이에서 부드럽게 전환
+            setOpacity((ratio - 0.2) / 0.3);
+          }
+        });
+      },
+      {
+        threshold: Array.from({ length: 101 }, (_, i) => i / 100), // 0부터 1까지 0.01 단위
+        rootMargin: "0px 0px -100px 0px",
+      }
+    );
+
+    if (cardsRef.current) {
+      observer.observe(cardsRef.current);
+    }
+
+    return () => {
+      if (cardsRef.current) {
+        observer.unobserve(cardsRef.current);
+      }
+    };
+  }, []);
 
   return (
     <div className={"relative w-full hero-gradient-overlay -mt-[94px]"}>
@@ -89,9 +126,12 @@ export const HeroSection = () => {
             }
           >
             GOTCAR transforms real-time driving data into secure, private, and
-            valuable digital assets. Powered by our AI Mobility Agent, it builds
-            a safer, smarter, and decentralized mobility ecosystem — where every
-            driver becomes a vital data node.
+            valuable digital assets.
+            <br />
+            Powered by our AI Mobility Agent, it builds a safer, smarter, and
+            decentralized mobility ecosystem —
+            <br />
+            where every driver becomes a vital data node.
           </p>
         </section>
       </div>
@@ -182,19 +222,20 @@ export const HeroSection = () => {
               </div>
             </header>
 
-            <div className={"grid grid-cols-1 md:grid-cols-3 gap-4"}>
+            <div
+              ref={cardsRef}
+              className={"grid grid-cols-1 md:grid-cols-3 gap-4"}
+            >
               {/* Card 1: Precision Positioning AI Engine */}
               <div
-                className={
-                  "bg-[#121A26] rounded-2xl flex flex-col p-4 md:p-6 animate-slide-up-fade-in"
-                }
+                className={`bg-[#121A26] rounded-2xl flex flex-col p-4 md:p-6 transition-all duration-300 ease-out`}
                 style={{
                   width: "100%",
                   maxWidth: "427px",
                   height: "auto",
                   border: "1px solid rgba(0, 40, 52, 1)",
-                  animationDelay: "0.2s",
-                  opacity: 0,
+                  opacity: opacity,
+                  transform: `translateY(${20 * (1 - opacity)}px)`,
                 }}
               >
                 <Image
@@ -230,16 +271,15 @@ export const HeroSection = () => {
 
               {/* Card 2: Mobility Data Blockchain */}
               <div
-                className={
-                  "bg-[#121A26] rounded-2xl flex flex-col p-4 md:p-6 animate-slide-up-fade-in"
-                }
+                className={`bg-[#121A26] rounded-2xl flex flex-col p-4 md:p-6 transition-all duration-300 ease-out`}
                 style={{
                   width: "100%",
                   maxWidth: "427px",
                   height: "auto",
                   border: "1px solid rgba(0, 40, 52, 1)",
-                  animationDelay: "0.4s",
-                  opacity: 0,
+                  opacity: opacity,
+                  transform: `translateY(${20 * (1 - opacity)}px)`,
+                  transitionDelay: "0.1s",
                 }}
               >
                 <Image
@@ -275,16 +315,15 @@ export const HeroSection = () => {
 
               {/* Card 3: AI Mobility Agent */}
               <div
-                className={
-                  "bg-[#121A26] rounded-2xl flex flex-col p-4 md:p-6 animate-slide-up-fade-in"
-                }
+                className={`bg-[#121A26] rounded-2xl flex flex-col p-4 md:p-6 transition-all duration-300 ease-out`}
                 style={{
                   width: "100%",
                   maxWidth: "427px",
                   height: "auto",
                   border: "1px solid rgba(0, 40, 52, 1)",
-                  animationDelay: "0.6s",
-                  opacity: 0,
+                  opacity: opacity,
+                  transform: `translateY(${20 * (1 - opacity)}px)`,
+                  transitionDelay: "0.2s",
                 }}
               >
                 <Image

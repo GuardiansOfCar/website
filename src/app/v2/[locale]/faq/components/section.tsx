@@ -21,10 +21,12 @@ export const FaqSection = ({
 
   return (
     <div
+      onClick={handleOpenClick}
       className={clsx(
         "w-full flex flex-col relative transition-all duration-300 rounded-2xl",
         "p-4 md:p-8",
         "min-h-[64px] md:min-h-[96px]",
+        "cursor-pointer",
         open ? "h-auto" : "h-[64px] md:h-[96px]"
       )}
       style={{
@@ -35,10 +37,9 @@ export const FaqSection = ({
       }}
     >
       {/* 아이콘 - 컨테이너 상단, 우측으로부터 32px */}
-      <button
-        onClick={handleOpenClick}
+      <div
         className={clsx(
-          "bg-transparent border-none cursor-pointer",
+          "bg-transparent border-none pointer-events-none",
           "absolute flex items-center justify-center z-10",
           "top-4 right-4 w-5 h-5",
           "md:top-8 md:right-8 md:w-6 md:h-6"
@@ -65,10 +66,9 @@ export const FaqSection = ({
             loading={"lazy"}
           />
         )}
-      </button>
+      </div>
       
-      <button
-        onClick={handleOpenClick}
+      <div
         className={clsx(
           "w-full flex items-center text-left bg-transparent",
           "pr-11 md:pr-14"
@@ -85,7 +85,7 @@ export const FaqSection = ({
         >
           {title}
         </p>
-      </button>
+      </div>
       {open && (
         <div 
           className={clsx(
