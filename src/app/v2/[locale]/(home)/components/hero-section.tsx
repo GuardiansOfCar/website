@@ -101,8 +101,11 @@ export const HeroSection = () => {
         >
           <h1
             className={
-              "font-bold text-[72px] leading-[80px] text-center text-neutral-100"
+              "font-bold text-[40px] md:text-[72px] leading-[48px] md:leading-[80px] text-center text-neutral-100"
             }
+            style={{
+              fontFamily: "Pretendard, sans-serif",
+            }}
           >
             <span
               className={
@@ -122,8 +125,11 @@ export const HeroSection = () => {
           </h1>
           <p
             className={
-              "font-normal text-[18px] leading-[26px] text-center text-neutral-100 max-w-4xl"
+              "font-normal text-[15px] md:text-[18px] leading-[22px] md:leading-[26px] text-center text-neutral-100 max-w-4xl"
             }
+            style={{
+              fontFamily: "Pretendard, sans-serif",
+            }}
           >
             GOTCAR transforms real-time driving data into secure, private, and
             valuable digital assets.

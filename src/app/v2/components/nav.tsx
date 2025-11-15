@@ -5,7 +5,7 @@ import clsx from "clsx";
 import NextLink from "next/link";
 import { Link, usePathname } from "@/app/v2/i18n/navigation";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useLockBodyScroll } from "@uidotdev/usehooks";
 import { useWallet } from "@/app/v2/lib/use-wallet";
 import { shortenAddress } from "@/app/v2/lib/utils";
@@ -19,14 +19,37 @@ export const Nav = () => {
   const searchParams = useSearchParams();
 
   const wallet = useWallet();
-  
+
   // Staking이나 Referral 페이지인지 확인
-  const isLightMode = pathname.startsWith("/staking") || pathname.startsWith("/referral");
+  const isLightMode =
+    pathname.startsWith("/staking") || pathname.startsWith("/referral");
 
   const [langOpened, setLangOpened] = useState(false);
+  const langDropdownRef = useRef<HTMLDivElement>(null);
+
   const handleLangClick = () => {
     setLangOpened(!langOpened);
   };
+
+  // 외부 클릭 감지
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        langDropdownRef.current &&
+        !langDropdownRef.current.contains(event.target as Node)
+      ) {
+        setLangOpened(false);
+      }
+    };
+
+    if (langOpened) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [langOpened]);
 
   const handleBuyGocarClick = () => {
     if (wallet.address) {
@@ -64,9 +87,13 @@ export const Nav = () => {
                 fontWeight: isActive ? 700 : 400,
                 fontSize: "16px",
                 lineHeight: "24px",
-                color: isActive 
-                  ? (isLightMode ? "#0F0F0F" : "#FFFFFF")
-                  : (isLightMode ? "#28282A" : "#E0E1E5"),
+                color: isActive
+                  ? isLightMode
+                    ? "#0F0F0F"
+                    : "#FFFFFF"
+                  : isLightMode
+                    ? "#28282A"
+                    : "#E0E1E5",
               }}
             >
               {nav.label}
@@ -93,13 +120,15 @@ export const Nav = () => {
 
   const renderLanguage = (isMobile?: boolean) => {
     return (
-      <div className={"relative max-desktop:w-full"}>
+      <div className={"relative"} ref={langDropdownRef}>
         <button
           onClick={handleLangClick}
           className={clsx(
             "py-2 px-3 flex items-center gap-2 hover:text-primary transition-colors",
             langOpened && "!text-primary",
-            "max-desktop:px-5 max-desktop:py-5 max-desktop:justify-between max-desktop:w-full",
+            isMobile && "px-2 py-2",
+            !isMobile &&
+              "max-desktop:px-5 max-desktop:py-5 max-desktop:justify-between max-desktop:w-full",
             "align-middle"
           )}
           style={{
@@ -111,11 +140,15 @@ export const Nav = () => {
           }}
         >
           <Image
-            src={isLightMode ? "/images/language-icon-black.png" : "/images/language-icon.png"}
+            src={
+              isLightMode
+                ? "/images/language-icon-black.png"
+                : "/images/language-icon.png"
+            }
             alt={"Language Settings"}
             title={"Change Language"}
-            width={16}
-            height={16}
+            width={18}
+            height={18}
             className={"object-contain"}
             loading={"lazy"}
           />
@@ -126,27 +159,36 @@ export const Nav = () => {
             src={
               langOpened
                 ? "/images/chervon-down-primary.png"
-                : (isLightMode ? "/images/chervon-down-black.png" : "/images/chervon-down.png")
+                : isLightMode
+                  ? "/images/chervon-down-black.png"
+                  : "/images/chervon-down.png"
             }
             alt={langOpened ? "Close language menu" : "Open language menu"}
             title={langOpened ? "Close language menu" : "Open language menu"}
             loading={"lazy"}
-            style={isLightMode && !langOpened ? {
-              filter: "brightness(0) saturate(100%) invert(47%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%)",
-            } : {}}
+            style={
+              isLightMode && !langOpened
+                ? {
+                    filter:
+                      "brightness(0) saturate(100%) invert(47%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%)",
+                  }
+                : {}
+            }
           />
         </button>
         {langOpened && (
           <div
             style={{
-              ...(isMobile ? {} : {
-                right: "calc((100% - 1312px) / 2)",
-                top: isScrolled ? 0 : 66,
-              }),
-              backgroundColor: isLightMode ? "rgba(255,255,255,0.95)" : "rgba(7,20,25,0.95)",
+              right: 0,
+              top: "100%",
+              marginTop: "8px",
+              left: "auto",
+              backgroundColor: isLightMode
+                ? "rgba(255,255,255,0.95)"
+                : "rgba(7,20,25,0.95)",
             }}
             className={
-              "backdrop-blur-md z-[9999] fixed rounded-lg border border-neutral-60/20 max-desktop:!relative max-desktop:top-0"
+              "backdrop-blur-md z-[9999] absolute rounded-lg border border-neutral-60/20"
             }
           >
             <div
@@ -192,7 +234,8 @@ export const Nav = () => {
 
   const listTools = (
     <div>
-      <div className={"hidden max-desktop:flex"}>{renderLanguage(true)}</div>
+      {/* 모바일에서는 헤더에 표시되므로 여기서는 숨김 */}
+      <div className={"hidden"}>{renderLanguage(true)}</div>
       <div
         className={
           "flex items-center max-desktop:grid max-desktop:grid-cols-2 max-desktop:space-x-0 max-desktop:gap-3 max-desktop:px-5 max-desktop:py-4 border-b-primary  max-desktop:border-b-[4px]"
@@ -208,7 +251,9 @@ export const Nav = () => {
           aria-label={"Follow GOTCAR on X (Twitter)"}
         >
           <Image
-            src={isLightMode ? "/images/x-icon-black.png" : "/images/x-icon.png"}
+            src={
+              isLightMode ? "/images/x-icon-black.png" : "/images/x-icon.png"
+            }
             width={24}
             height={24}
             alt={"Follow GOTCAR on X (Twitter)"}
@@ -228,7 +273,11 @@ export const Nav = () => {
           aria-label={"Join GOTCAR Telegram Community"}
         >
           <Image
-            src={isLightMode ? "/images/telegram-icon-black.png" : "/images/telegram-icon.png"}
+            src={
+              isLightMode
+                ? "/images/telegram-icon-black.png"
+                : "/images/telegram-icon.png"
+            }
             width={24}
             height={24}
             alt={"Join GOTCAR Telegram Community"}
@@ -237,9 +286,16 @@ export const Nav = () => {
           />
         </a>
 
-        <div className={"max-desktop:hidden"} style={{ marginLeft: "16px" }}>{renderLanguage()}</div>
+        <div className={"max-desktop:hidden"} style={{ marginLeft: "16px" }}>
+          {renderLanguage()}
+        </div>
 
-        <NextLink href={"/whitepaper.pdf"} target={"_blank"} rel={"noopener noreferrer"} style={{ marginLeft: "16px" }}>
+        <NextLink
+          href={"/whitepaper.pdf"}
+          target={"_blank"}
+          rel={"noopener noreferrer"}
+          style={{ marginLeft: "16px" }}
+        >
           <button
             className={clsx(
               "flex items-center justify-center gap-2",
@@ -305,52 +361,80 @@ export const Nav = () => {
         "rounded-2xl border-b border-neutral-60/20",
         "pt-3 px-6 pb-3",
         "flex items-center",
-        "max-desktop:max-w-full max-desktop:w-full max-desktop:rounded-none max-desktop:border-b-0 max-desktop:bg-black max-desktop:backdrop-blur-none"
+        "max-desktop:max-w-[calc(100%-32px)] max-desktop:w-[calc(100%-32px)] max-desktop:mx-4 max-desktop:rounded-2xl max-desktop:border-b-0 max-desktop:bg-black max-desktop:backdrop-blur-none max-desktop:justify-between max-desktop:pt-4 max-desktop:px-4 max-desktop:pb-[19px]"
       )}
       style={{
         backgroundColor: isLightMode ? "white" : "rgba(7,20,25,0.8)",
       }}
     >
-      <Link href={"/"} locale={"en"} className={"flex items-center flex-shrink-0"} style={{ gap: "8px" }}>
+      <Link
+        href={"/"}
+        locale={"en"}
+        className={
+          "flex items-center flex-shrink-0 gap-2 max-desktop:gap-[6px]"
+        }
+      >
         <Image
-          src={isLightMode ? "/images/logo-black.png" : "/images/gotcar-logo.png"}
+          src={
+            isLightMode ? "/images/logo-black.png" : "/images/gotcar-logo.png"
+          }
           alt={"GOTCAR Logo - AI-Powered Mobility Ecosystem"}
           title={"GOTCAR - Guardians Of The Car"}
           width={24}
           height={24}
-          className={"object-contain"}
+          className={"object-contain max-desktop:w-[18px] max-desktop:h-[18px]"}
           loading={"eager"}
           fetchPriority={"high"}
         />
         <Image
-          src={isLightMode ? "/images/gotcar-text-black.png" : "/images/gotcar-text.png"}
+          src={
+            isLightMode
+              ? "/images/gotcar-text-black.png"
+              : "/images/gotcar-text.png"
+          }
           alt={"GOTCAR - Guardians Of The Car"}
           title={"GOTCAR - AI-Powered Mobility Ecosystem"}
           width={117}
           height={20}
-          className={"object-contain"}
+          className={"object-contain max-desktop:w-[88px] max-desktop:h-[15px]"}
           loading={"eager"}
           fetchPriority={"high"}
         />
       </Link>
-      <div className={"max-desktop:hidden flex-1"} style={{ marginLeft: "40px" }}>{listNav}</div>
+      <div
+        className={"max-desktop:hidden flex-1"}
+        style={{ marginLeft: "40px" }}
+      >
+        {listNav}
+      </div>
 
       <div className={"max-desktop:hidden flex-shrink-0"}>{listTools}</div>
 
-      <button 
-        className={"hidden max-desktop:block"} 
-        onClick={handleMenuClick}
-        aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+      {/* 모바일: 언어 선택기 + 햄버거 메뉴 */}
+      <div
+        className={"hidden max-desktop:flex items-center gap-4 flex-shrink-0"}
       >
-        <Image
-          src={menuOpen ? "/images/menu-close.png" : "/images/menu.png"}
-          alt={menuOpen ? "Close navigation menu" : "Open navigation menu"}
-          title={menuOpen ? "Close menu" : "Open menu"}
-          width={24}
-          height={24}
-          loading={"lazy"}
-        />
-      </button>
+        <div className={"relative"}>{renderLanguage(true)}</div>
+        <button
+          onClick={handleMenuClick}
+          aria-label={
+            menuOpen ? "Close navigation menu" : "Open navigation menu"
+          }
+        >
+          <Image
+            src={menuOpen ? "/images/menu-close.png" : "/images/menu.png"}
+            alt={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+            title={menuOpen ? "Close menu" : "Open menu"}
+            width={24}
+            height={24}
+            className={"object-contain"}
+            style={{
+              filter: "brightness(0) invert(1)",
+            }}
+            loading={"lazy"}
+          />
+        </button>
+      </div>
 
       <div
         className={clsx(
