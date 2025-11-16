@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { RoadmapContainer } from "@/app/v2/[locale]/roadmap/components/container";
 import { FaqContainer } from "@/app/v2/[locale]/faq/components/container";
 import { HeroSection } from "@/app/v2/[locale]/(home)/components/hero-section";
+import { TechnologiesSection } from "@/app/v2/[locale]/(home)/components/technologies-section";
 import { ExperienceSection } from "@/app/v2/[locale]/(home)/components/experience-section";
 import { GuardianSection } from "@/app/v2/[locale]/(home)/components/guardian-section";
 import { PartnershipSection } from "@/app/v2/[locale]/(home)/components/partnership-section";
@@ -16,6 +17,9 @@ export const HomeContainer = () => {
     <>
       {/* 1. HeroSection (GIF + Engineering the Next Mobility Era 통합) */}
       <HeroSection />
+
+      {/* 1.5. Technologies Section (Engineering the Next Mobility Era) */}
+      <TechnologiesSection />
 
       {/* 2. From Engineering to Experience 섹션 */}
       <ExperienceSection />

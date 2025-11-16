@@ -22,7 +22,10 @@ export const Nav = () => {
 
   // Staking이나 Referral 페이지인지 확인
   const isLightMode =
-    pathname.startsWith("/staking") || pathname.startsWith("/referral");
+    pathname.startsWith("/staking") ||
+    pathname.startsWith("/referral") ||
+    pathname.includes("/staking") ||
+    pathname.includes("/referral");
 
   const [langOpened, setLangOpened] = useState(false);
   const langDropdownRef = useRef<HTMLDivElement>(null);
@@ -59,15 +62,38 @@ export const Nav = () => {
     }
   };
 
+  const params = useParams();
+  const selected = params.locale as string;
+
   const listNav = (
     <ul className={"flex items-center"} style={{ gap: "48px" }}>
       {[
-        { label: t("home.nav1"), href: "/", locale: "en", isHome: true },
-        { label: t("home.nav6"), href: "/staking", locale: "en" },
-        { label: t("home.nav7"), href: "/referral", locale: "en" },
+        { label: t("home.nav1"), href: "/" as const, isHome: true },
+        {
+          label: t("home.nav6"),
+          href: (selected === "en"
+            ? "/v2/en/staking"
+            : selected === "zh-CN"
+              ? "/v2/zh-CN/staking"
+              : "/v2/ja/staking") as
+            | "/v2/en/staking"
+            | "/v2/zh-CN/staking"
+            | "/v2/ja/staking",
+        },
+        {
+          label: t("home.nav7"),
+          href: (selected === "en"
+            ? "/v2/en/referral"
+            : selected === "zh-CN"
+              ? "/v2/zh-CN/referral"
+              : "/v2/ja/referral") as
+            | "/v2/en/referral"
+            | "/v2/zh-CN/referral"
+            | "/v2/ja/referral",
+        },
       ].map((nav, index) => {
         const isActive = nav.isHome
-          ? pathname === "/" || pathname === "/en"
+          ? pathname === "/"
           : pathname === nav.href || pathname.startsWith(nav.href + "/");
         return (
           <li key={index}>
@@ -76,7 +102,6 @@ export const Nav = () => {
                 setMenuOpen(false);
               }}
               href={nav.href}
-              {...(nav.locale && { locale: nav.locale })}
               className={clsx(
                 "block py-2 px-3 cursor-pointer transition-colors",
                 "max-desktop:px-5 max-desktop:py-5 max-desktop:justify-between",
@@ -103,9 +128,6 @@ export const Nav = () => {
       })}
     </ul>
   );
-
-  const params = useParams();
-  const selected = params.locale;
 
   const [isScrolled, setIsScrolled] = useState(false);
 

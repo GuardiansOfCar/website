@@ -13,17 +13,8 @@ export const GuardianSection = () => {
 
   return (
     <div className={"bg-white"}>
-      <Main
-        leftHref={""}
-        rightHref={""}
-        hideNav
-        horizontalPadding={"px-0 max-desktop:px-5"}
-      >
-        <div
-          className={
-            "flex flex-col space-y-8 md:space-y-16 py-6 md:py-10 px-4 md:px-0"
-          }
-        >
+      <Main leftHref={""} rightHref={""} hideNav horizontalPadding={"px-4"}>
+        <div className={"flex flex-col space-y-8 md:space-y-16 py-6 md:py-10"}>
           {/* Be the Guardian — Drive, Earn, Connect. 제목 */}
           <div className={"text-center"}>
             <h2
@@ -112,7 +103,7 @@ export const GuardianSection = () => {
             {/* 오른쪽: 설명 텍스트 */}
             <div
               className={
-                "flex flex-col justify-center items-center md:items-start w-full md:w-auto max-w-[500px] px-4 md:px-0"
+                "flex flex-col justify-center items-center md:items-start w-full md:w-auto max-w-[500px]"
               }
               style={{
                 paddingTop: "12px",
@@ -150,7 +141,7 @@ export const GuardianSection = () => {
           {/* 하단 섹션: 3개의 기능 카드 */}
           <div
             className={
-              "grid grid-cols-1 md:grid-cols-3 mt-8 md:mt-12 w-full max-w-[1312px] mx-auto gap-4 md:gap-6 px-4 md:px-0"
+              "grid grid-cols-1 md:grid-cols-3 mt-8 md:mt-12 w-full max-w-[1312px] mx-auto gap-4 md:gap-6"
             }
           >
             {/* Card 1: Drive */}

@@ -6,15 +6,10 @@ import Image from "next/image";
 export const TeamSection = () => {
   return (
     <div className={"bg-white"}>
-      <Main
-        leftHref={""}
-        rightHref={""}
-        hideNav
-        horizontalPadding={"px-0 max-desktop:px-5"}
-      >
+      <Main leftHref={""} rightHref={""} hideNav horizontalPadding={"px-4"}>
         <div
           className={
-            "flex flex-col space-y-6 md:space-y-8 py-6 md:py-10 w-full max-w-[1312px] mx-auto px-4 md:px-0"
+            "flex flex-col space-y-6 md:space-y-8 py-6 md:py-10 w-full max-w-[1312px] mx-auto"
           }
         >
           <h2

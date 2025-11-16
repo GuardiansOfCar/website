@@ -69,10 +69,10 @@ export const PartnershipSection = () => {
 
     return (
         <div className={"bg-white"}>
-            <Main leftHref={""} rightHref={""} hideNav horizontalPadding={"px-0 max-desktop:px-5"}>
+            <Main leftHref={""} rightHref={""} hideNav horizontalPadding={"px-4"}>
                 <div
                     className={
-                        "py-10 max-desktop:py-8 max-desktop:px-0 flex flex-col space-y-4"
+                        "py-10 max-desktop:py-8 flex flex-col space-y-4"
                     }
                 >
                     {/* Featured Partnership with lines */}

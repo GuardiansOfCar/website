@@ -66,7 +66,7 @@ export const RoadmapContainer = ({ hideNav }: { hideNav?: boolean }) => {
             }
             style={{
               boxShadow: "0px 0px 8px 0px rgba(0, 0, 0, 0.04)",
-              backgroundColor: "rgba(255, 255, 255, 1)",
+              backgroundColor: "#030711",
             }}
           >
             <div className={"flex flex-col md:flex-row gap-4 md:gap-4 w-full"}>
