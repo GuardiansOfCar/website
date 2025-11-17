@@ -18,14 +18,47 @@ export const StakingSection = ({
   description: ReactNode;
 }) => {
   return (
-    <section className={"border-neutral-0 border-4  p-4 flex flex-col bg-neutral-100"}>
+    <section
+      className={"max-desktop:w-full max-desktop:h-auto"}
+      style={{
+        width: "308px",
+        height: "256px",
+        minWidth: "212px",
+        borderRadius: "16px",
+        border: "1px solid #EDEEF0",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        padding: "24px",
+        backgroundColor: "#F9FBFB",
+        opacity: 1,
+        boxSizing: "border-box",
+      }}
+    >
       <div
-        className={clsx(headerBorder && "border-b-neutral-60 border-b pb-2")}
+        className={clsx(headerBorder && "border-b-neutral-60 border-b")}
+        style={headerBorder ? { paddingBottom: "12px" } : {}}
       >
-        <p className={"text-body-3"}>{title}</p>
+        <p
+          style={{
+            fontFamily: "Pretendard, sans-serif",
+            fontWeight: 700,
+            fontSize: "15px",
+            lineHeight: "22px",
+            verticalAlign: "middle",
+            color: "rgba(93, 94, 96, 1)",
+          }}
+        >
+          {title}
+        </p>
         <div className={"text-title-1b"}>{description}</div>
       </div>
-      <div className={"pt-4 flex flex-col space-y-4"}>{children}</div>
+      <div
+        className={"flex flex-col space-y-4 flex-1 justify-between"}
+        style={headerBorder ? { paddingTop: "12px" } : { paddingTop: "16px" }}
+      >
+        {children}
+      </div>
     </section>
   );
 };

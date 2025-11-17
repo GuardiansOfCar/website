@@ -118,13 +118,13 @@ const stakingStructuredData = {
 
 export default async function StakingPage({ params }: Props) {
   return (
-    <>
+    <div style={{ backgroundColor: "#F9FBFB", minHeight: "100vh" }} className="-mt-[94px]">
       <Script
         id="structured-data-staking"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(stakingStructuredData) }}
       />
       <StakingPageClient />
-    </>
+    </div>
   );
 }

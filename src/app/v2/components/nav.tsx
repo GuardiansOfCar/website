@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import clsx from "clsx";
 import NextLink from "next/link";
-import { Link, usePathname } from "@/app/v2/i18n/navigation";
+import { usePathname } from "@/app/v2/i18n/navigation";
 import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
 import { useLockBodyScroll } from "@uidotdev/usehooks";
@@ -20,12 +20,39 @@ export const Nav = () => {
 
   const wallet = useWallet();
 
+  // 현재 경로를 클라이언트 사이드에서 가져오기
+  const [currentPath, setCurrentPath] = useState<string>("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const updatePath = () => {
+        setCurrentPath(window.location.pathname);
+      };
+
+      // 초기 경로 설정
+      updatePath();
+
+      // 경로 변경 감지를 위한 이벤트 리스너
+      window.addEventListener("popstate", updatePath);
+
+      // Next.js 라우터 이벤트 감지
+      const handleRouteChange = () => {
+        updatePath();
+      };
+
+      // pathname이 변경될 때마다 업데이트
+      updatePath();
+
+      return () => {
+        window.removeEventListener("popstate", updatePath);
+      };
+    }
+  }, [pathname]);
+
   // Staking이나 Referral 페이지인지 확인
   const isLightMode =
-    pathname.startsWith("/staking") ||
-    pathname.startsWith("/referral") ||
-    pathname.includes("/staking") ||
-    pathname.includes("/referral");
+    currentPath.startsWith("/v2/") &&
+    (currentPath.includes("/staking") || currentPath.includes("/referral"));
 
   const [langOpened, setLangOpened] = useState(false);
   const langDropdownRef = useRef<HTMLDivElement>(null);
@@ -68,7 +95,15 @@ export const Nav = () => {
   const listNav = (
     <ul className={"flex items-center"} style={{ gap: "48px" }}>
       {[
-        { label: t("home.nav1"), href: "/" as const, isHome: true },
+        {
+          label: t("home.nav1"),
+          href: (selected === "en"
+            ? "/v2/en"
+            : selected === "zh-CN"
+              ? "/v2/zh-CN"
+              : "/v2/ja") as "/v2/en" | "/v2/zh-CN" | "/v2/ja",
+          isHome: true,
+        },
         {
           label: t("home.nav6"),
           href: (selected === "en"
@@ -92,14 +127,15 @@ export const Nav = () => {
             | "/v2/ja/referral",
         },
       ].map((nav, index) => {
-        // 실제 브라우저 경로 확인
+        // 현재 경로와 비교 (클라이언트 사이드 경로 사용)
         const actualPathname =
-          typeof window !== "undefined" ? window.location.pathname : pathname;
+          currentPath ||
+          (typeof window !== "undefined" ? window.location.pathname : "");
         const isActive = nav.isHome
-          ? pathname === "/"
+          ? actualPathname === nav.href || actualPathname === nav.href + "/"
           : actualPathname === nav.href ||
             actualPathname.startsWith(nav.href + "/");
-        const LinkComponent = nav.isHome ? Link : NextLink;
+        const LinkComponent = NextLink;
         return (
           <li key={index}>
             <LinkComponent
@@ -296,7 +332,7 @@ export const Nav = () => {
           style={{ marginLeft: "16px" }}
           target={"_blank"}
           rel={"noopener noreferrer"}
-          href={"https://t.me/GOTCAR_Official"}
+          href={"https://t.me/Gotcar_Official"}
           aria-label={"Join GOTCAR Telegram Community"}
         >
           <Image
@@ -394,9 +430,14 @@ export const Nav = () => {
         backgroundColor: isLightMode ? "white" : "rgba(7,20,25,0.8)",
       }}
     >
-      <Link
-        href={"/"}
-        locale={"en"}
+      <NextLink
+        href={
+          selected === "en"
+            ? "/v2/en"
+            : selected === "zh-CN"
+              ? "/v2/zh-CN"
+              : "/v2/ja"
+        }
         className={
           "flex items-center flex-shrink-0 gap-2 max-desktop:gap-[6px]"
         }
@@ -427,7 +468,7 @@ export const Nav = () => {
           loading={"eager"}
           fetchPriority={"high"}
         />
-      </Link>
+      </NextLink>
       <div
         className={"max-desktop:hidden flex-1"}
         style={{ marginLeft: "40px" }}
@@ -456,7 +497,7 @@ export const Nav = () => {
             height={24}
             className={"object-contain"}
             style={{
-              filter: "brightness(0) invert(1)",
+              filter: isLightMode ? "brightness(0)" : "brightness(0) invert(1)",
             }}
             loading={"lazy"}
           />
@@ -482,7 +523,7 @@ export const Nav = () => {
               "top-[94px] flex flex-col"
             )}
             style={{
-              height: "376px",
+              // height: "376px",
               width: "402px",
               maxWidth: "calc(100vw - 32px)",
               left: "16px",
@@ -491,6 +532,8 @@ export const Nav = () => {
               gap: "0",
               marginBottom: "16px",
               overflowY: "auto",
+              backdropFilter: "blur(8px)",
+              WebkitBackdropFilter: "blur(8px)",
             }}
             onClick={(e) => {
               e.stopPropagation();
@@ -499,7 +542,11 @@ export const Nav = () => {
             {[
               {
                 label: t("home.nav1"),
-                href: "/v2/en" as const,
+                href: (selected === "en"
+                  ? "/v2/en"
+                  : selected === "zh-CN"
+                    ? "/v2/zh-CN"
+                    : "/v2/ja") as "/v2/en" | "/v2/zh-CN" | "/v2/ja",
                 isHome: true,
               },
               {
@@ -525,15 +572,16 @@ export const Nav = () => {
                   | "/v2/ja/referral",
               },
             ].map((nav, index) => {
+              // 현재 경로와 비교 (클라이언트 사이드 경로 사용)
               const actualPathname =
-                typeof window !== "undefined"
-                  ? window.location.pathname
-                  : pathname;
+                currentPath ||
+                (typeof window !== "undefined" ? window.location.pathname : "");
               const isActive = nav.isHome
-                ? pathname === "/"
+                ? actualPathname === nav.href ||
+                  actualPathname === nav.href + "/"
                 : actualPathname === nav.href ||
                   actualPathname.startsWith(nav.href + "/");
-              const LinkComponent = nav.isHome ? Link : NextLink;
+              const LinkComponent = NextLink;
               return (
                 <li key={index}>
                   <LinkComponent
@@ -556,12 +604,22 @@ export const Nav = () => {
                       fontWeight: isActive ? 700 : 400,
                       fontSize: "16px",
                       lineHeight: "24px",
-                      color: isActive ? "#FFFFFF" : "#E0E1E5",
-                      backgroundColor: isActive
-                        ? "rgba(0, 40, 52, 1)"
-                        : "rgba(7, 20, 25, 0.8)",
+                      color: isLightMode
+                        ? "#0F0F0F"
+                        : isActive
+                          ? "#FFFFFF"
+                          : "#E0E1E5",
+                      backgroundColor: isLightMode
+                        ? isActive
+                          ? "rgba(237, 238, 240, 1)"
+                          : "rgba(255, 255, 255, 0.8)"
+                        : isActive
+                          ? "rgba(0, 40, 52, 1)"
+                          : "rgba(7, 20, 25, 0.8)",
                       borderBottomWidth: "1px",
-                      borderBottomColor: "rgba(0, 40, 52, 1)",
+                      borderBottomColor: isLightMode
+                        ? "rgba(237, 238, 240, 1)"
+                        : "rgba(0, 40, 52, 1)",
                       borderBottomStyle: "solid",
                       backdropFilter: "blur(8px)",
                       WebkitBackdropFilter: "blur(8px)",
@@ -590,10 +648,14 @@ export const Nav = () => {
                   fontWeight: 400,
                   fontSize: "16px",
                   lineHeight: "24px",
-                  color: "#E0E1E5",
-                  backgroundColor: "rgba(7, 20, 25, 0.8)",
+                  color: isLightMode ? "#0F0F0F" : "#E0E1E5",
+                  backgroundColor: isLightMode
+                    ? "rgba(255, 255, 255, 0.8)"
+                    : "rgba(7, 20, 25, 0.8)",
                   borderBottomWidth: "1px",
-                  borderBottomColor: "rgba(0, 40, 52, 1)",
+                  borderBottomColor: isLightMode
+                    ? "rgba(237, 238, 240, 1)"
+                    : "rgba(0, 40, 52, 1)",
                   borderBottomStyle: "solid",
                   backdropFilter: "blur(8px)",
                   WebkitBackdropFilter: "blur(8px)",
@@ -611,7 +673,11 @@ export const Nav = () => {
                   aria-label={"Follow GOTCAR on X (Twitter)"}
                 >
                   <Image
-                    src={"/images/x-icon.png"}
+                    src={
+                      isLightMode
+                        ? "/images/x-icon-black.png"
+                        : "/images/x-icon.png"
+                    }
                     width={24}
                     height={24}
                     alt={"Follow GOTCAR on X (Twitter)"}
@@ -625,11 +691,15 @@ export const Nav = () => {
                   }
                   target={"_blank"}
                   rel={"noopener noreferrer"}
-                  href={"https://t.me/GOTCAR_Official"}
+                  href={"https://t.me/Gotcar_Official"}
                   aria-label={"Join GOTCAR Telegram Community"}
                 >
                   <Image
-                    src={"/images/telegram-icon.png"}
+                    src={
+                      isLightMode
+                        ? "/images/telegram-icon-black.png"
+                        : "/images/telegram-icon.png"
+                    }
                     width={24}
                     height={24}
                     alt={"Join GOTCAR Telegram Community"}
@@ -651,9 +721,13 @@ export const Nav = () => {
                   paddingBottom: "16px",
                   paddingLeft: "16px",
                   gap: "8px",
-                  backgroundColor: "rgba(7, 20, 25, 0.8)",
+                  backgroundColor: isLightMode
+                    ? "rgba(255, 255, 255, 0.8)"
+                    : "rgba(7, 20, 25, 0.8)",
                   borderBottomWidth: "1px",
-                  borderBottomColor: "rgba(0, 40, 52, 1)",
+                  borderBottomColor: isLightMode
+                    ? "rgba(237, 238, 240, 1)"
+                    : "rgba(0, 40, 52, 1)",
                   borderBottomStyle: "solid",
                   borderBottomLeftRadius: "16px",
                   borderBottomRightRadius: "16px",

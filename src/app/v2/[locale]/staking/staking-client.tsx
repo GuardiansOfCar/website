@@ -1,16 +1,18 @@
 "use client";
 
-import { Main } from "@/components/main";
+import { Main } from "@/app/v2/components/main";
 import { useTranslations } from "next-intl";
-import { StakingSection } from "@/app/[locale]/staking/components/section";
+import { StakingSection } from "@/app/v2/[locale]/staking/components/section";
 import { Button } from "@/components/button";
+import { StakingButton } from "@/app/v2/components/staking-button";
 import { Popup } from "@/components/popup";
 import { useEffect, useState } from "react";
 import { API_BASE_URL } from "@/lib/constants";
 import { useWallet } from "@/lib/use-wallet";
 import { useRouter } from "@/app/v2/i18n/navigation";
 import { useForm } from "react-hook-form";
-import {useSWRConfig} from "swr";
+import { useSWRConfig } from "swr";
+import { CopyrightFooter } from "@/app/v2/components/copyright-footer";
 
 export function StakingPageClient() {
   const t = useTranslations();
@@ -51,12 +53,12 @@ export function StakingPageClient() {
     id: 0,
     annualRate: "",
   });
-  
+
   const { mutate } = useSWRConfig();
 
   useEffect(() => {
     mutate(["walletsInfo"]);
-    
+
     fetch(`${API_BASE_URL}/v1/stakings/status/estimated`).then(async (res) => {
       if (res.status === 200 || res.status === 201) {
         const data = (await res.json()) as {
@@ -78,7 +80,7 @@ export function StakingPageClient() {
           };
           setTotal(data);
         }
-      },
+      }
     );
   };
 
@@ -90,7 +92,7 @@ export function StakingPageClient() {
 
   const fetchStatusMe = () => {
     fetch(
-      `${API_BASE_URL}/v1/stakings/status/me/${wallet.id}?userWalletId=${wallet.id}`,
+      `${API_BASE_URL}/v1/stakings/status/me/${wallet.id}?userWalletId=${wallet.id}`
     ).then(async (res) => {
       if (res.status === 200 || res.status === 201) {
         const data = (await res.json()) as {
@@ -119,7 +121,7 @@ export function StakingPageClient() {
           };
           setReward(data.reward);
         }
-      },
+      }
     );
   };
   useEffect(() => {
@@ -159,7 +161,7 @@ export function StakingPageClient() {
 
   const handleWithdrawal = async () => {
     const otpRes = await fetch(
-      `${API_BASE_URL}/v1/wallets/check/otp?icoWalletAddress=${wallet.icoAddress}&otpCode=${unstakeForm.getValues("otp")}`,
+      `${API_BASE_URL}/v1/wallets/check/otp?icoWalletAddress=${wallet.icoAddress}&otpCode=${unstakeForm.getValues("otp")}`
     );
     if (otpRes.status !== 200 && otpRes.status !== 201) {
       return alert("Invalid otp code. please try again.");
@@ -188,7 +190,7 @@ export function StakingPageClient() {
 
   const handleClaimClick = async () => {
     const otpRes = await fetch(
-      `${API_BASE_URL}/v1/wallets/check/otp?icoWalletAddress=${wallet.icoAddress}&otpCode=${claimForm.getValues("otp")}`,
+      `${API_BASE_URL}/v1/wallets/check/otp?icoWalletAddress=${wallet.icoAddress}&otpCode=${claimForm.getValues("otp")}`
     );
     if (otpRes.status !== 200 && otpRes.status !== 201) {
       return alert("Invalid otp code. please try again.");
@@ -217,7 +219,7 @@ export function StakingPageClient() {
 
   const handleStakeConfirmClick = async () => {
     const otpRes = await fetch(
-      `${API_BASE_URL}/v1/wallets/check/otp?icoWalletAddress=${wallet.icoAddress}&otpCode=${stakeForm.getValues("otp")}`,
+      `${API_BASE_URL}/v1/wallets/check/otp?icoWalletAddress=${wallet.icoAddress}&otpCode=${stakeForm.getValues("otp")}`
     );
     if (otpRes.status !== 200 && otpRes.status !== 201) {
       return alert("Invalid otp code. please try again.");
@@ -246,7 +248,7 @@ export function StakingPageClient() {
   };
 
   return (
-    <div className={"bg-hero"}>
+    <div>
       {buyPopup && (
         <Popup onClose={handleBuyPopupClose} title={t("staking.c4")}>
           <div className={"flex flex-col space-y-3"}>
@@ -409,128 +411,546 @@ export function StakingPageClient() {
         </Popup>
       )}
 
-      <Main leftHref={"/faq"} rightHref={"/referral"}>
-        <div className={"flex flex-col space-y-8 items-start"}>
-          <div className={"flex flex-col space-y-4"}>
-            <h1 className={"text-header-2 text-primary"}>My TOKEN STAKING Status</h1>
-            <p className={"text-body-3 text-neutral-100"}>{t("staking.a2")}</p>
+      <Main
+        leftHref={"/faq"}
+        rightHref={"/referral"}
+        hideNav={true}
+        horizontalPadding="px-0 max-desktop:px-4"
+      >
+        <div
+          className={
+            "flex flex-col items-center max-desktop:mt-[80px] w-[1312px] max-w-[1312px] max-desktop:w-full max-desktop:max-w-full mx-auto"
+          }
+          style={{
+            marginTop: "120px",
+          }}
+        >
+          <div
+            className={
+              "flex flex-col space-y-4 max-desktop:space-y-4 items-center w-full mb-8 md:mb-12"
+            }
+          >
+            <h1
+              className={
+                "text-center w-full text-[40px] leading-[48px] max-desktop:text-[24px] max-desktop:leading-[32px]"
+              }
+              style={{
+                fontFamily: "Pretendard, sans-serif",
+                fontWeight: 700,
+                textAlign: "center",
+              }}
+            >
+              <span
+                style={{
+                  color: "#0F0F0F",
+                  fontFamily: "Pretendard, sans-serif",
+                  fontWeight: 700,
+                }}
+              >
+                GOTCAR
+              </span>{" "}
+              <span
+                style={{
+                  color: "#00D6DD",
+                  fontFamily: "Pretendard, sans-serif",
+                  fontWeight: 700,
+                }}
+              >
+                Token Staking
+              </span>
+            </h1>
           </div>
 
-          <div className={"grid grid-cols-4 gap-x-5 self-stretch max-tablet:flex max-tablet:flex-col max-tablet:space-y-4"}>
+          <div
+            className={
+              "grid grid-cols-4 max-desktop:flex max-desktop:flex-col w-[1312px] max-w-[1312px] max-desktop:w-full max-desktop:max-w-full max-desktop:[&>section]:mt-0"
+            }
+            style={{
+              borderRadius: "24px",
+              gap: "16px",
+              padding: "16px",
+              backgroundColor: "#FFFFFF",
+              boxShadow: "0px 0px 8px 0px #0000000A",
+            }}
+          >
             <StakingSection
               title={t("staking.c1")}
               headerBorder
               description={
-                <>
-                  <span>
-                    {status.stakedBalance.toLocaleString()}{" "}
-                    <span className={"text-primary-10"}>$GOTCAR</span>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    width: "100%",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "Pretendard, sans-serif",
+                      fontWeight: 700,
+                      fontSize: "20px",
+                      lineHeight: "28px",
+                      color: "rgba(15, 15, 15, 1)",
+                    }}
+                  >
+                    {status.stakedBalance.toLocaleString()}
                   </span>
-                </>
+                  <span
+                    style={{
+                      fontFamily: "Pretendard, sans-serif",
+                      fontWeight: 700,
+                      fontSize: "16px",
+                      lineHeight: "24px",
+                      color: "#0082A2",
+                    }}
+                  >
+                    $GOTCAR
+                  </span>
+                </div>
               }
             >
               <div className={""}>
-                <span className={"text-body-3"}>{t("staking.c2")}</span>
+                <span
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 700,
+                    fontSize: "15px",
+                    lineHeight: "22px",
+                    verticalAlign: "middle",
+                    color: "rgba(93, 94, 96, 1)",
+                  }}
+                >
+                  {t("staking.c2")}
+                </span>
                 <div className={"text-title-1b"}>
-                  <span>
-                    {status.availableBalance.toLocaleString()}{" "}
-                    <span className={"text-primary-10"}>$GOTCAR</span>
-                  </span>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      width: "100%",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontFamily: "Pretendard, sans-serif",
+                        fontWeight: 700,
+                        fontSize: "20px",
+                        lineHeight: "28px",
+                        color: "rgba(15, 15, 15, 1)",
+                      }}
+                    >
+                      {status.availableBalance.toLocaleString()}
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: "Pretendard, sans-serif",
+                        fontWeight: 700,
+                        fontSize: "16px",
+                        lineHeight: "24px",
+                        color: "#0082A2",
+                      }}
+                    >
+                      $GOTCAR
+                    </span>
+                  </div>
                 </div>
               </div>
-              <Button
+              <StakingButton
                 onClick={() => {
                   setBuyPopup(true);
                 }}
               >
                 {t("staking.c3")}
-              </Button>
+              </StakingButton>
             </StakingSection>
 
             <StakingSection
               title={t("staking.d1")}
               headerBorder
               description={
-                <>
-                  <span>{total.myPoolRate}</span>
-                </>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    width: "100%",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "Pretendard, sans-serif",
+                      fontWeight: 700,
+                      fontSize: "20px",
+                      lineHeight: "28px",
+                      color: "rgba(15, 15, 15, 1)",
+                    }}
+                  >
+                    {total.myPoolRate && total.myPoolRate !== ""
+                      ? total.myPoolRate.replace("%", "")
+                      : "0"}
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: "Pretendard, sans-serif",
+                      fontWeight: 700,
+                      fontSize: "16px",
+                      lineHeight: "24px",
+                      color: "rgba(0, 130, 162, 1)",
+                    }}
+                  >
+                    %
+                  </span>
+                </div>
               }
             >
               <div className={""}>
-                <span className={"text-body-3"}>{t("staking.d2")}</span>
+                <span
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 700,
+                    fontSize: "15px",
+                    lineHeight: "22px",
+                    verticalAlign: "middle",
+                    color: "rgba(93, 94, 96, 1)",
+                  }}
+                >
+                  {t("staking.d2")}
+                </span>
                 <div className={"text-title-1b"}>
-                  <span>
-                    {total.totalStaked.toLocaleString()}{" "}
-                    <span className={"text-primary-10"}>$GOTCAR</span>
-                  </span>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      width: "100%",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontFamily: "Pretendard, sans-serif",
+                        fontWeight: 700,
+                        fontSize: "20px",
+                        lineHeight: "28px",
+                        color: "rgba(15, 15, 15, 1)",
+                      }}
+                    >
+                      {total.totalStaked.toLocaleString()}
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: "Pretendard, sans-serif",
+                        fontWeight: 700,
+                        fontSize: "16px",
+                        lineHeight: "24px",
+                        color: "#0082A2",
+                      }}
+                    >
+                      $GOTCAR
+                    </span>
+                  </div>
                 </div>
               </div>
             </StakingSection>
 
             <StakingSection
               title={t("staking.e1")}
+              headerBorder
               description={
-                <>
-                  <span>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    width: "100%",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "Pretendard, sans-serif",
+                      fontWeight: 700,
+                      fontSize: "20px",
+                      lineHeight: "28px",
+                      color: "rgba(15, 15, 15, 1)",
+                    }}
+                  >
                     {estimated.annualRate}
-                    <span className={"text-label-1 ml-1"}>p/a</span>
                   </span>
-                </>
+                  <span
+                    style={{
+                      fontFamily: "Pretendard, sans-serif",
+                      fontWeight: 700,
+                      fontSize: "16px",
+                      lineHeight: "24px",
+                      color: "rgba(0, 130, 162, 1)",
+                    }}
+                  >
+                    p/a
+                  </span>
+                </div>
               }
             >
-              <div className={"flex flex-col space-y-2"}>
-                <p className={"text-label-1"}>{t("staking.e2")}</p>
-                <p className={"text-label-1"}>{t("staking.e3")}</p>
-                <p className={"text-label-1"}>{t("staking.e4")}</p>
+              <div className={"flex flex-col"}>
+                <p
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 700,
+                    fontSize: "15px",
+                    lineHeight: "22px",
+                    verticalAlign: "middle",
+                    color: "rgba(93, 94, 96, 1)",
+                  }}
+                >
+                  {t("staking.e2")}
+                </p>
+                <p
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 400,
+                    fontSize: "15px",
+                    lineHeight: "22px",
+                    verticalAlign: "middle",
+                    color: "rgba(93, 94, 96, 1)",
+                  }}
+                >
+                  {t("staking.e3")}
+                </p>
+                <p
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 400,
+                    fontSize: "15px",
+                    lineHeight: "22px",
+                    verticalAlign: "middle",
+                    color: "rgba(93, 94, 96, 1)",
+                  }}
+                >
+                  {t("staking.e4")}
+                </p>
               </div>
             </StakingSection>
 
             <StakingSection
               title={t("staking.f1")}
               description={
-                <>
-                  <span>
-                    {reward} <span className={"text-primary-10"}>$GOTCAR</span>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    width: "100%",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "Pretendard, sans-serif",
+                      fontWeight: 700,
+                      fontSize: "20px",
+                      lineHeight: "28px",
+                      color: "rgba(15, 15, 15, 1)",
+                    }}
+                  >
+                    {reward && reward !== "" && !isNaN(parseFloat(reward))
+                      ? parseFloat(reward).toLocaleString()
+                      : "0"}
                   </span>
-                </>
+                  <span
+                    style={{
+                      fontFamily: "Pretendard, sans-serif",
+                      fontWeight: 700,
+                      fontSize: "16px",
+                      lineHeight: "24px",
+                      color: "#0082A2",
+                    }}
+                  >
+                    $GOTCAR
+                  </span>
+                </div>
               }
             >
-              <Button
+              <StakingButton
                 onClick={() => {
                   setUnstakePopup(true);
                 }}
               >
                 {t("staking.b2")}
-              </Button>
-              <Button
+              </StakingButton>
+              <StakingButton
                 onClick={() => {
                   setClaimPopup(false);
                 }}
                 disabled={true}
+                backgroundColor="#2F2F31"
+                borderColor="rgba(70, 71, 73, 1)"
+                textColor="#FFFFFF"
               >
                 {t("staking.f2")}
-              </Button>
+              </StakingButton>
             </StakingSection>
           </div>
 
           {/* Notice Section */}
-          <div className={"border-neutral-0 border-4 bg-neutral-100 p-6 flex flex-col space-y-4 self-stretch"}>
-            <h2 className={"text-header-4 text-neutral-0"}>Notice</h2>
-            <div className={"flex flex-col space-y-4 text-body-3 text-neutral-0"}>
-              <p>
-                It may take 7 days for your tokens to be fully unstaked after you submit an unstake request. After the unstaking period ends, an additional processing time of up to 3 days may be required for withdrawal completion.
+          <div
+            className={
+              "flex flex-col space-y-4 w-[1312px] max-w-[1312px] max-desktop:w-full max-desktop:max-w-full max-desktop:mx-auto"
+            }
+            style={{
+              marginTop: "80px",
+              marginLeft: "auto",
+              marginRight: "auto",
+              paddingLeft: "0",
+              paddingRight: "0",
+            }}
+          >
+            <div className={"flex items-center justify-center w-full"}>
+              <div
+                className={"h-0 border-t flex-1"}
+                style={{
+                  borderColor: "#E0E1E5",
+                  borderWidth: "1px",
+                }}
+              />
+              <h2
+                className={
+                  "text-center align-middle whitespace-nowrap text-base md:text-[20px] leading-6 md:leading-[28px] px-4"
+                }
+                style={{
+                  fontFamily: "Pretendard, sans-serif",
+                  fontWeight: 700,
+                  color: "#78797C",
+                  verticalAlign: "middle",
+                }}
+              >
+                Notice
+              </h2>
+              <div
+                className={"h-0 border-t flex-1"}
+                style={{
+                  borderColor: "#E0E1E5",
+                  borderWidth: "1px",
+                }}
+              />
+            </div>
+            <div
+              className={"flex flex-col space-y-4 text-center"}
+              style={{
+                marginTop: "40px",
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: "Pretendard, sans-serif",
+                  fontWeight: 400,
+                  fontSize: "15px",
+                  lineHeight: "22px",
+                  textAlign: "center",
+                  verticalAlign: "middle",
+                  color: "#5D5E60",
+                }}
+              >
+                It may take{" "}
+                <span
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 700,
+                    fontSize: "15px",
+                    lineHeight: "22px",
+                    textAlign: "center",
+                    verticalAlign: "middle",
+                  }}
+                >
+                  7 days
+                </span>{" "}
+                for your tokens to be fully unstaked after you submit an unstake
+                request.
+                <br />
+                After the unstaking period ends, an{" "}
+                <span
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 700,
+                    fontSize: "15px",
+                    lineHeight: "22px",
+                    textAlign: "center",
+                    verticalAlign: "middle",
+                  }}
+                >
+                  additional processing time of up to 3 days
+                </span>{" "}
+                may be required for withdrawal completion.
+                <br />
+                <br />
               </p>
-              <p>
-                Unstaking will become available after the official token launch. Please note that there may be up to a 10-day difference in withdrawal timing compared to users who did not stake their tokens.
+              <p
+                style={{
+                  fontFamily: "Pretendard, sans-serif",
+                  fontWeight: 400,
+                  fontSize: "15px",
+                  lineHeight: "22px",
+                  textAlign: "center",
+                  verticalAlign: "middle",
+                  color: "#5D5E60",
+                }}
+              >
+                Unstaking will become available{" "}
+                <span
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 700,
+                    fontSize: "15px",
+                    lineHeight: "22px",
+                    textAlign: "center",
+                    verticalAlign: "middle",
+                  }}
+                >
+                  after the official token launch
+                  <br />
+                </span>
+                . Please note that there may be{" "}
+                <span
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 700,
+                    fontSize: "15px",
+                    lineHeight: "22px",
+                    textAlign: "center",
+                    verticalAlign: "middle",
+                  }}
+                >
+                  up to a 10-day difference
+                </span>{" "}
+                in withdrawal timing compared to users who did not stake their
+                tokens.
+                <br />
+                <br />
               </p>
-              <p>
-                This time window is designed to maintain network stability and ensure a smooth token circulation process during the early phase of the ecosystem. We appreciate your patience and commitment as a Guardian contributing to the strength of the GOTCAR network.
+              <p
+                style={{
+                  fontFamily: "Pretendard, sans-serif",
+                  fontWeight: 400,
+                  fontSize: "15px",
+                  lineHeight: "22px",
+                  textAlign: "center",
+                  verticalAlign: "middle",
+                  color: "#5D5E60",
+                }}
+              >
+                This time window is designed to maintain network stability and
+                ensure a smooth token circulation process during the early phase
+                of the ecosystem.
+                <br />
+                We appreciate your patience and commitment as a Guardian
+                contributing to the strength of the GOTCAR network.
               </p>
             </div>
           </div>
         </div>
       </Main>
+      <div
+        className={"w-full flex justify-center"}
+        style={{
+          paddingTop: "40px",
+          paddingLeft: "16px",
+          paddingRight: "16px",
+        }}
+      >
+        <CopyrightFooter />
+      </div>
     </div>
   );
 }
-

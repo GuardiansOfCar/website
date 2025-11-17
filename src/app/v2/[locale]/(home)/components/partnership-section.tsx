@@ -206,8 +206,16 @@ export const PartnershipSection = () => {
                           filter: item.imagePath.includes("CENTROID")
                             ? "invert(1)"
                             : "none",
-                          width: isSquareLogo ? "60px" : undefined,
-                          height: isSquareLogo ? "60px" : undefined,
+                          width: isSquareLogo
+                            ? isMobile
+                              ? "40px"
+                              : "60px"
+                            : undefined,
+                          height: isSquareLogo
+                            ? isMobile
+                              ? "40px"
+                              : "60px"
+                            : undefined,
                         }}
                         loading={"lazy"}
                       />

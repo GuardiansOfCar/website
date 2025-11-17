@@ -114,13 +114,13 @@ const referralStructuredData = {
 
 export default async function ReferralPage({ params }: Props) {
   return (
-    <>
+    <div style={{ backgroundColor: "#F9FBFB", minHeight: "100vh" }} className="-mt-[94px]">
       <Script
         id="structured-data-referral"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(referralStructuredData) }}
       />
       <ReferralPageClient />
-    </>
+    </div>
   );
 }
