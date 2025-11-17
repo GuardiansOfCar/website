@@ -11,10 +11,17 @@ export const GuardianSection = () => {
   // "Guardian" 단어를 찾아서 분리
   const parts = title.split(/(Guardian)/i);
 
+  // "Guardian" 다음 부분을 찾기
+  const guardianIndex = parts.findIndex((p) => p.toLowerCase() === "guardian");
+
   return (
     <div className={"bg-white"}>
       <Main leftHref={""} rightHref={""} hideNav horizontalPadding={"px-4"}>
-        <div className={"flex flex-col space-y-8 md:space-y-16 py-6 md:py-10"}>
+        <div
+          className={
+            "flex flex-col space-y-8 md:space-y-16 pb-10 md:pb-10 w-full max-w-[1312px] mx-auto"
+          }
+        >
           {/* Be the Guardian — Drive, Earn, Connect. 제목 */}
           <div className={"text-center"}>
             <h2
@@ -22,27 +29,39 @@ export const GuardianSection = () => {
                 "font-bold text-2xl md:text-[40px] leading-tight md:leading-[48px] text-center text-[#0F0F0F]"
               }
             >
-              {parts.map((part, index) =>
-                part.toLowerCase() === "guardian" ? (
-                  <span key={index} className={"text-sub-primary"}>
-                    {part}
-                  </span>
-                ) : (
-                  <span key={index}>{part}</span>
-                )
-              )}
+              {parts.map((part, index) => {
+                if (part.toLowerCase() === "guardian") {
+                  return (
+                    <span key={index} className={"text-sub-primary"}>
+                      {part}
+                    </span>
+                  );
+                }
+                // "Guardian" 다음 부분에 "—"가 포함되어 있으면 모바일에서 줄바꿈
+                if (
+                  index === guardianIndex + 1 &&
+                  part.trim().startsWith("—")
+                ) {
+                  return (
+                    <span key={index}>
+                      <br className={"md:hidden"} />
+                      {part}
+                    </span>
+                  );
+                }
+                return <span key={index}>{part}</span>;
+              })}
             </h2>
           </div>
 
           {/* G2E App with lines */}
           <div
-            className={"flex items-center justify-center mt-6 md:mt-12"}
+            className={"flex items-center justify-center mt-6 md:mt-12 w-full"}
             style={{ gap: "12px" }}
           >
             <div
-              className={"h-0 border-t hidden md:block flex-1"}
+              className={"h-0 border-t flex-1"}
               style={{
-                maxWidth: "571px",
                 borderColor: "#E0E1E5",
                 borderWidth: "1px",
               }}
@@ -61,9 +80,8 @@ export const GuardianSection = () => {
               G2E App
             </p>
             <div
-              className={"h-0 border-t hidden md:block flex-1"}
+              className={"h-0 border-t flex-1"}
               style={{
-                maxWidth: "571px",
                 borderColor: "#E0E1E5",
                 borderWidth: "1px",
               }}
@@ -130,9 +148,9 @@ export const GuardianSection = () => {
                 }}
               >
                 Drive, share, and earn in real time.
-                <br />
+                <br className={"hidden md:block"} />
                 Every mile you move helps build a connected, decentralized{" "}
-                <br />
+                <br className={"hidden md:block"} />
                 mobility ecosystem — and rewards you with tokens.
               </p>
             </div>

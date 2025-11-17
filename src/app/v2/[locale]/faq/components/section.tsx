@@ -25,15 +25,15 @@ export const FaqSection = ({
       className={clsx(
         "w-full flex flex-col relative transition-all duration-300 rounded-2xl",
         "p-4 md:p-8",
-        "min-h-[64px] md:min-h-[96px]",
-        "cursor-pointer",
-        open ? "h-auto" : "h-[64px] md:h-[96px]"
+        "cursor-pointer"
       )}
       style={{
         gap: "12px",
         borderWidth: "1px",
         backgroundColor: open ? "#002834" : "rgba(255, 255, 255, 1)",
-        border: open ? "1px solid rgba(34, 34, 34, 1)" : "1px solid rgba(237, 238, 240, 1)",
+        border: open
+          ? "1px solid rgba(34, 34, 34, 1)"
+          : "1px solid rgba(237, 238, 240, 1)",
       }}
     >
       {/* 아이콘 - 컨테이너 상단, 우측으로부터 32px */}
@@ -67,31 +67,39 @@ export const FaqSection = ({
           />
         )}
       </div>
-      
+
       <div
         className={clsx(
           "w-full flex items-center text-left bg-transparent",
-          "pr-11 md:pr-14"
+          "pr-8 md:pr-12"
         )}
         style={{
           gap: "12px",
         }}
       >
-        <p 
-          className={clsx(
-            "flex-1 text-sm md:text-base font-medium",
-            open ? "text-white" : "text-[#0F0F0F]"
-          )}
+        <p
+          className={"flex-1 text-base md:text-2xl leading-6 md:leading-8"}
+          style={{
+            fontFamily: "Pretendard, sans-serif",
+            fontWeight: 700,
+            letterSpacing: "normal",
+            color: open ? "rgba(255, 255, 255, 1)" : "rgba(15, 15, 15, 1)",
+          }}
         >
           {title}
         </p>
       </div>
       {open && (
-        <div 
+        <div
           className={clsx(
-            "text-xs md:text-sm leading-5 md:leading-6 text-white",
-            "mt-3 md:mt-4"
+            "mt-3 md:mt-4 text-[15px] md:text-lg leading-[22px] md:leading-7"
           )}
+          style={{
+            fontFamily: "Pretendard, sans-serif",
+            fontWeight: 400,
+            letterSpacing: "normal",
+            color: "rgba(207, 208, 212, 1)",
+          }}
         >
           {children}
         </div>

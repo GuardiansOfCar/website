@@ -9,10 +9,13 @@ const FAQ_ITEMS = [
     question: "What makes GOTCAR unique?",
     answer: (
       <>
-        By utilizing open data, GOTCAR builds an AI-based precision vehicle positioning service that provides 99% cost savings compared to existing autonomous or HD map technologies.
+        By utilizing open data, GOTCAR builds an AI-based precision vehicle
+        positioning service that provides 99% cost savings compared to existing
+        autonomous or HD map technologies.
         <br />
         <br />
-        Our goal is to make such advanced systems accessible to all vehicles and all environments, not limited to specific models or areas.
+        Our goal is to make such advanced systems accessible to all vehicles and
+        all environments, not limited to specific models or areas.
       </>
     ),
   },
@@ -20,10 +23,12 @@ const FAQ_ITEMS = [
     question: "What is the utility of the $GOTCAR token?",
     answer: (
       <>
-        $GOTCAR is used for mobility-related payments such as fueling, parking, charging, and insurance,
+        $GOTCAR is used for mobility-related payments such as fueling, parking,
+        charging, and insurance,
         <br />
         <br />
-        as well as for G2E (Guardians-to-Earn) rewards, staking, and community incentives within the ecosystem.
+        as well as for G2E (Guardians-to-Earn) rewards, staking, and community
+        incentives within the ecosystem.
       </>
     ),
   },
@@ -31,12 +36,15 @@ const FAQ_ITEMS = [
     question: "How does GOTCAR use AI technology?",
     answer: (
       <>
-        The AI Agent analyzes driving behavior, road hazards, and weather conditions in real time,
+        The AI Agent analyzes driving behavior, road hazards, and weather
+        conditions in real time,
         <br />
         <br />
-        providing lane-level navigation, indoor parking guidance, and accident alerts.
+        providing lane-level navigation, indoor parking guidance, and accident
+        alerts.
         <br />
-        It detects and warns drivers about risks that are difficult to see or react to visually.
+        It detects and warns drivers about risks that are difficult to see or
+        react to visually.
       </>
     ),
   },
@@ -47,7 +55,8 @@ const FAQ_ITEMS = [
         You can claim your tokens immediately upon the official launch.
         <br />
         <br />
-        The token launch and global CEX listings are planned between Q4 2025 and Q1 2026, with the claim period opening on the same schedule.
+        The token launch and global CEX listings are planned between Q4 2025 and
+        Q1 2026, with the claim period opening on the same schedule.
       </>
     ),
   },
@@ -66,10 +75,12 @@ const FAQ_ITEMS = [
     question: "What is Guardians-to-Earn (G2E)?",
     answer: (
       <>
-        Drivers contribute their driving data, which the AI analyzes to assess safety and accident risks.
+        Drivers contribute their driving data, which the AI analyzes to assess
+        safety and accident risks.
         <br />
         <br />
-        Participants are rewarded in tokens based on their contribution to traffic safety — making every driver a Guardian of the GOTCAR ecosystem.
+        Participants are rewarded in tokens based on their contribution to
+        traffic safety — making every driver a Guardian of the GOTCAR ecosystem.
       </>
     ),
   },
@@ -77,33 +88,50 @@ const FAQ_ITEMS = [
     question: "What are GOTCAR's future partnership plans?",
     answer: (
       <>
-        GOTCAR is pursuing integrations with global automakers such as Toyota, Hyundai, and Tesla,
+        GOTCAR is pursuing integrations with global automakers such as Toyota,
+        Hyundai, and Tesla,
         <br />
         as well as navigation and payment platforms like Google and Apple.
         <br />
         <br />
-        Our long-term goal is to deliver AI-powered safety and convenience services directly within real-world vehicle systems.
+        Our long-term goal is to deliver AI-powered safety and convenience
+        services directly within real-world vehicle systems.
       </>
     ),
   },
 ];
 
-export const FaqContainer = ({ hideBuy, hideNav }: { hideBuy?: boolean; hideNav?: boolean }) => {
+export const FaqContainer = ({
+  hideBuy,
+  hideNav,
+}: {
+  hideBuy?: boolean;
+  hideNav?: boolean;
+}) => {
   const [openIndex, setOpenIndex] = useState<number | undefined>(undefined);
 
   return (
     <div className={"bg-[#F9FBFB]"}>
-      <Main leftHref={hideNav ? "" : "/roadmap"} rightHref={hideNav ? "" : "/staking"} hideNav={hideNav} horizontalPadding={"px-0 max-desktop:px-5"}>
-        <div 
-          className={"flex flex-col items-center py-6 md:py-10 w-full max-w-[1312px] mx-auto px-4 md:px-0"}
+      <Main
+        leftHref={hideNav ? "" : "/roadmap"}
+        rightHref={hideNav ? "" : "/staking"}
+        hideNav={hideNav}
+        horizontalPadding={"px-0 max-desktop:px-4"}
+      >
+        <div
+          className={
+            "flex flex-col items-center pt-10 md:pt-[80px] w-full max-w-[1312px] mx-auto md:px-0"
+          }
         >
-          <h2 className={"text-2xl md:text-header-2 text-[#0F0F0F] mb-6 md:mb-8 text-center font-bold"}>
+          <h2
+            className={
+              "text-2xl md:text-header-2 text-[#0F0F0F] mb-8 md:mb-12 text-center font-bold"
+            }
+          >
             FAQ
           </h2>
 
-          <div 
-            className={"flex flex-col w-full gap-4 md:gap-4 pb-16 md:pb-[120px]"}
-          >
+          <div className={"flex flex-col w-full gap-4 md:gap-4"}>
             {FAQ_ITEMS.map((item, index) => (
               <FaqSection
                 key={index}

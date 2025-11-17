@@ -39,8 +39,12 @@ export const HeroSection = () => {
             }}
           />
 
-          {/* 그라데이션 마스크 - 모바일과 데스크톱에서 좌우 자연스러운 전환 */}
-          <div className={"absolute inset-0 pointer-events-none z-[2]"}>
+          {/* 그라데이션 마스크 - 데스크톱에서만 좌우 자연스러운 전환 */}
+          <div
+            className={
+              "absolute inset-0 pointer-events-none z-[2] hidden md:block"
+            }
+          >
             <div
               className={"absolute left-0 top-0 bottom-0 w-[50px] xl:w-[100px]"}
               style={{

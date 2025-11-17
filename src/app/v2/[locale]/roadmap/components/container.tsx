@@ -41,11 +41,11 @@ export const RoadmapContainer = ({ hideNav }: { hideNav?: boolean }) => {
         leftHref={hideNav ? "" : "/howtobuy"}
         rightHref={hideNav ? "" : "/faq"}
         hideNav={hideNav}
-        horizontalPadding={"px-0 max-desktop:px-5"}
+        horizontalPadding={"px-0 max-desktop:px-4"}
       >
         <div
           className={
-            "flex flex-col space-y-6 md:space-y-8 py-6 md:py-10 px-4 md:px-0"
+            "flex flex-col space-y-6 md:space-y-8 py-10 md:py-10 md:px-0 w-full max-w-[1312px] mx-auto"
           }
         >
           <h2
@@ -60,85 +60,75 @@ export const RoadmapContainer = ({ hideNav }: { hideNav?: boolean }) => {
           </h2>
 
           {/* New area below Our Roadmap */}
-          <div
-            className={
-              "w-full max-w-[1312px] mx-auto rounded-3xl p-4 md:p-4 mt-6 md:mt-12"
-            }
-            style={{
-              boxShadow: "0px 0px 8px 0px rgba(0, 0, 0, 0.04)",
-              backgroundColor: "#030711",
-            }}
-          >
-            <div className={"flex flex-col md:flex-row gap-4 md:gap-4 w-full"}>
-              {ROADMAP_PHASES.map((item, index) => (
+          <div className={"flex flex-col md:flex-row gap-4 md:gap-4 w-full"}>
+            {ROADMAP_PHASES.map((item, index) => (
+              <div
+                key={index}
+                className={
+                  "flex flex-col rounded-2xl gap-2 p-4 md:p-6 w-full md:w-auto md:flex-1"
+                }
+                style={{
+                  backgroundColor: "rgba(249, 251, 251, 1)",
+                  border: "1px solid rgba(237, 238, 240, 1)",
+                }}
+              >
                 <div
-                  key={index}
-                  className={
-                    "flex flex-col rounded-2xl gap-2 p-4 md:p-6 w-full md:w-auto md:flex-1"
-                  }
                   style={{
-                    backgroundColor: "rgba(249, 251, 251, 1)",
-                    border: "1px solid rgba(237, 238, 240, 1)",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "8px",
+                    marginBottom: "0",
                   }}
                 >
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "8px",
-                      marginBottom: "0",
-                    }}
-                  >
-                    <div className={"flex flex-col items-start gap-2 md:gap-4"}>
-                      <Image
-                        src={item.icon}
-                        alt={`${item.phase} icon`}
-                        width={48}
-                        height={48}
-                        className={"object-contain w-8 h-8 md:w-12 md:h-12"}
-                        loading={"lazy"}
-                      />
-                      <h3
-                        className={"font-bold"}
-                        style={{
-                          fontFamily: "Pretendard, sans-serif",
-                          fontWeight: 700,
-                          fontSize: "18px",
-                          lineHeight: "26px",
-                          color: "#0F0F0F",
-                        }}
-                      >
-                        {item.phase}
-                      </h3>
-                    </div>
-                    <p
+                  <div className={"flex flex-col items-start gap-2 md:gap-4"}>
+                    <Image
+                      src={item.icon}
+                      alt={`${item.phase} icon`}
+                      width={48}
+                      height={48}
+                      className={"object-contain w-12 h-12 md:w-12 md:h-12"}
+                      loading={"lazy"}
+                    />
+                    <h3
+                      className={"font-bold"}
                       style={{
                         fontFamily: "Pretendard, sans-serif",
                         fontWeight: 700,
-                        fontSize: "15px",
-                        lineHeight: "22px",
-                        color: "#5D5E60",
-                        verticalAlign: "middle",
+                        fontSize: "18px",
+                        lineHeight: "26px",
+                        color: "#0F0F0F",
                       }}
                     >
-                      {item.period}
-                    </p>
+                      {item.phase}
+                    </h3>
                   </div>
                   <p
                     style={{
                       fontFamily: "Pretendard, sans-serif",
-                      fontWeight: 400,
+                      fontWeight: 700,
                       fontSize: "15px",
                       lineHeight: "22px",
                       color: "#5D5E60",
                       verticalAlign: "middle",
                     }}
                   >
-                    {item.description}
+                    {item.period}
                   </p>
                 </div>
-              ))}
-            </div>
+                <p
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 400,
+                    fontSize: "15px",
+                    lineHeight: "22px",
+                    color: "#5D5E60",
+                    verticalAlign: "middle",
+                  }}
+                >
+                  {item.description}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </Main>

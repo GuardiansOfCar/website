@@ -187,7 +187,7 @@ input[type="number"] {
     background-position: center top; /* 중앙 정렬 */
   }
 
-  /* Hero GIF 배경 최적화 - 1920px 이상일 때 그라데이션 처리 */
+  /* Hero GIF 배경 최적화 - 모바일은 좌우 16px, 데스크톱은 더 넓게 */
   .hero-gradient-overlay {
     position: relative;
   }
@@ -198,7 +198,7 @@ input[type="number"] {
     left: 0;
     top: 0;
     bottom: 0;
-    width: 200px;
+    width: 16px;
     background: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
     pointer-events: none;
     z-index: 1;
@@ -210,16 +210,23 @@ input[type="number"] {
     right: 0;
     top: 0;
     bottom: 0;
-    width: 200px;
+    width: 16px;
     background: linear-gradient(to left, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
     pointer-events: none;
     z-index: 1;
   }
 
-  @media (min-width: 1920px) {
+  @media (min-width: 768px) {
     .hero-gradient-overlay::before,
     .hero-gradient-overlay::after {
-      display: block;
+      width: 50px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .hero-gradient-overlay::before,
+    .hero-gradient-overlay::after {
+      width: 100px;
     }
   }
 

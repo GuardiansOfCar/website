@@ -12,7 +12,7 @@ export const Main = (
   }>
 ) => {
   const horizontalPadding = props.horizontalPadding || "px-24 max-desktop:px-5";
-  const verticalPadding = props.verticalPadding || "py-20 max-desktop:py-8";
+  const verticalPadding = props.verticalPadding || "py-20 max-desktop:py-10";
 
   return (
     <main

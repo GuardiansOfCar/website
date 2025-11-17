@@ -92,16 +92,21 @@ export const Nav = () => {
             | "/v2/ja/referral",
         },
       ].map((nav, index) => {
+        // 실제 브라우저 경로 확인
+        const actualPathname =
+          typeof window !== "undefined" ? window.location.pathname : pathname;
         const isActive = nav.isHome
           ? pathname === "/"
-          : pathname === nav.href || pathname.startsWith(nav.href + "/");
+          : actualPathname === nav.href ||
+            actualPathname.startsWith(nav.href + "/");
+        const LinkComponent = nav.isHome ? Link : NextLink;
         return (
           <li key={index}>
-            <Link
+            <LinkComponent
               onClick={() => {
                 setMenuOpen(false);
               }}
-              href={nav.href}
+              href={nav.href as any}
               className={clsx(
                 "block py-2 px-3 cursor-pointer transition-colors",
                 "max-desktop:px-5 max-desktop:py-5 max-desktop:justify-between",
@@ -122,7 +127,7 @@ export const Nav = () => {
               }}
             >
               {nav.label}
-            </Link>
+            </LinkComponent>
           </li>
         );
       })}
@@ -458,18 +463,256 @@ export const Nav = () => {
         </button>
       </div>
 
-      <div
-        className={clsx(
-          menuOpen ? "block" : "hidden",
-          "fixed top-[94px] right-0 left-0 bottom-0 z-[50] bg-[rgba(0,0,0,0.5)] pb-[100px]"
-        )}
-      >
-        {menuOpen && <A />}
-        <div className={"bg-black max-h-[100vh] overflow-y-auto"}>
-          {listNav}
-          {listTools}
-        </div>
-      </div>
+      {/* 모바일 메뉴 */}
+      {menuOpen && (
+        <>
+          <A />
+          {/* 배경 오버레이 */}
+          <div
+            className={"fixed inset-0 z-[40] max-desktop:block hidden"}
+            style={{
+              backgroundColor: "transparent",
+            }}
+            onClick={() => setMenuOpen(false)}
+          />
+          {/* 모바일용 네비게이션 목록 */}
+          <ul
+            className={clsx(
+              "fixed z-[50] hidden max-desktop:block",
+              "top-[94px] flex flex-col"
+            )}
+            style={{
+              height: "376px",
+              width: "402px",
+              maxWidth: "calc(100vw - 32px)",
+              left: "16px",
+              borderRadius: "16px",
+              boxShadow: "0px 0px 12px 0px rgba(28, 32, 33, 0.04)",
+              gap: "0",
+              marginBottom: "16px",
+              overflowY: "auto",
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            {[
+              {
+                label: t("home.nav1"),
+                href: "/v2/en" as const,
+                isHome: true,
+              },
+              {
+                label: t("home.nav6"),
+                href: (selected === "en"
+                  ? "/v2/en/staking"
+                  : selected === "zh-CN"
+                    ? "/v2/zh-CN/staking"
+                    : "/v2/ja/staking") as
+                  | "/v2/en/staking"
+                  | "/v2/zh-CN/staking"
+                  | "/v2/ja/staking",
+              },
+              {
+                label: t("home.nav7"),
+                href: (selected === "en"
+                  ? "/v2/en/referral"
+                  : selected === "zh-CN"
+                    ? "/v2/zh-CN/referral"
+                    : "/v2/ja/referral") as
+                  | "/v2/en/referral"
+                  | "/v2/zh-CN/referral"
+                  | "/v2/ja/referral",
+              },
+            ].map((nav, index) => {
+              const actualPathname =
+                typeof window !== "undefined"
+                  ? window.location.pathname
+                  : pathname;
+              const isActive = nav.isHome
+                ? pathname === "/"
+                : actualPathname === nav.href ||
+                  actualPathname.startsWith(nav.href + "/");
+              const LinkComponent = nav.isHome ? Link : NextLink;
+              return (
+                <li key={index}>
+                  <LinkComponent
+                    onClick={() => {
+                      setMenuOpen(false);
+                    }}
+                    href={nav.href as any}
+                    className={clsx(
+                      "block cursor-pointer transition-all",
+                      "border-b last:border-b-0"
+                    )}
+                    style={{
+                      width: "100%",
+                      paddingTop: "16px",
+                      paddingRight: "24px",
+                      paddingBottom: "16px",
+                      paddingLeft: "24px",
+                      gap: "8px",
+                      fontFamily: "Pretendard, sans-serif",
+                      fontWeight: isActive ? 700 : 400,
+                      fontSize: "16px",
+                      lineHeight: "24px",
+                      color: isActive ? "#FFFFFF" : "#E0E1E5",
+                      backgroundColor: isActive
+                        ? "rgba(0, 40, 52, 1)"
+                        : "rgba(7, 20, 25, 0.8)",
+                      borderBottomWidth: "1px",
+                      borderBottomColor: "rgba(0, 40, 52, 1)",
+                      borderBottomStyle: "solid",
+                      backdropFilter: "blur(8px)",
+                      WebkitBackdropFilter: "blur(8px)",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    {nav.label}
+                  </LinkComponent>
+                </li>
+              );
+            })}
+
+            {/* 모바일용 도구들 - SNS 아이콘 */}
+            <li>
+              <div
+                className={"flex items-center"}
+                style={{
+                  width: "100%",
+                  paddingTop: "16px",
+                  paddingRight: "24px",
+                  paddingBottom: "16px",
+                  paddingLeft: "24px",
+                  gap: "16px",
+                  fontFamily: "Pretendard, sans-serif",
+                  fontWeight: 400,
+                  fontSize: "16px",
+                  lineHeight: "24px",
+                  color: "#E0E1E5",
+                  backgroundColor: "rgba(7, 20, 25, 0.8)",
+                  borderBottomWidth: "1px",
+                  borderBottomColor: "rgba(0, 40, 52, 1)",
+                  borderBottomStyle: "solid",
+                  backdropFilter: "blur(8px)",
+                  WebkitBackdropFilter: "blur(8px)",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <a
+                  className={
+                    "cursor-pointer w-6 h-6 relative flex items-center justify-center"
+                  }
+                  target={"_blank"}
+                  rel={"noopener noreferrer"}
+                  href={"https://x.com/gotcar_official"}
+                  aria-label={"Follow GOTCAR on X (Twitter)"}
+                >
+                  <Image
+                    src={"/images/x-icon.png"}
+                    width={24}
+                    height={24}
+                    alt={"Follow GOTCAR on X (Twitter)"}
+                    title={"GOTCAR Official X (Twitter) Account"}
+                    loading={"lazy"}
+                  />
+                </a>
+                <a
+                  className={
+                    "cursor-pointer w-6 h-6 relative flex items-center justify-center"
+                  }
+                  target={"_blank"}
+                  rel={"noopener noreferrer"}
+                  href={"https://t.me/GOTCAR_Official"}
+                  aria-label={"Join GOTCAR Telegram Community"}
+                >
+                  <Image
+                    src={"/images/telegram-icon.png"}
+                    width={24}
+                    height={24}
+                    alt={"Join GOTCAR Telegram Community"}
+                    title={"GOTCAR Official Telegram Channel"}
+                    loading={"lazy"}
+                  />
+                </a>
+              </div>
+            </li>
+
+            {/* 모바일용 도구들 - Docs & Wallet */}
+            <li>
+              <div
+                className={"flex items-center"}
+                style={{
+                  width: "100%",
+                  paddingTop: "16px",
+                  paddingRight: "16px",
+                  paddingBottom: "16px",
+                  paddingLeft: "16px",
+                  gap: "8px",
+                  backgroundColor: "rgba(7, 20, 25, 0.8)",
+                  borderBottomWidth: "1px",
+                  borderBottomColor: "rgba(0, 40, 52, 1)",
+                  borderBottomStyle: "solid",
+                  borderBottomLeftRadius: "16px",
+                  borderBottomRightRadius: "16px",
+                  backdropFilter: "blur(8px)",
+                  WebkitBackdropFilter: "blur(8px)",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <NextLink
+                  href={"/whitepaper.pdf"}
+                  target={"_blank"}
+                  rel={"noopener noreferrer"}
+                  className={"flex-1"}
+                >
+                  <button
+                    className={clsx(
+                      "flex items-center justify-center gap-2 w-full",
+                      "bg-[#2F2F31] rounded-xl",
+                      "text-[#FFFFFF] font-bold text-sm leading-[22px] text-center align-middle",
+                      "h-[42px]"
+                    )}
+                    style={{
+                      fontFamily: "Pretendard, sans-serif",
+                    }}
+                  >
+                    <span>{t("home.docs1")}</span>
+                    <Image
+                      src={"/images/docs-arrow.png"}
+                      width={8}
+                      height={8}
+                      alt={"Open GOTCAR documentation"}
+                      title={"GOTCAR Documentation - Whitepaper"}
+                      className={"object-contain"}
+                      loading={"lazy"}
+                    />
+                  </button>
+                </NextLink>
+                <button
+                  onClick={handleBuyGocarClick}
+                  className={clsx(
+                    "flex items-center justify-center gap-2 flex-1",
+                    "bg-primary rounded-xl",
+                    "text-[#0F0F0F] font-bold text-sm leading-[22px] text-center align-middle",
+                    "h-[42px]"
+                  )}
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                  }}
+                >
+                  {wallet.address
+                    ? shortenAddress(wallet.address)
+                    : t("home.presaleJoin2")}
+                </button>
+              </div>
+            </li>
+          </ul>
+        </>
+      )}
     </nav>
   );
 };

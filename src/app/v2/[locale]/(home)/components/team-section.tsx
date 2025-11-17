@@ -9,7 +9,7 @@ export const TeamSection = () => {
       <Main leftHref={""} rightHref={""} hideNav horizontalPadding={"px-4"}>
         <div
           className={
-            "flex flex-col space-y-6 md:space-y-8 py-6 md:py-10 w-full max-w-[1312px] mx-auto"
+            "flex flex-col space-y-6 md:space-y-8 mb-10 md:py-10 w-full max-w-[1312px] mx-auto"
           }
         >
           <h2
@@ -25,12 +25,30 @@ export const TeamSection = () => {
 
           {/* Introduction Section */}
           <div
-            className={"flex flex-col md:flex-row gap-6 md:gap-8 items-start"}
+            className={"flex flex-col md:flex-row gap-4 md:gap-8 items-start"}
           >
-            <div className={"flex-1 flex flex-col"}>
+            {/* 모바일에서 이미지를 먼저 표시 */}
+            <div
+              className={
+                "flex-shrink-0 relative overflow-hidden w-full md:w-[648px] h-[200px] md:h-[264px] rounded-2xl border border-[rgba(237, 238, 240, 1)] order-1 md:order-3 mt-0"
+              }
+            >
+              <Image
+                src={"/images/team-section-img.png"}
+                alt={"GOTCAR Team - Innovators and Engineers"}
+                title={
+                  "GOTCAR Team - Driving the next era of AI-powered mobility"
+                }
+                width={648}
+                height={264}
+                className={"object-cover w-full h-full"}
+                loading={"lazy"}
+              />
+            </div>
+            <div className={"flex-1 flex flex-col order-2 md:order-2"}>
               <p
                 className={
-                  "text-[24px] leading-[32px] text-[#00556B] mb-6 md:mb-[98px]"
+                  "text-[24px] leading-[32px] text-[#00556B] mb-4 md:mb-[98px]"
                 }
                 style={{
                   fontFamily: "Pretendard, sans-serif",
@@ -56,23 +74,6 @@ export const TeamSection = () => {
                 connected world on the road.
               </p>
             </div>
-            <div
-              className={
-                "flex-shrink-0 relative overflow-hidden w-full md:w-[648px] h-[200px] md:h-[264px] rounded-2xl border border-[rgba(237, 238, 240, 1)]"
-              }
-            >
-              <Image
-                src={"/images/team-section-img.png"}
-                alt={"GOTCAR Team - Innovators and Engineers"}
-                title={
-                  "GOTCAR Team - Driving the next era of AI-powered mobility"
-                }
-                width={648}
-                height={264}
-                className={"object-cover w-full h-full"}
-                loading={"lazy"}
-              />
-            </div>
           </div>
 
           {/* Team Members Cards */}
@@ -89,8 +90,12 @@ export const TeamSection = () => {
             >
               <div
                 className={
-                  "w-full md:w-48 h-48 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden"
+                  "w-[120px] h-[120px] md:w-48 md:h-48 rounded-xl md:rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden"
                 }
+                style={{
+                  maxWidth: "120px",
+                  maxHeight: "120px",
+                }}
               >
                 <Image
                   src={"/images/gotcar-ceo.png"}
@@ -102,7 +107,10 @@ export const TeamSection = () => {
                   loading={"lazy"}
                 />
               </div>
-              <div className={"flex-1 space-y-2"}>
+              <div
+                className={"flex-1 space-y-2"}
+                style={{ paddingLeft: "8px" }}
+              >
                 <div>
                   <h3
                     className={"text-[20px] leading-[28px] text-[#0F0F0F]"}
@@ -169,8 +177,12 @@ export const TeamSection = () => {
             >
               <div
                 className={
-                  "w-full md:w-48 h-48 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden"
+                  "w-[120px] h-[120px] md:w-48 md:h-48 rounded-xl md:rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden"
                 }
+                style={{
+                  maxWidth: "120px",
+                  maxHeight: "120px",
+                }}
               >
                 <Image
                   src={"/images/gotcar-cto.png"}
@@ -182,7 +194,10 @@ export const TeamSection = () => {
                   loading={"lazy"}
                 />
               </div>
-              <div className={"flex-1 space-y-2"}>
+              <div
+                className={"flex-1 space-y-2"}
+                style={{ paddingLeft: "8px" }}
+              >
                 <div>
                   <h3
                     className={"text-[20px] leading-[28px] text-[#0F0F0F]"}

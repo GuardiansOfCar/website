@@ -10,21 +10,16 @@ export const ExperienceSection = () => {
   const card3Ref = useRef<HTMLDivElement>(null);
   const card4Ref = useRef<HTMLDivElement>(null);
   const card5Ref = useRef<HTMLDivElement>(null);
-  const [card1Opacity, setCard1Opacity] = useState(1); // 모바일에서는 항상 보이도록 초기값 1
-  const [card2Opacity, setCard2Opacity] = useState(1);
-  const [card3Opacity, setCard3Opacity] = useState(1);
-  const [card4Opacity, setCard4Opacity] = useState(1);
-  const [card5Opacity, setCard5Opacity] = useState(1);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const [card1Opacity, setCard1Opacity] = useState(0);
+  const [card2Opacity, setCard2Opacity] = useState(0);
+  const [card3Opacity, setCard3Opacity] = useState(0);
+  const [card4Opacity, setCard4Opacity] = useState(0);
+  const [card5Opacity, setCard5Opacity] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    // PC에서만 애니메이션 적용 (md 브레이크포인트 이상)
-    const isDesktop = window.matchMedia("(min-width: 768px)").matches;
-    if (!isDesktop) {
-      // 모바일에서는 opacity를 항상 1로 유지
-      return;
-    }
-
-    // PC에서는 초기값을 0으로 설정
+    // 초기값을 0으로 설정
     setCard1Opacity(0);
     setCard2Opacity(0);
     setCard3Opacity(0);
@@ -82,18 +77,61 @@ export const ExperienceSection = () => {
     };
   }, []);
 
+  // PC에서 그리드 상단 마진을 40px로 설정
+  useEffect(() => {
+    const updateMargin = () => {
+      if (gridRef.current) {
+        const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+        gridRef.current.style.marginTop = isDesktop ? "40px" : "24px";
+      }
+    };
+
+    updateMargin();
+    window.addEventListener("resize", updateMargin);
+    return () => window.removeEventListener("resize", updateMargin);
+  }, []);
+
+  // 모바일 감지 및 카드 순서 설정
+  useEffect(() => {
+    const updateMobileAndOrder = () => {
+      const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+      setIsMobile(!isDesktop);
+
+      // 카드 순서 설정
+      if (card1Ref.current) {
+        card1Ref.current.style.order = isDesktop ? "0" : "1";
+      }
+      if (card2Ref.current) {
+        card2Ref.current.style.order = isDesktop ? "0" : "3";
+      }
+      if (card3Ref.current) {
+        card3Ref.current.style.order = isDesktop ? "0" : "4";
+      }
+      if (card4Ref.current) {
+        card4Ref.current.style.order = isDesktop ? "0" : "2";
+      }
+      if (card5Ref.current) {
+        card5Ref.current.style.order = isDesktop ? "0" : "5";
+      }
+    };
+
+    updateMobileAndOrder();
+    window.addEventListener("resize", updateMobileAndOrder);
+    return () => window.removeEventListener("resize", updateMobileAndOrder);
+  }, []);
+
   return (
     <div className={"bg-white"}>
       <Main leftHref={""} rightHref={""} hideNav horizontalPadding={"px-4"}>
         <section
-          className={"flex flex-col space-y-6 md:space-y-8 py-6 md:py-10"}
+          className={"flex flex-col w-full max-w-[1312px] mx-auto"}
           aria-labelledby="experience-heading"
         >
-          <header className={"text-center space-y-2"}>
+          <header className={"text-center"}>
             <h2
               id="experience-heading"
               className={
-                "font-bold text-[22px] md:text-[40px] leading-[32px] md:leading-[48px] text-center whitespace-nowrap"
+                "font-bold text-[22px] md:text-[40px] leading-[32px] md:leading-[48px] mt-10 md:mt-0 text-center whitespace-nowrap"
               }
               style={{
                 fontFamily: "Pretendard, sans-serif",
@@ -106,13 +144,13 @@ export const ExperienceSection = () => {
             </h2>
             {/* Our Services with lines */}
             <div
-              className={"flex items-center justify-center mt-6 md:mt-12"}
-              style={{ gap: "12px", marginTop: "24px" }}
+              className={
+                "flex items-center justify-center mt-6 md:mt-12 w-full mt-6 md:mt-24"
+              }
             >
               <div
                 className={"h-0 border-t flex-1"}
                 style={{
-                  maxWidth: "571px",
                   borderColor: "#E0E1E5",
                   borderWidth: "1px",
                 }}
@@ -133,7 +171,6 @@ export const ExperienceSection = () => {
               <div
                 className={"h-0 border-t flex-1"}
                 style={{
-                  maxWidth: "571px",
                   borderColor: "#E0E1E5",
                   borderWidth: "1px",
                 }}
@@ -142,14 +179,15 @@ export const ExperienceSection = () => {
           </header>
 
           <div
+            ref={gridRef}
             className={
-              "grid grid-cols-1 md:grid-cols-3 mt-6 md:mt-8 w-full max-w-[1312px] mx-auto gap-4 md:gap-4"
+              "grid grid-cols-1 md:grid-cols-3 mt-6 w-full max-w-[1312px] mx-auto gap-4 md:gap-4 overflow-x-hidden"
             }
           >
             {/* Left Column - Top Card */}
             <div
               ref={card1Ref}
-              className={`border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6`}
+              className={`border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6 items-center md:items-start text-center md:text-left`}
               style={{
                 width: "100%",
                 maxWidth: "426px",
@@ -157,12 +195,14 @@ export const ExperienceSection = () => {
                 gap: "8px",
                 minHeight: "auto",
                 opacity: card1Opacity,
-                transform: `translateX(${-30 * (1 - card1Opacity)}px) translateY(${20 * (1 - card1Opacity)}px)`,
+                transform: isMobile
+                  ? `translateY(${20 * (1 - card1Opacity)}px)`
+                  : `translateX(${-30 * (1 - card1Opacity)}px) translateY(${20 * (1 - card1Opacity)}px)`,
                 transition: "opacity 0.3s ease-out, transform 0.3s ease-out",
               }}
             >
               {/* 아이콘과 텍스트 컨테이너 */}
-              <div className={"flex flex-col"}>
+              <div className={"flex flex-col items-center md:items-start"}>
                 {/* 아이콘 */}
                 <Image
                   src={"/images/g23-3d-icon.png"}
@@ -174,7 +214,7 @@ export const ExperienceSection = () => {
                   }
                   width={64}
                   height={64}
-                  className={"object-contain w-12 h-12 md:w-16 md:h-16"}
+                  className={"object-contain w-16 h-16 md:w-16 md:h-16"}
                   loading={"lazy"}
                 />
                 {/* 텍스트 - 아이콘 아래 16px 간격 */}
@@ -217,7 +257,7 @@ export const ExperienceSection = () => {
             {/* Middle Card - Large */}
             <div
               ref={card2Ref}
-              className={`border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col md:row-span-2 relative p-4 md:p-6`}
+              className={`border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col md:row-span-2 relative p-4 md:p-6 items-center md:items-start text-center md:text-left`}
               style={{
                 width: "100%",
                 maxWidth: "427px",
@@ -278,7 +318,7 @@ export const ExperienceSection = () => {
                   width={378}
                   height={316}
                   className={
-                    "object-contain w-full max-w-[280px] md:max-w-[378px] h-auto"
+                    "object-contain w-[228px] h-[180px] md:max-w-[378px] md:h-auto"
                   }
                   loading={"lazy"}
                 />
@@ -288,7 +328,7 @@ export const ExperienceSection = () => {
             {/* Right Column - Top Card */}
             <div
               ref={card3Ref}
-              className={`border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6`}
+              className={`border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6 items-center md:items-start text-center md:text-left`}
               style={{
                 width: "100%",
                 maxWidth: "426px",
@@ -296,13 +336,15 @@ export const ExperienceSection = () => {
                 gap: "8px",
                 minHeight: "auto",
                 opacity: card3Opacity,
-                transform: `translateX(${30 * (1 - card3Opacity)}px) translateY(${20 * (1 - card3Opacity)}px)`,
+                transform: isMobile
+                  ? `translateY(${20 * (1 - card3Opacity)}px)`
+                  : `translateX(${30 * (1 - card3Opacity)}px) translateY(${20 * (1 - card3Opacity)}px)`,
                 transition: "opacity 0.3s ease-out, transform 0.3s ease-out",
                 transitionDelay: "0.15s",
               }}
             >
               {/* 아이콘과 텍스트 컨테이너 */}
-              <div className={"flex flex-col"}>
+              <div className={"flex flex-col items-center md:items-start"}>
                 {/* 아이콘 */}
                 <Image
                   src={"/images/precision-parking-3d-icon.png"}
@@ -314,7 +356,7 @@ export const ExperienceSection = () => {
                   }
                   width={64}
                   height={64}
-                  className={"object-contain w-12 h-12 md:w-16 md:h-16"}
+                  className={"object-contain w-16 h-16 md:w-16 md:h-16"}
                   loading={"lazy"}
                 />
                 {/* 텍스트 - 아이콘 아래 16px 간격 */}
@@ -357,7 +399,7 @@ export const ExperienceSection = () => {
             {/* Left Column - Bottom Card */}
             <div
               ref={card4Ref}
-              className={`border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6`}
+              className={`border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6 items-center md:items-start text-center md:text-left`}
               style={{
                 width: "100%",
                 maxWidth: "426px",
@@ -365,13 +407,15 @@ export const ExperienceSection = () => {
                 gap: "8px",
                 minHeight: "auto",
                 opacity: card4Opacity,
-                transform: `translateX(${-30 * (1 - card4Opacity)}px) translateY(${-20 * (1 - card4Opacity)}px)`,
+                transform: isMobile
+                  ? `translateY(${-20 * (1 - card4Opacity)}px)`
+                  : `translateX(${-30 * (1 - card4Opacity)}px) translateY(${-20 * (1 - card4Opacity)}px)`,
                 transition: "opacity 0.3s ease-out, transform 0.3s ease-out",
                 transitionDelay: "0.2s",
               }}
             >
               {/* 아이콘과 텍스트 컨테이너 */}
-              <div className={"flex flex-col"}>
+              <div className={"flex flex-col items-center md:items-start"}>
                 {/* 아이콘 */}
                 <Image
                   src={"/images/smart-payment-3d-icon.png"}
@@ -381,7 +425,7 @@ export const ExperienceSection = () => {
                   }
                   width={64}
                   height={64}
-                  className={"object-contain w-12 h-12 md:w-16 md:h-16"}
+                  className={"object-contain w-16 h-16 md:w-16 md:h-16"}
                   loading={"lazy"}
                 />
                 {/* 텍스트 - 아이콘 아래 16px 간격 */}
@@ -424,7 +468,7 @@ export const ExperienceSection = () => {
             {/* Right Column - Bottom Card */}
             <div
               ref={card5Ref}
-              className={`border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6`}
+              className={`border border-[rgba(237,238,240,1)] bg-[rgba(249,251,251,1)] flex flex-col relative p-4 md:p-6 items-center md:items-start text-center md:text-left`}
               style={{
                 width: "100%",
                 maxWidth: "426px",
@@ -432,13 +476,15 @@ export const ExperienceSection = () => {
                 gap: "8px",
                 minHeight: "auto",
                 opacity: card5Opacity,
-                transform: `translateX(${30 * (1 - card5Opacity)}px) translateY(${-20 * (1 - card5Opacity)}px)`,
+                transform: isMobile
+                  ? `translateY(${-20 * (1 - card5Opacity)}px)`
+                  : `translateX(${30 * (1 - card5Opacity)}px) translateY(${-20 * (1 - card5Opacity)}px)`,
                 transition: "opacity 0.3s ease-out, transform 0.3s ease-out",
                 transitionDelay: "0.25s",
               }}
             >
               {/* 아이콘과 텍스트 컨테이너 */}
-              <div className={"flex flex-col"}>
+              <div className={"flex flex-col items-center md:items-start"}>
                 {/* 아이콘 */}
                 <Image
                   src={"/images/mobility-analytics-3d-icon.png"}
@@ -448,7 +494,7 @@ export const ExperienceSection = () => {
                   }
                   width={64}
                   height={64}
-                  className={"object-contain w-12 h-12 md:w-16 md:h-16"}
+                  className={"object-contain w-16 h-16 md:w-16 md:h-16"}
                   loading={"lazy"}
                 />
                 {/* 텍스트 - 아이콘 아래 16px 간격 */}

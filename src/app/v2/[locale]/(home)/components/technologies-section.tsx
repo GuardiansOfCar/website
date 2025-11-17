@@ -161,7 +161,7 @@ export const TechnologiesSection = () => {
             >
               <div
                 className={
-                  "w-12 h-12 md:w-12 md:h-12 bg-[#121A26] flex items-center justify-center flex-shrink-0 rounded-lg border border-[#00C8C8]/20"
+                  "w-12 h-12 bg-[#121A26] flex items-center justify-center flex-shrink-0 rounded-lg"
                 }
                 style={{ marginBottom: "16px" }}
               >
@@ -173,7 +173,7 @@ export const TechnologiesSection = () => {
                   }
                   width={48}
                   height={48}
-                  className={"object-contain w-8 h-8 md:w-12 md:h-12"}
+                  className={"object-contain w-12 h-12"}
                   loading={"lazy"}
                 />
               </div>
@@ -222,7 +222,7 @@ export const TechnologiesSection = () => {
             >
               <div
                 className={
-                  "w-12 h-12 md:w-12 md:h-12 bg-[#121A26] flex items-center justify-center flex-shrink-0 rounded-lg border border-[#00C8C8]/20"
+                  "w-12 h-12 bg-[#121A26] flex items-center justify-center flex-shrink-0 rounded-lg"
                 }
                 style={{ marginBottom: "16px" }}
               >
@@ -234,7 +234,7 @@ export const TechnologiesSection = () => {
                   }
                   width={48}
                   height={48}
-                  className={"object-contain w-8 h-8 md:w-12 md:h-12"}
+                  className={"object-contain w-12 h-12"}
                   loading={"lazy"}
                 />
               </div>
@@ -282,7 +282,7 @@ export const TechnologiesSection = () => {
             >
               <div
                 className={
-                  "w-12 h-12 md:w-12 md:h-12 bg-[#121A26] flex items-center justify-center flex-shrink-0 rounded-lg border border-[#00C8C8]/20"
+                  "w-12 h-12 bg-[#121A26] flex items-center justify-center flex-shrink-0 rounded-lg"
                 }
                 style={{ marginBottom: "16px" }}
               >
@@ -294,7 +294,7 @@ export const TechnologiesSection = () => {
                   }
                   width={48}
                   height={48}
-                  className={"object-contain w-8 h-8 md:w-12 md:h-12"}
+                  className={"object-contain w-12 h-12"}
                   loading={"lazy"}
                 />
               </div>

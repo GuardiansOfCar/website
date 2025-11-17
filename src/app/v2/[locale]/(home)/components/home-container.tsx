@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { RoadmapContainer } from "@/app/v2/[locale]/roadmap/components/container";
 import { FaqContainer } from "@/app/v2/[locale]/faq/components/container";
 import { HeroSection } from "@/app/v2/[locale]/(home)/components/hero-section";
@@ -45,13 +46,15 @@ export const HomeContainer = () => {
         style={{
           backgroundColor: "rgba(249, 251, 251, 1)",
           marginTop: 0,
-          paddingBottom: "24px",
-          paddingTop: "24px",
+          paddingBottom: "36px",
+          paddingTop: "40px",
+          paddingLeft: "16px",
+          paddingRight: "16px",
         }}
       >
         <div
           className={
-            "flex flex-col w-full max-w-[1312px] mx-auto px-4 md:px-6 py-6 md:py-6 rounded-2xl"
+            "flex flex-col w-full max-w-[1312px] mx-auto px-6 md:px-6 py-12 md:py-[48px] rounded-2xl"
           }
           style={{
             borderBottomWidth: "1px",
@@ -60,9 +63,72 @@ export const HomeContainer = () => {
             backgroundColor: "rgba(7, 20, 25, 1)",
           }}
         >
-          <p className={"text-neutral-100 text-sm md:text-base font-medium"}>
-            ⓒ 2025 GOTCAR. All Rights Reserved.
-          </p>
+          {/* 저작권 텍스트와 소셜 아이콘 */}
+          <div
+            className={
+              "flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-0"
+            }
+          >
+            <p className={"text-neutral-100 text-sm md:text-base font-medium"}>
+              ⓒ 2025 GOTCAR. All Rights Reserved.
+            </p>
+            <div className={"flex items-center gap-4"}>
+              <a
+                className={
+                  "cursor-pointer w-6 h-6 relative flex items-center justify-center"
+                }
+                target={"_blank"}
+                rel={"noopener noreferrer"}
+                href={"https://www.binance.com/en"}
+                aria-label={"Visit GOTCAR on Binance"}
+              >
+                <Image
+                  src={"/images/binance-square-icon.png"}
+                  width={24}
+                  height={24}
+                  alt={"Visit GOTCAR on Binance"}
+                  title={"GOTCAR on Binance"}
+                  loading={"lazy"}
+                />
+              </a>
+              <a
+                className={
+                  "cursor-pointer w-6 h-6 relative flex items-center justify-center"
+                }
+                target={"_blank"}
+                rel={"noopener noreferrer"}
+                href={"https://x.com/gotcar_official"}
+                aria-label={"Follow GOTCAR on X (Twitter)"}
+              >
+                <Image
+                  src={"/images/x-icon.png"}
+                  width={24}
+                  height={24}
+                  alt={"Follow GOTCAR on X (Twitter)"}
+                  title={"GOTCAR Official X (Twitter) Account"}
+                  loading={"lazy"}
+                />
+              </a>
+              <a
+                className={
+                  "cursor-pointer w-6 h-6 relative flex items-center justify-center"
+                }
+                target={"_blank"}
+                rel={"noopener noreferrer"}
+                href={"https://t.me/GOTCAR_Official"}
+                aria-label={"Join GOTCAR Telegram Community"}
+              >
+                <Image
+                  src={"/images/telegram-icon.png"}
+                  width={24}
+                  height={24}
+                  alt={"Join GOTCAR Telegram Community"}
+                  title={"GOTCAR Official Telegram Channel"}
+                  loading={"lazy"}
+                />
+              </a>
+            </div>
+          </div>
           <p
             className={
               "text-neutral-100 text-xs md:text-sm leading-5 md:leading-6"
