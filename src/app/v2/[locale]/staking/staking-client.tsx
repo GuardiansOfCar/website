@@ -4,7 +4,7 @@ import { Main } from "@/app/v2/components/main";
 import { useTranslations } from "next-intl";
 import { StakingSection } from "@/app/v2/[locale]/staking/components/section";
 import { Button } from "@/components/button";
-import { StakingButton } from "@/app/v2/components/staking-button";
+import { ButtonRenewal } from "@/app/v2/components/button-renewal";
 import { Popup } from "@/components/popup";
 import { useEffect, useState } from "react";
 import { API_BASE_URL } from "@/lib/constants";
@@ -555,13 +555,13 @@ export function StakingPageClient() {
                   </div>
                 </div>
               </div>
-              <StakingButton
+              <ButtonRenewal
                 onClick={() => {
                   setBuyPopup(true);
                 }}
               >
                 {t("staking.c3")}
-              </StakingButton>
+              </ButtonRenewal>
             </StakingSection>
 
             <StakingSection
@@ -763,14 +763,14 @@ export function StakingPageClient() {
                 </div>
               }
             >
-              <StakingButton
+              <ButtonRenewal
                 onClick={() => {
                   setUnstakePopup(true);
                 }}
               >
                 {t("staking.b2")}
-              </StakingButton>
-              <StakingButton
+              </ButtonRenewal>
+              <ButtonRenewal
                 onClick={() => {
                   setClaimPopup(false);
                 }}
@@ -780,7 +780,7 @@ export function StakingPageClient() {
                 textColor="#FFFFFF"
               >
                 {t("staking.f2")}
-              </StakingButton>
+              </ButtonRenewal>
             </StakingSection>
           </div>
 

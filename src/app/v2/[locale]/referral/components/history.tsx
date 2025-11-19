@@ -2,8 +2,6 @@
 
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useState } from "react";
-import clsx from "clsx";
-import { Button } from "@/components/button";
 import { useWallet } from "@/lib/use-wallet";
 import { WalletManagePopup } from "@/components/wallet-manage-popup";
 import { shortenAddress } from "@/lib/utils";
@@ -11,6 +9,7 @@ import { API_BASE_URL, wrapWindow } from "@/lib/constants";
 import Image from "next/image";
 import { useRouter } from "@/app/v2/i18n/navigation";
 import { useSWRConfig } from "swr";
+import { ButtonRenewal } from "@/app/v2/components/button-renewal";
 
 interface Stats {
   icoEthAmount: number;
@@ -40,7 +39,7 @@ export const ReferralHistory = () => {
     if (!wallet.address) return alert("Please connect your wallet first.");
     if (!wallet.id)
       return alert(
-        "You don't have wallet Id. Participate in ICO and get your walletId first.",
+        "You don't have wallet Id. Participate in ICO and get your walletId first."
       );
 
     fetch(`${API_BASE_URL}/v1/referrals/generate/code`, {
@@ -64,7 +63,7 @@ export const ReferralHistory = () => {
   const referralLink = useMemo(
     () =>
       `${wrapWindow?.location.protocol}//${wrapWindow?.location.host}?r=${wallet.referral}`,
-    [wallet.referral],
+    [wallet.referral]
   );
   const handleCopyReferral = () => {
     wrapWindow?.navigator.clipboard.writeText(referralLink);
@@ -79,7 +78,7 @@ export const ReferralHistory = () => {
           const data = (await res.json()) as Stats;
           setData(data);
         }
-      },
+      }
     );
   }, [wallet.id]);
 
@@ -96,94 +95,120 @@ export const ReferralHistory = () => {
     <>
       <div
         className={
-          "bg-neutral-100 p-9 border-neutral-0 border-4 flex flex-col space-y-6 self-stretch max-tablet:p-5"
+          "w-[1312px] max-w-[1312px] max-desktop:w-full max-desktop:max-w-full"
         }
+        style={{
+          borderRadius: "24px",
+          padding: "16px",
+          backgroundColor: "#FFFFFF",
+          boxShadow: "0px 0px 8px 0px #0000000A",
+        }}
       >
-        <p className={"text-neutral-0 text-header-3"}>{t("referral.a1")}</p>
-
-        <div className={"max-tablet:block hidden flex flex-col space-y-6"}>
-          {columns.map((c) => (
-            <div key={c.key} className={"flex flex-col"}>
-              <div className={"px-4 pb-3 text-title-1b text-neutral-30"}>
-                {c.label}
-              </div>
-              <div className={"border-y border-y-[#D9D9D9] p-4"}>
-                <span className={"text-neutral-0 text-header-4"}>
-                  {(data as any)[c.key]}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
-        <table className={"max-tablet:hidden"}>
-          <thead>
-            <tr
-              className={clsx(
-                "[&>th]:text-left [&>th]:px-4  [&>th]:py-3 [&>th]:border-b [&>th]:border-b-neutral-60 [&>th]:text-title-1b [&>th]:text-neutral-30",
-              )}
-            >
-              <th>SOL</th>
-              <th>ETH</th>
-              <th>BNB</th>
-              <th>USDT</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              className={clsx(
-                "[&>td]:text-left [&>td]:px-4  [&>td]:py-3 [&>td]:border-b [&>td]:border-b-neutral-60 [&>td]:text-header-4 [&>th]:text-neutral-0",
-              )}
-            >
-              <td>{data.icoSolAmount}</td>
-              <td>{data.icoEthAmount}</td>
-              <td>{data.icoBnbAmount}</td>
-              <td>{data.icoUSDTAmount}</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div
-          className={"flex w-full gap-8 max-tablet:flex-col max-tablet:gap-6"}
+        <section
+          className={"max-desktop:w-full max-desktop:h-auto"}
+          style={{
+            width: "100%",
+            minHeight: "256px",
+            borderRadius: "16px",
+            border: "1px solid #EDEEF0",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            padding: "24px",
+            backgroundColor: "#F9FBFB",
+            opacity: 1,
+            boxSizing: "border-box",
+          }}
         >
-          {wallet.referral ? (
+          <div
+            className={"border-b-neutral-60 border-b"}
+            style={{ paddingBottom: "12px" }}
+          >
             <div
-              onClick={handleCopyReferral}
               className={
-                "bg-[#F0F0F0] text-title-1 px-4 py-[18px] flex-1 text-[#646464] cursor-pointer flex justify-between items-center"
+                "grid grid-cols-4 max-desktop:grid-cols-2 max-mobile:grid-cols-1 gap-4"
               }
             >
-              <span>{referralLink}</span>
-              <Image
-                src={"/images/copy.png"}
-                alt={"cpoy"}
-                width={24}
-                height={24}
-              />
+              {columns.map((c) => (
+                <div key={c.key} className={"flex flex-col"}>
+                  <p
+                    style={{
+                      fontFamily: "Pretendard, sans-serif",
+                      fontWeight: 700,
+                      fontSize: "15px",
+                      lineHeight: "22px",
+                      color: "rgba(93, 94, 96, 1)",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    {c.label}
+                  </p>
+                  <span
+                    style={{
+                      fontFamily: "Pretendard, sans-serif",
+                      fontWeight: 700,
+                      fontSize: "20px",
+                      lineHeight: "28px",
+                      color: "rgba(15, 15, 15, 1)",
+                    }}
+                  >
+                    {(data as any)[c.key].toLocaleString()}
+                  </span>
+                </div>
+              ))}
             </div>
-          ) : (
+          </div>
+          {!wallet.address && (
             <div
-              onClick={handleCreateReferral}
-              className={
-                "bg-[#CDE7E5] text-title-1 px-4 py-[18px] flex-1 text-neutral-0 cursor-pointer"
-              }
+              className={"flex justify-center"}
+              style={{ paddingTop: "12px" }}
             >
-              {t("referral.a2")}
+              <ButtonRenewal
+                onClick={() => {
+                  alert(
+                    "Please select a network and wallet from the main screen and connect them."
+                  );
+                  router.push("/");
+                }}
+                backgroundColor={"#21EAF1"}
+                borderColor={"#00D6DD"}
+                className={"min-w-[240px]"}
+              >
+                {t("referral.a3")}
+              </ButtonRenewal>
             </div>
           )}
-          <Button
-            onClick={() => {
-              alert(
-                "Please select a network and wallet from the main screen and connect them.",
-              );
-              router.push("/");
-            }}
-            disabled={!!wallet.address}
-            className={"min-w-[240px]"}
-          >
-            {wallet.address ? shortenAddress(wallet.address) : t("referral.a3")}
-          </Button>
-        </div>
+        </section>
       </div>
+
+      {wallet.referral && (
+        <div
+          className={
+            "w-[1312px] max-w-[1312px] max-desktop:w-full max-desktop:max-w-full mt-8"
+          }
+        >
+          <div
+            onClick={handleCopyReferral}
+            className={
+              "bg-[#F0F0F0] text-title-1 px-4 py-[18px] text-[#646464] cursor-pointer flex justify-between items-center rounded-xl"
+            }
+            style={{
+              fontFamily: "Pretendard, sans-serif",
+              fontWeight: 400,
+              fontSize: "15px",
+              lineHeight: "22px",
+            }}
+          >
+            <span>{referralLink}</span>
+            <Image
+              src={"/images/copy.png"}
+              alt={"copy"}
+              width={24}
+              height={24}
+            />
+          </div>
+        </div>
+      )}
 
       <WalletManagePopup />
     </>

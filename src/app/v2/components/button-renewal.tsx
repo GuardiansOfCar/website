@@ -3,7 +3,7 @@
 import clsx, { ClassValue } from "clsx";
 import { PropsWithChildren } from "react";
 
-export const StakingButton = ({
+export const ButtonRenewal = ({
   className,
   disabled,
   type,
