@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { StakingSection } from "@/app/v2/[locale]/staking/components/section";
 import { Button } from "@/components/button";
 import { ButtonRenewal } from "@/app/v2/components/button-renewal";
-import { Popup } from "@/components/popup";
+import { Popup } from "@/app/v2/components/popup";
 import { useEffect, useState } from "react";
 import { API_BASE_URL } from "@/lib/constants";
 import { useWallet } from "@/lib/use-wallet";
@@ -146,9 +146,7 @@ export function StakingPageClient() {
     defaultValues: { otp: "" },
   });
   const stakeAmount = stakeForm.watch("amount");
-  const handleStakePurchaseClick = () => {
-    router.push(`/?amount=${stakeForm.getValues("amount")}`);
-  };
+
   const handleStakeClick = () => {
     if (!wallet.icoAddress) return alert("You can connect wallet first.");
     setStakePopup(true);
@@ -280,12 +278,13 @@ export function StakingPageClient() {
               </div>
             </div>
 
-            <Button onClick={handleStakePurchaseClick}>
-              {t("staking.c8")}
-            </Button>
-            <Button disabled={!stakeAmount} onClick={handleStakeClick}>
+            <ButtonRenewal
+              disabled={!stakeAmount}
+              onClick={handleStakeClick}
+              width="100%"
+            >
               {t("staking.c9")}
-            </Button>
+            </ButtonRenewal>
           </div>
         </Popup>
       )}
@@ -318,31 +317,39 @@ export function StakingPageClient() {
               />
             </div>
 
-            <Button onClick={handleWithdrawal} disabled>
+            <ButtonRenewal onClick={handleWithdrawal} disabled width="100%">
               WITHDRAWAL
-            </Button>
-            <Button
+            </ButtonRenewal>
+            <ButtonRenewal
               onClick={handleUnstakePopupClose}
-              className={"!bg-neutral-40"}
+              backgroundColor="#2F2F31"
+              borderColor="#2F2F31"
+              textColor="#FFFFFF"
+              width="100%"
             >
               {t("staking.c13")}
-            </Button>
+            </ButtonRenewal>
           </div>
         </Popup>
       )}
 
       {stakePopup && (
-        <Popup onClose={handleStakePopupClose} title={t("staking.c9")}>
-          <div className={"flex flex-col space-y-3"}>
-            <div className={"flex flex-col items-center"}>
-              <p className={"text-center text-body-3"}>{t("staking.c2")}</p>
-              <span className={"text-header-3"}>
-                {stakeAmount.toLocaleString()}{" "}
-                <span className={"text-header-3 text-primary-10"}>$GOTCAR</span>
+        <Popup onClose={handleStakePopupClose} title="Stake $GOTCAR">
+          <div className={"flex flex-col space-y-6"}>
+            <div className={"flex flex-col items-center justify-center"}>
+              <span
+                className={"text-header-3"}
+                style={{ fontSize: "32px", lineHeight: "40px" }}
+              >
+                {Number(stakeAmount).toLocaleString()}{" "}
+                <span className={"text-[#0082A2]"}>$GOTCAR</span>
               </span>
             </div>
 
-            <p className={"text-body-3 text-center"}>{t("staking.c11")}</p>
+            <p className={"text-body-3 text-center text-[#5D5E60]"}>
+              You’re about to stake the $GOCAR amount shown above. Do you want
+              to proceed?
+            </p>
 
             <div className={"space-y-1 w-full"}>
               <p className={"text-body-3"}>otp Code</p>
@@ -357,15 +364,24 @@ export function StakingPageClient() {
               />
             </div>
 
-            <Button disabled={!stakeAmount} onClick={handleStakeConfirmClick}>
-              {t("staking.c12")}
-            </Button>
-            <Button
-              onClick={handleStakePopupClose}
-              className={"!bg-neutral-40"}
-            >
-              {t("staking.c13")}
-            </Button>
+            <div className="flex flex-col space-y-3 w-full">
+              <ButtonRenewal
+                disabled={!stakeAmount}
+                onClick={handleStakeConfirmClick}
+                width="100%"
+              >
+                Confirm
+              </ButtonRenewal>
+              <ButtonRenewal
+                onClick={handleStakePopupClose}
+                backgroundColor="#2F2F31"
+                borderColor="#2F2F31"
+                textColor="#FFFFFF"
+                width="100%"
+              >
+                Cancel
+              </ButtonRenewal>
+            </div>
           </div>
         </Popup>
       )}

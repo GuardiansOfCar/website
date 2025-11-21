@@ -124,7 +124,7 @@ export const ExperienceSection = () => {
     <div className={"bg-white"}>
       <Main leftHref={""} rightHref={""} hideNav horizontalPadding={"px-4"}>
         <section
-          className={"flex flex-col w-full max-w-[1312px] mx-auto"}
+          className={"flex flex-col w-full max-w-[1312px] mx-auto overflow-hidden"}
           aria-labelledby="experience-heading"
         >
           <header className={"text-center"}>
@@ -181,7 +181,7 @@ export const ExperienceSection = () => {
           <div
             ref={gridRef}
             className={
-              "grid grid-cols-1 md:grid-cols-3 mt-6 w-full max-w-[1312px] mx-auto gap-4 md:gap-4 overflow-x-hidden"
+              "grid grid-cols-1 md:grid-cols-3 mt-6 w-full max-w-[1312px] mx-auto gap-4 md:gap-4 overflow-hidden"
             }
           >
             {/* Left Column - Top Card */}

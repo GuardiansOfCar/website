@@ -2,7 +2,7 @@
 
 import { Popup } from "@/app/v2/components/popup";
 import { Wallet } from "@/app/v2/components/wallet";
-import { Button } from "@/app/v2/components/button";
+import { ButtonRenewal } from "@/app/v2/components/button-renewal";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useWallet } from "@/app/v2/lib/use-wallet";
@@ -103,15 +103,18 @@ export const WalletManagePopup = () => {
             {!isMobile && <Wallet type={"phantom"} />}
             {!isMobile && <Wallet type={"trust"} />}
             <Wallet type={"metamask"} />
-            <Button
-              className={"!bg-neutral-40"}
+            <ButtonRenewal
               onClick={() => {
                 setCreate(true);
                 setConnect(false);
               }}
+              backgroundColor="#2F2F31"
+              borderColor="#2F2F31"
+              textColor="#FFFFFF"
+              width="100%"
             >
               {t("home.presaleJoin5")}
-            </Button>
+            </ButtonRenewal>
           </div>
         </Popup>
       )}
@@ -150,14 +153,17 @@ export const WalletManagePopup = () => {
                 <Wallet create type={"metamask"} />
               </>
             )}
-            <Button
-              className={"!bg-neutral-40"}
+            <ButtonRenewal
               onClick={() => {
                 setCreate(false);
               }}
+              backgroundColor="#2F2F31"
+              borderColor="#2F2F31"
+              textColor="#FFFFFF"
+              width="100%"
             >
               CLOSE
-            </Button>
+            </ButtonRenewal>
           </div>
         </Popup>
       )}
