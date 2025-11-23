@@ -6,7 +6,6 @@ import { useTrustWallet } from "@/app/v2/lib/use-trust-wallet";
 import { useWalletConnect } from "@/app/v2/lib/use-wallet-connect";
 import { useWallet } from "@/app/v2/lib/use-wallet";
 import { wrapWindow } from "@/app/v2/lib/constants";
-import {BorderText} from "@/app/v2/components/border-text";
 
 export const Wallet = ({
   type,
@@ -52,33 +51,74 @@ export const Wallet = ({
   if (wallet.network === "SOL" && type === "metamask") return null;
   if (type === "phantom") return null;
 
+  const getLogoBackground = () => {
+    if (type === "connect") {
+      return "rgba(59, 153, 252, 1)"; // Wallet Connect blue
+    }
+    return "rgba(255, 255, 255, 1)"; // White for Trust Wallet and MetaMask
+  };
+
   return (
     <button
       onClick={handleClick}
-      className={"border-neutral-0 border-4 h-[56px] flex relative"}
+      style={{
+        width: "338px",
+        height: "52px",
+        borderRadius: "12px",
+        borderWidth: "1px",
+        border: "1px solid rgba(0, 214, 221, 1)",
+        backgroundColor: "rgba(33, 234, 241, 1)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        paddingLeft: "16px",
+        paddingRight: "0",
+        cursor: "pointer",
+        transition: "all 0.2s",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.backgroundColor = "rgba(33, 234, 241, 0.9)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.backgroundColor = "rgba(33, 234, 241, 1)";
+      }}
     >
-      <div
-        className={
-          "flex-1 flex items-center px-3 bg-primary border-r-neutral-0 border-r-4   h-full"
-        }
+      <span
+        style={{
+          fontFamily: "Pretendard, sans-serif",
+          fontWeight: 700,
+          fontSize: "16px",
+          lineHeight: "24px",
+          color: "rgba(0, 0, 0, 1)",
+        }}
       >
-        <BorderText className={"text-title-1 text-left font-[700]"}>
-          {
-            //type === "phantom" ? "PHANTOM" :
-            type === "metamask"
-              ? "METAMASK"
-              : type === "trust"
-                ? "TRUST WALLET"
-                : "WALLET CONNECT"
-          }
-        </BorderText>
-      </div>
+        {type === "metamask"
+          ? "MetaMask"
+          : type === "trust"
+            ? "Trust Wallet"
+            : "Wallet Connect"}
+      </span>
 
-      <div className={"bg-white w-[52px] h-full relative"}>
+      <div
+        style={{
+          width: "52px",
+          height: "52px",
+          borderRadius: "12px",
+          borderWidth: "1px",
+          border: "1px solid rgba(0, 214, 221, 1)",
+          background:
+            type === "connect"
+              ? "linear-gradient(180deg, #556FFF 0%, #3353FC 100%)"
+              : "rgba(255, 255, 255, 1)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          position: "relative",
+        }}
+      >
         <Image
-          className={"object-cover"}
+          className={"object-contain"}
           src={
-            //type === "phantom" ? "/images/phantom.png" :
             type === "metamask"
               ? "/images/metamask.png"
               : type === "trust"
@@ -86,7 +126,8 @@ export const Wallet = ({
                 : "/images/walletconnect.png"
           }
           alt={"Wallet Icon"}
-          fill
+          width={type === "connect" ? 24 : 32}
+          height={type === "connect" ? 24 : 32}
         />
       </div>
     </button>

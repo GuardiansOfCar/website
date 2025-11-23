@@ -7,10 +7,14 @@ export const Popup = ({
   onClose,
   children,
   title,
+  titleAlign = "left",
+  showCloseButton = true,
 }: {
   onClose: () => void;
   children: ReactNode;
   title: ReactNode;
+  titleAlign?: "left" | "center";
+  showCloseButton?: boolean;
 }) => {
   const ref = useClickAway<HTMLDivElement>(() => {
     onClose();
@@ -46,18 +50,42 @@ export const Popup = ({
       >
         <div
           className={
-            "flex items-center justify-between"
+            titleAlign === "center"
+              ? "flex items-center justify-between relative"
+              : "flex items-center justify-between"
           }
         >
-          <span className={"text-body-1b"}>{title}</span>
-          <button onClick={onClose}>
-            <Image
-              src={"/images/close.png"}
-              alt={"close"}
-              width={16}
-              height={16}
-            />
-          </button>
+          <span
+            className={
+              titleAlign === "center"
+                ? "flex-1 text-center"
+                : "text-body-1b"
+            }
+            style={
+              titleAlign === "center"
+                ? {
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 700,
+                    fontSize: "18px",
+                    lineHeight: "26px",
+                    textAlign: "center",
+                    verticalAlign: "middle",
+                  }
+                : undefined
+            }
+          >
+            {title}
+          </span>
+          {showCloseButton && (
+            <button onClick={onClose} className={titleAlign === "center" ? "absolute right-0" : ""}>
+              <Image
+                src={"/images/close.png"}
+                alt={"close"}
+                width={16}
+                height={16}
+              />
+            </button>
+          )}
         </div>
         <div className={"flex w-full flex-col"}>{children}</div>
       </div>

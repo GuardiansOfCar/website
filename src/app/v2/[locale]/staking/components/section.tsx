@@ -19,9 +19,9 @@ export const StakingSection = ({
 }) => {
   return (
     <section
-      className={"max-desktop:w-full max-desktop:h-auto"}
+      className={"w-full max-desktop:h-auto"}
       style={{
-        width: "308px",
+        width: "100%",
         height: "256px",
         minWidth: "212px",
         borderRadius: "16px",

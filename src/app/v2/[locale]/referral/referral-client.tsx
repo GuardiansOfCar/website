@@ -11,11 +11,11 @@ export function ReferralPageClient() {
         leftHref={"/staking"}
         rightHref={"/g2e"}
         hideNav={true}
-        horizontalPadding="px-0 max-desktop:px-4"
+        horizontalPadding="px-0 max-laptop:px-4"
       >
         <div
           className={
-            "flex flex-col items-center max-desktop:mt-[80px] w-[1312px] max-w-[1312px] max-desktop:w-full max-desktop:max-w-full mx-auto"
+            "flex flex-col items-center max-laptop:mt-[80px] w-[1312px] max-w-[1312px] max-desktop:w-full max-laptop:w-full max-laptop:max-w-full mx-auto"
           }
           style={{
             marginTop: "120px",
@@ -23,12 +23,12 @@ export function ReferralPageClient() {
         >
           <div
             className={
-              "flex flex-col space-y-4 max-desktop:space-y-4 items-center w-full mb-8 md:mb-12"
+              "flex flex-col space-y-4 max-laptop:space-y-4 items-center w-full mb-8 md:mb-12"
             }
           >
             <h1
               className={
-                "text-center w-full text-[40px] leading-[48px] max-desktop:text-[24px] max-desktop:leading-[32px]"
+                "text-center w-full text-[40px] leading-[48px] max-laptop:text-[24px] max-laptop:leading-[32px]"
               }
               style={{
                 fontFamily: "Pretendard, sans-serif",
@@ -57,4 +57,3 @@ export function ReferralPageClient() {
     </div>
   );
 }
-

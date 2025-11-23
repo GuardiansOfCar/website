@@ -24,10 +24,12 @@ export function StakingPageClient() {
 
   const handleBuyPopupClose = () => {
     setBuyPopup(false);
+    stakeForm.reset();
   };
 
   const handleUnstakePopupClose = () => {
     setUnstakePopup(false);
+    unstakeForm.reset();
   };
 
   const handleStakePopupClose = () => {
@@ -248,87 +250,292 @@ export function StakingPageClient() {
   return (
     <div>
       {buyPopup && (
-        <Popup onClose={handleBuyPopupClose} title={t("staking.c4")}>
+        <Popup
+          onClose={handleBuyPopupClose}
+          title="STAKE $GOTCAR"
+          titleAlign="center"
+          showCloseButton={false}
+        >
           <div className={"flex flex-col space-y-3"}>
             <div className={"flex flex-col items-center"}>
-              <p className={"text-center text-body-3"}>{t("staking.c2")}</p>
-              <span className={"text-header-3"}>
-                {status.availableBalance.toLocaleString()}{" "}
-                <span className={"text-header-3 text-primary-10"}>$GOTCAR</span>
+              <p
+                className={"text-center"}
+                style={{
+                  fontFamily: "Pretendard, sans-serif",
+                  fontWeight: 700,
+                  fontSize: "15px",
+                  lineHeight: "22px",
+                  textAlign: "center",
+                  verticalAlign: "middle",
+                  color: "rgba(93, 94, 96, 1)",
+                }}
+              >
+                {t("staking.c2")}
+              </p>
+              <span
+                style={{
+                  fontFamily: "Pretendard, sans-serif",
+                  fontWeight: 700,
+                  fontSize: "20px",
+                  lineHeight: "28px",
+                  color: "rgba(15, 15, 15, 1)",
+                }}
+              >
+                {status.availableBalance.toLocaleString()}
+                <span
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 700,
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    color: "rgba(0, 130, 162, 1)",
+                    marginLeft: "8px",
+                  }}
+                >
+                  $GOTCAR
+                </span>
               </span>
             </div>
 
             <div className={"space-y-1"}>
-              <div className={"flex items-center justify-between"}>
-                <p className={"text-body-3"}>{t("staking.c7")}</p>
-                <button onClick={handleAllClick} className={"text-body-3b"}>
+              <div
+                className={"flex items-center justify-between"}
+                style={{ paddingLeft: "8px", paddingRight: "8px" }}
+              >
+                <p
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 400,
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    verticalAlign: "middle",
+                    color: "rgba(120, 121, 124, 1)",
+                  }}
+                >
+                  {t("staking.c7")}
+                </p>
+                <button
+                  onClick={handleAllClick}
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 700,
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    verticalAlign: "middle",
+                    color: "rgba(0, 85, 107, 1)",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                >
                   {t("staking.c6")}
                 </button>
               </div>
-              <div className={"bg-[#CDE7E5] flex"}>
+              <div
+                style={{
+                  width: "338px",
+                  height: "52px",
+                  borderRadius: "12px",
+                  border: stakeAmount
+                    ? "1px solid rgba(0, 214, 221, 1)"
+                    : "1px solid rgba(224, 225, 229, 1)",
+                  display: "flex",
+                  alignItems: "center",
+                  paddingLeft: "16px",
+                  paddingRight: "16px",
+                  backgroundColor: "#FFFFFF",
+                }}
+              >
                 <input
                   {...stakeForm.register("amount")}
-                  className={
-                    "py-3 px-2 bg-transparent text-body-2 rounded-none flex-1"
-                  }
+                  placeholder="Enter amount"
+                  style={{
+                    flex: 1,
+                    border: "none",
+                    outline: "none",
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 400,
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    verticalAlign: "middle",
+                    color: "rgba(120, 121, 124, 1)",
+                    backgroundColor: "transparent",
+                  }}
+                  className="[&::placeholder]:text-[rgba(120,121,124,1)] [&::placeholder]:font-normal"
                 />
-                <span className={"m-4 text-title-1 text-primary-0"}>
+                <span
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 700,
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    textAlign: "right",
+                    verticalAlign: "middle",
+                    color: "rgba(120, 121, 124, 1)",
+                  }}
+                >
                   $GOTCAR
                 </span>
               </div>
             </div>
 
-            <ButtonRenewal
-              disabled={!stakeAmount}
-              onClick={handleStakeClick}
-              width="100%"
-            >
-              {t("staking.c9")}
-            </ButtonRenewal>
+            <div className={"flex flex-col space-y-3"}>
+              <ButtonRenewal
+                disabled={!stakeAmount}
+                onClick={handleStakeClick}
+                width="100%"
+              >
+                Stake $GOTCAR
+              </ButtonRenewal>
+              <ButtonRenewal
+                onClick={handleBuyPopupClose}
+                backgroundColor="rgba(47, 47, 49, 1)"
+                borderColor="rgba(70, 71, 73, 1)"
+                textColor="rgba(255, 255, 255, 1)"
+                width="100%"
+                height="52px"
+              >
+                Cancel
+              </ButtonRenewal>
+            </div>
           </div>
         </Popup>
       )}
 
       {unstakePopup && (
-        <Popup onClose={handleUnstakePopupClose} title={t("staking.b1")}>
+        <Popup
+          onClose={handleUnstakePopupClose}
+          title={t("staking.b1")}
+          titleAlign="center"
+          showCloseButton={false}
+        >
           <div className={"flex flex-col space-y-3"}>
             <div className={"flex flex-col items-center"}>
-              <p className={"text-center text-body-3"}>{t("staking.c1")}</p>
-              <span className={"text-header-3"}>
-                {status.stakedBalance.toLocaleString()}{" "}
-                <span className={"text-header-3 text-primary-10"}>$GOTCAR</span>
+              <p
+                className={"text-center"}
+                style={{
+                  fontFamily: "Pretendard, sans-serif",
+                  fontWeight: 700,
+                  fontSize: "15px",
+                  lineHeight: "22px",
+                  textAlign: "center",
+                  verticalAlign: "middle",
+                  color: "rgba(93, 94, 96, 1)",
+                }}
+              >
+                {t("staking.c1")}
+              </p>
+              <span
+                style={{
+                  fontFamily: "Pretendard, sans-serif",
+                  fontWeight: 700,
+                  fontSize: "20px",
+                  lineHeight: "28px",
+                  color: "rgba(15, 15, 15, 1)",
+                }}
+              >
+                {status.stakedBalance.toLocaleString()}
+                <span
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 700,
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    color: "rgba(0, 130, 162, 1)",
+                    marginLeft: "8px",
+                  }}
+                >
+                  $GOTCAR
+                </span>
               </span>
             </div>
 
-            <p className={"text-body-3 text-center"}>
+            <p
+              className={"text-center"}
+              style={{
+                fontFamily: "Pretendard, sans-serif",
+                fontWeight: 400,
+                fontSize: "15px",
+                lineHeight: "22px",
+                textAlign: "center",
+                verticalAlign: "middle",
+                color: "rgba(120, 121, 124, 1)",
+              }}
+            >
               {t("staking.b3")} {t("staking.b4")}
             </p>
 
-            <div className={"space-y-1 w-full"}>
-              <p className={"text-body-3"}>otp Code</p>
-              <input
-                {...unstakeForm.register("otp")}
-                max={6}
-                maxLength={6}
-                type={"number"}
-                className={
-                  "py-3 px-2 bg-[#CDE7E5] text-body-2 rounded-none w-full"
-                }
-              />
+            <div className={"space-y-1"}>
+              <div
+                className={"flex items-center justify-between"}
+                style={{ paddingLeft: "8px", paddingRight: "8px" }}
+              >
+                <p
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 400,
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    verticalAlign: "middle",
+                    color: "rgba(120, 121, 124, 1)",
+                  }}
+                >
+                  OTP Code
+                </p>
+              </div>
+              <div
+                style={{
+                  width: "338px",
+                  height: "52px",
+                  borderRadius: "12px",
+                  border: unstakeForm.watch("otp")
+                    ? "1px solid rgba(0, 214, 221, 1)"
+                    : "1px solid rgba(224, 225, 229, 1)",
+                  display: "flex",
+                  alignItems: "center",
+                  paddingLeft: "16px",
+                  paddingRight: "16px",
+                  backgroundColor: "#FFFFFF",
+                }}
+              >
+                <input
+                  {...unstakeForm.register("otp")}
+                  max={6}
+                  maxLength={6}
+                  type={"number"}
+                  placeholder="Enter OTP code"
+                  style={{
+                    flex: 1,
+                    border: "none",
+                    outline: "none",
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 400,
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    verticalAlign: "middle",
+                    color: "rgba(120, 121, 124, 1)",
+                    backgroundColor: "transparent",
+                  }}
+                  className="[&::placeholder]:text-[rgba(120,121,124,1)] [&::placeholder]:font-normal"
+                />
+              </div>
             </div>
 
-            <ButtonRenewal onClick={handleWithdrawal} disabled width="100%">
-              WITHDRAWAL
-            </ButtonRenewal>
-            <ButtonRenewal
-              onClick={handleUnstakePopupClose}
-              backgroundColor="#2F2F31"
-              borderColor="#2F2F31"
-              textColor="#FFFFFF"
-              width="100%"
-            >
-              {t("staking.c13")}
-            </ButtonRenewal>
+            <div className={"flex flex-col space-y-3"}>
+              <ButtonRenewal onClick={handleWithdrawal} disabled width="100%">
+                WITHDRAWAL
+              </ButtonRenewal>
+              <ButtonRenewal
+                onClick={handleUnstakePopupClose}
+                backgroundColor="rgba(47, 47, 49, 1)"
+                borderColor="rgba(70, 71, 73, 1)"
+                textColor="rgba(255, 255, 255, 1)"
+                width="100%"
+                height="52px"
+              >
+                {t("staking.c13")}
+              </ButtonRenewal>
+            </div>
           </div>
         </Popup>
       )}
@@ -435,7 +642,7 @@ export function StakingPageClient() {
       >
         <div
           className={
-            "flex flex-col items-center max-desktop:mt-[80px] w-[1312px] max-w-[1312px] max-desktop:w-full max-desktop:max-w-full mx-auto"
+            "flex flex-col items-center max-laptop:mt-[80px] w-[1312px] max-w-[1312px] max-desktop:w-full max-laptop:w-full max-laptop:max-w-full mx-auto"
           }
           style={{
             marginTop: "120px",
@@ -448,7 +655,7 @@ export function StakingPageClient() {
           >
             <h1
               className={
-                "text-center w-full text-[40px] leading-[48px] max-desktop:text-[24px] max-desktop:leading-[32px]"
+                "text-center w-full text-[40px] leading-[48px] max-laptop:text-[24px] max-laptop:leading-[32px]"
               }
               style={{
                 fontFamily: "Pretendard, sans-serif",
@@ -479,7 +686,7 @@ export function StakingPageClient() {
 
           <div
             className={
-              "grid grid-cols-4 max-desktop:flex max-desktop:flex-col w-[1312px] max-w-[1312px] max-desktop:w-full max-desktop:max-w-full max-desktop:[&>section]:mt-0"
+              "grid grid-cols-4 max-laptop:grid-cols-2 max-tablet:flex max-tablet:flex-col w-[1312px] max-w-[1312px] max-desktop:w-full max-laptop:w-full max-laptop:max-w-full max-tablet:w-full max-tablet:max-w-full max-tablet:[&>section]:mt-0"
             }
             style={{
               borderRadius: "24px",
@@ -803,7 +1010,7 @@ export function StakingPageClient() {
           {/* Notice Section */}
           <div
             className={
-              "flex flex-col space-y-4 w-[1312px] max-w-[1312px] max-desktop:w-full max-desktop:max-w-full max-desktop:mx-auto"
+              "flex flex-col space-y-4 w-[1312px] max-w-[1312px] max-desktop:w-full max-laptop:w-full max-laptop:max-w-full mx-auto"
             }
             style={{
               marginTop: "80px",

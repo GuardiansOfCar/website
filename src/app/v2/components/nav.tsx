@@ -93,7 +93,10 @@ export const Nav = () => {
   const selected = params.locale as string;
 
   const listNav = (
-    <ul className={"flex items-center"} style={{ gap: "48px" }}>
+    <ul
+      className={"flex items-center max-laptop:gap-[32px]"}
+      style={{ gap: "48px" }}
+    >
       {[
         {
           label: t("home.nav1"),
@@ -145,7 +148,7 @@ export const Nav = () => {
               href={nav.href as any}
               className={clsx(
                 "block py-2 px-3 cursor-pointer transition-colors",
-                "max-desktop:px-5 max-desktop:py-5 max-desktop:justify-between",
+                "max-laptop:px-5 max-laptop:py-5 max-laptop:justify-between",
                 "align-middle"
               )}
               style={{
@@ -191,7 +194,7 @@ export const Nav = () => {
             langOpened && "!text-primary",
             isMobile && "px-2 py-2",
             !isMobile &&
-              "max-desktop:px-5 max-desktop:py-5 max-desktop:justify-between max-desktop:w-full",
+              "max-laptop:px-5 max-laptop:py-5 max-laptop:justify-between max-laptop:w-full",
             "align-middle"
           )}
           style={{
@@ -275,7 +278,7 @@ export const Nav = () => {
                     className={clsx(
                       "flex text-left w-full py-3 text-body-1b hover:text-primary cursor-pointer transition-colors",
                       pathname.endsWith(`/${chapter.key}`) && "!text-primary",
-                      "px-4 max-desktop:px-8 max-desktop:py-4 max-desktop:w-full"
+                      "px-4 max-laptop:px-8 max-laptop:py-4 max-laptop:w-full"
                     )}
                     style={{
                       color: isLightMode ? "#0F0F0F" : "#FFFFFF",
@@ -301,7 +304,7 @@ export const Nav = () => {
       <div className={"hidden"}>{renderLanguage(true)}</div>
       <div
         className={
-          "flex items-center max-desktop:grid max-desktop:grid-cols-2 max-desktop:space-x-0 max-desktop:gap-3 max-desktop:px-5 max-desktop:py-4 border-b-primary  max-desktop:border-b-[4px]"
+          "flex items-center max-laptop:grid max-laptop:grid-cols-2 max-laptop:space-x-0 max-laptop:gap-3 max-laptop:px-5 max-laptop:py-4 border-b-primary  max-laptop:border-b-[4px]"
         }
       >
         <a
@@ -327,7 +330,7 @@ export const Nav = () => {
 
         <a
           className={
-            "cursor-pointer w-6 h-6 relative flex items-center justify-center"
+            "cursor-pointer w-6 h-6 relative flex items-center justify-center max-laptop:ml-0"
           }
           style={{ marginLeft: "16px" }}
           target={"_blank"}
@@ -349,7 +352,7 @@ export const Nav = () => {
           />
         </a>
 
-        <div className={"max-desktop:hidden"} style={{ marginLeft: "16px" }}>
+        <div className={"max-laptop:hidden"} style={{ marginLeft: "16px" }}>
           {renderLanguage()}
         </div>
 
@@ -357,6 +360,7 @@ export const Nav = () => {
           href={"/whitepaper.pdf"}
           target={"_blank"}
           rel={"noopener noreferrer"}
+          className={"max-laptop:ml-0"}
           style={{ marginLeft: "16px" }}
         >
           <button
@@ -365,7 +369,7 @@ export const Nav = () => {
               "bg-[#2F2F31] rounded-xl",
               "text-[#FFFFFF] font-bold text-sm leading-[22px] text-center align-middle",
               "w-[80px] h-[42px]",
-              "max-desktop:w-full"
+              "max-laptop:w-full"
             )}
             style={{
               fontFamily: "Pretendard, sans-serif",
@@ -391,7 +395,7 @@ export const Nav = () => {
         <button
           onClick={handleBuyGocarClick}
           className={clsx(
-            "max-desktop:col-span-2",
+            "max-laptop:col-span-2 max-laptop:ml-0",
             "flex items-center justify-center gap-2",
             "bg-primary rounded-xl",
             "text-[#0F0F0F] font-bold text-sm leading-[22px] text-center align-middle",
@@ -424,7 +428,7 @@ export const Nav = () => {
         "rounded-2xl border-b border-neutral-60/20",
         "pt-3 px-6 pb-3",
         "flex items-center",
-        "max-desktop:max-w-[calc(100%-32px)] max-desktop:w-[calc(100%-32px)] max-desktop:mx-4 max-desktop:rounded-2xl max-desktop:border-b-0 max-desktop:bg-black max-desktop:backdrop-blur-none max-desktop:justify-between max-desktop:pt-4 max-desktop:px-4 max-desktop:pb-[19px]"
+        "max-laptop:max-w-[calc(100%-32px)] max-laptop:w-[calc(100%-32px)] max-laptop:mx-4 max-laptop:rounded-2xl max-laptop:border-b-0 max-laptop:bg-black max-laptop:backdrop-blur-none max-laptop:justify-between max-laptop:pt-4 max-laptop:px-4 max-laptop:pb-[19px]"
       )}
       style={{
         backgroundColor: isLightMode ? "white" : "rgba(7,20,25,0.8)",
@@ -438,9 +442,7 @@ export const Nav = () => {
               ? "/v2/zh-CN"
               : "/v2/ja"
         }
-        className={
-          "flex items-center flex-shrink-0 gap-2 max-desktop:gap-[6px]"
-        }
+        className={"flex items-center flex-shrink-0 gap-2 max-laptop:gap-[6px]"}
       >
         <Image
           src={
@@ -450,7 +452,7 @@ export const Nav = () => {
           title={"GOTCAR - Guardians Of The Car"}
           width={24}
           height={24}
-          className={"object-contain max-desktop:w-[18px] max-desktop:h-[18px]"}
+          className={"object-contain max-laptop:w-[18px] max-laptop:h-[18px]"}
           loading={"eager"}
           fetchPriority={"high"}
         />
@@ -464,23 +466,28 @@ export const Nav = () => {
           title={"GOTCAR - AI-Powered Mobility Ecosystem"}
           width={117}
           height={20}
-          className={"object-contain max-desktop:w-[88px] max-desktop:h-[15px]"}
+          className={"object-contain max-laptop:w-[88px] max-laptop:h-[15px]"}
           loading={"eager"}
           fetchPriority={"high"}
         />
       </NextLink>
       <div
-        className={"max-desktop:hidden flex-1"}
+        className={"max-laptop:hidden flex-1"}
         style={{ marginLeft: "40px" }}
       >
         {listNav}
       </div>
 
-      <div className={"max-desktop:hidden flex-shrink-0"}>{listTools}</div>
+      <div
+        className={"max-laptop:hidden flex-shrink-0"}
+        style={{ marginLeft: "20px" }}
+      >
+        {listTools}
+      </div>
 
       {/* 모바일: 언어 선택기 + 햄버거 메뉴 */}
       <div
-        className={"hidden max-desktop:flex items-center gap-4 flex-shrink-0"}
+        className={"hidden max-laptop:flex items-center gap-4 flex-shrink-0"}
       >
         <div className={"relative"}>{renderLanguage(true)}</div>
         <button
@@ -510,7 +517,7 @@ export const Nav = () => {
           <A />
           {/* 배경 오버레이 */}
           <div
-            className={"fixed inset-0 z-[40] max-desktop:block hidden"}
+            className={"fixed inset-0 z-[40] max-laptop:block hidden"}
             style={{
               backgroundColor: "transparent",
             }}
@@ -519,14 +526,15 @@ export const Nav = () => {
           {/* 모바일용 네비게이션 목록 */}
           <ul
             className={clsx(
-              "fixed z-[50] hidden max-desktop:block",
+              "fixed z-[50] hidden max-laptop:block",
               "top-[94px] flex flex-col"
             )}
             style={{
               // height: "376px",
-              width: "402px",
+              width: "calc(100vw - 32px)",
               maxWidth: "calc(100vw - 32px)",
               left: "16px",
+              right: "16px",
               borderRadius: "16px",
               boxShadow: "0px 0px 12px 0px rgba(28, 32, 33, 0.04)",
               gap: "0",

@@ -95,7 +95,7 @@ export const ReferralHistory = () => {
     <>
       <div
         className={
-          "w-[1312px] max-w-[1312px] max-desktop:w-full max-desktop:max-w-full"
+          "w-[1312px] max-w-[1312px] max-desktop:w-full max-laptop:w-full max-laptop:max-w-full"
         }
         style={{
           borderRadius: "24px",
@@ -105,7 +105,7 @@ export const ReferralHistory = () => {
         }}
       >
         <section
-          className={"max-desktop:w-full max-desktop:h-auto"}
+          className={"max-laptop:w-full max-laptop:h-auto"}
           style={{
             width: "100%",
             minHeight: "256px",
@@ -126,7 +126,7 @@ export const ReferralHistory = () => {
           >
             <div
               className={
-                "grid grid-cols-4 max-desktop:grid-cols-2 max-mobile:grid-cols-1 gap-4"
+                "grid grid-cols-4 max-laptop:grid-cols-2 max-mobile:grid-cols-1 gap-4"
               }
             >
               {columns.map((c) => (
@@ -184,7 +184,7 @@ export const ReferralHistory = () => {
       {wallet.referral && (
         <div
           className={
-            "w-[1312px] max-w-[1312px] max-desktop:w-full max-desktop:max-w-full mt-8"
+            "w-[1312px] max-w-[1312px] max-desktop:w-full max-laptop:w-full max-laptop:max-w-full mt-8"
           }
         >
           <div
