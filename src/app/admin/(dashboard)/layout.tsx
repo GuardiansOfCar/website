@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/sidebar";
 import { cookies } from "next/headers";
 import AdminProvider from "@/app/admin/(dashboard)/provider";
-import { decrypt } from "@/app/lib/session";
+import { decrypt } from "@/lib/session";
 import { Separator } from "@/components/ui/separator";
 import { ThemeProvider } from "@/app/admin/(dashboard)/contexts/theme-context";
 import { ThemeToggle } from "@/app/admin/(dashboard)/components/theme-toggle";

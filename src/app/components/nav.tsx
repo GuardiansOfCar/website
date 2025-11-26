@@ -46,12 +46,11 @@ export const Nav = () => {
     };
 
     if (langOpened) {
-      // mousedown 대신 click 사용 - 링크 클릭이 먼저 처리되도록
-      document.addEventListener("click", handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [langOpened]);
 
@@ -224,17 +223,17 @@ export const Nav = () => {
                 const currentSearch = searchParams.toString();
                 // pathname이 "/" 또는 빈 문자열일 경우 "/" 사용
                 const basePath = pathname || "/";
-                // 직접 locale prefix를 붙인 절대 경로 생성
-                const newHref = `/${chapter.key}${basePath}${currentSearch ? `?${currentSearch}` : ""}`;
+                const newHref = `${basePath}${currentSearch ? `?${currentSearch}` : ""}`;
 
                 return (
-                  <NextLink
+                  <IntlLink
                     onClick={() => {
                       setLangOpened(false);
                       setMenuOpen(false);
                     }}
                     key={chapter.key}
-                    href={newHref}
+                    href={newHref as any}
+                    locale={chapter.key as any}
                     className={clsx(
                       "flex text-left w-full py-3 text-body-1b hover:text-primary cursor-pointer transition-colors",
                       selected === chapter.key && "!text-primary",
@@ -248,7 +247,7 @@ export const Nav = () => {
                       {chapter.code}
                     </span>
                     {chapter.label}
-                  </NextLink>
+                  </IntlLink>
                 );
               })}
             </div>
@@ -395,7 +394,7 @@ export const Nav = () => {
       }}
     >
       <NextLink
-        href={`/${selected}`}
+        href={selected === "en" ? "en" : selected === "zh-CN" ? "zh-CN" : "ja"}
         className={"flex items-center flex-shrink-0 gap-2 max-laptop:gap-[6px]"}
       >
         <Image

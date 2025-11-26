@@ -1,25 +1,11 @@
 import { PropsWithChildren } from "react";
-import Head from "next/head";
-import Script from "next/script";
+import "./globals.css";
 
-export default function RootLayout(props: PropsWithChildren) {
+export default function V2RootLayout(props: PropsWithChildren) {
   return (
-    <>
-      <Head>
-        <Script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "GOTCAR",
-              url: "https://guardiansofthecar.com",
-              logo: "https://guardiansofthecar.com/images/gocar.png",
-            }),
-          }}
-        />
-      </Head>
-      {props.children}
-    </>
+    <html lang="en">
+      <body className="antialiased">{props.children}</body>
+    </html>
   );
 }
+

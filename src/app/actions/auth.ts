@@ -1,6 +1,6 @@
 "use server";
 
-import { createSession, deleteSession } from "@/app/lib/session";
+import { createSession, deleteSession } from "@/lib/session";
 import { API_BASE_URL } from "@/lib/constants";
 import { redirect } from "next/navigation";
 

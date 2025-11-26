@@ -2,7 +2,7 @@
 
 import { Popup } from "@/components/popup";
 import { Wallet } from "@/components/wallet";
-import { Button } from "@/components/button";
+import { ButtonRenewal } from "@/components/button-renewal";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useWallet } from "@/lib/use-wallet";
@@ -35,7 +35,7 @@ export const WalletManagePopup = () => {
     setisMobile(
       typeof window !== undefined
         ? /iPhone|iPad|iPod|Android/i.test(window.navigator.userAgent)
-        : false,
+        : false
     );
   }, []);
 
@@ -47,16 +47,54 @@ export const WalletManagePopup = () => {
             setConnect(false);
           }}
           title={t("home.presaleJoin2")}
+          titleAlign="center"
+          showCloseButton={false}
         >
           <div className={"flex flex-col space-y-3"}>
             {!isMobile && (
               <>
-                <p className={"text-center"}>{t("home.presaleJoin3")}</p>
-                <p className={"text-center"}>{t("home.presaleJoin4")}</p>
+                <p
+                  className={"text-center"}
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 400,
+                    fontSize: "15px",
+                    lineHeight: "22px",
+                    textAlign: "center",
+                    verticalAlign: "middle",
+                    color: "rgba(120, 121, 124, 1)",
+                  }}
+                >
+                  {t("home.presaleJoin3")}
+                </p>
+                <p
+                  className={"text-center"}
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 400,
+                    fontSize: "15px",
+                    lineHeight: "22px",
+                    textAlign: "center",
+                    verticalAlign: "middle",
+                    color: "rgba(120, 121, 124, 1)",
+                  }}
+                >
+                  {t("home.presaleJoin4")}
+                </p>
               </>
             )}
 
-            <div className={"flex items-center space-x-2 self-stretch pb-2"}>
+            <div
+              className={"flex items-center"}
+              style={{
+                width: "338px",
+                height: "54px",
+                borderRadius: "12px",
+                padding: "4px",
+                backgroundColor: "rgba(237, 240, 240, 1)",
+                gap: "4px",
+              }}
+            >
               {[
                 ["ETH", "eth.png", "ETH"],
                 ["SOL", "sol.png", "SOL"],
@@ -65,24 +103,40 @@ export const WalletManagePopup = () => {
                 <button
                   key={item[2]}
                   onClick={handleCoinClick(item[2] as any)}
-                  className={clsx(
-                    "flex items-center px-[30px] py-2 space-x-2 max-tablet:px-2 flex-1",
-                    wallet.network === item[2]
-                      ? "bg-neutral-0"
-                      : "bg-neutral-80",
-                  )}
+                  className={"flex items-center justify-center"}
+                  style={{
+                    width: wallet.network === item[2] ? "110px" : "auto",
+                    height: wallet.network === item[2] ? "46px" : "auto",
+                    borderRadius: wallet.network === item[2] ? "8px" : "0",
+                    padding: wallet.network === item[2] ? "12px" : "0",
+                    gap: wallet.network === item[2] ? "8px" : "0",
+                    backgroundColor:
+                      wallet.network === item[2]
+                        ? "rgba(255, 255, 255, 1)"
+                        : "transparent",
+                    boxShadow:
+                      wallet.network === item[2]
+                        ? "0px 0px 12px 0px rgba(0, 0, 0, 0.08)"
+                        : "none",
+                    transition: "all 0.2s",
+                    flex: wallet.network === item[2] ? "0 0 110px" : "1",
+                  }}
                 >
-                  <Image
-                    src={`/images/${item[1]}`}
-                    alt={item[2]}
-                    width={24}
-                    height={24}
-                  />
                   <span
-                    className={clsx(
-                      "text-body-3",
-                      wallet.network === item[2] && "text-neutral-100",
-                    )}
+                    style={{
+                      fontFamily: "Pretendard, sans-serif",
+                      fontWeight: wallet.network === item[2] ? 600 : 500,
+                      fontSize: "15px",
+                      lineHeight: "22px",
+                      letterSpacing: "-0.2px",
+                      textAlign: "center",
+                      verticalAlign: "middle",
+                      color:
+                        wallet.network === item[2]
+                          ? "rgba(0, 0, 0, 1)"
+                          : "rgba(93, 94, 96, 1)",
+                      textTransform: "uppercase",
+                    }}
                   >
                     {item[0]}
                   </span>
@@ -103,15 +157,31 @@ export const WalletManagePopup = () => {
             {!isMobile && <Wallet type={"phantom"} />}
             {!isMobile && <Wallet type={"trust"} />}
             <Wallet type={"metamask"} />
-            <Button
-              className={"!bg-neutral-40"}
+            <ButtonRenewal
               onClick={() => {
                 setCreate(true);
                 setConnect(false);
               }}
+              backgroundColor="rgba(224, 225, 229, 1)"
+              borderColor="rgba(120, 121, 124, 0.16)"
+              textColor="rgba(0, 0, 0, 1)"
+              width="100%"
+              height="52px"
             >
-              {t("home.presaleJoin5")}
-            </Button>
+              I Don't Have a Wallet
+            </ButtonRenewal>
+            <ButtonRenewal
+              onClick={() => {
+                setConnect(false);
+              }}
+              backgroundColor="rgba(47, 47, 49, 1)"
+              borderColor="rgba(70, 71, 73, 1)"
+              textColor="rgba(255, 255, 255, 1)"
+              width="100%"
+              height="52px"
+            >
+              Cancel
+            </ButtonRenewal>
           </div>
         </Popup>
       )}
@@ -122,10 +192,23 @@ export const WalletManagePopup = () => {
             setCreate(false);
           }}
           title={t("home.noWallet2")}
+          titleAlign="center"
+          showCloseButton={false}
         >
           <div className={"flex flex-col space-y-3"}>
             {isMobile && (
-              <p className={"text-body-3 text-center"}>
+              <p
+                className={"text-center"}
+                style={{
+                  fontFamily: "Pretendard, sans-serif",
+                  fontWeight: 400,
+                  fontSize: "15px",
+                  lineHeight: "22px",
+                  textAlign: "center",
+                  verticalAlign: "middle",
+                  color: "rgba(120, 121, 124, 1)",
+                }}
+              >
                 {t("home.noWallet3")}
                 <br />
                 <br />
@@ -137,7 +220,18 @@ export const WalletManagePopup = () => {
               </p>
             )}
             {!isMobile && (
-              <p className={"text-body-3 text-center"}>
+              <p
+                className={"text-center"}
+                style={{
+                  fontFamily: "Pretendard, sans-serif",
+                  fontWeight: 400,
+                  fontSize: "15px",
+                  lineHeight: "22px",
+                  textAlign: "center",
+                  verticalAlign: "middle",
+                  color: "rgba(120, 121, 124, 1)",
+                }}
+              >
                 Create a wallet and purchase GOTCAR tokens.
               </p>
             )}
@@ -150,14 +244,18 @@ export const WalletManagePopup = () => {
                 <Wallet create type={"metamask"} />
               </>
             )}
-            <Button
-              className={"!bg-neutral-40"}
+            <ButtonRenewal
               onClick={() => {
                 setCreate(false);
               }}
+              backgroundColor="rgba(47, 47, 49, 1)"
+              borderColor="rgba(70, 71, 73, 1)"
+              textColor="rgba(255, 255, 255, 1)"
+              width="100%"
+              height="52px"
             >
               CLOSE
-            </Button>
+            </ButtonRenewal>
           </div>
         </Popup>
       )}

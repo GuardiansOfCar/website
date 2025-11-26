@@ -1,30 +1,4 @@
 {
-  "chapter": {
-    "chapterFour1": "Chapter 4",
-    "chapterFour2": "Chapter 4: Guardians of the Car",
-    "chapterFour3": "With GOTCAR's AI and services, traffic accidents become a thing of the past, and drivers experience true safety. Those who embraced GOTCAR's vision became known as the Guardians of the Car. The Frog gazes at the sky and whispers, “This world is for you, my son.”",
-    "chapterMenu1": "Chapter 1",
-    "chapterMenu2": "Chapter 2",
-    "chapterMenu3": "Chapter 3",
-    "chapterMenu4": "Chapter 4",
-    "chapterOne1": "CHAPTER 1",
-    "chapterOne2": "Chapter 1 : A Tragic Loss, A New Mission",
-    "chapterOne3": "The Frog lived a joyful life with his beloved son. But one day, a tragic car accident took his son away. With over a million lives lost to traffic accidents each year, The Frog vowed, \"No one should ever experience this pain again.\"",
-    "chapterThree1": "CHAPTER 3",
-    "chapterThree2": "Chapter 3: The Revolution of Mobility – Guardians of the Car",
-    "chapterThree3": "Agent GOTCAR realizes that the greatest obstacle to accident prevention is the imbalance of information. To solve this, he establishes the Web3.0-based Guardians of the Car mobility network.",
-    "chapterThree4": "By enabling real-time data sharing between drivers and pedestrians, the network fosters a transparent and trustworthy mobility ecosystem. Through this system, anyone can contribute to a safer mobility environment and be rewarded for their efforts.",
-    "chapterTwo1": "CHAPTER 2",
-    "chapterTwo2": "Chapter 2: The Birth of the AI Guardian – Agent GOTCAR",
-    "chapterTwo3": "Amidst despair, the Frog awakens his genius and develops Agent GOTCAR, an AI-powered guardian dedicated to preventing traffic accidents.",
-    "chapterTwo4": "He creates groundbreaking technologies that provide drivers with essential real-time alerts:",
-    "chapterTwo5": "* Forward Collision Warnings",
-    "chapterTwo6": "* Alerts for Traffic Violations & Wrong-Way Drivers",
-    "chapterTwo7": "* Road Hazard Analysis Based on Weather Conditions",
-    "chapterTwo8": "Wearing his signature monocle, the Frog transforms into a true innovator, shaping the future where roads are safer and drivers navigate with confidence.",
-    "disclaimer": "*DISCLAIMER:",
-    "disclaimerT1": "This story through Chapter 1 to Chapter 4 is a work of fiction created to aid in understanding the project and has no relation to real persons or events."
-  },
   "faqs": {
     "a1": "GOTCAR CRYPTO PRESALE FAQS",
     "b1": "What is $GOTCAR Token?",
@@ -40,16 +14,16 @@
     "e2": "GOTCAR's AI Agent utilizes the Guardians' data to provide forward collision alerts, notifications for signal violations and wrong-way vehicles, and road hazard analysis based on weather conditions, ensuring the safety of both drivers and pedestrians.",
     "e3": "Furthermore, the AI Agent continuously learns from the Guardians' data, evolving autonomously to provide more precise and valuable services.",
     "f1": "When will Guardians of the Car launch its main features?",
-    "f2": "Guardians of the Car services will be launched in phases. Starting in 2025, the project will roll out staking and G2E as the initial features.",
+    "f2": "Guardians of the Car services will be launched in phases. Starting in 2025, the project will roll out staking, node services, and G2E as the initial features.",
     "f3": "Following this, more advanced AI-based safety and convenience services will be introduced to the world.",
     "g1": "When do I get my tokens?",
     "g2": "Once the presale ends and the token launches, you can instantly claim your $GOTCAR tokens.",
-    "g3": "Simply connect your wallet and click \"Claim\"— it’s that easy!",
-    "h1": "\"Stay Hungry. Stay Foolish. Stay Guardian.\" - Steve Guardian"
+    "g3": "Simply connect your wallet and click \"Claim\"— it's that easy!",
+    "h1": "\"Stay Hungry. Stay Foolish. Stay Profitable. Stay Guardian.\" - Steve Guardian"
   },
   "home": {
     "cw": "Select a network on the home screen and connect to your wallet.",
-    "animation1": "$GOTCAR Presale is heating up! Don’t Miss the Best Entry Before Price Increases! 💰🏎️💨",
+    "animation1": "$GOTCAR Presale is heating up! Don't Miss the Best Entry Before Price Increases! 💰🏎️💨",
     "buyToken1": "BUY $GOTCAR",
     "intro1": "BUY $GOTCAR, BECOME A GUARDIAN",
     "intro10": "The Road to Zero Accidents – Your personal JARVIS that aims to create a safer and smarter driving experience.",
@@ -104,19 +78,119 @@
     },
     "guardian": {
       "title": "Be the Guardian — Drive, Earn, Connect."
+    },
+    "experience": {
+      "title": "From Engineering to",
+      "titleHighlight": "Experience",
+      "subtitle": "Our Services",
+      "g2e": {
+        "title": "G2E (Guardians-To-Earn)",
+        "subtitle": "Data Contribution Rewards",
+        "description": "Earn tokens by contributing driving data and reporting road risks."
+      },
+      "aiRisk": {
+        "title": "AI Risk Alert",
+        "subtitle": "Real-time Risk Prediction",
+        "description": "Detects hazards such as collisions, wrong-way driving, and severe weather conditions."
+      },
+      "parking": {
+        "title": "Precision Parking",
+        "subtitle": "Indoor Parking Assistance",
+        "description": "Tracks vehicle position to locate empty spots and navigate within indoor areas."
+      },
+      "payment": {
+        "title": "Smart Payment",
+        "subtitle": "In-Vehicle Payment",
+        "description": "Supports payments for parking, charging, and insurance directly from the car."
+      },
+      "analytics": {
+        "title": "Mobility Analytics",
+        "subtitle": "B2B Data Insights",
+        "description": "Provides analytical mobility data services for city planners, traffic agencies, and OEMs."
+      }
+    },
+    "technologies": {
+      "title": "Engineering the",
+      "titleHighlight": "Next Mobility Era",
+      "subtitle": "Our Technologies",
+      "precision": {
+        "title": "Precision Positioning AI Engine",
+        "description": "Tracks your exact location with sub-meter accuracy, even inside tunnels or underground parking areas — making lane-level navigation possible."
+      },
+      "blockchain": {
+        "title": "Mobility Data Blockchain",
+        "description": "Uses blockchain to securely share driving data while keeping it anonymous — ensuring transparency and trust across the network."
+      },
+      "agent": {
+        "title": "AI Mobility Agent",
+        "description": "Analyzes driving behavior and road conditions to predict risks in real time and offer smart, personalized guidance for every driver."
+      }
+    },
+    "team": {
+      "title": "Meet the Team",
+      "intro1": "We are a team of innovators and engineers driving the next era of AI-powered mobility.",
+      "intro2": "With expertise across automotive technology, data intelligence, and blockchain, we are building the foundation for a safer, smarter, and more connected world on the road.",
+      "ceo": {
+        "name": "Dave Park",
+        "role": "Founder & CEO",
+        "desc1": "Former planner for Connected Car projects at LGU+, Hyundai, and Toyota.",
+        "desc2": "Expert in precise positioning technology and smart mobility system design.",
+        "desc3": "Serves as a review committee member at the National Land & Transport Data Forum."
+      },
+      "cto": {
+        "name": "Jr. Park",
+        "role": "Chief Technology Officer (CTO)",
+        "desc1": "Ph.D. in Nuclear Engineering from Seoul National University.",
+        "desc2": "Specialized in AI-driven CAN data analysis and vehicle positioning correction algorithms.",
+        "desc3": "Leads GOTCAR's AI Mobility Agent development and data intelligence strategy."
+      }
+    },
+    "hero": {
+      "title1": "Zero",
+      "title2": "Accidents.",
+      "title3": "Zero",
+      "title4": "Doubt.",
+      "description": "GOTCAR transforms real-time driving data into secure, private, and valuable digital assets. Powered by our AI Mobility Agent, it builds a safer, smarter, and decentralized mobility ecosystem — where every driver becomes a vital data node."
+    },
+    "g2e": {
+      "subtitle": "G2E App",
+      "title": "Experience the GOTCAR App.",
+      "description": "Drive, share, and earn in real time. Every mile you move helps build a connected, decentralized mobility ecosystem — and rewards you with tokens.",
+      "drive": {
+        "title": "Drive!",
+        "description": "Track your trips and gain real-time insights into your driving performance."
+      },
+      "earn": {
+        "title": "Earn!",
+        "description": "Share your driving data and get rewarded with points you can convert into tokens."
+      },
+      "connect": {
+        "title": "Connect!",
+        "description": "Join the decentralized mobility network where every driver becomes a Guardian."
+      }
+    },
+    "faq": {
+      "title": "FAQ",
+      "q1": "What makes GOTCAR unique?",
+      "a1": "By utilizing open data, GOTCAR builds an AI-based precision vehicle positioning service that provides 99% cost savings compared to existing autonomous or HD map technologies. Our goal is to make such advanced systems accessible to all vehicles and all environments, not limited to specific models or areas.",
+      "q2": "What is the utility of the $GOTCAR token?",
+      "a2": "$GOTCAR is used for mobility-related payments such as fueling, parking, charging, and insurance, as well as for G2E (Guardians-to-Earn) rewards, staking, and community incentives within the ecosystem.",
+      "q3": "How does GOTCAR use AI technology?",
+      "a3": "The AI Agent analyzes driving behavior, road hazards, and weather conditions in real time, providing lane-level navigation, indoor parking guidance, and accident alerts. It detects and warns drivers about risks that are difficult to see or react to visually.",
+      "q4": "When can I claim my $GOTCAR tokens?",
+      "a4": "You can claim your tokens immediately upon the official launch. The token launch and global CEX listings are planned between Q4 2025 and Q1 2026, with the claim period opening on the same schedule.",
+      "q5": "How do I stake $GOTCAR?",
+      "a5": "Staking begins by depositing $GOTCAR through the official website. Rewards vary depending on the amount and duration of your stake.",
+      "q6": "What is Guardians-to-Earn (G2E)?",
+      "a6": "Drivers contribute their driving data, which the AI analyzes to assess safety and accident risks. Participants are rewarded in tokens based on their contribution to traffic safety — making every driver a Guardian of the GOTCAR ecosystem.",
+      "q7": "What are GOTCAR's future partnership plans?",
+      "a7": "GOTCAR is pursuing integrations with global automakers such as Toyota, Hyundai, and Tesla, as well as navigation and payment platforms like Google and Apple. Our long-term goal is to deliver AI-powered safety and convenience services directly within real-world vehicle systems."
+    },
+    "footer": {
+      "copyright": "ⓒ 2025 GOTCAR. All Rights Reserved.",
+      "disclaimer1": "GOTCAR Token is not a security or investment product.",
+      "disclaimer2": "Cryptocurrency investments involve the risk of loss."
     }
-  },
-  "howToBuy": {
-    "a1": "How To Buy GOTCAR Token",
-    "b1": "Get Wallet",
-    "b2": "Do Guardians already have wallets? 🤔 But if not, try Trust Wallet or any popular wallet app.",
-    "c1": "Fund Wallet",
-    "c2": "Load ETH, SOL, BNB, or USDT to your wallet to swap for $GOTCAR tokens. Send a little extra ETH, SOL or BNB to pay for gas fees.",
-    "d1": "Buy & Stake",
-    "d2": "To purchase $GOTCAR, connect your wallet to the site. Select payment method and amount to buy. Confirm the transaction. Stake your $GOTCAR if you want that sweet rewards!",
-    "e1": "Token Supply",
-    "e2": "10,000,000,000 $GOTCAR",
-    "f1": "Dad, Bitcoin is old news... $GOTCAR is the new gold!"
   },
   "referral": {
     "a1": "MY INVITED",
@@ -124,23 +198,6 @@
     "a3": "Connect Wallet",
     "b1": "INVITE YOUR FRIENDS AND EARN 5%",
     "c1": "After Launch in $GOTCAR"
-  },
-  "roadmap": {
-    "a1": "Our Roadmap",
-    "b1": "Phase 1 : Audit & Presale",
-    "b2": "We will ensure the integrity of the token through an audit and promote $GOTCAR to Guardians worldwide with a global marketing campaign.",
-    "c1": "Phase 2 : Service Launch",
-    "c2": "This is not just another meme project. We are launching the following services to make a real impact and enhance the long-term sustainability of the $GOTCAR ecosystem",
-    "c3": ": AIAgent, G2E(Guardians to Earn), Staking",
-    "d1": "Phase 3 : $GOTCAR Token Launching!",
-    "d2": "We will proceed with token claims, launch, and listings on major global CEX.",
-    "d3": "Through continuous service launches and expanded marketing efforts, we will expand the world of GOTCAR Guardians",
-    "e1": "Phase 4: Building a Mobility Ecosystem Free from Accidents & Inconvenience",
-    "e2": "With the support of our Guardians, we will strive to establish an AI-driven accident prevention and vehicle data analysis system.",
-    "e3": "We aim to collaborate with global mobility leaders such as Tesla, Toyota, and Lamborghini to explore opportunities for safer and more convenient services for drivers.",
-    "f1": "DISCLAIMER:",
-    "g1": "Always do your own research. Nothing presented here constitutes financial advice. This is a meme coin, intended for fun and entertainment.",
-    "h1": "\"Guardians never hit the brakes! 🚀 Keep explore the ecosystem of $GOTCAR!\""
   },
   "staking": {
     "a1": "GOTCAR TOKEN STAKING",
@@ -191,11 +248,42 @@
   },
   "common": {
     "submit": "SUBMIT",
-    "cancel": "CANCEL"
+    "cancel": "CANCEL",
+    "languageSettings": "Language Settings",
+    "changeLanguage": "Change Language",
+    "openLanguageMenu": "Open language menu",
+    "closeLanguageMenu": "Close language menu",
+    "followX": "Follow GOTCAR on X (Twitter)",
+    "xAccount": "GOTCAR Official X (Twitter) Account",
+    "joinTelegram": "Join GOTCAR Telegram Community",
+    "telegramChannel": "GOTCAR Official Telegram Channel",
+    "openDocs": "Open GOTCAR documentation",
+    "docsTitle": "GOTCAR Documentation - Whitepaper",
+    "logoAlt": "GOTCAR Logo - AI-Powered Mobility Ecosystem",
+    "logoTitle": "GOTCAR - Guardians Of The Car",
+    "textLogoAlt": "GOTCAR - Guardians Of The Car",
+    "textLogoTitle": "GOTCAR - AI-Powered Mobility Ecosystem",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "openMenuTitle": "Open menu",
+    "closeMenuTitle": "Close menu"
   },
   "metadata": {
     "title": "GOTCAR Official Page",
     "openGraphTitle": "The first car meme coin",
-    "openGraphDescription": "GOTCAR - \"The first car meme coin\""
+    "openGraphDescription": "GOTCAR - \"The first car meme coin\"",
+    "home": {
+      "title": "GOTCAR - Guardians Of The Car | AI-Powered Mobility Ecosystem | Zero Accidents",
+      "description": "GOTCAR transforms real-time driving data into secure, private, and valuable digital assets. Powered by AI Mobility Agent, building a safer, smarter, and decentralized mobility ecosystem. Join the Guardians and earn rewards through G2E (Guardians-to-Earn).",
+      "keywords": "GOTCAR, Guardians Of The Car, AI mobility, autonomous driving, blockchain mobility, drive to earn, G2E, Guardians-to-Earn, cryptocurrency, meme coin, AI agent, AI Mobility Agent, vehicle positioning, precision positioning, traffic safety, smart mobility, Web3 mobility, decentralized mobility, car token, mobility ecosystem, road safety, AI navigation, mobility data, blockchain technology"
+    },
+    "staking": {
+      "title": "GOTCAR Staking | Earn Rewards by Staking Your $GOTCAR Tokens",
+      "description": "Stake your $GOTCAR tokens and earn dynamic rewards over three years. Join the GOTCAR staking program and maximize your earnings in the AI-powered mobility ecosystem."
+    },
+    "referral": {
+      "title": "GOTCAR Referral Program | Invite Friends and Earn 5% Bonus",
+      "description": "Invite your friends to join GOTCAR and earn 5% bonus rewards. Share your referral code and grow together in the Guardians of the Car community."
+    }
   }
 }

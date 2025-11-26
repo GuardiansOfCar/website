@@ -2,7 +2,7 @@ import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { decrypt } from "@/app/lib/session";
+import { decrypt } from "@/lib/session";
 import Negotiator from "negotiator";
 import { match } from "@formatjs/intl-localematcher";
 

@@ -1,534 +1,140 @@
-"use client";
+import type { Metadata } from "next";
+import Script from "next/script";
+import { StakingPageClient } from "./staking-client";
+import { readFileSync } from "fs";
 
-import { Main } from "@/components/main";
-import { useTranslations } from "next-intl";
-import { StakingSection } from "@/app/[locale]/staking/components/section";
-import { Button } from "@/components/button";
-import Image from "next/image";
-import { StakingSupply } from "@/app/[locale]/staking/components/supply";
-import { Popup } from "@/components/popup";
-import { useEffect, useState } from "react";
-import { API_BASE_URL } from "@/lib/constants";
-import { useWallet } from "@/lib/use-wallet";
-import { useRouter } from "@/i18n/navigation";
-import { useForm } from "react-hook-form";
-import {useSWRConfig} from "swr";
+type Props = {
+  params: Promise<{ locale: string }>;
+};
 
-export default function StakingPage() {
-  const t = useTranslations();
+// ISR: 1시간마다 재생성
+export const revalidate = 3600;
 
-  const [unstakePopup, setUnstakePopup] = useState(false);
-  const [buyPopup, setBuyPopup] = useState(false);
-  const [claimPopup, setClaimPopup] = useState(false);
-  const [stakePopup, setStakePopup] = useState(false);
+// 정적 경로 생성: 빌드 시 각 언어별로 페이지 생성
+export async function generateStaticParams() {
+  return [{ locale: "en" }, { locale: "zh-CN" }, { locale: "ja" }];
+}
 
-  const handleBuyPopupClose = () => {
-    setBuyPopup(false);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const baseUrl = "https://guardiansofthecar.com";
+
+  // 기본값 (영어)
+  let metadata = {
+    title: "GOTCAR Token Staking | My TOKEN STAKING Status | Earn Rewards",
+    description:
+      "Stake your GOTCAR tokens and earn rewards. View your staking status, staked balance, available balance, and estimated rewards. GOTCAR staking rewards are distributed over three years with dynamic reward rates.",
+    keywords:
+      "GOTCAR staking, token staking, crypto staking, GOTCAR rewards, staking rewards, blockchain staking, DeFi staking, cryptocurrency staking, token rewards, staking platform, GOTCAR token, earn crypto, staking balance, unstaking, claim rewards, staking status, staked balance, available balance, annual reward rate, pool rate, total staked, reward distribution, three year staking, dynamic rewards",
+    ogLocale: "en_US",
   };
 
-  const handleUnstakePopupClose = () => {
-    setUnstakePopup(false);
-  };
+  try {
+    const messages = JSON.parse(
+      readFileSync(`./messages/${locale}.json`, "utf-8")
+    );
+    if (messages.metadata?.staking) {
+      metadata = {
+        title: messages.metadata.staking.title || metadata.title,
+        description:
+          messages.metadata.staking.description || metadata.description,
+        keywords: messages.metadata.staking.keywords || metadata.keywords,
+        ogLocale:
+          locale === "zh-CN" ? "zh_CN" : locale === "ja" ? "ja_JP" : "en_US",
+      };
+    }
+  } catch (e) {
+    console.error("Error reading metadata for locale:", locale);
+  }
 
-  const handleStakePopupClose = () => {
-    setStakePopup(false);
-  };
-
-  const handleClaimPopupClose = () => {
-    setClaimPopup(false);
-  };
-
-  const wallet = useWallet();
-  const [status, setStatus] = useState({
-    stakedBalance: 0,
-    availableBalance: 0,
-  });
-
-  const [total, setTotal] = useState({
-    myPoolRate: "",
-    totalStaked: 0,
-  });
-
-  const [estimated, setEstimated] = useState({
-    id: 0,
-    annualRate: "",
-  });
-  
-  const { mutate } = useSWRConfig();
-
-  useEffect(() => {
-    mutate(["walletsInfo"]);
-    
-    fetch(`${API_BASE_URL}/v1/stakings/status/estimated`).then(async (res) => {
-      if (res.status === 200 || res.status === 201) {
-        const data = (await res.json()) as {
-          id: number;
-          annualRate: string;
-        };
-        setEstimated(data);
-      }
-    });
-  }, []);
-
-  const fetchStatueTotalMe = () => {
-    fetch(`${API_BASE_URL}/v1/stakings/status/total/me/${wallet.id}`).then(
-      async (res) => {
-        if (res.status === 200 || res.status === 201) {
-          const data = (await res.json()) as {
-            myPoolRate: string;
-            totalStaked: number;
-          };
-          setTotal(data);
-        }
+  return {
+    title: metadata.title,
+    description: metadata.description,
+    keywords: metadata.keywords ? metadata.keywords.split(", ") : [],
+    authors: [{ name: "GOTCAR Team" }],
+    creator: "GOTCAR",
+    publisher: "GOTCAR",
+    metadataBase: new URL(baseUrl),
+    openGraph: {
+      title: metadata.title,
+      description: metadata.description,
+      url:
+        locale === "en" ? `${baseUrl}/staking` : `${baseUrl}/${locale}/staking`,
+      siteName: "GOTCAR",
+      type: "website",
+      images: [
+        {
+          url: `${baseUrl}/images/og-image.png`,
+          width: 1200,
+          height: 630,
+          alt: metadata.title,
+        },
+      ],
+      locale: metadata.ogLocale,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: metadata.title,
+      description: metadata.description,
+      images: [`${baseUrl}/images/og-image.png`],
+    },
+    alternates: {
+      canonical:
+        locale === "en" ? `${baseUrl}/staking` : `${baseUrl}/${locale}/staking`,
+      languages: {
+        en: `${baseUrl}/staking`,
+        "zh-CN": `${baseUrl}/zh-CN/staking`,
+        ja: `${baseUrl}/ja/staking`,
       },
-    );
-  };
-
-  useEffect(() => {
-    if (!wallet.id) return;
-
-    fetchStatueTotalMe();
-  }, [wallet.id]);
-
-  const fetchStatusMe = () => {
-    fetch(
-      `${API_BASE_URL}/v1/stakings/status/me/${wallet.id}?userWalletId=${wallet.id}`,
-    ).then(async (res) => {
-      if (res.status === 200 || res.status === 201) {
-        const data = (await res.json()) as {
-          stakedBalance: number;
-          availableBalance: number;
-        };
-        setStatus(data);
-      }
-    });
-  };
-
-  useEffect(() => {
-    if (!wallet.id) return;
-
-    fetchStatusMe();
-  }, [wallet.id]);
-
-  const [reward, setReward] = useState("");
-
-  const fetchRewardMe = () => {
-    fetch(`${API_BASE_URL}/v1/stakings/reward/me/${wallet.id}`).then(
-      async (res) => {
-        if (res.status === 200 || res.status === 201) {
-          const data = (await res.json()) as {
-            reward: string;
-          };
-          setReward(data.reward);
-        }
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
       },
-    );
+    },
   };
-  useEffect(() => {
-    if (!wallet.id) return;
-    fetchRewardMe();
-  }, [wallet.id]);
-  const router = useRouter();
-  const stakeForm = useForm<{
-    amount: string;
-    otp: string;
-  }>({
-    defaultValues: { amount: "", otp: "" },
-  });
-  const unstakeForm = useForm<{
-    otp: string;
-  }>({
-    defaultValues: { otp: "" },
-  });
-  const claimForm = useForm<{
-    otp: string;
-  }>({
-    defaultValues: { otp: "" },
-  });
-  const stakeAmount = stakeForm.watch("amount");
-  const handleStakePurchaseClick = () => {
-    router.push(`/?amount=${stakeForm.getValues("amount")}`);
-  };
-  const handleStakeClick = () => {
-    if (!wallet.icoAddress) return alert("You can connect wallet first.");
-    setStakePopup(true);
-    handleBuyPopupClose();
-  };
+}
 
-  const handleAllClick = () => {
-    stakeForm.setValue("amount", status.availableBalance.toString());
-  };
+const stakingStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "FinancialProduct",
+  name: "GOTCAR Token Staking",
+  description:
+    "Stake GOTCAR tokens and earn rewards over three years with dynamic reward rates. View staking status, manage staked balance, and claim rewards.",
+  provider: {
+    "@type": "Organization",
+    name: "GOTCAR",
+    url: "https://guardiansofthecar.com",
+  },
+  category: "Cryptocurrency Staking",
+  termsOfService: "https://guardiansofthecar.com",
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.5",
+    reviewCount: "100",
+  },
+};
 
-  const handleWithdrawal = async () => {
-    const otpRes = await fetch(
-      `${API_BASE_URL}/v1/wallets/check/otp?icoWalletAddress=${wallet.icoAddress}&otpCode=${unstakeForm.getValues("otp")}`,
-    );
-    if (otpRes.status !== 200 && otpRes.status !== 201) {
-      return alert("Invalid otp code. please try again.");
-    }
-
-    const res = await fetch(`${API_BASE_URL}/v1/stakings/unstake/gocar`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userWalletId: wallet.id,
-        amount: status.stakedBalance,
-        otpCode: unstakeForm.getValues("otp"),
-      }),
-    });
-
-    if (res.status !== 200 && res.status !== 201) {
-      return alert("Failed to unstake your $GOTCAR. Please retry again.");
-    }
-
-    setUnstakePopup(false);
-    fetchRewardMe();
-    fetchStatueTotalMe();
-    fetchStatusMe();
-    unstakeForm.reset();
-  };
-
-  const handleClaimClick = async () => {
-    const otpRes = await fetch(
-      `${API_BASE_URL}/v1/wallets/check/otp?icoWalletAddress=${wallet.icoAddress}&otpCode=${claimForm.getValues("otp")}`,
-    );
-    if (otpRes.status !== 200 && otpRes.status !== 201) {
-      return alert("Invalid otp code. please try again.");
-    }
-
-    const res = await fetch(`${API_BASE_URL}/v1/stakings/claim/reward`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userWalletId: wallet.id,
-        amount: parseFloat(reward),
-        otpCode: claimForm.getValues("otp"),
-      }),
-    });
-
-    if (res.status !== 200 && res.status !== 201) {
-      return alert("Failed to unstake your $GOTCAR. Please retry again.");
-    }
-
-    setClaimPopup(false);
-    fetchRewardMe();
-    fetchStatueTotalMe();
-    fetchStatusMe();
-    claimForm.reset();
-  };
-
-  const handleStakeConfirmClick = async () => {
-    const otpRes = await fetch(
-      `${API_BASE_URL}/v1/wallets/check/otp?icoWalletAddress=${wallet.icoAddress}&otpCode=${stakeForm.getValues("otp")}`,
-    );
-    if (otpRes.status !== 200 && otpRes.status !== 201) {
-      return alert("Invalid otp code. please try again.");
-    }
-
-    const res = await fetch(`${API_BASE_URL}/v1/stakings`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        icoWalletAddress: wallet.icoAddress,
-        amount: Number.parseFloat(stakeAmount),
-        otpCode: stakeForm.getValues("otp"),
-      }),
-    });
-
-    if (res.status !== 200 && res.status !== 201) {
-      return alert("Failed to stake your $GOTCAR. Please retry again.");
-    }
-
-    setStakePopup(false);
-    fetchRewardMe();
-    fetchStatueTotalMe();
-    fetchStatusMe();
-
-    stakeForm.reset();
-  };
-
+export default async function StakingPage({ params }: Props) {
   return (
-    <div className={"bg-hero"}>
-      {buyPopup && (
-        <Popup onClose={handleBuyPopupClose} title={t("staking.c4")}>
-          <div className={"flex flex-col space-y-3"}>
-            <div className={"flex flex-col items-center"}>
-              <p className={"text-center text-body-3"}>{t("staking.c2")}</p>
-              <span className={"text-header-3"}>
-                {status.availableBalance.toLocaleString()}{" "}
-                <span className={"text-header-3 text-primary-10"}>$GOTCAR</span>
-              </span>
-            </div>
-
-            <div className={"space-y-1"}>
-              <div className={"flex items-center justify-between"}>
-                <p className={"text-body-3"}>{t("staking.c7")}</p>
-                <button onClick={handleAllClick} className={"text-body-3b"}>
-                  {t("staking.c6")}
-                </button>
-              </div>
-              <div className={"bg-[#CDE7E5] flex"}>
-                <input
-                  {...stakeForm.register("amount")}
-                  className={
-                    "py-3 px-2 bg-transparent text-body-2 rounded-none flex-1"
-                  }
-                />
-                <span className={"m-4 text-title-1 text-primary-0"}>
-                  $GOTCAR
-                </span>
-              </div>
-            </div>
-
-            <Button onClick={handleStakePurchaseClick}>
-              {t("staking.c8")}
-            </Button>
-            <Button disabled={!stakeAmount} onClick={handleStakeClick}>
-              {t("staking.c9")}
-            </Button>
-          </div>
-        </Popup>
-      )}
-
-      {unstakePopup && (
-        <Popup onClose={handleUnstakePopupClose} title={t("staking.b1")}>
-          <div className={"flex flex-col space-y-3"}>
-            <div className={"flex flex-col items-center"}>
-              <p className={"text-center text-body-3"}>{t("staking.c1")}</p>
-              <span className={"text-header-3"}>
-                {status.stakedBalance.toLocaleString()}{" "}
-                <span className={"text-header-3 text-primary-10"}>$GOTCAR</span>
-              </span>
-            </div>
-
-            <p className={"text-body-3 text-center"}>
-              {t("staking.b3")} {t("staking.b4")}
-            </p>
-
-            <div className={"space-y-1 w-full"}>
-              <p className={"text-body-3"}>otp Code</p>
-              <input
-                {...unstakeForm.register("otp")}
-                max={6}
-                maxLength={6}
-                type={"number"}
-                className={
-                  "py-3 px-2 bg-[#CDE7E5] text-body-2 rounded-none w-full"
-                }
-              />
-            </div>
-
-            <Button onClick={handleWithdrawal} disabled>
-              WITHDRAWAL
-            </Button>
-            <Button
-              onClick={handleUnstakePopupClose}
-              className={"!bg-neutral-40"}
-            >
-              {t("staking.c13")}
-            </Button>
-          </div>
-        </Popup>
-      )}
-
-      {stakePopup && (
-        <Popup onClose={handleStakePopupClose} title={t("staking.c9")}>
-          <div className={"flex flex-col space-y-3"}>
-            <div className={"flex flex-col items-center"}>
-              <p className={"text-center text-body-3"}>{t("staking.c2")}</p>
-              <span className={"text-header-3"}>
-                {stakeAmount.toLocaleString()}{" "}
-                <span className={"text-header-3 text-primary-10"}>$GOTCAR</span>
-              </span>
-            </div>
-
-            <p className={"text-body-3 text-center"}>{t("staking.c11")}</p>
-
-            <div className={"space-y-1 w-full"}>
-              <p className={"text-body-3"}>otp Code</p>
-              <input
-                {...stakeForm.register("otp")}
-                max={6}
-                maxLength={6}
-                type={"number"}
-                className={
-                  "py-3 px-2 bg-[#CDE7E5] text-body-2 rounded-none w-full"
-                }
-              />
-            </div>
-
-            <Button disabled={!stakeAmount} onClick={handleStakeConfirmClick}>
-              {t("staking.c12")}
-            </Button>
-            <Button
-              onClick={handleStakePopupClose}
-              className={"!bg-neutral-40"}
-            >
-              {t("staking.c13")}
-            </Button>
-          </div>
-        </Popup>
-      )}
-
-      {claimPopup && (
-        <Popup onClose={handleClaimPopupClose} title={t("staking.f3")}>
-          <div className={"flex flex-col space-y-3"}>
-            <div className={"flex flex-col items-center"}>
-              <span className={"text-header-3"}>
-                {reward}{" "}
-                <span className={"text-header-3 text-primary-10"}>$GOTCAR</span>
-              </span>
-            </div>
-
-            <p className={"text-body-3 text-center"}>{t("staking.f4")}</p>
-            <p className={"text-body-3 text-center text-[#CF1C1C]"}>
-              {t("staking.f5")}
-            </p>
-
-            <div className={"space-y-1 w-full"}>
-              <p className={"text-body-3"}>otp Code</p>
-              <input
-                {...claimForm.register("otp")}
-                max={6}
-                maxLength={6}
-                type={"number"}
-                className={
-                  "py-3 px-2 bg-[#CDE7E5] text-body-2 rounded-none w-full"
-                }
-              />
-            </div>
-
-            <Button disabled onClick={handleClaimClick}>
-              CLAIM
-            </Button>
-            <Button
-              onClick={handleClaimPopupClose}
-              className={"!bg-neutral-40"}
-            >
-              {t("staking.c13")}
-            </Button>
-          </div>
-        </Popup>
-      )}
-
-      <Main leftHref={"/faq"} rightHref={"/referral"}>
-        <div className={"flex flex-col space-y-8 items-start"}>
-          <div className={"flex flex-col space-y-4"}>
-            <h2 className={"text-header-2 text-primary"}>{t("staking.a1")}</h2>
-            <p className={"text-body-3 text-neutral-100"}>{t("staking.a2")}</p>
-          </div>
-
-          <div className={"grid grid-cols-4 gap-x-5 self-stretch max-tablet:flex max-tablet:flex-col max-tablet:space-y-4"}>
-            <StakingSection
-              title={t("staking.c1")}
-              headerBorder
-              description={
-                <>
-                  <span>
-                    {status.stakedBalance.toLocaleString()}{" "}
-                    <span className={"text-primary-10"}>$GOTCAR</span>
-                  </span>
-                </>
-              }
-            >
-              <div className={""}>
-                <span className={"text-body-3"}>{t("staking.c2")}</span>
-                <div className={"text-title-1b"}>
-                  <span>
-                    {status.availableBalance.toLocaleString()}{" "}
-                    <span className={"text-primary-10"}>$GOTCAR</span>
-                  </span>
-                </div>
-              </div>
-              <Button
-                onClick={() => {
-                  setBuyPopup(true);
-                }}
-              >
-                {t("staking.c3")}
-              </Button>
-            </StakingSection>
-
-            <StakingSection
-              title={t("staking.d1")}
-              headerBorder
-              description={
-                <>
-                  <span>{total.myPoolRate}</span>
-                </>
-              }
-            >
-              <div className={""}>
-                <span className={"text-body-3"}>{t("staking.d2")}</span>
-                <div className={"text-title-1b"}>
-                  <span>
-                    {total.totalStaked.toLocaleString()}{" "}
-                    <span className={"text-primary-10"}>$GOTCAR</span>
-                  </span>
-                </div>
-              </div>
-            </StakingSection>
-
-            <StakingSection
-              title={t("staking.e1")}
-              description={
-                <>
-                  <span>
-                    {estimated.annualRate}
-                    <span className={"text-label-1 ml-1"}>p/a</span>
-                  </span>
-                </>
-              }
-            >
-              <div className={"flex flex-col space-y-2"}>
-                <p className={"text-label-1"}>{t("staking.e2")}</p>
-                <p className={"text-label-1"}>{t("staking.e3")}</p>
-                <p className={"text-label-1"}>{t("staking.e4")}</p>
-              </div>
-            </StakingSection>
-
-            <StakingSection
-              title={t("staking.f1")}
-              description={
-                <>
-                  <span>
-                    {reward} <span className={"text-primary-10"}>$GOTCAR</span>
-                  </span>
-                </>
-              }
-            >
-              <Button
-                onClick={() => {
-                  setUnstakePopup(true);
-                }}
-              >
-                {t("staking.b2")}
-              </Button>
-              <Button
-                onClick={() => {
-                  setClaimPopup(false);
-                }}
-                disabled={true}
-              >
-                {t("staking.f2")}
-              </Button>
-            </StakingSection>
-          </div>
-
-          <div className={"flex self-stretch max-tablet:flex-col"}>
-            <div className={"flex-1 overflow-x-scroll scrollbar-custom max-tablet:pb-2"}>
-              <StakingSupply />
-            </div>
-            <div className={"w-[20%] max-tablet:w-auto"}>
-              <div
-                className={"w-[500px] h-[500px] absolute max-tablet:relative -translate-x-[30%] max-tablet:translate-x-0 max-tablet:w-full max-tablet:h-[100vw]"}
-              >
-                <Image src={"/images/staking.png"} alt={"staking"} fill />
-              </div>
-            </div>
-          </div>
-        </div>
-      </Main>
+    <div
+      style={{ backgroundColor: "#F9FBFB", minHeight: "100vh" }}
+      className="-mt-[94px]"
+    >
+      <Script
+        id="structured-data-staking"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(stakingStructuredData),
+        }}
+      />
+      <StakingPageClient />
     </div>
   );
 }

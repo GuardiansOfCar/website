@@ -2,45 +2,56 @@
 
 import { ReactNode, useState } from "react";
 import Image from "next/image";
-import clsx, { ClassValue } from "clsx";
 
 export const FaqSection = ({
   title,
   children,
-  onOpen,
-  open,
+  defaultOpened = false,
 }: {
+  defaultOpened?: boolean;
   children: ReactNode;
   title: string;
-  open: boolean;
-  onOpen: (open: boolean) => void;
 }) => {
+  const [open, setOpen] = useState(defaultOpened);
+
   const handleOpenClick = () => {
-    onOpen(!open);
+    setOpen((prev) => !prev);
   };
 
   return (
-    <section className={"border-neutral-0 border-4 flex flex-col"}>
+    <section
+      className={
+        "w-full max-w-[800px] border border-[#E0E1E5] rounded-2xl flex flex-col overflow-hidden"
+      }
+    >
       <button
         onClick={handleOpenClick}
-        className={clsx(
-          " py-4 px-3 flex items-center justify-between bg-neutral-100",
-          open && "!bg-primary-90",
-        )}
+        className={`py-4 px-5 flex items-center justify-between transition-colors ${
+          open ? "bg-[#F0F9FA]" : "bg-white hover:bg-[#F9FBFB]"
+        }`}
       >
-        <p className={"text-body-1b text-left mr-2"}>{title}</p>
+        <p
+          className={
+            "text-base md:text-lg font-bold text-left mr-2 text-[#0F0F0F]"
+          }
+          style={{ fontFamily: "Pretendard, sans-serif" }}
+        >
+          {title}
+        </p>
         <Image
           src={"/images/chervon-down-black.png"}
-          alt={"chervb"}
-          width={16}
-          height={16}
+          alt={"Toggle FAQ"}
+          width={20}
+          height={20}
+          className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`}
         />
       </button>
       {open && (
         <div
           className={
-            "border-t-4 border-neutral-0 py-4 px-5 text-body-3 bg-neutral-100"
+            "border-t border-[#E0E1E5] py-4 px-5 text-sm md:text-base text-[#525252] bg-white"
           }
+          style={{ fontFamily: "Pretendard, sans-serif" }}
         >
           {children}
         </div>
