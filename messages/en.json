@@ -193,7 +193,7 @@
     }
   },
   "referral": {
-    "a1": "MY INVITED",
+    "a1": "My Invitations",
     "a2": "Generate referral code",
     "a3": "Connect Wallet",
     "b1": "INVITE YOUR FRIENDS AND EARN 5%",
@@ -284,6 +284,11 @@
     "referral": {
       "title": "GOTCAR Referral Program | Invite Friends and Earn 5% Bonus",
       "description": "Invite your friends to join GOTCAR and earn 5% bonus rewards. Share your referral code and grow together in the Guardians of the Car community."
+    },
+    "faq": {
+      "title": "GOTCAR FAQ | Frequently Asked Questions | Crypto Presale Guide",
+      "description": "Find answers to frequently asked questions about GOTCAR, the first car meme coin with AI-powered mobility. Learn about $GOTCAR token, presale, staking, and the Guardians ecosystem.",
+      "keywords": "GOTCAR FAQ, crypto FAQ, presale FAQ, token FAQ, GOTCAR questions, car meme coin FAQ, AI mobility FAQ, blockchain FAQ, staking questions, G2E FAQ, Guardians FAQ, cryptocurrency guide"
     }
   }
 }

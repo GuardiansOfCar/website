@@ -284,6 +284,11 @@
     "referral": {
       "title": "GOTCAR推荐计划 | 邀请好友赚取5%奖励",
       "description": "邀请您的朋友加入GOTCAR，赚取5%的奖励。分享您的推荐码，与车之守护者社区一起成长。"
+    },
+    "faq": {
+      "title": "GOTCAR FAQ | 常见问题 | 加密预售指南",
+      "description": "查找关于GOTCAR的常见问题解答，这是首个具有AI驱动出行功能的汽车迷因币。了解$GOTCAR代币、预售、质押和守护者生态系统。",
+      "keywords": "GOTCAR FAQ, 加密货币FAQ, 预售FAQ, 代币FAQ, GOTCAR问题, 汽车迷因币FAQ, AI出行FAQ, 区块链FAQ, 质押问题, G2E FAQ, 守护者FAQ"
     }
   }
 }

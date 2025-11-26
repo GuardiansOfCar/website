@@ -3,8 +3,10 @@
 import { Main } from "@/components/main";
 import { ReferralHistory } from "@/app/[locale]/referral/components/history";
 import { CopyrightFooter } from "@/components/copyright-footer";
+import { useTranslations } from "next-intl";
 
 export function ReferralPageClient() {
+  const t = useTranslations();
   return (
     <div>
       <Main
@@ -37,7 +39,7 @@ export function ReferralPageClient() {
                 color: "#0F0F0F",
               }}
             >
-              My Invitations
+              {t("referral.a1")}
             </h1>
           </div>
 

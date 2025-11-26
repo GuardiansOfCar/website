@@ -12,12 +12,7 @@ export const revalidate = 3600;
 
 // 정적 경로 생성: 빌드 시 각 언어별로 페이지 생성
 export async function generateStaticParams() {
-  return [
-    { locale: "en" },
-    { locale: "zh-CN" },
-    { locale: "zh-TW" },
-    { locale: "ja" },
-  ];
+  return [{ locale: "en" }, { locale: "zh-CN" }, { locale: "ja" }];
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -104,7 +99,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         en: `${baseUrl}`,
         "zh-CN": `${baseUrl}/zh-CN`,
-        "zh-TW": `${baseUrl}/zh-TW`,
         ja: `${baseUrl}/ja`,
       },
     },

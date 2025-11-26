@@ -670,16 +670,7 @@ export function StakingPageClient() {
                   fontWeight: 700,
                 }}
               >
-                GOTCAR
-              </span>{" "}
-              <span
-                style={{
-                  color: "#00D6DD",
-                  fontFamily: "Pretendard, sans-serif",
-                  fontWeight: 700,
-                }}
-              >
-                Token Staking
+                {t("staking.a1")}
               </span>
             </h1>
           </div>
