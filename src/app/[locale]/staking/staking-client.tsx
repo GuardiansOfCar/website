@@ -1030,7 +1030,7 @@ export function StakingPageClient() {
                   verticalAlign: "middle",
                 }}
               >
-                Notice
+                {t("staking.notice.title")}
               </h2>
               <div
                 className={"h-0 border-t flex-1"}
@@ -1057,7 +1057,7 @@ export function StakingPageClient() {
                   color: "#5D5E60",
                 }}
               >
-                It may take{" "}
+                {t("staking.notice.p1")}
                 <span
                   style={{
                     fontFamily: "Pretendard, sans-serif",
@@ -1068,54 +1068,11 @@ export function StakingPageClient() {
                     verticalAlign: "middle",
                   }}
                 >
-                  7 days
-                </span>{" "}
-                for your tokens to be fully unstaked after you submit an unstake
-                request.
-                <br />
-                After the unstaking period ends, an{" "}
-                <span
-                  style={{
-                    fontFamily: "Pretendard, sans-serif",
-                    fontWeight: 700,
-                    fontSize: "15px",
-                    lineHeight: "22px",
-                    textAlign: "center",
-                    verticalAlign: "middle",
-                  }}
-                >
-                  additional processing time of up to 3 days
-                </span>{" "}
-                may be required for withdrawal completion.
-                <br />
-                <br />
-              </p>
-              <p
-                style={{
-                  fontFamily: "Pretendard, sans-serif",
-                  fontWeight: 400,
-                  fontSize: "15px",
-                  lineHeight: "22px",
-                  textAlign: "center",
-                  verticalAlign: "middle",
-                  color: "#5D5E60",
-                }}
-              >
-                Unstaking will become available{" "}
-                <span
-                  style={{
-                    fontFamily: "Pretendard, sans-serif",
-                    fontWeight: 700,
-                    fontSize: "15px",
-                    lineHeight: "22px",
-                    textAlign: "center",
-                    verticalAlign: "middle",
-                  }}
-                >
-                  after the official token launch
-                  <br />
+                  {t("staking.notice.p1_bold")}
                 </span>
-                . Please note that there may be{" "}
+                {t("staking.notice.p1_cont")}
+                <br />
+                {t("staking.notice.p2")}
                 <span
                   style={{
                     fontFamily: "Pretendard, sans-serif",
@@ -1126,10 +1083,9 @@ export function StakingPageClient() {
                     verticalAlign: "middle",
                   }}
                 >
-                  up to a 10-day difference
-                </span>{" "}
-                in withdrawal timing compared to users who did not stake their
-                tokens.
+                  {t("staking.notice.p2_bold")}
+                </span>
+                {t("staking.notice.p2_cont")}
                 <br />
                 <br />
               </p>
@@ -1144,12 +1100,50 @@ export function StakingPageClient() {
                   color: "#5D5E60",
                 }}
               >
-                This time window is designed to maintain network stability and
-                ensure a smooth token circulation process during the early phase
-                of the ecosystem.
+                {t("staking.notice.p3")}
+                <span
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 700,
+                    fontSize: "15px",
+                    lineHeight: "22px",
+                    textAlign: "center",
+                    verticalAlign: "middle",
+                  }}
+                >
+                  {t("staking.notice.p3_bold")}
+                </span>
+                {t("staking.notice.p3_cont")}
+                <span
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 700,
+                    fontSize: "15px",
+                    lineHeight: "22px",
+                    textAlign: "center",
+                    verticalAlign: "middle",
+                  }}
+                >
+                  {t("staking.notice.p3_bold2")}
+                </span>
+                {t("staking.notice.p3_cont2")}
                 <br />
-                We appreciate your patience and commitment as a Guardian
-                contributing to the strength of the GOTCAR network.
+                <br />
+              </p>
+              <p
+                style={{
+                  fontFamily: "Pretendard, sans-serif",
+                  fontWeight: 400,
+                  fontSize: "15px",
+                  lineHeight: "22px",
+                  textAlign: "center",
+                  verticalAlign: "middle",
+                  color: "#5D5E60",
+                }}
+              >
+                {t("staking.notice.p4")}
+                <br />
+                {t("staking.notice.p5")}
               </p>
             </div>
           </div>
