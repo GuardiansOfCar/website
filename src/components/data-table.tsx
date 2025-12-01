@@ -81,18 +81,18 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <div className={"flex items-center justify-between"}>
-        <h3 className={"text-lg font-bold"}>{title}</h3>
+      <div className={"flex flex-col md:flex-row items-start md:items-center justify-between gap-2"}>
+        {title && <h3 className={"text-base md:text-lg font-bold"}>{title}</h3>}
 
-        <div className={"flex items-center space-x-4"}>
-          {toolbar}
+        <div className={"flex flex-col md:flex-row items-stretch md:items-center gap-2 w-full md:w-auto"}>
+          {toolbar && <div className="w-full md:w-auto">{toolbar}</div>}
           {rowActionButtons && rowActionButtons.length > 0 && (
-            <div className={"flex items-center space-x-2"}>
+            <div className={"flex items-center gap-2 flex-wrap"}>
               {rowActionButtons.map((button, idx) => (
                 <Button
                   key={idx}
                   variant="default"
-                  className="bg-primary text-black hover:bg-primary/90 font-medium"
+                  className="bg-primary text-black hover:bg-primary/90 font-medium text-xs md:text-sm"
                   onClick={() => {
                     button
                       .onClick(
@@ -110,7 +110,7 @@ export function DataTable<TData, TValue>({
           )}
         </div>
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-md border overflow-x-auto">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

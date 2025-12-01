@@ -7,9 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default async function AdminLayout(props: PropsWithChildren) {
-  return (
-    <html lang={"ko"}>
-      <body className={`antialiased`}>{props.children}</body>
-    </html>
-  );
+  return <>{props.children}</>;
 }

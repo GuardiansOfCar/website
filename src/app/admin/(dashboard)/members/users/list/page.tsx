@@ -49,7 +49,7 @@ export default function AdminUsersListPage() {
 
   // 사용자 목록 데이터 요청
   const { data: listData, isLoading } = useSWR(
-    [`/v1/admin-members/members/user`, request],
+    [`/admin-members/members/user`, request],
     (args) => fetch(args[0], { query: args[1] })
   );
 
@@ -74,20 +74,28 @@ export default function AdminUsersListPage() {
   };
 
   return (
-    <main className={"mx-auto p-10 flex flex-col w-full space-y-6"}>
+    <main
+      className={
+        "mx-auto p-4 md:p-6 lg:p-10 flex flex-col w-full space-y-4 md:space-y-6"
+      }
+    >
       <div>
-        <p className="text-sm text-muted-foreground">회원 &gt; 회원 조회</p>
-        <h1 className={"text-2xl font-bold"}>조회</h1>
+        <p className="text-xs md:text-sm text-muted-foreground">
+          회원 &gt; 회원 조회
+        </p>
+        <h1 className={"text-xl md:text-2xl font-bold"}>조회</h1>
       </div>
       <Separator />
 
       {/* 검색 필터 섹션 */}
       <Card>
-        <CardContent className="p-6 space-y-4">
-          <div className="flex items-center space-x-4">
-            <span className="w-24 font-semibold">로그인 제공자</span>
+        <CardContent className="p-4 md:p-6 space-y-4">
+          <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+            <span className="w-full md:w-24 font-semibold text-sm shrink-0">
+              로그인 제공자
+            </span>
             <Select value={userProvider} onValueChange={setUserProvider}>
-              <SelectTrigger className="w-[280px]">
+              <SelectTrigger className="w-full md:w-[280px]">
                 <SelectValue placeholder="제공자 선택" />
               </SelectTrigger>
               <SelectContent>
@@ -98,10 +106,12 @@ export default function AdminUsersListPage() {
               </SelectContent>
             </Select>
           </div>
-          <div className="flex items-center space-x-4">
-            <span className="w-24 font-semibold">활성화 상태</span>
+          <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+            <span className="w-full md:w-24 font-semibold text-sm shrink-0">
+              활성화 상태
+            </span>
             <Select value={userStatus} onValueChange={setUserStatus}>
-              <SelectTrigger className="w-[280px]">
+              <SelectTrigger className="w-full md:w-[280px]">
                 <SelectValue placeholder="상태 선택" />
               </SelectTrigger>
               <SelectContent>
@@ -111,8 +121,10 @@ export default function AdminUsersListPage() {
               </SelectContent>
             </Select>
           </div>
-          <div className="flex items-center space-x-4">
-            <span className="w-24 font-semibold">검색</span>
+          <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+            <span className="w-full md:w-24 font-semibold text-sm shrink-0">
+              검색
+            </span>
             <Input
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
@@ -125,11 +137,17 @@ export default function AdminUsersListPage() {
               className="flex-1"
             />
           </div>
-          <div className="flex justify-end space-x-2 pt-2">
-            <Button variant="outline" onClick={handleReset}>
+          <div className="flex flex-col md:flex-row justify-end gap-2 pt-2">
+            <Button
+              variant="outline"
+              onClick={handleReset}
+              className="w-full md:w-auto"
+            >
               초기화
             </Button>
-            <Button onClick={handleSearch}>검색</Button>
+            <Button onClick={handleSearch} className="w-full md:w-auto">
+              검색
+            </Button>
           </div>
         </CardContent>
       </Card>

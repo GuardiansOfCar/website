@@ -34,6 +34,7 @@ export function StakingPageClient() {
 
   const handleStakePopupClose = () => {
     setStakePopup(false);
+    stakeForm.setValue("otp", ""); // OTP만 초기화
   };
 
   const handleClaimPopupClose = () => {
@@ -61,7 +62,7 @@ export function StakingPageClient() {
   useEffect(() => {
     mutate(["walletsInfo"]);
 
-    fetch(`${API_BASE_URL}/v1/stakings/status/estimated`).then(async (res) => {
+    fetch(`${API_BASE_URL}/stakings/status/estimated`).then(async (res) => {
       if (res.status === 200 || res.status === 201) {
         const data = (await res.json()) as {
           id: number;
@@ -73,7 +74,7 @@ export function StakingPageClient() {
   }, []);
 
   const fetchStatueTotalMe = () => {
-    fetch(`${API_BASE_URL}/v1/stakings/status/total/me/${wallet.id}`).then(
+    fetch(`${API_BASE_URL}/stakings/status/total/me/${wallet.id}`).then(
       async (res) => {
         if (res.status === 200 || res.status === 201) {
           const data = (await res.json()) as {
@@ -94,7 +95,7 @@ export function StakingPageClient() {
 
   const fetchStatusMe = () => {
     fetch(
-      `${API_BASE_URL}/v1/stakings/status/me/${wallet.id}?userWalletId=${wallet.id}`
+      `${API_BASE_URL}/stakings/status/me/${wallet.id}?userWalletId=${wallet.id}`
     ).then(async (res) => {
       if (res.status === 200 || res.status === 201) {
         const data = (await res.json()) as {
@@ -115,7 +116,7 @@ export function StakingPageClient() {
   const [reward, setReward] = useState("");
 
   const fetchRewardMe = () => {
-    fetch(`${API_BASE_URL}/v1/stakings/reward/me/${wallet.id}`).then(
+    fetch(`${API_BASE_URL}/stakings/reward/me/${wallet.id}`).then(
       async (res) => {
         if (res.status === 200 || res.status === 201) {
           const data = (await res.json()) as {
@@ -138,41 +139,64 @@ export function StakingPageClient() {
     defaultValues: { amount: "", otp: "" },
   });
   const unstakeForm = useForm<{
+    amount: string;
     otp: string;
   }>({
-    defaultValues: { otp: "" },
+    defaultValues: { amount: "", otp: "" },
   });
   const claimForm = useForm<{
+    amount: string;
     otp: string;
   }>({
-    defaultValues: { otp: "" },
+    defaultValues: { amount: "", otp: "" },
   });
   const stakeAmount = stakeForm.watch("amount");
 
   const handleStakeClick = () => {
     if (!wallet.icoAddress) return alert("You can connect wallet first.");
+
+    const amount = parseFloat(stakeForm.getValues("amount"));
+    if (!amount || amount <= 0) {
+      return alert("Please enter a valid amount to stake.");
+    }
+    if (amount > status.availableBalance) {
+      return alert("You cannot stake more than your available balance.");
+    }
+
     setStakePopup(true);
-    handleBuyPopupClose();
+    setBuyPopup(false); // stakeForm.reset()을 호출하지 않음
   };
 
   const handleAllClick = () => {
     stakeForm.setValue("amount", status.availableBalance.toString());
   };
 
+  const handleUnstakeAllClick = () => {
+    unstakeForm.setValue("amount", status.stakedBalance.toString());
+  };
+
   const handleWithdrawal = async () => {
+    const unstakeAmount = parseFloat(unstakeForm.getValues("amount"));
+    if (!unstakeAmount || unstakeAmount <= 0) {
+      return alert("Please enter a valid amount to unstake.");
+    }
+    if (unstakeAmount > status.stakedBalance) {
+      return alert("You cannot unstake more than your staked balance.");
+    }
+
     const otpRes = await fetch(
-      `${API_BASE_URL}/v1/wallets/check/otp?icoWalletAddress=${wallet.icoAddress}&otpCode=${unstakeForm.getValues("otp")}`
+      `${API_BASE_URL}/wallets/check/otp?icoWalletAddress=${wallet.icoAddress}&otpCode=${unstakeForm.getValues("otp")}`
     );
     if (otpRes.status !== 200 && otpRes.status !== 201) {
       return alert("Invalid otp code. please try again.");
     }
 
-    const res = await fetch(`${API_BASE_URL}/v1/stakings/unstake/gocar`, {
+    const res = await fetch(`${API_BASE_URL}/stakings/unstake/gocar`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         userWalletId: wallet.id,
-        amount: status.stakedBalance,
+        amount: unstakeAmount,
         otpCode: unstakeForm.getValues("otp"),
       }),
     });
@@ -188,26 +212,38 @@ export function StakingPageClient() {
     unstakeForm.reset();
   };
 
+  const handleClaimAllClick = () => {
+    claimForm.setValue("amount", reward);
+  };
+
   const handleClaimClick = async () => {
+    const claimAmount = parseFloat(claimForm.getValues("amount"));
+    if (!claimAmount || claimAmount <= 0) {
+      return alert("Please enter a valid amount to claim.");
+    }
+    if (claimAmount > parseFloat(reward)) {
+      return alert("You cannot claim more than your available rewards.");
+    }
+
     const otpRes = await fetch(
-      `${API_BASE_URL}/v1/wallets/check/otp?icoWalletAddress=${wallet.icoAddress}&otpCode=${claimForm.getValues("otp")}`
+      `${API_BASE_URL}/wallets/check/otp?icoWalletAddress=${wallet.icoAddress}&otpCode=${claimForm.getValues("otp")}`
     );
     if (otpRes.status !== 200 && otpRes.status !== 201) {
       return alert("Invalid otp code. please try again.");
     }
 
-    const res = await fetch(`${API_BASE_URL}/v1/stakings/claim/reward`, {
+    const res = await fetch(`${API_BASE_URL}/stakings/claim/reward`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         userWalletId: wallet.id,
-        amount: parseFloat(reward),
+        amount: claimAmount,
         otpCode: claimForm.getValues("otp"),
       }),
     });
 
     if (res.status !== 200 && res.status !== 201) {
-      return alert("Failed to unstake your $GOTCAR. Please retry again.");
+      return alert("Failed to claim your rewards. Please retry again.");
     }
 
     setClaimPopup(false);
@@ -219,13 +255,13 @@ export function StakingPageClient() {
 
   const handleStakeConfirmClick = async () => {
     const otpRes = await fetch(
-      `${API_BASE_URL}/v1/wallets/check/otp?icoWalletAddress=${wallet.icoAddress}&otpCode=${stakeForm.getValues("otp")}`
+      `${API_BASE_URL}/wallets/check/otp?icoWalletAddress=${wallet.icoAddress}&otpCode=${stakeForm.getValues("otp")}`
     );
     if (otpRes.status !== 200 && otpRes.status !== 201) {
       return alert("Invalid otp code. please try again.");
     }
 
-    const res = await fetch(`${API_BASE_URL}/v1/stakings`, {
+    const res = await fetch(`${API_BASE_URL}/stakings`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -480,6 +516,89 @@ export function StakingPageClient() {
                     color: "rgba(120, 121, 124, 1)",
                   }}
                 >
+                  Unstake Amount
+                </p>
+                <button
+                  onClick={handleUnstakeAllClick}
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 700,
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    verticalAlign: "middle",
+                    color: "rgba(0, 85, 107, 1)",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  ALL
+                </button>
+              </div>
+              <div
+                style={{
+                  width: "338px",
+                  height: "52px",
+                  borderRadius: "12px",
+                  border: unstakeForm.watch("amount")
+                    ? "1px solid rgba(0, 214, 221, 1)"
+                    : "1px solid rgba(224, 225, 229, 1)",
+                  display: "flex",
+                  alignItems: "center",
+                  paddingLeft: "16px",
+                  paddingRight: "16px",
+                  backgroundColor: "#FFFFFF",
+                }}
+              >
+                <input
+                  {...unstakeForm.register("amount")}
+                  type={"number"}
+                  placeholder="Enter amount"
+                  style={{
+                    flex: 1,
+                    border: "none",
+                    outline: "none",
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 400,
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    verticalAlign: "middle",
+                    color: "rgba(120, 121, 124, 1)",
+                    backgroundColor: "transparent",
+                  }}
+                  className="[&::placeholder]:text-[rgba(120,121,124,1)] [&::placeholder]:font-normal"
+                />
+                <span
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 700,
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    textAlign: "right",
+                    verticalAlign: "middle",
+                    color: "rgba(120, 121, 124, 1)",
+                  }}
+                >
+                  $GOTCAR
+                </span>
+              </div>
+            </div>
+
+            <div className={"space-y-1"}>
+              <div
+                className={"flex items-center justify-between"}
+                style={{ paddingLeft: "8px", paddingRight: "8px" }}
+              >
+                <p
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 400,
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    verticalAlign: "middle",
+                    color: "rgba(120, 121, 124, 1)",
+                  }}
+                >
                   OTP Code
                 </p>
               </div>
@@ -500,9 +619,10 @@ export function StakingPageClient() {
               >
                 <input
                   {...unstakeForm.register("otp")}
-                  max={6}
                   maxLength={6}
-                  type={"number"}
+                  type={"text"}
+                  inputMode="numeric"
+                  pattern="[0-9]*"
                   placeholder="Enter OTP code"
                   style={{
                     flex: 1,
@@ -522,8 +642,17 @@ export function StakingPageClient() {
             </div>
 
             <div className={"flex flex-col space-y-3"}>
-              <ButtonRenewal onClick={handleWithdrawal} disabled width="100%">
-                WITHDRAWAL
+              <ButtonRenewal
+                onClick={handleWithdrawal}
+                disabled={
+                  !unstakeForm.watch("amount") ||
+                  parseFloat(unstakeForm.watch("amount")) <= 0 ||
+                  !unstakeForm.watch("otp") ||
+                  String(unstakeForm.watch("otp")).length < 6
+                }
+                width="100%"
+              >
+                UNSTAKE
               </ButtonRenewal>
               <ButtonRenewal
                 onClick={handleUnstakePopupClose}
@@ -541,39 +670,129 @@ export function StakingPageClient() {
       )}
 
       {stakePopup && (
-        <Popup onClose={handleStakePopupClose} title="Stake $GOTCAR">
-          <div className={"flex flex-col space-y-6"}>
-            <div className={"flex flex-col items-center justify-center"}>
-              <span
-                className={"text-header-3"}
-                style={{ fontSize: "32px", lineHeight: "40px" }}
+        <Popup
+          onClose={handleStakePopupClose}
+          title="Stake $GOTCAR"
+          titleAlign="center"
+          showCloseButton={false}
+        >
+          <div className={"flex flex-col space-y-3"}>
+            <div className={"flex flex-col items-center"}>
+              <p
+                className={"text-center"}
+                style={{
+                  fontFamily: "Pretendard, sans-serif",
+                  fontWeight: 700,
+                  fontSize: "15px",
+                  lineHeight: "22px",
+                  textAlign: "center",
+                  verticalAlign: "middle",
+                  color: "rgba(93, 94, 96, 1)",
+                }}
               >
-                {Number(stakeAmount).toLocaleString()}{" "}
-                <span className={"text-[#0082A2]"}>$GOTCAR</span>
+                Staking Amount
+              </p>
+              <span
+                style={{
+                  fontFamily: "Pretendard, sans-serif",
+                  fontWeight: 700,
+                  fontSize: "20px",
+                  lineHeight: "28px",
+                  color: "rgba(15, 15, 15, 1)",
+                }}
+              >
+                {Number(stakeAmount).toLocaleString()}
+                <span
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 700,
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    color: "rgba(0, 130, 162, 1)",
+                    marginLeft: "8px",
+                  }}
+                >
+                  $GOTCAR
+                </span>
               </span>
             </div>
 
-            <p className={"text-body-3 text-center text-[#5D5E60]"}>
-              You’re about to stake the $GOCAR amount shown above. Do you want
+            <p
+              className={"text-center"}
+              style={{
+                fontFamily: "Pretendard, sans-serif",
+                fontWeight: 400,
+                fontSize: "15px",
+                lineHeight: "22px",
+                color: "rgba(120, 121, 124, 1)",
+              }}
+            >
+              You're about to stake the $GOTCAR amount shown above. Do you want
               to proceed?
             </p>
 
-            <div className={"space-y-1 w-full"}>
-              <p className={"text-body-3"}>otp Code</p>
-              <input
-                {...stakeForm.register("otp")}
-                max={6}
-                maxLength={6}
-                type={"number"}
-                className={
-                  "py-3 px-2 bg-[#CDE7E5] text-body-2 rounded-none w-full"
-                }
-              />
+            <div className={"space-y-1"}>
+              <div
+                className={"flex items-center justify-between"}
+                style={{ paddingLeft: "8px", paddingRight: "8px" }}
+              >
+                <p
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 400,
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    color: "rgba(120, 121, 124, 1)",
+                  }}
+                >
+                  OTP Code
+                </p>
+              </div>
+              <div
+                style={{
+                  width: "338px",
+                  height: "52px",
+                  borderRadius: "12px",
+                  border: stakeForm.watch("otp")
+                    ? "1px solid rgba(0, 214, 221, 1)"
+                    : "1px solid rgba(224, 225, 229, 1)",
+                  display: "flex",
+                  alignItems: "center",
+                  paddingLeft: "16px",
+                  paddingRight: "16px",
+                  backgroundColor: "#FFFFFF",
+                }}
+              >
+                <input
+                  {...stakeForm.register("otp")}
+                  maxLength={6}
+                  type={"text"}
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  placeholder="Enter OTP code"
+                  style={{
+                    flex: 1,
+                    border: "none",
+                    outline: "none",
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 400,
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    color: "rgba(120, 121, 124, 1)",
+                    backgroundColor: "transparent",
+                  }}
+                  className="[&::placeholder]:text-[rgba(120,121,124,1)] [&::placeholder]:font-normal"
+                />
+              </div>
             </div>
 
             <div className="flex flex-col space-y-3 w-full">
               <ButtonRenewal
-                disabled={!stakeAmount}
+                disabled={
+                  !stakeAmount ||
+                  !stakeForm.watch("otp") ||
+                  String(stakeForm.watch("otp")).length < 6
+                }
                 onClick={handleStakeConfirmClick}
                 width="100%"
               >
@@ -594,42 +813,248 @@ export function StakingPageClient() {
       )}
 
       {claimPopup && (
-        <Popup onClose={handleClaimPopupClose} title={t("staking.f3")}>
+        <Popup
+          onClose={handleClaimPopupClose}
+          title={t("staking.f3")}
+          titleAlign="center"
+          showCloseButton={false}
+        >
           <div className={"flex flex-col space-y-3"}>
             <div className={"flex flex-col items-center"}>
-              <span className={"text-header-3"}>
-                {reward}{" "}
-                <span className={"text-header-3 text-primary-10"}>$GOTCAR</span>
+              <p
+                className={"text-center"}
+                style={{
+                  fontFamily: "Pretendard, sans-serif",
+                  fontWeight: 700,
+                  fontSize: "15px",
+                  lineHeight: "22px",
+                  textAlign: "center",
+                  verticalAlign: "middle",
+                  color: "rgba(93, 94, 96, 1)",
+                }}
+              >
+                Available Rewards
+              </p>
+              <span
+                style={{
+                  fontFamily: "Pretendard, sans-serif",
+                  fontWeight: 700,
+                  fontSize: "20px",
+                  lineHeight: "28px",
+                  color: "rgba(15, 15, 15, 1)",
+                }}
+              >
+                {reward && !isNaN(parseFloat(reward))
+                  ? parseFloat(reward).toLocaleString()
+                  : "0"}
+                <span
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 700,
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    color: "rgba(0, 130, 162, 1)",
+                    marginLeft: "8px",
+                  }}
+                >
+                  $GOTCAR
+                </span>
               </span>
             </div>
 
-            <p className={"text-body-3 text-center"}>{t("staking.f4")}</p>
-            <p className={"text-body-3 text-center text-[#CF1C1C]"}>
+            <p
+              className={"text-center"}
+              style={{
+                fontFamily: "Pretendard, sans-serif",
+                fontWeight: 400,
+                fontSize: "15px",
+                lineHeight: "22px",
+                textAlign: "center",
+                verticalAlign: "middle",
+                color: "rgba(120, 121, 124, 1)",
+              }}
+            >
+              {t("staking.f4")}
+            </p>
+            <p
+              className={"text-center"}
+              style={{
+                fontFamily: "Pretendard, sans-serif",
+                fontWeight: 400,
+                fontSize: "15px",
+                lineHeight: "22px",
+                textAlign: "center",
+                verticalAlign: "middle",
+                color: "rgba(207, 28, 28, 1)",
+              }}
+            >
               {t("staking.f5")}
             </p>
 
-            <div className={"space-y-1 w-full"}>
-              <p className={"text-body-3"}>otp Code</p>
-              <input
-                {...claimForm.register("otp")}
-                max={6}
-                maxLength={6}
-                type={"number"}
-                className={
-                  "py-3 px-2 bg-[#CDE7E5] text-body-2 rounded-none w-full"
-                }
-              />
+            <div className={"space-y-1"}>
+              <div
+                className={"flex items-center justify-between"}
+                style={{ paddingLeft: "8px", paddingRight: "8px" }}
+              >
+                <p
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 400,
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    verticalAlign: "middle",
+                    color: "rgba(120, 121, 124, 1)",
+                  }}
+                >
+                  Claim Amount
+                </p>
+                <button
+                  onClick={handleClaimAllClick}
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 700,
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    verticalAlign: "middle",
+                    color: "rgba(0, 85, 107, 1)",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  ALL
+                </button>
+              </div>
+              <div
+                style={{
+                  width: "338px",
+                  height: "52px",
+                  borderRadius: "12px",
+                  border: claimForm.watch("amount")
+                    ? "1px solid rgba(0, 214, 221, 1)"
+                    : "1px solid rgba(224, 225, 229, 1)",
+                  display: "flex",
+                  alignItems: "center",
+                  paddingLeft: "16px",
+                  paddingRight: "16px",
+                  backgroundColor: "#FFFFFF",
+                }}
+              >
+                <input
+                  {...claimForm.register("amount")}
+                  type={"number"}
+                  placeholder="Enter amount"
+                  style={{
+                    flex: 1,
+                    border: "none",
+                    outline: "none",
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 400,
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    verticalAlign: "middle",
+                    color: "rgba(120, 121, 124, 1)",
+                    backgroundColor: "transparent",
+                  }}
+                  className="[&::placeholder]:text-[rgba(120,121,124,1)] [&::placeholder]:font-normal"
+                />
+                <span
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 700,
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    textAlign: "right",
+                    verticalAlign: "middle",
+                    color: "rgba(120, 121, 124, 1)",
+                  }}
+                >
+                  $GOTCAR
+                </span>
+              </div>
             </div>
 
-            <Button disabled onClick={handleClaimClick}>
-              CLAIM
-            </Button>
-            <Button
-              onClick={handleClaimPopupClose}
-              className={"!bg-neutral-40"}
-            >
-              {t("staking.c13")}
-            </Button>
+            <div className={"space-y-1"}>
+              <div
+                className={"flex items-center justify-between"}
+                style={{ paddingLeft: "8px", paddingRight: "8px" }}
+              >
+                <p
+                  style={{
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 400,
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    verticalAlign: "middle",
+                    color: "rgba(120, 121, 124, 1)",
+                  }}
+                >
+                  OTP Code
+                </p>
+              </div>
+              <div
+                style={{
+                  width: "338px",
+                  height: "52px",
+                  borderRadius: "12px",
+                  border: claimForm.watch("otp")
+                    ? "1px solid rgba(0, 214, 221, 1)"
+                    : "1px solid rgba(224, 225, 229, 1)",
+                  display: "flex",
+                  alignItems: "center",
+                  paddingLeft: "16px",
+                  paddingRight: "16px",
+                  backgroundColor: "#FFFFFF",
+                }}
+              >
+                <input
+                  {...claimForm.register("otp")}
+                  maxLength={6}
+                  type={"text"}
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  placeholder="Enter OTP code"
+                  style={{
+                    flex: 1,
+                    border: "none",
+                    outline: "none",
+                    fontFamily: "Pretendard, sans-serif",
+                    fontWeight: 400,
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    verticalAlign: "middle",
+                    color: "rgba(120, 121, 124, 1)",
+                    backgroundColor: "transparent",
+                  }}
+                  className="[&::placeholder]:text-[rgba(120,121,124,1)] [&::placeholder]:font-normal"
+                />
+              </div>
+            </div>
+
+            <div className={"flex flex-col space-y-3"}>
+              <ButtonRenewal
+                onClick={handleClaimClick}
+                disabled={
+                  !claimForm.watch("amount") ||
+                  parseFloat(claimForm.watch("amount")) <= 0 ||
+                  !claimForm.watch("otp") ||
+                  String(claimForm.watch("otp")).length < 6
+                }
+                width="100%"
+              >
+                CLAIM
+              </ButtonRenewal>
+              <ButtonRenewal
+                onClick={handleClaimPopupClose}
+                backgroundColor="rgba(47, 47, 49, 1)"
+                borderColor="rgba(70, 71, 73, 1)"
+                textColor="rgba(255, 255, 255, 1)"
+                width="100%"
+                height="52px"
+              >
+                {t("staking.c13")}
+              </ButtonRenewal>
+            </div>
           </div>
         </Popup>
       )}
@@ -986,9 +1411,9 @@ export function StakingPageClient() {
               </ButtonRenewal>
               <ButtonRenewal
                 onClick={() => {
-                  setClaimPopup(false);
+                  setClaimPopup(true);
                 }}
-                disabled={true}
+                disabled={!reward || parseFloat(reward) < 1}
                 backgroundColor="#2F2F31"
                 borderColor="rgba(70, 71, 73, 1)"
                 textColor="#FFFFFF"

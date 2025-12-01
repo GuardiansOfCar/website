@@ -28,7 +28,10 @@ import { DataTablePagination } from "@/components/data-table-pagination";
 function PointPaymentHistory({ userId }: { userId: string }) {
   const fetch = useAdminFetch();
   // SWR을 사용해 포인트 지급 내역을 불러옵니다.
-  const { data: listData, isLoading } = useSWR(`/v1/users/${userId}/points/payment`, (url) => fetch(url));
+  const { data: listData, isLoading } = useSWR(
+    `/users/${userId}/points/payment`,
+    (url) => fetch(url)
+  );
 
   return (
     <div className="py-4">
@@ -53,10 +56,13 @@ function PointPaymentHistory({ userId }: { userId: string }) {
 function DrivingHistory({ userId }: { userId: string }) {
   const fetch = useAdminFetch();
   // SWR을 사용해 주행 기록을 불러옵니다.
-  const { data: listData, isLoading } = useSWR(`/v1/users/${userId}/driving-history`, (url) => fetch(url));
+  const { data: listData, isLoading } = useSWR(
+    `/users/${userId}/driving-history`,
+    (url) => fetch(url)
+  );
   return (
-     <div className="py-4">
-       <DataTable
+    <div className="py-4">
+      <DataTable
         data={listData?.data ?? []}
         total={listData?.total || 0}
         columns={[
@@ -66,9 +72,9 @@ function DrivingHistory({ userId }: { userId: string }) {
           { accessorKey: "mode", header: "주행 모드" },
         ]}
       />
-       {/* 필요 시 페이지네이션 추가 */}
-     </div>
-  )
+      {/* 필요 시 페이지네이션 추가 */}
+    </div>
+  );
 }
 
 // ====================================================================
@@ -83,14 +89,17 @@ export default function MemberDetailPage() {
   // 계정 상태 관련 상태
   const [accountStatus, setAccountStatus] = useState("");
   const [reason, setReason] = useState("");
-  
+
   // 섹션 표시 상태
   const [showPointsPayment, setShowPointsPayment] = useState(false);
   const [showPointsExchange, setShowPointsExchange] = useState(false);
   const [showDrivingHistory, setShowDrivingHistory] = useState(false);
 
   // SWR로 기본 회원 정보 불러오기
-  const { data: memberData, isLoading } = useSWR(id ? `/v1/admin-members/members/user/${id}` : null, (url) => fetch(url));
+  const { data: memberData, isLoading } = useSWR(
+    id ? `/admin-members/members/user/${id}` : null,
+    (url) => fetch(url)
+  );
 
   // 데이터 로딩 완료 시 계정 상태 업데이트
   useEffect(() => {
@@ -102,12 +111,12 @@ export default function MemberDetailPage() {
   // 계정 상태 변경 핸들러
   const handleStatusUpdate = async () => {
     try {
-      await fetch(`/v1/admin-members/members/user/${id}`, {
-        method: 'PATCH',
-        data: { 
+      await fetch(`/admin-members/members/user/${id}`, {
+        method: "PATCH",
+        data: {
           user_id: parseInt(id),
-          is_active: accountStatus === "active" 
-        }
+          is_active: accountStatus === "active",
+        },
       });
       alert("계정 상태가 성공적으로 변경되었습니다.");
     } catch (error) {
@@ -121,13 +130,17 @@ export default function MemberDetailPage() {
   return (
     <main className="mx-auto flex w-full flex-col space-y-8 p-10">
       <div>
-        <p className="text-sm text-muted-foreground">회원 &gt; 회원 조회 &gt; 회원 정보 조회</p>
+        <p className="text-sm text-muted-foreground">
+          회원 &gt; 회원 조회 &gt; 회원 정보 조회
+        </p>
         <h1 className="text-2xl font-bold">회원 정보 조회</h1>
       </div>
-      
+
       {/* 기본 정보 */}
       <Card>
-        <CardHeader><CardTitle>회원 정보</CardTitle></CardHeader>
+        <CardHeader>
+          <CardTitle>회원 정보</CardTitle>
+        </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2">
             <div className="space-y-2">
@@ -144,16 +157,19 @@ export default function MemberDetailPage() {
             </div>
             <div className="space-y-2">
               <Label>가입일자</Label>
-              <Input value={dayjs(memberData?.created_at).format("YYYY.MM.DD") || ""} disabled />
+              <Input
+                value={dayjs(memberData?.created_at).format("YYYY.MM.DD") || ""}
+                disabled
+              />
             </div>
           </div>
         </CardContent>
       </Card>
-      
+
       {/* 포인트 지급 내역 */}
       <Card>
         <CardHeader>
-          <CardTitle 
+          <CardTitle
             className="cursor-pointer"
             onClick={() => setShowPointsPayment(!showPointsPayment)}
           >
@@ -170,7 +186,7 @@ export default function MemberDetailPage() {
       {/* 포인트 교환 내역 */}
       <Card>
         <CardHeader>
-          <CardTitle 
+          <CardTitle
             className="cursor-pointer"
             onClick={() => setShowPointsExchange(!showPointsExchange)}
           >
@@ -187,7 +203,7 @@ export default function MemberDetailPage() {
       {/* 주행 기록 */}
       <Card>
         <CardHeader>
-          <CardTitle 
+          <CardTitle
             className="cursor-pointer"
             onClick={() => setShowDrivingHistory(!showDrivingHistory)}
           >
@@ -203,12 +219,16 @@ export default function MemberDetailPage() {
 
       {/* 계정 상태 관리 */}
       <Card>
-        <CardHeader><CardTitle>계정 상태</CardTitle></CardHeader>
+        <CardHeader>
+          <CardTitle>계정 상태</CardTitle>
+        </CardHeader>
         <CardContent className="flex items-end space-x-4">
           <div className="flex-1 space-y-2">
             <Label>상태</Label>
             <Select value={accountStatus} onValueChange={setAccountStatus}>
-              <SelectTrigger><SelectValue/></SelectTrigger>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
               <SelectContent>
                 <SelectItem value="active">활성</SelectItem>
                 <SelectItem value="inactive">비활성</SelectItem>
@@ -222,9 +242,14 @@ export default function MemberDetailPage() {
           <Button onClick={handleStatusUpdate}>변경</Button>
         </CardContent>
       </Card>
-      
+
       <div className="pt-4 text-center">
-        <Button variant="outline" size="lg" className="w-full md:w-1/4" onClick={() => router.back()}>
+        <Button
+          variant="outline"
+          size="lg"
+          className="w-full md:w-1/4"
+          onClick={() => router.back()}
+        >
           뒤로
         </Button>
       </div>

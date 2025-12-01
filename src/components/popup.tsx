@@ -1,7 +1,7 @@
 "use client";
-import { ReactNode } from "react";
+import { ReactNode, useRef } from "react";
 import Image from "next/image";
-import { useClickAway, useLockBodyScroll } from "@uidotdev/usehooks";
+import { useLockBodyScroll } from "@uidotdev/usehooks";
 
 export const Popup = ({
   onClose,
@@ -16,9 +16,7 @@ export const Popup = ({
   titleAlign?: "left" | "center";
   showCloseButton?: boolean;
 }) => {
-  const ref = useClickAway<HTMLDivElement>(() => {
-    onClose();
-  });
+  const ref = useRef<HTMLDivElement>(null);
 
   useLockBodyScroll();
 
@@ -27,9 +25,19 @@ export const Popup = ({
       className={
         "fixed top-0 left-0 right-0 bottom-0 z-[300] flex items-center justify-center bg-[#0000007A]"
       }
+      onClick={(e) => {
+        // 배경(오버레이) 클릭 시에만 닫기
+        if (e.target === e.currentTarget) {
+          onClose();
+        }
+      }}
     >
       <div
         ref={ref}
+        onClick={(e) => {
+          // 팝업 내부 클릭 시 이벤트 전파 방지
+          e.stopPropagation();
+        }}
         style={{
           width: "370px",
           maxWidth: "1312px",
@@ -57,9 +65,7 @@ export const Popup = ({
         >
           <span
             className={
-              titleAlign === "center"
-                ? "flex-1 text-center"
-                : "text-body-1b"
+              titleAlign === "center" ? "flex-1 text-center" : "text-body-1b"
             }
             style={
               titleAlign === "center"
@@ -77,7 +83,10 @@ export const Popup = ({
             {title}
           </span>
           {showCloseButton && (
-            <button onClick={onClose} className={titleAlign === "center" ? "absolute right-0" : ""}>
+            <button
+              onClick={onClose}
+              className={titleAlign === "center" ? "absolute right-0" : ""}
+            >
               <Image
                 src={"/images/close.png"}
                 alt={"close"}

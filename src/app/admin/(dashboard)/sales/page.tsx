@@ -43,89 +43,89 @@ export default function AdminSales() {
   const pathname = usePathname();
 
   const listStakings = useSWR(
-    [`/v1/icosales/participate/list`, request],
+    [`/icosales/participate/list`, request],
     (args) => fetch(args[0], { query: args[1] }),
   );
 
-  const icoStatus = useSWR([`/v1/icosales/status`], (args) => fetch(args[0]));
+  const icoStatus = useSWR([`/icosales/status`], (args) => fetch(args[0]));
 
   const [text, setText] = useState(request.search || "");
 
   return (
-    <main className={"mx-auto p-10 flex flex-col w-full"}>
-      <div className={"flex items-center justify-between"}>
-        <h1 className={"text-2xl font-bold"}>ICO 관리</h1>
+    <main className={"mx-auto p-4 md:p-6 lg:p-10 flex flex-col w-full"}>
+      <div className={"flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2"}>
+        <h1 className={"text-xl md:text-2xl font-bold"}>ICO 관리</h1>
         <Link href={"/admin/sales/create"}>
-          <Button>등록</Button>
+          <Button className="w-full sm:w-auto">등록</Button>
         </Link>
       </div>
       <Separator className={"my-4"} />
 
-      <div className={"flex flex-col space-y-10"}>
-        <div className={"flex flex-col space-y-5"}>
-          <div className={"grid grid-cols-4 gap-5"}>
+      <div className={"flex flex-col space-y-6 md:space-y-10"}>
+        <div className={"flex flex-col space-y-4 md:space-y-5"}>
+          <div className={"grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5"}>
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">ETH</CardTitle>
+                <CardTitle className="text-xs md:text-sm font-medium">ETH</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">
+                <div className="text-lg md:text-2xl font-bold">
                   {(icoStatus.data?.icoEthAmount || "0").toLocaleString()}
                 </div>
               </CardContent>
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">SOL</CardTitle>
+                <CardTitle className="text-xs md:text-sm font-medium">SOL</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">
+                <div className="text-lg md:text-2xl font-bold">
                   {(icoStatus.data?.icoSolAmount || "0").toLocaleString()}
                 </div>
               </CardContent>
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">BNB</CardTitle>
+                <CardTitle className="text-xs md:text-sm font-medium">BNB</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">
+                <div className="text-lg md:text-2xl font-bold">
                   {(icoStatus.data?.icoBnbAmount || "0").toLocaleString()}
                 </div>
               </CardContent>
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">USDT</CardTitle>
+                <CardTitle className="text-xs md:text-sm font-medium">USDT</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">
+                <div className="text-lg md:text-2xl font-bold">
                   {(icoStatus.data?.icoUSDTAmount || "0").toLocaleString()}
                 </div>
               </CardContent>
             </Card>
           </div>
-          <div className={"grid grid-cols-2 gap-5"}>
+          <div className={"grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5"}>
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
+                <CardTitle className="text-xs md:text-sm font-medium">
                   지급 $GOTCAR
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">
+                <div className="text-lg md:text-2xl font-bold">
                   {(icoStatus.data?.doneGocarAmount || "0").toLocaleString()}
                 </div>
               </CardContent>
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
+                <CardTitle className="text-xs md:text-sm font-medium">
                   미지급 $GOTCAR
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">
+                <div className="text-lg md:text-2xl font-bold">
                   {(icoStatus.data?.notGocarAmount || "0").toLocaleString()}
                 </div>
               </CardContent>
@@ -181,7 +181,7 @@ export default function AdminSales() {
             {
               label: "정산",
               onClick: async (data: any[]) => {
-                fetch(`/v1/icosales/complete/settlements`, {
+                fetch(`/icosales/complete/settlements`, {
                   method: "POST",
                   data: {
                     ids: data.map((x) => x.userWalletId),
@@ -191,24 +191,23 @@ export default function AdminSales() {
             },
           ]}
           toolbar={
-            <>
-              <div className={"flex space-x-2 items-center"}>
-                <Input
-                  value={text}
-                  onChange={(e) => setText(e.target.value)}
-                  placeholder={"지갑 주소 입력"}
-                  className={"w-[400px]"}
-                />
-                <Button
-                  onClick={() => {
-                    router.push(
-                      `${pathname}?${stringify({ ...request, search: text, page: 1 })}`,
-                    );
-                  }}
-                >
-                  검색
-                </Button>
-              </div>
+            <div className="flex flex-col md:flex-row gap-2 items-stretch md:items-center w-full md:w-auto">
+              <Input
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                placeholder={"지갑 주소 입력"}
+                className={"w-full md:w-[300px] lg:w-[400px]"}
+              />
+              <Button
+                onClick={() => {
+                  router.push(
+                    `${pathname}?${stringify({ ...request, search: text, page: 1 })}`,
+                  );
+                }}
+                className="w-full md:w-auto"
+              >
+                검색
+              </Button>
               <Underkdollar
                 value={request.balanceSort}
                 setValue={(balanceSort) => {
@@ -233,7 +232,7 @@ export default function AdminSales() {
                   )
                 }
               >
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-full md:w-[180px]">
                   <SelectValue placeholder="판매 유형" />
                 </SelectTrigger>
                 <SelectContent>
@@ -243,7 +242,7 @@ export default function AdminSales() {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-            </>
+            </div>
           }
         />
         <DataTablePagination

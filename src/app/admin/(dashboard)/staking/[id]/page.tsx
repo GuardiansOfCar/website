@@ -27,15 +27,15 @@ export default function AdminStakingId() {
 
   const fetch = useAdminFetch();
 
-  const listStakings = useSWR([`/v1/stakings/history`, request], (args) =>
+  const listStakings = useSWR([`/stakings/history`, request], (args) =>
     fetch(args[0], { query: args[1] }),
   );
 
-  const stakingDetail = useSWR([`/v1/stakings/detail/${id}`], (args) =>
+  const stakingDetail = useSWR([`/stakings/detail/${id}`], (args) =>
     fetch(args[0]),
   );
 
-  const stakingTotal = useSWR([`/v1/stakings/status/total/me/${id}`], (args) =>
+  const stakingTotal = useSWR([`/stakings/status/total/me/${id}`], (args) =>
     fetch(args[0]),
   );
 

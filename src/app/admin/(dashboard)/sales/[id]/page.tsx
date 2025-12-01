@@ -41,7 +41,7 @@ export default function AdminSalesId() {
   const sid = sp.get("sid") as string;
 
   const rewardDetail = useSWR(
-    isCreate ? null : [`/v1/icosales/participate/detail/${sid}`],
+    isCreate ? null : [`/icosales/participate/detail/${sid}`],
     (args) => fetch(args[0]),
   );
 
@@ -78,7 +78,7 @@ export default function AdminSalesId() {
   const router = useRouter();
 
   const onSubmit = (data: Values) => {
-    fetch(`/v1/icosales/private/${isCreate ? "create" : "update"}`, {
+    fetch(`/icosales/private/${isCreate ? "create" : "update"}`, {
       method: isCreate ? "POST" : "PUT",
       data: {
         id: isCreate ? undefined : parseInt(sid as any),

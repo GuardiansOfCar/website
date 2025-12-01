@@ -26,21 +26,21 @@ export default function AdminReward() {
   const fetch = useAdminFetch();
   const router = useRouter();
 
-  const listStakings = useSWR([`/v1/rewards/list`, request], (args) =>
+  const listStakings = useSWR([`/rewards/list`, request], (args) =>
     fetch(args[0], { query: args[1] }),
   );
 
   return (
-    <main className={"mx-auto p-10 flex flex-col w-full"}>
-      <div className={"flex items-center justify-between"}>
-        <h1 className={"text-2xl font-bold"}>보너스 요율 관리</h1>
+    <main className={"mx-auto p-4 md:p-6 lg:p-10 flex flex-col w-full"}>
+      <div className={"flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2"}>
+        <h1 className={"text-xl md:text-2xl font-bold"}>보너스 요율 관리</h1>
         <Link href={"/admin/reward/create"}>
-          <Button>등록</Button>
+          <Button className="w-full sm:w-auto">등록</Button>
         </Link>
       </div>
       <Separator className={"my-4"} />
 
-      <div className={"flex flex-col space-y-10"}>
+      <div className={"flex flex-col space-y-6 md:space-y-10"}>
         <DataTable
           onRowClick={(x) => router.push(`/admin/reward/${(x as any).id}`)}
           title={""}

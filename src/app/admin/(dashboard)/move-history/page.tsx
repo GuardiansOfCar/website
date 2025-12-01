@@ -52,7 +52,10 @@ export default function DrivingHistoryPage() {
     // undefined가 아닌 값만 추가 (서버에서 빈값은 '전체'로 처리)
     if (urlParams.start_date) params.start_date = urlParams.start_date;
     if (urlParams.end_date) params.end_date = urlParams.end_date;
-    if (urlParams.active_time_minutes && parseInt(urlParams.active_time_minutes) > 0) {
+    if (
+      urlParams.active_time_minutes &&
+      parseInt(urlParams.active_time_minutes) > 0
+    ) {
       params.active_time_minutes = parseInt(urlParams.active_time_minutes);
     }
     if (urlParams.day_of_week && parseInt(urlParams.day_of_week) > 0) {
@@ -88,7 +91,7 @@ export default function DrivingHistoryPage() {
 
   // 주행 기록 데이터 요청
   const { data: listData, isLoading } = useSWR(
-    [`/v1/admin-move-history/list`, request],
+    [`/admin-move-history/list`, request],
     (args) => fetch(args[0], { query: args[1] })
   );
 
@@ -130,12 +133,12 @@ export default function DrivingHistoryPage() {
   };
 
   return (
-    <main className="mx-auto flex w-full flex-col space-y-6 p-10 bg-white dark:bg-black">
+    <main className="mx-auto flex w-full flex-col space-y-4 md:space-y-6 p-4 md:p-6 lg:p-10 bg-white dark:bg-black">
       <div>
-        <p className="text-sm text-muted-foreground dark:text-gray-400">
+        <p className="text-xs md:text-sm text-muted-foreground dark:text-gray-400">
           주행 데이터
         </p>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">
           조회
         </h1>
       </div>
@@ -143,79 +146,90 @@ export default function DrivingHistoryPage() {
 
       {/* 검색 필터 섹션 */}
       <Card>
-        <CardContent className="p-6">
-          <div className="grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2">
+        <CardContent className="p-4 md:p-6">
+          <div className="grid grid-cols-1 gap-x-4 md:gap-x-8 gap-y-4 md:grid-cols-2">
             {/* 주행 날짜 필터 */}
-            <div className="flex items-center space-x-2">
-              <span className="w-24 shrink-0 font-semibold">주행 날짜</span>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant={"outline"}
-                    className={cn(
-                      "w-[280px] justify-start text-left font-normal",
-                      !date && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {date?.from ? (
-                      date.to ? (
-                        <>
-                          {dayjs(date.from).format("YYYY-MM-DD")} -{" "}
-                          {dayjs(date.to).format("YYYY-MM-DD")}
-                        </>
+            <div className="flex flex-col md:flex-row md:items-center gap-2 md:col-span-2">
+              <span className="w-full md:w-24 shrink-0 font-semibold text-sm">
+                주행 날짜
+              </span>
+              <div className="flex flex-col md:flex-row gap-2 flex-1">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "w-full md:w-[280px] justify-start text-left font-normal",
+                        !date && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {date?.from ? (
+                        date.to ? (
+                          <>
+                            {dayjs(date.from).format("YYYY-MM-DD")} -{" "}
+                            {dayjs(date.to).format("YYYY-MM-DD")}
+                          </>
+                        ) : (
+                          dayjs(date.from).format("YYYY-MM-DD")
+                        )
                       ) : (
-                        dayjs(date.from).format("YYYY-MM-DD")
-                      )
-                    ) : (
-                      <span>날짜 선택</span>
-                    )}
+                        <span>날짜 선택</span>
+                      )}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="range"
+                      selected={date}
+                      onSelect={setDate}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+                <div className="flex items-center flex-wrap gap-1">
+                  <Button
+                    variant={!date ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => setDate(undefined)}
+                    className="text-xs"
+                  >
+                    전체
                   </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="range"
-                    selected={date}
-                    onSelect={setDate}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-              <div className="flex items-center space-x-1">
-                <Button
-                  variant={!date ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setDate(undefined)}
-                >
-                  전체
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setDate({ from: new Date(), to: new Date() })}
-                >
-                  오늘
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setDatePreset("week", 1)}
-                >
-                  1주일
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setDatePreset("month", 1)}
-                >
-                  1개월
-                </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() =>
+                      setDate({ from: new Date(), to: new Date() })
+                    }
+                    className="text-xs"
+                  >
+                    오늘
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setDatePreset("week", 1)}
+                    className="text-xs"
+                  >
+                    1주일
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setDatePreset("month", 1)}
+                    className="text-xs"
+                  >
+                    1개월
+                  </Button>
+                </div>
               </div>
             </div>
-            <div></div> {/* 그리드 레이아웃을 위한 빈 공간 */}
             {/* 주행 시간, 주행 요일 필터 */}
-            <div className="flex items-center space-x-2">
-              <span className="w-24 shrink-0 font-semibold">활성 시간(분) 이하</span>
+            <div className="flex flex-col md:flex-row md:items-center gap-2">
+              <span className="w-full md:w-24 shrink-0 font-semibold text-sm">
+                활성 시간(분) 이하
+              </span>
               <Input
                 type="number"
                 value={activeTimeMinutes || ""}
@@ -223,16 +237,18 @@ export default function DrivingHistoryPage() {
                   setActiveTimeMinutes(parseInt(e.target.value) || 0)
                 }
                 placeholder="최소 활성 시간"
-                className="w-[120px]"
+                className="w-full md:w-[120px]"
               />
             </div>
-            <div className="flex items-center space-x-2">
-              <span className="w-24 shrink-0 font-semibold">주행 요일</span>
+            <div className="flex flex-col md:flex-row md:items-center gap-2">
+              <span className="w-full md:w-24 shrink-0 font-semibold text-sm">
+                주행 요일
+              </span>
               <Select
                 value={dayOfWeek.toString()}
                 onValueChange={(value) => setDayOfWeek(parseInt(value))}
               >
-                <SelectTrigger>
+                <SelectTrigger className="w-full md:w-auto">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -248,10 +264,12 @@ export default function DrivingHistoryPage() {
               </Select>
             </div>
             {/* 주행 방법, 회원 이름 필터 */}
-            <div className="flex items-center space-x-2">
-              <span className="w-24 shrink-0 font-semibold">주행 방법</span>
+            <div className="flex flex-col md:flex-row md:items-center gap-2">
+              <span className="w-full md:w-24 shrink-0 font-semibold text-sm">
+                주행 방법
+              </span>
               <Select value={moveMethod} onValueChange={setMoveMethod}>
-                <SelectTrigger>
+                <SelectTrigger className="w-full md:w-auto">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -263,10 +281,12 @@ export default function DrivingHistoryPage() {
                 </SelectContent>
               </Select>
             </div>
-            <div className="flex items-center space-x-2">
-              <span className="w-24 shrink-0 font-semibold">승인 상태</span>
+            <div className="flex flex-col md:flex-row md:items-center gap-2">
+              <span className="w-full md:w-24 shrink-0 font-semibold text-sm">
+                승인 상태
+              </span>
               <Select value={status} onValueChange={setStatus}>
-                <SelectTrigger>
+                <SelectTrigger className="w-full md:w-auto">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -277,8 +297,10 @@ export default function DrivingHistoryPage() {
                 </SelectContent>
               </Select>
             </div>
-            <div className="flex items-center space-x-2">
-              <span className="w-24 shrink-0 font-semibold">회원 이름</span>
+            <div className="flex flex-col md:flex-row md:items-center gap-2">
+              <span className="w-full md:w-24 shrink-0 font-semibold text-sm">
+                회원 이름
+              </span>
               <Input
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
@@ -288,14 +310,21 @@ export default function DrivingHistoryPage() {
                   }
                 }}
                 placeholder="회원 이름으로 검색"
+                className="flex-1"
               />
             </div>
           </div>
-          <div className="mt-6 flex justify-end space-x-2">
-            <Button variant="outline" onClick={handleReset}>
+          <div className="mt-4 md:mt-6 flex flex-col md:flex-row justify-end gap-2">
+            <Button
+              variant="outline"
+              onClick={handleReset}
+              className="w-full md:w-auto"
+            >
               초기화
             </Button>
-            <Button onClick={handleSearch}>검색</Button>
+            <Button onClick={handleSearch} className="w-full md:w-auto">
+              검색
+            </Button>
           </div>
         </CardContent>
       </Card>
@@ -313,7 +342,7 @@ export default function DrivingHistoryPage() {
               handleSearch();
             }}
           >
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-full md:w-[180px]">
               <SelectValue placeholder="정렬" />
             </SelectTrigger>
             <SelectContent>
@@ -352,18 +381,23 @@ export default function DrivingHistoryPage() {
             cell: ({ row }) => {
               const status = row.original.status;
               const statusLabels = {
-                'Pending': '대기',
-                'Approved': '승인',
-                'Rejected': '거절'
+                Pending: "대기",
+                Approved: "승인",
+                Rejected: "거절",
               };
               const statusColors = {
-                'Pending': 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300',
-                'Approved': 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
-                'Rejected': 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
+                Pending:
+                  "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
+                Approved:
+                  "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
+                Rejected:
+                  "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300",
               };
-              
+
               return (
-                <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColors[status as keyof typeof statusColors] || 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300'}`}>
+                <span
+                  className={`px-2 py-1 rounded-full text-xs font-medium ${statusColors[status as keyof typeof statusColors] || "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300"}`}
+                >
                   {statusLabels[status as keyof typeof statusLabels] || status}
                 </span>
               );

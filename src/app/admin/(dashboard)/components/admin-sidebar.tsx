@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   Sidebar,
   SidebarContent,
@@ -20,6 +20,7 @@ import {
   SidebarSeparator,
 } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { logout } from "@/app/actions/auth";
 import {
@@ -39,6 +40,10 @@ import {
   TrendingUp,
   History,
   Target,
+  Wallet,
+  Coins,
+  ArrowRightLeft,
+  ListOrdered,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -52,6 +57,11 @@ const sidebarNav = [
         title: "스테이킹 관리",
         url: "/admin/staking",
         icon: Target,
+      },
+      {
+        title: "출금 관리",
+        url: "/admin/withdrawal",
+        icon: Wallet,
       },
       {
         title: "리퍼럴 관리",
@@ -114,6 +124,33 @@ const sidebarNav = [
     icon: Car,
   },
   {
+    title: "포인트 관리",
+    icon: Coins,
+    children: [
+      {
+        title: "포인트 지급 설정",
+        url: "/admin/points/settings",
+        icon: Settings,
+      },
+      {
+        title: "포인트 지급 및 교환 내역",
+        icon: ArrowRightLeft,
+        children: [
+          {
+            title: "포인트 지급 내역 조회",
+            url: "/admin/points/grant-history",
+            icon: ListOrdered,
+          },
+          {
+            title: "포인트 교환 내역 조회",
+            url: "/admin/points/exchange-history",
+            icon: History,
+          },
+        ],
+      },
+    ],
+  },
+  {
     title: "공지사항",
     icon: FileText,
     children: [
@@ -147,6 +184,26 @@ const sidebarNav = [
   },
 ];
 
+// 메뉴 아이템에서 모든 URL을 재귀적으로 수집하는 함수
+function collectUrls(item: any): string[] {
+  const urls: string[] = [];
+  if (item.url) {
+    urls.push(item.url);
+  }
+  if (item.children) {
+    item.children.forEach((child: any) => {
+      urls.push(...collectUrls(child));
+    });
+  }
+  return urls;
+}
+
+// 현재 경로가 메뉴 아이템의 하위 URL에 해당하는지 확인
+function isPathInBranch(pathname: string, item: any): boolean {
+  const urls = collectUrls(item);
+  return urls.some((url) => pathname === url || pathname.startsWith(url + "/"));
+}
+
 // 중첩된 메뉴 아이템의 내용만 렌더링하는 컴포넌트 (li 태그 없이)
 function RecursiveMenuItemContent({
   item,
@@ -158,7 +215,7 @@ function RecursiveMenuItemContent({
   const hasChildren = item.children && item.children.length > 0;
   const currentPath = item.url;
   const isActive = pathname === currentPath;
-  const isActiveBranch = pathname.startsWith(currentPath);
+  const isActiveBranch = isPathInBranch(pathname, item);
   const [isOpen, setIsOpen] = useState(isActiveBranch);
   const Icon = item.icon;
 
@@ -180,10 +237,10 @@ function RecursiveMenuItemContent({
           )}
         >
           <div className="flex items-center gap-2">
-            {Icon && <Icon className="h-4 w-4" />}
-            <span className="truncate">{item.title}</span>
+            {Icon && <Icon className="h-4 w-4 flex-shrink-0" />}
+            <span className="whitespace-nowrap text-sm">{item.title}</span>
           </div>
-          <div className="transition-transform duration-200">
+          <div className="transition-transform duration-200 flex-shrink-0">
             {isOpen ? (
               <ChevronDown className="h-4 w-4" />
             ) : (
@@ -210,10 +267,10 @@ function RecursiveMenuItemContent({
       isActive={isActive}
       className="transition-all duration-200 hover:bg-sidebar-accent/50 text-gray-700 dark:text-[#B4B5B1] hover:bg-gray-100 dark:hover:bg-gray-800"
     >
-      <a href={currentPath} className="flex items-center gap-2">
-        {Icon && <Icon className="h-4 w-4" />}
-        <span className="truncate">{item.title}</span>
-      </a>
+      <Link href={currentPath} className="flex items-center gap-2">
+        {Icon && <Icon className="h-4 w-4 flex-shrink-0" />}
+        <span className="whitespace-nowrap text-sm">{item.title}</span>
+      </Link>
     </SidebarMenuButton>
   );
 }
@@ -229,7 +286,7 @@ function RecursiveMenuItem({
   const hasChildren = item.children && item.children.length > 0;
   const currentPath = item.url;
   const isActive = pathname === currentPath;
-  const isActiveBranch = pathname.startsWith(currentPath);
+  const isActiveBranch = isPathInBranch(pathname, item);
   // ICO 관리 메뉴는 기본적으로 열려있도록 설정
   const [isOpen, setIsOpen] = useState(
     isActiveBranch || item.title === "ICO 관리"

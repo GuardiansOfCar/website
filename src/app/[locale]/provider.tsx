@@ -66,18 +66,18 @@ export const Updater = () => {
     walletStore.address && walletStore.network ? ["walletsInfo"] : null,
     () =>
       fetch(
-        `${API_BASE_URL}/v1/wallets/info?icoWalletAddress=${walletStore.address}&icoNetwork=${walletStore.network}`,
+        `${API_BASE_URL}/wallets/info?icoWalletAddress=${walletStore.address}&icoNetwork=${walletStore.network}`
       ).then((r) => r.json()),
     {
       onSuccess: (data) => {
         if (data.walletId) {
           otpStore.setState(
-            data.isRegisteredOtp ? "registered" : "unregistered",
+            data.isRegisteredOtp ? "registered" : "unregistered"
           );
           walletStore.setInfo(data);
         }
       },
-    },
+    }
   );
 
   return null;
@@ -100,7 +100,7 @@ export const OtpPopup = () => {
     if (!data.code)
       return alert("Please enter your valid OTP code with 6 digits.");
 
-    const res = await fetch(`${API_BASE_URL}/v1/wallets/update`, {
+    const res = await fetch(`${API_BASE_URL}/wallets/update`, {
       headers: { "Content-Type": "application/json" },
       method: "PUT",
       body: JSON.stringify({

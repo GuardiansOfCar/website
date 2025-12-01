@@ -10,7 +10,7 @@ export async function logout() {
 }
 
 export async function login(data: any) {
-  const res = await fetch(`${API_BASE_URL}/v1/auth/login/admin`, {
+  const res = await fetch(`${API_BASE_URL}/auth/login/admin`, {
     headers: { "Content-Type": "application/json" },
     method: "POST",
     body: JSON.stringify({

@@ -21,7 +21,7 @@ export default function MemberCreatePage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  
+
   // 비밀번호 보이기/숨기기 상태
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -40,19 +40,19 @@ export default function MemberCreatePage() {
       return;
     }
 
-    const payload = { 
-      nickname, 
-      email, 
-      password 
+    const payload = {
+      nickname,
+      email,
+      password,
     };
 
     try {
-      await fetch("/v1/admin-members/members/user", { 
-        method: "POST", 
-        data: payload 
-      }); 
+      await fetch("/admin-members/members/user", {
+        method: "POST",
+        data: payload,
+      });
       alert("회원 계정이 성공적으로 생성되었습니다.");
-      router.push("/admin/members/users"); 
+      router.push("/admin/members/users");
     } catch (error) {
       console.error("회원 계정 생성 실패:", error);
       alert("계정 생성에 실패했습니다.");
@@ -60,20 +60,22 @@ export default function MemberCreatePage() {
   };
 
   return (
-    <main className="mx-auto flex w-full flex-col space-y-6 p-10">
+    <main className="mx-auto flex w-full flex-col space-y-4 md:space-y-6 p-4 md:p-6 lg:p-10">
       <div>
-        <p className="text-sm text-muted-foreground">회원 &gt; 회원 계정 생성</p>
-        <h1 className="text-2xl font-bold">회원 계정 생성</h1>
+        <p className="text-xs md:text-sm text-muted-foreground">
+          회원 &gt; 회원 계정 생성
+        </p>
+        <h1 className="text-xl md:text-2xl font-bold">회원 계정 생성</h1>
       </div>
       <Separator />
 
       <form onSubmit={handleSubmit}>
         <Card>
           <CardHeader>
-            <CardTitle>회원 정보</CardTitle>
+            <CardTitle className="text-base md:text-lg">회원 정보</CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2">
+          <CardContent className="p-4 md:p-6">
+            <div className="grid grid-cols-1 gap-x-4 md:gap-x-8 gap-y-4 md:gap-y-6 md:grid-cols-2">
               {/* 회원 이름 */}
               <div className="space-y-2">
                 <Label htmlFor="nickname">회원 이름</Label>
@@ -114,7 +116,11 @@ export default function MemberCreatePage() {
                   className="absolute bottom-1 right-1 h-7 w-7"
                   onClick={() => setShowPassword((prev) => !prev)}
                 >
-                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
                 </Button>
               </div>
 
@@ -135,7 +141,11 @@ export default function MemberCreatePage() {
                   className="absolute bottom-1 right-1 h-7 w-7"
                   onClick={() => setShowConfirmPassword((prev) => !prev)}
                 >
-                  {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  {showConfirmPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
                 </Button>
               </div>
             </div>
@@ -143,11 +153,17 @@ export default function MemberCreatePage() {
         </Card>
 
         {/* 등록/취소 버튼 */}
-        <div className="mt-8 grid grid-cols-2 gap-4">
-          <Button type="button" variant="outline" size="lg" onClick={() => router.back()}>
+        <div className="mt-6 md:mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+          <Button
+            type="button"
+            variant="outline"
+            size="lg"
+            onClick={() => router.back()}
+            className="w-full sm:w-auto"
+          >
             취소
           </Button>
-          <Button type="submit" size="lg">
+          <Button type="submit" size="lg" className="w-full sm:w-auto">
             등록
           </Button>
         </div>

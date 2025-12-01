@@ -48,17 +48,17 @@ export default function AdminManagerCreatePage() {
       return;
     }
 
-    const payload = { 
-      nickname, 
-      email, 
-      password, 
-      role 
+    const payload = {
+      nickname,
+      email,
+      password,
+      role,
     };
 
     try {
-      await fetch("/v1/admin-members/members/manager", { 
-        method: "POST", 
-        data: payload 
+      await fetch("/admin-members/members/manager", {
+        method: "POST",
+        data: payload,
       });
       alert("관리자 계정이 성공적으로 생성되었습니다.");
       router.push("/admin/members/managers");
@@ -69,21 +69,23 @@ export default function AdminManagerCreatePage() {
   };
 
   return (
-    <main className="mx-auto flex w-full flex-col space-y-6 p-10">
+    <main className="mx-auto flex w-full flex-col space-y-4 md:space-y-6 p-4 md:p-6 lg:p-10">
       <div>
-        <p className="text-sm text-muted-foreground">관리자 &gt; 관리자 생성</p>
-        <h1 className="text-2xl font-bold">관리자 생성</h1>
+        <p className="text-xs md:text-sm text-muted-foreground">
+          관리자 &gt; 관리자 생성
+        </p>
+        <h1 className="text-xl md:text-2xl font-bold">관리자 생성</h1>
       </div>
       <Separator />
 
-      <form onSubmit={handleSubmit} className="space-y-8">
+      <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
         {/* 관리자 정보 섹션 */}
         <Card>
           <CardHeader>
-            <CardTitle>관리자 정보</CardTitle>
+            <CardTitle className="text-base md:text-lg">관리자 정보</CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2">
+          <CardContent className="p-4 md:p-6">
+            <div className="grid grid-cols-1 gap-x-4 md:gap-x-8 gap-y-4 md:gap-y-6 md:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="nickname">관리자 이름</Label>
                 <Input
@@ -121,7 +123,11 @@ export default function AdminManagerCreatePage() {
                   className="absolute bottom-1 right-1 h-7 w-7"
                   onClick={() => setShowPassword((prev) => !prev)}
                 >
-                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
                 </Button>
               </div>
 
@@ -141,7 +147,11 @@ export default function AdminManagerCreatePage() {
                   className="absolute bottom-1 right-1 h-7 w-7"
                   onClick={() => setShowConfirmPassword((prev) => !prev)}
                 >
-                  {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  {showConfirmPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
                 </Button>
               </div>
             </div>
@@ -151,9 +161,9 @@ export default function AdminManagerCreatePage() {
         {/* 관리자 역할 섹션 */}
         <Card>
           <CardHeader>
-            <CardTitle>관리자 역할</CardTitle>
+            <CardTitle className="text-base md:text-lg">관리자 역할</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-4 md:p-6">
             <div className="space-y-2">
               <Label htmlFor="role">관리자 역할</Label>
               <Select value={role} onValueChange={setRole}>
@@ -170,11 +180,17 @@ export default function AdminManagerCreatePage() {
         </Card>
 
         {/* 등록/취소 버튼 */}
-        <div className="grid grid-cols-2 gap-4">
-          <Button type="button" variant="outline" size="lg" onClick={() => router.back()}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+          <Button
+            type="button"
+            variant="outline"
+            size="lg"
+            onClick={() => router.back()}
+            className="w-full sm:w-auto"
+          >
             취소
           </Button>
-          <Button type="submit" size="lg">
+          <Button type="submit" size="lg" className="w-full sm:w-auto">
             등록
           </Button>
         </div>

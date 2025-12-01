@@ -72,7 +72,7 @@ export default function DrivingHistoryDetailPage() {
 
   // 주행 기록 상세 데이터 요청
   const { data: historyData, isLoading } = useSWR(
-    [`/v1/admin-move-history/detail/${historyId}`],
+    [`/admin-move-history/detail/${historyId}`],
     (args) => fetch(args[0])
   );
 
@@ -146,7 +146,7 @@ export default function DrivingHistoryDetailPage() {
       }
 
       // API 호출
-      const response = await fetch(`/v1/admin-move-history/approve/${historyId}`, {
+      const response = await fetch(`/admin-move-history/approve/${historyId}`, {
         method: "POST",
         data: requestData,
       });

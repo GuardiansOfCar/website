@@ -37,10 +37,10 @@ export default function AdminManagerEditPage() {
   // 비밀번호 보이기/숨기기 상태
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  
+
   // SWR을 사용하여 기존 관리자 데이터 불러오기
   const { data: adminData, isLoading } = useSWR(
-    id ? `/v1/admin-members/members/manager/${id}` : null, 
+    id ? `/admin-members/members/manager/${id}` : null,
     (url) => fetch(url)
   );
 
@@ -76,9 +76,9 @@ export default function AdminManagerEditPage() {
     }
 
     try {
-      await fetch(`/v1/admin-members/members/manager/${id}`, { 
-        method: "PATCH", 
-        data: payload 
+      await fetch(`/admin-members/members/manager/${id}`, {
+        method: "PATCH",
+        data: payload,
       });
       alert("관리자 정보가 성공적으로 수정되었습니다.");
       router.push("/admin/members/managers");
@@ -93,7 +93,9 @@ export default function AdminManagerEditPage() {
   return (
     <main className="mx-auto flex w-full flex-col space-y-6 p-10">
       <div>
-        <p className="text-sm text-muted-foreground">관리자 &gt; 관리자 조회 &gt; 관리자 수정</p>
+        <p className="text-sm text-muted-foreground">
+          관리자 &gt; 관리자 조회 &gt; 관리자 수정
+        </p>
         <h1 className="text-2xl font-bold">관리자 수정</h1>
       </div>
       <Separator />
@@ -108,10 +110,10 @@ export default function AdminManagerEditPage() {
             <div className="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="nickname">관리자 이름</Label>
-                <Input 
-                  id="nickname" 
-                  value={nickname} 
-                  onChange={(e) => setNickname(e.target.value)} 
+                <Input
+                  id="nickname"
+                  value={nickname}
+                  onChange={(e) => setNickname(e.target.value)}
                 />
               </div>
               <div className="space-y-2">
@@ -124,7 +126,9 @@ export default function AdminManagerEditPage() {
 
         {/* 관리자 역할 섹션 */}
         <Card>
-          <CardHeader><CardTitle>관리자 역할</CardTitle></CardHeader>
+          <CardHeader>
+            <CardTitle>관리자 역할</CardTitle>
+          </CardHeader>
           <CardContent>
             <Select value={role} onValueChange={setRole}>
               <SelectTrigger className="w-full md:w-1/2">
@@ -140,7 +144,9 @@ export default function AdminManagerEditPage() {
 
         {/* 비밀번호 변경 섹션 */}
         <Card>
-          <CardHeader><CardTitle>비밀번호 변경</CardTitle></CardHeader>
+          <CardHeader>
+            <CardTitle>비밀번호 변경</CardTitle>
+          </CardHeader>
           <CardContent className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="currentPassword">현재 비밀번호</Label>
@@ -161,8 +167,18 @@ export default function AdminManagerEditPage() {
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                 />
-                <Button type="button" variant="ghost" size="icon" className="absolute bottom-1 right-1 h-7 w-7" onClick={() => setShowNewPassword((prev) => !prev)}>
-                  {showNewPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="absolute bottom-1 right-1 h-7 w-7"
+                  onClick={() => setShowNewPassword((prev) => !prev)}
+                >
+                  {showNewPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
                 </Button>
               </div>
               <div className="relative space-y-2">
@@ -173,8 +189,18 @@ export default function AdminManagerEditPage() {
                   value={confirmNewPassword}
                   onChange={(e) => setConfirmNewPassword(e.target.value)}
                 />
-                <Button type="button" variant="ghost" size="icon" className="absolute bottom-1 right-1 h-7 w-7" onClick={() => setShowConfirmPassword((prev) => !prev)}>
-                  {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="absolute bottom-1 right-1 h-7 w-7"
+                  onClick={() => setShowConfirmPassword((prev) => !prev)}
+                >
+                  {showConfirmPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
                 </Button>
               </div>
             </div>
@@ -183,8 +209,17 @@ export default function AdminManagerEditPage() {
 
         {/* 수정/취소 버튼 */}
         <div className="grid grid-cols-2 gap-4">
-          <Button type="button" variant="outline" size="lg" onClick={() => router.back()}>취소</Button>
-          <Button type="submit" size="lg">수정</Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="lg"
+            onClick={() => router.back()}
+          >
+            취소
+          </Button>
+          <Button type="submit" size="lg">
+            수정
+          </Button>
         </div>
       </form>
     </main>

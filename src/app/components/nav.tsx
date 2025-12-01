@@ -19,6 +19,7 @@ export const Nav = () => {
   const searchParams = useSearchParams();
 
   const wallet = useWallet();
+  const walletConnectorStore = useWalletConnectorStore();
 
   const params = useParams();
   const selected = params.locale as string;
@@ -374,7 +375,6 @@ export const Nav = () => {
   );
 
   const [menuOpen, setMenuOpen] = useState(false);
-  const walletConnectorStore = useWalletConnectorStore();
 
   const handleMenuClick = () => {
     setMenuOpen((p) => !p);

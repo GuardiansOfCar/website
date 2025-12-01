@@ -115,7 +115,7 @@ export default function PushAlertListPage() {
 
   // 푸시 알림 목록 데이터 요청
   const { data: listData, isLoading } = useSWR(
-    [`/v1/admin-notification/list`, request],
+    [`/admin-notification/list`, request],
     (args) => fetch(args[0], { query: args[1] }),
   );
 
@@ -153,61 +153,62 @@ export default function PushAlertListPage() {
   };
 
   return (
-    <main className="mx-auto flex w-full flex-col space-y-6 p-10">
+    <main className="mx-auto flex w-full flex-col space-y-4 md:space-y-6 p-4 md:p-6 lg:p-10">
       <div>
-        <p className="text-sm text-muted-foreground">Push 알림 &gt; Push 알림 조회</p>
-        <h1 className="text-2xl font-bold">조회</h1>
+        <p className="text-xs md:text-sm text-muted-foreground">Push 알림 &gt; Push 알림 조회</p>
+        <h1 className="text-xl md:text-2xl font-bold">조회</h1>
       </div>
       <Separator />
 
       {/* 검색 필터 섹션 */}
       <Card>
-        <CardContent className="p-6">
-          <div className="grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2">
+        <CardContent className="p-4 md:p-6">
+          <div className="grid grid-cols-1 gap-x-4 md:gap-x-8 gap-y-4 md:grid-cols-2">
             {/* 발송일자 필터 */}
-            <div className="flex items-center space-x-2">
-              <span className="w-24 shrink-0 font-semibold">발송일자</span>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant={"outline"}
-                    className={cn(
-                      "w-[280px] justify-start text-left font-normal",
-                      !date && "text-muted-foreground",
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {date?.from ? (
-                      date.to ? (
-                        <>
-                          {dayjs(date.from).format("YYYY.MM.DD")} - {dayjs(date.to).format("YYYY.MM.DD")}
-                        </>
+            <div className="flex flex-col md:flex-row md:items-center gap-2 md:col-span-2">
+              <span className="w-full md:w-24 shrink-0 font-semibold text-sm">발송일자</span>
+              <div className="flex flex-col md:flex-row gap-2 flex-1">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "w-full md:w-[280px] justify-start text-left font-normal",
+                        !date && "text-muted-foreground",
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {date?.from ? (
+                        date.to ? (
+                          <>
+                            {dayjs(date.from).format("YYYY.MM.DD")} - {dayjs(date.to).format("YYYY.MM.DD")}
+                          </>
+                        ) : (
+                          dayjs(date.from).format("YYYY.MM.DD")
+                        )
                       ) : (
-                        dayjs(date.from).format("YYYY.MM.DD")
-                      )
-                    ) : (
-                      <span>날짜 선택</span>
-                    )}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar mode="range" selected={date} onSelect={setDate} initialFocus />
-                </PopoverContent>
-              </Popover>
-              <div className="flex items-center space-x-1">
-                <Button variant="ghost" size="sm" onClick={() => setDate(undefined)}>전체</Button>
-                <Button variant="ghost" size="sm" onClick={() => setDate({from: new Date(), to: new Date()})}>오늘</Button>
-                <Button variant="ghost" size="sm" onClick={() => setDatePreset('week', 1)}>1주일</Button>
-                <Button variant="ghost" size="sm" onClick={() => setDatePreset('month', 1)}>1개월</Button>
+                        <span>날짜 선택</span>
+                      )}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar mode="range" selected={date} onSelect={setDate} initialFocus />
+                  </PopoverContent>
+                </Popover>
+                <div className="flex items-center flex-wrap gap-1">
+                  <Button variant="ghost" size="sm" onClick={() => setDate(undefined)} className="text-xs">전체</Button>
+                  <Button variant="ghost" size="sm" onClick={() => setDate({from: new Date(), to: new Date()})} className="text-xs">오늘</Button>
+                  <Button variant="ghost" size="sm" onClick={() => setDatePreset('week', 1)} className="text-xs">1주일</Button>
+                  <Button variant="ghost" size="sm" onClick={() => setDatePreset('month', 1)} className="text-xs">1개월</Button>
+                </div>
               </div>
             </div>
-            <div></div>
 
             {/* 알림 카테고리 필터 */}
-            <div className="flex items-center space-x-2">
-              <span className="w-24 shrink-0 font-semibold">알림 유형</span>
+            <div className="flex flex-col md:flex-row md:items-center gap-2">
+              <span className="w-full md:w-24 shrink-0 font-semibold text-sm">알림 유형</span>
               <Select value={category} onValueChange={setCategory}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectTrigger className="w-full md:w-auto"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   {notificationCategories.map(cat => (
                     <SelectItem key={cat.value} value={cat.value}>{cat.label}</SelectItem>
@@ -217,10 +218,10 @@ export default function PushAlertListPage() {
             </div>
 
             {/* 발송 상태 필터 */}
-            <div className="flex items-center space-x-2">
-              <span className="w-24 shrink-0 font-semibold">발송 상태</span>
+            <div className="flex flex-col md:flex-row md:items-center gap-2">
+              <span className="w-full md:w-24 shrink-0 font-semibold text-sm">발송 상태</span>
               <Select value={isSent} onValueChange={setIsSent}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectTrigger className="w-full md:w-auto"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   {sendStatusOptions.map(option => (
                     <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
@@ -230,10 +231,10 @@ export default function PushAlertListPage() {
             </div>
 
             {/* 타겟 유형 필터 */}
-            <div className="flex items-center space-x-2">
-              <span className="w-24 shrink-0 font-semibold">발송 대상</span>
+            <div className="flex flex-col md:flex-row md:items-center gap-2">
+              <span className="w-full md:w-24 shrink-0 font-semibold text-sm">발송 대상</span>
               <Select value={targetType} onValueChange={setTargetType}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectTrigger className="w-full md:w-auto"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   {targetTypeOptions.map(option => (
                     <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
@@ -243,18 +244,19 @@ export default function PushAlertListPage() {
             </div>
 
             {/* 알림 제목/내용 검색 */}
-            <div className="flex items-center space-x-2 md:col-span-2">
-              <span className="w-24 shrink-0 font-semibold">검색</span>
+            <div className="flex flex-col md:flex-row md:items-center gap-2 md:col-span-2">
+              <span className="w-full md:w-24 shrink-0 font-semibold text-sm">검색</span>
               <Input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="알림 제목 및 내용으로 검색"
+                className="flex-1"
               />
             </div>
           </div>
-          <div className="mt-6 flex justify-end space-x-2">
-            <Button variant="outline" onClick={handleReset}>초기화</Button>
-            <Button onClick={handleSearch}>검색</Button>
+          <div className="mt-4 md:mt-6 flex flex-col md:flex-row justify-end gap-2">
+            <Button variant="outline" onClick={handleReset} className="w-full sm:w-auto">초기화</Button>
+            <Button onClick={handleSearch} className="w-full sm:w-auto">검색</Button>
           </div>
         </CardContent>
       </Card>
@@ -268,7 +270,7 @@ export default function PushAlertListPage() {
           <Select value={orderBy} onValueChange={(value) => {
             setOrderBy(value as 'RECENT' | 'OLDEST');
           }}>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-full md:w-[180px]">
               <SelectValue placeholder="정렬" />
             </SelectTrigger>
             <SelectContent>

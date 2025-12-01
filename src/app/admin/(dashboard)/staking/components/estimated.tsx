@@ -33,7 +33,7 @@ export const AdminStakingEstimated = () => {
   }, []);
 
   const fetchEstimated = () => {
-    fetch(`/v1/stakings/status/estimated`).then((data) => {
+    fetch(`/stakings/status/estimated`).then((data) => {
       estimatedForm.reset({
         reward: data.annualRate,
         end: dayjs(new Date(data.endTime)).format("YYYY-MM-DDTHH:mm"),
@@ -43,7 +43,7 @@ export const AdminStakingEstimated = () => {
   };
 
   const onEstimatedSubmit = async (data: EstimatedFormData) => {
-    fetch(`/v1/stakings/estimated/update`, {
+    fetch(`/stakings/estimated/update`, {
       method: "POST",
       data: {
         rate: parseFloat(data.reward),
@@ -59,10 +59,10 @@ export const AdminStakingEstimated = () => {
     <form onSubmit={estimatedForm.handleSubmit(onEstimatedSubmit)}>
       <Card>
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl">Estimated 설정</CardTitle>
-          <CardDescription>요율과 기간을 설정해 주세요</CardDescription>
+          <CardTitle className="text-xl md:text-2xl">Estimated 설정</CardTitle>
+          <CardDescription className="text-xs md:text-sm">요율과 기간을 설정해 주세요</CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-4">
+        <CardContent className="grid gap-3 md:gap-4 p-4 md:p-6">
           <Separator />
 
           <div className="grid gap-2">

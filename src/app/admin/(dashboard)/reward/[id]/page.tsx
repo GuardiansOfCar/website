@@ -30,7 +30,7 @@ export default function AdminRewardId() {
   const isCreate = id === "create";
   const fetch = useAdminFetch();
 
-  const rewardDetail = useSWR([`/v1/rewards/detail/${id}`], (args) =>
+  const rewardDetail = useSWR([`/rewards/detail/${id}`], (args) =>
     fetch(args[0]),
   );
 
@@ -51,7 +51,7 @@ export default function AdminRewardId() {
 
   const router = useRouter();
   const onSubmit = (data: Values) => {
-    fetch(`/v1/rewards/${isCreate ? "create" : "update"}`, {
+    fetch(`/rewards/${isCreate ? "create" : "update"}`, {
       method: isCreate ? "POST" : "PUT",
       data: {
         rate: parseFloat(data.rate as any),
@@ -73,7 +73,7 @@ export default function AdminRewardId() {
 
   const handleDelete = () => {
     if (confirm("정말 삭제하시겠습니까?")) {
-      fetch(`/v1/rewards/${id}`, { method: "DELETE" })
+      fetch(`/rewards/${id}`, { method: "DELETE" })
         .then(router.back)
         .catch(() => {
           alert("삭제 실패했습니다. 다시 시도해 주세요.");

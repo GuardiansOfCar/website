@@ -27,17 +27,17 @@ export default function AdminReferralId() {
 
   const fetch = useAdminFetch();
 
-  const listStakings = useSWR([`/v1/referrals/history/list`, request], (args) =>
+  const listStakings = useSWR([`/referrals/history/list`, request], (args) =>
     fetch(args[0], { query: args[1] }),
   );
 
   const stakingDetail = useSWR(
-    [`/v1/referrals/settlement/detail/${sid}`],
+    [`/referrals/settlement/detail/${sid}`],
     (args) => fetch(args[0]),
   );
 
   const stakingRewardStatus = useSWR(
-    [`/v1/referrals/status/my/${id}`],
+    [`/referrals/status/my/${id}`],
     (args) => fetch(args[0]),
   );
 
