@@ -53,11 +53,6 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // v2 경로는 locale 리다이렉트를 건너뜀
-  if (path.startsWith("/v2")) {
-    return NextResponse.next();
-  }
-
   const pathnameParts = path.split("/");
   const firstSegment = pathnameParts[1];
   const hasLocale = locales.includes(firstSegment as any);

@@ -537,7 +537,8 @@ export function StakingPageClient() {
               </div>
               <div
                 style={{
-                  width: "338px",
+                  width: "100%",
+                  maxWidth: "338px",
                   height: "52px",
                   borderRadius: "12px",
                   border: unstakeForm.watch("amount")
@@ -556,6 +557,7 @@ export function StakingPageClient() {
                   placeholder="Enter amount"
                   style={{
                     flex: 1,
+                    minWidth: 0,
                     border: "none",
                     outline: "none",
                     fontFamily: "Pretendard, sans-serif",
@@ -570,6 +572,8 @@ export function StakingPageClient() {
                 />
                 <span
                   style={{
+                    flexShrink: 0,
+                    marginLeft: "8px",
                     fontFamily: "Pretendard, sans-serif",
                     fontWeight: 700,
                     fontSize: "16px",
@@ -644,12 +648,14 @@ export function StakingPageClient() {
             <div className={"flex flex-col space-y-3"}>
               <ButtonRenewal
                 onClick={handleWithdrawal}
-                disabled={
-                  !unstakeForm.watch("amount") ||
-                  parseFloat(unstakeForm.watch("amount")) <= 0 ||
-                  !unstakeForm.watch("otp") ||
-                  String(unstakeForm.watch("otp")).length < 6
-                }
+                disabled={true}
+                // 일시적으로 비활성화 (기존 활성화 로직 주석처리)
+                // disabled={
+                //   !unstakeForm.watch("amount") ||
+                //   parseFloat(unstakeForm.watch("amount")) <= 0 ||
+                //   !unstakeForm.watch("otp") ||
+                //   String(unstakeForm.watch("otp")).length < 6
+                // }
                 width="100%"
               >
                 UNSTAKE
