@@ -369,7 +369,8 @@ export function StakingPageClient() {
               </div>
               <div
                 style={{
-                  width: "338px",
+                  width: "100%",
+                  maxWidth: "338px",
                   height: "52px",
                   borderRadius: "12px",
                   border: stakeAmount
@@ -387,6 +388,7 @@ export function StakingPageClient() {
                   placeholder="Enter amount"
                   style={{
                     flex: 1,
+                    minWidth: 0,
                     border: "none",
                     outline: "none",
                     fontFamily: "Pretendard, sans-serif",
@@ -401,6 +403,8 @@ export function StakingPageClient() {
                 />
                 <span
                   style={{
+                    flexShrink: 0,
+                    marginLeft: "8px",
                     fontFamily: "Pretendard, sans-serif",
                     fontWeight: 700,
                     fontSize: "16px",
