@@ -316,7 +316,8 @@ export const Nav = () => {
           {renderLanguage()}
         </div>
 
-        <NextLink
+        {/* docs 임시 주석 처리 */}
+        {/* <NextLink
           href={"/whitepaper.pdf"}
           target={"_blank"}
           rel={"noopener noreferrer"}
@@ -350,7 +351,7 @@ export const Nav = () => {
               loading={"lazy"}
             />
           </button>
-        </NextLink>
+        </NextLink> */}
 
         <button
           onClick={handleBuyGocarClick}
@@ -676,7 +677,8 @@ export const Nav = () => {
                   alignItems: "center",
                 }}
               >
-                <NextLink
+                {/* docs 임시 주석 처리 */}
+                {/* <NextLink
                   href={"/whitepaper.pdf"}
                   target={"_blank"}
                   rel={"noopener noreferrer"}
@@ -704,7 +706,7 @@ export const Nav = () => {
                       loading={"lazy"}
                     />
                   </button>
-                </NextLink>
+                </NextLink> */}
                 <button
                   onClick={handleBuyGocarClick}
                   className={clsx(
