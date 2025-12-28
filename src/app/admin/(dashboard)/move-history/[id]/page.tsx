@@ -11,7 +11,13 @@ import { useAdminFetch } from "@/app/admin/(dashboard)/lib/use-admin-fetch";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
 // 주행 기록 상세 데이터 타입
@@ -38,24 +44,24 @@ interface DrivingHistoryDetail {
 
 // 거절 사유 enum (서버와 동일)
 enum RejectionReason {
-  INACCURATE_DATA = 'INACCURATE_DATA',
-  SUSPICIOUS_ACTIVITY = 'SUSPICIOUS_ACTIVITY',
-  INSUFFICIENT_EVIDENCE = 'INSUFFICIENT_EVIDENCE',
-  VIOLATION_OF_TERMS = 'VIOLATION_OF_TERMS',
-  DUPLICATE_SUBMISSION = 'DUPLICATE_SUBMISSION',
-  TECHNICAL_ERROR = 'TECHNICAL_ERROR',
-  OTHER = 'OTHER',
+  INACCURATE_DATA = "INACCURATE_DATA",
+  SUSPICIOUS_ACTIVITY = "SUSPICIOUS_ACTIVITY",
+  INSUFFICIENT_EVIDENCE = "INSUFFICIENT_EVIDENCE",
+  VIOLATION_OF_TERMS = "VIOLATION_OF_TERMS",
+  DUPLICATE_SUBMISSION = "DUPLICATE_SUBMISSION",
+  TECHNICAL_ERROR = "TECHNICAL_ERROR",
+  OTHER = "OTHER",
 }
 
 // 거절 사유 한국어 매핑
 const rejectionReasonLabels = {
-  [RejectionReason.INACCURATE_DATA]: '부정확한 데이터',
-  [RejectionReason.SUSPICIOUS_ACTIVITY]: '의심스러운 활동',
-  [RejectionReason.INSUFFICIENT_EVIDENCE]: '증거 부족',
-  [RejectionReason.VIOLATION_OF_TERMS]: '약관 위반',
-  [RejectionReason.DUPLICATE_SUBMISSION]: '중복 제출',
-  [RejectionReason.TECHNICAL_ERROR]: '기술적 오류',
-  [RejectionReason.OTHER]: '기타',
+  [RejectionReason.INACCURATE_DATA]: "부정확한 데이터",
+  [RejectionReason.SUSPICIOUS_ACTIVITY]: "의심스러운 활동",
+  [RejectionReason.INSUFFICIENT_EVIDENCE]: "증거 부족",
+  [RejectionReason.VIOLATION_OF_TERMS]: "약관 위반",
+  [RejectionReason.DUPLICATE_SUBMISSION]: "중복 제출",
+  [RejectionReason.TECHNICAL_ERROR]: "기술적 오류",
+  [RejectionReason.OTHER]: "기타",
 };
 
 export default function DrivingHistoryDetailPage() {
@@ -123,7 +129,11 @@ export default function DrivingHistoryDetailPage() {
       return;
     }
 
-    if (paymentStatus === "REJECT" && rejectionReason === "CUSTOM" && !customReason.trim()) {
+    if (
+      paymentStatus === "REJECT" &&
+      rejectionReason === "CUSTOM" &&
+      !customReason.trim()
+    ) {
       alert("직접입력 사유를 입력해주세요.");
       return;
     }
@@ -226,7 +236,8 @@ export default function DrivingHistoryDetailPage() {
                   주행 시작 - 종료 시각
                 </p>
                 <p className="text-lg font-semibold text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 p-3 rounded">
-                  {dayjs(history.start_at).format("YYYY/MM/DD HH:mm:ss")} - {dayjs(history.end_at).format("YYYY/MM/DD HH:mm:ss")}
+                  {dayjs(history.start_at).format("YYYY/MM/DD HH:mm:ss")} -{" "}
+                  {dayjs(history.end_at).format("YYYY/MM/DD HH:mm:ss")}
                 </p>
               </div>
               <div className="space-y-2">
@@ -246,7 +257,7 @@ export default function DrivingHistoryDetailPage() {
                 </p>
               </div>
             </div>
-            
+
             {/* 오른쪽 열 */}
             <div className="space-y-4">
               <div className="space-y-2">
@@ -262,7 +273,17 @@ export default function DrivingHistoryDetailPage() {
                   주행 시간
                 </p>
                 <p className="text-lg font-semibold text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 p-3 rounded">
-                  {Math.floor(history.active_time_seconds / 3600).toString().padStart(2, '0')}:{Math.floor((history.active_time_seconds % 3600) / 60).toString().padStart(2, '0')}:{(history.active_time_seconds % 60).toString().padStart(2, '0')}
+                  {Math.floor(history.active_time_seconds / 3600)
+                    .toString()
+                    .padStart(2, "0")}
+                  :
+                  {Math.floor((history.active_time_seconds % 3600) / 60)
+                    .toString()
+                    .padStart(2, "0")}
+                  :
+                  {(history.active_time_seconds % 60)
+                    .toString()
+                    .padStart(2, "0")}
                 </p>
               </div>
               <div className="space-y-2">
@@ -278,7 +299,9 @@ export default function DrivingHistoryDetailPage() {
                   주행 모드
                 </p>
                 <p className="text-lg font-semibold text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 p-3 rounded">
-                  {history.move_method === 'CAR' ? '운전(오토바이)' : history.move_method}
+                  {history.move_method === "CAR"
+                    ? "운전(오토바이)"
+                    : history.move_method}
                 </p>
               </div>
               <div className="space-y-2">
@@ -286,19 +309,24 @@ export default function DrivingHistoryDetailPage() {
                   지급 상태
                 </p>
                 <div className="p-3 rounded bg-gray-100 dark:bg-gray-800">
-                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                    history.point_status === 'Approved' 
-                      ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300'
-                      : history.point_status === 'Pending'
-                      ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300'
-                      : history.point_status === 'Rejected'
-                      ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
-                      : 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300'
-                  }`}>
-                    {history.point_status === 'Approved' ? '지급 완료' : 
-                     history.point_status === 'Pending' ? '대기' : 
-                     history.point_status === 'Rejected' ? '거절' : 
-                     history.point_status || '알 수 없음'}
+                  <span
+                    className={`px-3 py-1 rounded-full text-sm font-medium ${
+                      history.point_status === "Approved"
+                        ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
+                        : history.point_status === "Pending"
+                          ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
+                          : history.point_status === "Rejected"
+                            ? "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300"
+                            : "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300"
+                    }`}
+                  >
+                    {history.point_status === "Approved"
+                      ? "지급 완료"
+                      : history.point_status === "Pending"
+                        ? "대기"
+                        : history.point_status === "Rejected"
+                          ? "거절"
+                          : history.point_status || "알 수 없음"}
                   </span>
                 </div>
               </div>
@@ -324,7 +352,7 @@ export default function DrivingHistoryDetailPage() {
                 className="w-full h-auto rounded-lg border border-gray-200 dark:border-gray-700"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
+                  target.style.display = "none";
                 }}
               />
             </div>
@@ -345,7 +373,10 @@ export default function DrivingHistoryDetailPage() {
             <span className="w-24 shrink-0 font-semibold text-gray-900 dark:text-white">
               지급여부
             </span>
-            <Select value={paymentStatus} onValueChange={handlePaymentStatusChange}>
+            <Select
+              value={paymentStatus}
+              onValueChange={handlePaymentStatusChange}
+            >
               <SelectTrigger className="w-[200px] bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-600">
                 <SelectValue placeholder="지급여부 선택" />
               </SelectTrigger>
@@ -363,16 +394,21 @@ export default function DrivingHistoryDetailPage() {
                 <span className="w-24 shrink-0 font-semibold text-gray-900 dark:text-white">
                   거절 사유
                 </span>
-                <Select value={rejectionReason} onValueChange={handleRejectionReasonChange}>
+                <Select
+                  value={rejectionReason}
+                  onValueChange={handleRejectionReasonChange}
+                >
                   <SelectTrigger className="w-[200px] bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-600">
                     <SelectValue placeholder="거절 사유 선택" />
                   </SelectTrigger>
                   <SelectContent>
-                    {Object.entries(rejectionReasonLabels).map(([value, label]) => (
-                      <SelectItem key={value} value={value}>
-                        {label}
-                      </SelectItem>
-                    ))}
+                    {Object.entries(rejectionReasonLabels).map(
+                      ([value, label]) => (
+                        <SelectItem key={value} value={value}>
+                          {label}
+                        </SelectItem>
+                      )
+                    )}
                     <SelectItem value="CUSTOM">직접입력</SelectItem>
                   </SelectContent>
                 </Select>
