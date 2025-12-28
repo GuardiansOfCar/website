@@ -372,7 +372,7 @@ export default function DrivingHistoryPage() {
           {
             accessorKey: "distance",
             header: "주행 거리",
-            cell: ({ row }) => `${row.original.distance.toFixed(2)}km`,
+            cell: ({ row }) => `${(row.original.distance / 1000).toFixed(2)}km`,
           },
           { accessorKey: "move_method", header: "주행 방법" },
           {

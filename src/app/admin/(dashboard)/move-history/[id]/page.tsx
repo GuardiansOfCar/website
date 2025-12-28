@@ -234,7 +234,7 @@ export default function DrivingHistoryDetailPage() {
                   주행 거리
                 </p>
                 <p className="text-lg font-semibold text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 p-3 rounded">
-                  {history.distance.toFixed(1)}km
+                  {(history.distance / 1000).toFixed(2)}km
                 </p>
               </div>
               <div className="space-y-2">
