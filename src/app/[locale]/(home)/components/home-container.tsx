@@ -30,8 +30,8 @@ export const HomeContainer = () => {
       {/* 4. 파트너쉽 섹션 */}
       <PartnershipSection />
 
-      {/* 5. Meet the team 섹션 */}
-      <TeamSection />
+      {/* 5. Meet the team 섹션 - 임시 주석처리 */}
+      {/* <TeamSection /> */}
 
       {/* 6. FAQ 섹션 */}
       <FaqSection />
