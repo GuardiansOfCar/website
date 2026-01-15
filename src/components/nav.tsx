@@ -316,15 +316,14 @@ export const Nav = () => {
           {renderLanguage()}
         </div>
 
-        {/* docs 임시 주석 처리 */}
-        {/* <NextLink
-          href={"/whitepaper.pdf"}
+        <NextLink
+          href={"https://docs.guardiansofthecar.com/"}
           target={"_blank"}
           rel={"noopener noreferrer"}
           className={"max-laptop:ml-0"}
           style={{ marginLeft: "16px" }}
         >
-          <button
+          <div
             className={clsx(
               "flex items-center justify-center gap-2",
               "bg-[#2F2F31] rounded-xl",
@@ -350,8 +349,8 @@ export const Nav = () => {
               className={"object-contain"}
               loading={"lazy"}
             />
-          </button>
-        </NextLink> */}
+          </div>
+        </NextLink>
 
         <button
           onClick={handleBuyGocarClick}
@@ -677,14 +676,13 @@ export const Nav = () => {
                   alignItems: "center",
                 }}
               >
-                {/* docs 임시 주석 처리 */}
-                {/* <NextLink
-                  href={"/whitepaper.pdf"}
+                <NextLink
+                  href={"https://docs.guardiansofthecar.com/"}
                   target={"_blank"}
                   rel={"noopener noreferrer"}
                   className={"flex-1"}
                 >
-                  <button
+                  <div
                     className={clsx(
                       "flex items-center justify-center gap-2 w-full",
                       "bg-[#2F2F31] rounded-xl",
@@ -705,8 +703,8 @@ export const Nav = () => {
                       className={"object-contain"}
                       loading={"lazy"}
                     />
-                  </button>
-                </NextLink> */}
+                  </div>
+                </NextLink>
                 <button
                   onClick={handleBuyGocarClick}
                   className={clsx(

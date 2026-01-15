@@ -19,12 +19,40 @@ export const PartnershipSection = () => {
   const validFeatures = useMemo(() => {
     return [
       {
-        url: "#",
+        url: "https://synergyib.co.kr/",
         imagePath: "/images/synergy-ib-investment-logo.png",
         isImage: true,
       },
-      { url: "#", imagePath: "/images/upgradepart2-logo.png", isImage: true },
-      { url: "#", imagePath: "/images/CENTROID-logo.png", isImage: true },
+      {
+        url: "https://www.upgradepart2.com/",
+        imagePath: "/images/upgradepart2-logo.png",
+        isImage: true,
+      },
+      {
+        url: "http://centroidip.com/",
+        imagePath: "/images/CENTROID-logo.png",
+        isImage: true,
+      },
+      {
+        url: "https://www.tanes-vc.xyz/",
+        imagePath: "/images/tanes-logo.png",
+        isImage: true,
+      },
+      {
+        url: "https://www.quantora.today/",
+        imagePath: "/images/quantora-logo.png",
+        isImage: true,
+      },
+      {
+        url: "https://www.aivent.world/",
+        imagePath: "/images/aivent-logo.png",
+        isImage: true,
+      },
+      {
+        url: "https://www.abode-vc.com/",
+        imagePath: "/images/abobe-logo.png",
+        isImage: true,
+      },
     ];
   }, []);
 
@@ -119,7 +147,9 @@ export const PartnershipSection = () => {
           >
             <div
               ref={containerRef}
-              className={"flex gap-x-6 animate-partnership-scroll"}
+              className={
+                "flex gap-x-6 animate-partnership-scroll hover:[animation-play-state:paused]"
+              }
               style={{
                 width: "max-content",
               }}
@@ -135,7 +165,7 @@ export const PartnershipSection = () => {
                     rel={"noopener noreferrer"}
                     href={item.url}
                     className={
-                      "flex-shrink-0 flex items-center justify-center w-[135px] h-[48px] md:w-[180px] md:h-[64px] rounded-2xl bg-white p-[18px] md:p-6 gap-1.5 md:gap-2"
+                      "flex-shrink-0 flex items-center justify-center w-[135px] h-[48px] md:w-[180px] md:h-[64px] rounded-2xl bg-white p-3 md:p-4 gap-1.5 md:gap-2"
                     }
                     aria-label={`Featured partner ${i + 1}`}
                     style={{
