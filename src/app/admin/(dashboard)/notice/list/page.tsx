@@ -257,7 +257,7 @@ export default function NoticeListPage() {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => router.push(`/admin/news/${row.original.id}`)} // 경로 수정
+                onClick={() => router.push(`/admin/notice/${row.original.id}`)} // 경로 수정
               >
                 <Edit className="h-4 w-4" />
               </Button>

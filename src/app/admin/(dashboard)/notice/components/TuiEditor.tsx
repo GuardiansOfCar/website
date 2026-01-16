@@ -16,8 +16,8 @@ const TuiEditor = forwardRef(
       <Editor
         {...props}
         ref={ref}
-        initialValue=" " // placeholder와 initialValue 동시 사용을 위한 트릭
-        placeholder="내용을 입력해주세요."
+        initialValue={props.initialValue || " "} // placeholder와 initialValue 동시 사용을 위한 트릭
+        placeholder={props.placeholder || "내용을 입력해주세요."}
         previewStyle="vertical"
         height="600px"
         initialEditType="wysiwyg"

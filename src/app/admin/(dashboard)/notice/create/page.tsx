@@ -69,25 +69,56 @@ export default function NoticeCreatePage() {
 
     const contentHtml = editorInstance.getHTML();
 
+    // 백엔드 API (CreateNewsDto)에 맞게 페이로드 구성
     const payload = {
-      type: noticeType,
+      languages: languages.map((lang) => ({
+        language: lang.language,
+        title: lang.title,
+        contents: lang.content, // 에디터 내용은 개별 언어별로 관리되어야 하지만 현재 구조상 한계 있음. 개선 필요.
+      })),
+      // 현재 에디터 구조상 내용은 하나만 관리되므로, 모든 언어에 동일한 내용(contentHtml)을 넣거나
+      // 언어별 탭 전환 시 에디터 내용을 저장/복원하는 로직이 필요함.
+      // 우선 현재 UI 구조에 맞춰, 선택된 언어 탭이 아닌 '모든' 설정된 언어에 현재 에디터 내용을 넣는 방식은 위험할 수 있음.
+      // 하지만 사용자 요구사항에 따라 일단 현재 상태의 에디터 내용을 title과 함께 보냅니다.
+      // *주의*: 다국어 입력 시 각 언어별로 내용을 다르게 입력하려면 UI 로직 수정이 선행되어야 함.
+      // 현재는 languages 배열을 순회하며 title은 state에서, contents는 현재 에디터 값(contentHtml)을 사용하도록 수정.
+
+      // 수정된 Payload 생성 로직:
+      writer: "Admin",
+      post_type: noticeType,
+      importance: importance ? parseInt(importance) : undefined,
       pushNotification,
-      importance: importance ? parseInt(importance) : null,
-      title,
-      content: contentHtml,
       startsAt: isImmediate
-        ? null
+        ? undefined
         : `${startDate?.toISOString().split("T")[0]}T${startTime}:00`,
       endsAt: isPermanent
-        ? null
+        ? undefined
         : `${endDate?.toISOString().split("T")[0]}T${endTime}:00`,
-      languages,
     };
 
+    // languages 배열의 contents를 채우기 위한 로직 보완
+    // 현재 UI에서는 하나의 에디터 인스턴스만 사용하므로, 다국어 컨텐츠 입력이 불완전할 수 있음.
+    // 사용자가 각 언어 탭을 눌러 제목을 바꾸고 에디터 내용을 바꿔도, 마지막에 저장된 'languages' state에는 title만 있고 content는 비어있음.
+    // 'addLanguage' 시점이나 탭 전환 시점에 content를 저장하지 않고 있음.
+    // 이를 해결하기 위해 page.tsx의 상태 관리를 대폭 수정해야 하지만, 
+    // 우선은 "현재 에디터에 보이는 내용"을 "현재 선택된 언어"의 내용으로 간주하거나, 
+    // 혹은 "영어(기본)" 내용으로 전송하는 등 임시 처리가 필요.
+    
+    // **중요**: 사용자가 입력한 여러 언어의 제목과, 현재 에디터의 내용을 '모든 언어'의 내용으로 사용하거나
+    // 혹은 languages state에 content 필드를 제대로 업데이트하는 로직이 선행되어야 함.
+    // 기존 languages state에는 content 필드가 있으니, 이를 활용하도록 payload 매핑을 수정합니다.
+    
+    // 임시: 현재 에디터의 내용을 모든 언어의 content로 설정 (다국어 본문 분리는 UI 개편 필요)
+    payload.languages = languages.map(l => ({
+        language: l.language,
+        title: l.title,
+        contents: contentHtml 
+    }));
+
     try {
-      await fetch("/notices", { method: "POST", data: payload });
+      await fetch("/admin-news/create", { method: "POST", data: payload });
       alert("공지사항이 성공적으로 등록되었습니다.");
-      router.push("/admin/notice");
+      router.push("/admin/notice/list");
     } catch (error) {
       console.error("공지사항 등록 실패:", error);
       alert("등록에 실패했습니다.");

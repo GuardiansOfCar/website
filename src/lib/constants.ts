@@ -1,5 +1,5 @@
-export const API_BASE_URL = "https://api.guardiansofthecar.com/api/v1";
-// export const API_BASE_URL = "http://localhost:8000/api/v1";
+// export const API_BASE_URL = "https://api.guardiansofthecar.com/api/v1";
+export const API_BASE_URL = "http://localhost:8000/api/v1";
 
 export const WALLET_CONNECT_PROJECT_ID = "e836d5b6d527fd7288d8331a208e550a";
 
