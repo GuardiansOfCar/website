@@ -59,8 +59,7 @@ export function LoginForm({
               <Button
                 disabled={pending}
                 type="submit"
-                className="w-full"
-                color="black"
+                className="w-full text-black"
               >
                 로그인
               </Button>

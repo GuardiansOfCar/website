@@ -124,6 +124,11 @@ const sidebarNav = [
     icon: Car,
   },
   {
+    title: "티어 설정",
+    url: "/admin/tier-settings",
+    icon: Target,
+  },
+  {
     title: "포인트 관리",
     icon: Coins,
     children: [
