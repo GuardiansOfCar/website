@@ -52,16 +52,30 @@ export default function PointSettingsPage() {
   const [searchText, setSearchText] = useState("");
 
   // 페이지네이션
-  const request = useMemo(
-    () => ({
+  const request = useMemo(() => {
+    const params: {
+      page: number;
+      limit: number;
+      search?: string;
+      change_reason?: string;
+      is_active?: boolean;
+    } = {
       page: Number(searchParams.get("page")) || 1,
       limit: Number(searchParams.get("limit")) || 10,
-      search: searchParams.get("search") || "",
-      change_reason: searchParams.get("change_reason") || "",
-      is_active: searchParams.get("is_active") || "",
-    }),
-    [searchParams]
-  );
+    };
+
+    const search = searchParams.get("search");
+    if (search) params.search = search;
+
+    const change_reason = searchParams.get("change_reason");
+    if (change_reason) params.change_reason = change_reason;
+
+    const is_active = searchParams.get("is_active");
+    if (is_active === "true") params.is_active = true;
+    else if (is_active === "false") params.is_active = false;
+
+    return params;
+  }, [searchParams]);
 
   // 포인트 지급 항목 조회
   const { data: settingsData, isLoading } = useSWR(
@@ -104,12 +118,19 @@ export default function PointSettingsPage() {
     router.push(`/admin/points/settings/${id}/edit`);
   };
 
+  const handleRowClick = (id: number) => {
+    router.push(`/admin/points/settings/${id}`);
+  };
+
   const columns = [
     {
       accessorKey: "changeReason",
       header: "지급 사유",
       cell: ({ row }: any) => (
-        <span className="text-sm">
+        <span 
+          className="text-sm cursor-pointer hover:text-cyan-400"
+          onClick={() => handleRowClick(row.original.id)}
+        >
           {changeReasonLabels[row.original.changeReason] ||
             row.original.changeReasonLabel ||
             row.original.changeReason}
@@ -120,7 +141,10 @@ export default function PointSettingsPage() {
       accessorKey: "conditionName",
       header: "조건 이름",
       cell: ({ row }: any) => (
-        <span className="text-sm font-medium">
+        <span 
+          className="text-sm font-medium cursor-pointer hover:text-cyan-400"
+          onClick={() => handleRowClick(row.original.id)}
+        >
           {row.original.conditionName || "-"}
         </span>
       ),

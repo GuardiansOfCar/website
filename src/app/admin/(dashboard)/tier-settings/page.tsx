@@ -16,15 +16,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Switch } from "@/components/ui/switch";
 
 interface TierSetting {
   id: number;
@@ -34,6 +25,7 @@ interface TierSetting {
   point_earned: number;
   multiplier: number;
   upgrade_price: number;
+  is_active: boolean;
 }
 
 export default function TierSettingsPage() {
@@ -49,14 +41,12 @@ export default function TierSettingsPage() {
     multiplier: 1.0,
     upgrade_price: 0,
   });
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [tierToDelete, setTierToDelete] = useState<TierSetting | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   // 티어 목록 조회
   const { data: tiersData, isLoading: isLoadingTiers } = useSWR(
     "/admin-tier/tier",
-    (url) => fetch(url)
+    (url) => fetch(url, { query: { page: 1, limit: 100 } })
   );
 
   const tiers: TierSetting[] = tiersData?.tiers || [];
@@ -88,6 +78,7 @@ export default function TierSettingsPage() {
           point_earned: editData.point_earned,
           multiplier: editData.multiplier,
           upgrade_price: editData.upgrade_price,
+          is_active: editData.is_active,
         },
       });
 
@@ -145,26 +136,20 @@ export default function TierSettingsPage() {
     }
   };
 
-  // 삭제 확인 다이얼로그 열기
-  const handleDeleteClick = (tier: TierSetting) => {
-    setTierToDelete(tier);
-    setIsDeleteDialogOpen(true);
-  };
-
   // 삭제 실행
-  const handleConfirmDelete = async () => {
-    if (!tierToDelete) return;
+  const handleDeleteClick = async (tier: TierSetting) => {
+    if (!confirm(`정말로 "${tier.name}" 티어를 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`)) {
+      return;
+    }
 
     setIsLoading(true);
     try {
-      await fetch(`/admin-tier/tier/${tierToDelete.id}`, {
+      await fetch(`/admin-tier/tier/${tier.id}`, {
         method: "DELETE",
       });
 
       // 데이터 새로고침
       mutate("/admin-tier/tier");
-      setIsDeleteDialogOpen(false);
-      setTierToDelete(null);
       alert("티어가 삭제되었습니다.");
     } catch (error) {
       console.error("Failed to delete tier:", error);
@@ -306,6 +291,7 @@ export default function TierSettingsPage() {
                   </TableHead>
                   <TableHead className="text-center">배수</TableHead>
                   <TableHead className="text-center">업그레이드 가격</TableHead>
+                  <TableHead className="text-center">활성 상태</TableHead>
                   <TableHead className="w-32 text-center">작업</TableHead>
                 </TableRow>
               </TableHeader>
@@ -313,7 +299,7 @@ export default function TierSettingsPage() {
                 {tiers.length === 0 ? (
                   <TableRow>
                     <TableCell
-                      colSpan={7}
+                      colSpan={8}
                       className="text-center py-8 text-muted-foreground"
                     >
                       등록된 티어가 없습니다.
@@ -393,6 +379,25 @@ export default function TierSettingsPage() {
                               className="w-28 text-center"
                             />
                           </TableCell>
+                          <TableCell className="text-center">
+                            <Button
+                              size="sm"
+                              variant={editData.is_active ? "default" : "outline"}
+                              onClick={() =>
+                                setEditData({
+                                  ...editData,
+                                  is_active: !editData.is_active,
+                                })
+                              }
+                              className={`${
+                                editData.is_active
+                                  ? "bg-emerald-500 hover:bg-emerald-600 text-white"
+                                  : "border-red-500 text-red-500 hover:bg-red-50"
+                              }`}
+                            >
+                              {editData.is_active ? "활성" : "비활성"}
+                            </Button>
+                          </TableCell>
                           <TableCell>
                             <div className="flex gap-1 justify-center">
                               <Button
@@ -439,6 +444,15 @@ export default function TierSettingsPage() {
                           <TableCell className="text-center">
                             {tier.upgrade_price.toLocaleString()}P
                           </TableCell>
+                          <TableCell className="text-center">
+                            <span
+                              className={`px-2 py-1 rounded-md text-xs text-white ${
+                                tier.is_active ? "bg-emerald-500" : "bg-red-500"
+                              }`}
+                            >
+                              {tier.is_active ? "활성" : "비활성"}
+                            </span>
+                          </TableCell>
                           <TableCell>
                             <div className="flex gap-1 justify-center">
                               <Button
@@ -469,35 +483,6 @@ export default function TierSettingsPage() {
           )}
         </CardContent>
       </Card>
-
-      {/* 삭제 확인 다이얼로그 */}
-      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>티어 삭제</DialogTitle>
-            <DialogDescription>
-              정말로 "{tierToDelete?.name}" 티어를 삭제하시겠습니까?
-              <br />이 작업은 되돌릴 수 없습니다.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setIsDeleteDialogOpen(false)}
-              disabled={isLoading}
-            >
-              취소
-            </Button>
-            <Button
-              variant="destructive"
-              onClick={handleConfirmDelete}
-              disabled={isLoading}
-            >
-              삭제
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }
