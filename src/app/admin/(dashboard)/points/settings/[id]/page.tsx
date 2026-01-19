@@ -36,9 +36,12 @@ export default function PointSettingDetailPage() {
   const id = params.id as string;
 
   // 상세 데이터 조회
-  const { data: settingData, isLoading, error } = useSWR(
-    id ? [`/admin-point/settings/${id}`] : null,
-    (args) => fetch(args[0])
+  const {
+    data: settingData,
+    isLoading,
+    error,
+  } = useSWR(id ? [`/admin-point/settings/${id}`] : null, (args) =>
+    fetch(args[0])
   );
 
   if (isLoading) {
@@ -178,9 +181,7 @@ export default function PointSettingDetailPage() {
             <div className="md:col-span-3">
               <span
                 className={`text-sm px-2 py-1 rounded-md text-white ${
-                  settingData.isActive
-                    ? "bg-emerald-500"
-                    : "bg-red-500"
+                  settingData.isActive ? "bg-emerald-500" : "bg-red-500"
                 }`}
               >
                 {settingData.isActive ? "활성" : "비활성"}
@@ -194,7 +195,9 @@ export default function PointSettingDetailPage() {
               생성일
             </Label>
             <div className="md:col-span-3">
-              <span className="text-sm">{formatDate(settingData.createdAt)}</span>
+              <span className="text-sm">
+                {formatDate(settingData.createdAt)}
+              </span>
             </div>
           </div>
 
@@ -204,7 +207,9 @@ export default function PointSettingDetailPage() {
               수정일
             </Label>
             <div className="md:col-span-3">
-              <span className="text-sm">{formatDate(settingData.updatedAt)}</span>
+              <span className="text-sm">
+                {formatDate(settingData.updatedAt)}
+              </span>
             </div>
           </div>
         </CardContent>

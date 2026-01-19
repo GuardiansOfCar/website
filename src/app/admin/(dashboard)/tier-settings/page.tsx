@@ -138,7 +138,11 @@ export default function TierSettingsPage() {
 
   // 삭제 실행
   const handleDeleteClick = async (tier: TierSetting) => {
-    if (!confirm(`정말로 "${tier.name}" 티어를 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`)) {
+    if (
+      !confirm(
+        `정말로 "${tier.name}" 티어를 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`
+      )
+    ) {
       return;
     }
 
@@ -382,7 +386,9 @@ export default function TierSettingsPage() {
                           <TableCell className="text-center">
                             <Button
                               size="sm"
-                              variant={editData.is_active ? "default" : "outline"}
+                              variant={
+                                editData.is_active ? "default" : "outline"
+                              }
                               onClick={() =>
                                 setEditData({
                                   ...editData,
