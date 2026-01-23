@@ -27,11 +27,16 @@ import { DataTablePagination } from "@/components/data-table-pagination";
 // ====================================================================
 function PointPaymentHistory({ userId }: { userId: string }) {
   const fetch = useAdminFetch();
+  const [page, setPage] = useState(1);
+  const limit = 10;
+
   // SWR을 사용해 포인트 지급 내역을 불러옵니다.
   const { data: listData, isLoading } = useSWR(
-    `/users/${userId}/points/payment`,
+    `/users/${userId}/points/payment?page=${page}&limit=${limit}`,
     (url) => fetch(url)
   );
+
+  const totalPages = Math.ceil((listData?.total || 0) / limit);
 
   return (
     <div className="py-4">
@@ -45,7 +50,30 @@ function PointPaymentHistory({ userId }: { userId: string }) {
           { accessorKey: "reason", header: "지급 사유" },
         ]}
       />
-      {/* 필요 시 페이지네이션 추가 */}
+      {/* 페이지네이션 */}
+      {totalPages > 1 && (
+        <div className="mt-4 flex items-center justify-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={page === 1}
+          >
+            이전
+          </Button>
+          <span className="text-sm">
+            {page} / {totalPages}
+          </span>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            disabled={page === totalPages}
+          >
+            다음
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
@@ -55,11 +83,17 @@ function PointPaymentHistory({ userId }: { userId: string }) {
 // ====================================================================
 function DrivingHistory({ userId }: { userId: string }) {
   const fetch = useAdminFetch();
+  const [page, setPage] = useState(1);
+  const limit = 10;
+
   // SWR을 사용해 주행 기록을 불러옵니다.
   const { data: listData, isLoading } = useSWR(
-    `/users/${userId}/driving-history`,
+    `/users/${userId}/driving-history?page=${page}&limit=${limit}`,
     (url) => fetch(url)
   );
+
+  const totalPages = Math.ceil((listData?.total || 0) / limit);
+
   return (
     <div className="py-4">
       <DataTable
@@ -72,7 +106,87 @@ function DrivingHistory({ userId }: { userId: string }) {
           { accessorKey: "mode", header: "주행 모드" },
         ]}
       />
-      {/* 필요 시 페이지네이션 추가 */}
+      {/* 페이지네이션 */}
+      {totalPages > 1 && (
+        <div className="mt-4 flex items-center justify-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={page === 1}
+          >
+            이전
+          </Button>
+          <span className="text-sm">
+            {page} / {totalPages}
+          </span>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            disabled={page === totalPages}
+          >
+            다음
+          </Button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ====================================================================
+// 포인트 교환 내역 테이블 (서브 컴포넌트)
+// ====================================================================
+function PointExchangeHistory({ userId }: { userId: string }) {
+  const fetch = useAdminFetch();
+  const [page, setPage] = useState(1);
+  const limit = 10;
+
+  // SWR을 사용해 포인트 교환 내역을 불러옵니다.
+  const { data: listData, isLoading } = useSWR(
+    `/users/${userId}/points/exchange?page=${page}&limit=${limit}`,
+    (url) => fetch(url)
+  );
+
+  const totalPages = Math.ceil((listData?.total || 0) / limit);
+
+  return (
+    <div className="py-4">
+      <DataTable
+        data={listData?.data ?? []}
+        total={listData?.total || 0}
+        columns={[
+          // 포인트 교환 내역에 맞는 컬럼 정의
+          { accessorKey: "date", header: "교환일" },
+          { accessorKey: "amount", header: "교환 포인트" },
+          { accessorKey: "token_amount", header: "받은 토큰" },
+          { accessorKey: "status", header: "상태" },
+        ]}
+      />
+      {/* 페이지네이션 */}
+      {totalPages > 1 && (
+        <div className="mt-4 flex items-center justify-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={page === 1}
+          >
+            이전
+          </Button>
+          <span className="text-sm">
+            {page} / {totalPages}
+          </span>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            disabled={page === totalPages}
+          >
+            다음
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
@@ -90,6 +204,7 @@ export default function MemberDetailPage() {
   const [accountStatus, setAccountStatus] = useState("");
   const [reason, setReason] = useState("");
   const [referralCode, setReferralCode] = useState("");
+  const [inviterId, setInviterId] = useState("");
 
   // 섹션 표시 상태
   const [showPointsPayment, setShowPointsPayment] = useState(false);
@@ -107,6 +222,7 @@ export default function MemberDetailPage() {
     if (memberData) {
       setAccountStatus(memberData.is_active ? "active" : "inactive");
       setReferralCode(memberData.referral_code || "");
+      setInviterId(memberData.inviter_id?.toString() || "");
     }
   }, [memberData]);
 
@@ -123,6 +239,23 @@ export default function MemberDetailPage() {
       alert("레퍼럴 코드가 성공적으로 변경되었습니다.");
     } catch (error) {
       alert("레퍼럴 코드 변경에 실패했습니다.");
+      console.error(error);
+    }
+  };
+
+  // 추천인 ID 변경 핸들러
+  const handleInviterIdUpdate = async () => {
+    try {
+      await fetch(`/admin-members/members/user/${id}`, {
+        method: "PATCH",
+        data: {
+          user_id: parseInt(id),
+          inviter_id: inviterId ? parseInt(inviterId) : null,
+        },
+      });
+      alert("추천인 ID가 성공적으로 변경되었습니다.");
+    } catch (error) {
+      alert("추천인 ID 변경에 실패했습니다.");
       console.error(error);
     }
   };
@@ -203,6 +336,25 @@ export default function MemberDetailPage() {
         </CardContent>
       </Card>
 
+      {/* 추천인 ID 관리 */}
+      <Card>
+        <CardHeader>
+          <CardTitle>추천인 정보</CardTitle>
+        </CardHeader>
+        <CardContent className="flex items-end space-x-4">
+          <div className="flex-1 space-y-2">
+            <Label>추천인 ID (User ID)</Label>
+            <Input
+              type="number"
+              value={inviterId}
+              onChange={(e) => setInviterId(e.target.value)}
+              placeholder="추천인 User ID 입력"
+            />
+          </div>
+          <Button onClick={handleInviterIdUpdate}>변경</Button>
+        </CardContent>
+      </Card>
+
       {/* 포인트 지급 내역 */}
       <Card>
         <CardHeader>
@@ -232,7 +384,7 @@ export default function MemberDetailPage() {
         </CardHeader>
         {showPointsExchange && (
           <CardContent>
-            <div>포인트 교환 내역 테이블이 여기에 표시됩니다.</div>
+            <PointExchangeHistory userId={id} />
           </CardContent>
         )}
       </Card>
