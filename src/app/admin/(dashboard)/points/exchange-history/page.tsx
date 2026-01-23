@@ -75,6 +75,12 @@ export default function PointExchangeHistoryPage() {
   const [rejectReason, setRejectReason] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
 
+  // 상태 수동 변경 모달 상태
+  const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
+  const [manualStatus, setManualStatus] = useState<string>("");
+  const [adminMemo, setAdminMemo] = useState("");
+  const [failureReason, setFailureReason] = useState("");
+
   // 페이지네이션
   const request = useMemo(() => {
     const params: {
@@ -179,6 +185,52 @@ export default function PointExchangeHistoryPage() {
       setSelectedExchange(null);
       setRejectReason("");
     }
+  };
+
+  // 상태 수동 변경 처리
+  const handleStatusChange = async () => {
+    if (!selectedExchange || !manualStatus) {
+      alert("변경할 상태를 선택해주세요.");
+      return;
+    }
+    setIsProcessing(true);
+    try {
+      const result = await fetch(
+        `/admin-point/exchange/${selectedExchange.id}/status`,
+        {
+          method: "PUT",
+          data: {
+            status: manualStatus,
+            admin_memo: adminMemo || undefined,
+            failure_reason: failureReason || undefined,
+          },
+        }
+      );
+      if (result?.success) {
+        alert("상태가 변경되었습니다.");
+        refreshData();
+      } else {
+        alert(result?.message || "상태 변경에 실패했습니다.");
+      }
+    } catch (error: any) {
+      alert(error?.message || "상태 변경 중 오류가 발생했습니다.");
+    } finally {
+      setIsProcessing(false);
+      setIsStatusModalOpen(false);
+      setSelectedExchange(null);
+      setManualStatus("");
+      setAdminMemo("");
+      setFailureReason("");
+    }
+  };
+
+  // 상태 변경 모달 열기
+  const openStatusModal = (exchange: any) => {
+    setSelectedExchange(exchange);
+    setManualStatus(exchange.status);
+    setAdminMemo(exchange.adminMemo || "");
+    setFailureReason(exchange.failureReason || "");
+    setIsStatusModalOpen(true);
   };
 
   const handleDatePreset = (preset: DatePreset) => {
@@ -313,10 +365,32 @@ export default function PointExchangeHistoryPage() {
           label: status,
           className: "text-gray-500",
         };
+        const failureReason = row.original.failureReason;
         return (
-          <span className={`text-sm ${statusInfo.className}`}>
-            {statusInfo.label}
+          <div className="flex flex-col">
+            <span className={`text-sm ${statusInfo.className}`}>
+              {statusInfo.label}
+            </span>
+            {failureReason && (
+              <span className="text-xs text-red-400 truncate max-w-[150px]" title={failureReason}>
+                사유: {failureReason}
+              </span>
+            )}
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "adminMemo",
+      header: "관리자 메모",
+      cell: ({ row }: any) => {
+        const memo = row.original.adminMemo;
+        return memo ? (
+          <span className="text-sm text-gray-400 truncate max-w-[150px] block" title={memo}>
+            {memo}
           </span>
+        ) : (
+          <span className="text-sm text-gray-500">-</span>
         );
       },
     },
@@ -356,7 +430,17 @@ export default function PointExchangeHistoryPage() {
             </div>
           );
         }
-        return <span className="text-sm text-gray-400">-</span>;
+        // 완료/실패 상태에서는 상태 수정 버튼 표시
+        return (
+          <Button
+            size="sm"
+            variant="outline"
+            className="h-7 px-2 text-xs"
+            onClick={() => openStatusModal(row.original)}
+          >
+            상태 수정
+          </Button>
+        );
       },
     },
   ];
@@ -709,6 +793,103 @@ export default function PointExchangeHistoryPage() {
                 </>
               ) : (
                 "거절"
+              )}
+            </Button>
+          </SheetFooter>
+        </SheetContent>
+      </Sheet>
+
+      {/* 상태 수동 변경 모달 */}
+      <Sheet open={isStatusModalOpen} onOpenChange={setIsStatusModalOpen}>
+        <SheetContent>
+          <SheetHeader>
+            <SheetTitle>교환 상태 수동 변경</SheetTitle>
+            <SheetDescription>
+              교환 상태를 수동으로 변경하고 메모를 남길 수 있습니다.
+            </SheetDescription>
+          </SheetHeader>
+          {selectedExchange && (
+            <div className="py-4 space-y-4">
+              <div className="space-y-2 p-4 bg-gray-100 dark:bg-gray-800 rounded-md">
+                <p className="text-sm">
+                  <span className="text-gray-500">회원:</span>{" "}
+                  {selectedExchange.userName}
+                </p>
+                <p className="text-sm">
+                  <span className="text-gray-500">교환 포인트:</span>{" "}
+                  {selectedExchange.points?.toLocaleString()}P
+                </p>
+                <p className="text-sm">
+                  <span className="text-gray-500">코인량:</span>{" "}
+                  {selectedExchange.coinAmount?.toLocaleString()}{" "}
+                  {selectedExchange.coinSymbol}
+                </p>
+                <p className="text-sm">
+                  <span className="text-gray-500">현재 상태:</span>{" "}
+                  {exchangeStatusLabels[selectedExchange.status]?.label ||
+                    selectedExchange.status}
+                </p>
+              </div>
+              <div className="space-y-2">
+                <Label>변경할 상태</Label>
+                <Select value={manualStatus} onValueChange={setManualStatus}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="상태 선택" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="COMPLETED">교환 완료</SelectItem>
+                    <SelectItem value="PENDING">검토 필요</SelectItem>
+                    <SelectItem value="REJECTED">거절</SelectItem>
+                    <SelectItem value="FAILED">교환 실패</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              {manualStatus === "FAILED" && (
+                <div className="space-y-2">
+                  <Label>실패 사유</Label>
+                  <Textarea
+                    placeholder="실패 사유를 입력하세요. (예: 블록체인 전송 실패, 지갑 주소 오류 등)"
+                    value={failureReason}
+                    onChange={(e) => setFailureReason(e.target.value)}
+                    rows={3}
+                  />
+                </div>
+              )}
+              <div className="space-y-2">
+                <Label>관리자 메모</Label>
+                <Textarea
+                  placeholder="관리자 메모를 입력하세요."
+                  value={adminMemo}
+                  onChange={(e) => setAdminMemo(e.target.value)}
+                  rows={3}
+                />
+              </div>
+            </div>
+          )}
+          <SheetFooter className="gap-2">
+            <Button
+              variant="outline"
+              onClick={() => {
+                setIsStatusModalOpen(false);
+                setManualStatus("");
+                setAdminMemo("");
+                setFailureReason("");
+              }}
+              disabled={isProcessing}
+            >
+              취소
+            </Button>
+            <Button
+              onClick={handleStatusChange}
+              disabled={isProcessing || !manualStatus}
+            >
+              {isProcessing ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  처리 중...
+                </>
+              ) : (
+                "변경"
               )}
             </Button>
           </SheetFooter>
