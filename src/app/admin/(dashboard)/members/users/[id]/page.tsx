@@ -89,6 +89,7 @@ export default function MemberDetailPage() {
   // 계정 상태 관련 상태
   const [accountStatus, setAccountStatus] = useState("");
   const [reason, setReason] = useState("");
+  const [referralCode, setReferralCode] = useState("");
 
   // 섹션 표시 상태
   const [showPointsPayment, setShowPointsPayment] = useState(false);
@@ -105,8 +106,26 @@ export default function MemberDetailPage() {
   useEffect(() => {
     if (memberData) {
       setAccountStatus(memberData.is_active ? "active" : "inactive");
+      setReferralCode(memberData.referral_code || "");
     }
   }, [memberData]);
+
+  // 레퍼럴 코드 변경 핸들러
+  const handleReferralCodeUpdate = async () => {
+    try {
+      await fetch(`/admin-members/members/user/${id}`, {
+        method: "PATCH",
+        data: {
+          user_id: parseInt(id),
+          referral_code: referralCode,
+        },
+      });
+      alert("레퍼럴 코드가 성공적으로 변경되었습니다.");
+    } catch (error) {
+      alert("레퍼럴 코드 변경에 실패했습니다.");
+      console.error(error);
+    }
+  };
 
   // 계정 상태 변경 핸들러
   const handleStatusUpdate = async () => {
@@ -163,6 +182,24 @@ export default function MemberDetailPage() {
               />
             </div>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* 레퍼럴 코드 관리 */}
+      <Card>
+        <CardHeader>
+          <CardTitle>레퍼럴 코드</CardTitle>
+        </CardHeader>
+        <CardContent className="flex items-end space-x-4">
+          <div className="flex-1 space-y-2">
+            <Label>레퍼럴 코드</Label>
+            <Input
+              value={referralCode}
+              onChange={(e) => setReferralCode(e.target.value.toUpperCase())}
+              placeholder="레퍼럴 코드 입력"
+            />
+          </div>
+          <Button onClick={handleReferralCodeUpdate}>변경</Button>
         </CardContent>
       </Card>
 
