@@ -372,7 +372,10 @@ export default function PointExchangeHistoryPage() {
               {statusInfo.label}
             </span>
             {failureReason && (
-              <span className="text-xs text-red-400 truncate max-w-[150px]" title={failureReason}>
+              <span
+                className="text-xs text-red-400 truncate max-w-[150px]"
+                title={failureReason}
+              >
                 사유: {failureReason}
               </span>
             )}
@@ -386,7 +389,10 @@ export default function PointExchangeHistoryPage() {
       cell: ({ row }: any) => {
         const memo = row.original.adminMemo;
         return memo ? (
-          <span className="text-sm text-gray-400 truncate max-w-[150px] block" title={memo}>
+          <span
+            className="text-sm text-gray-400 truncate max-w-[150px] block"
+            title={memo}
+          >
             {memo}
           </span>
         ) : (
