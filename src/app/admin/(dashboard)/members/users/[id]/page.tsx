@@ -32,7 +32,7 @@ function PointPaymentHistory({ userId }: { userId: string }) {
 
   // SWR을 사용해 포인트 지급 내역을 불러옵니다.
   const { data: listData, isLoading } = useSWR(
-    `/users/${userId}/points/payment?page=${page}&limit=${limit}`,
+    `/admin-members/members/user/${userId}/points?page=${page}&limit=${limit}`,
     (url) => fetch(url)
   );
 
@@ -45,9 +45,34 @@ function PointPaymentHistory({ userId }: { userId: string }) {
         total={listData?.total || 0}
         columns={[
           // 포인트 지급 내역에 맞는 컬럼 정의
-          { accessorKey: "date", header: "지급일" },
-          { accessorKey: "amount", header: "지급 포인트" },
-          { accessorKey: "reason", header: "지급 사유" },
+          {
+            accessorKey: "date",
+            header: "지급일",
+            cell: ({ row }) => {
+              const date = row.getValue("date");
+              if (!date) return "-";
+              return new Date(date as string).toLocaleString("ko-KR");
+            },
+          },
+          {
+            accessorKey: "amount",
+            header: "변동 포인트",
+            cell: ({ row }) => {
+              const amount = row.getValue("amount") as number;
+              return amount >= 0
+                ? `+${amount.toLocaleString()}`
+                : amount.toLocaleString();
+            },
+          },
+          { accessorKey: "reason", header: "변동 사유" },
+          {
+            accessorKey: "balance",
+            header: "잔액",
+            cell: ({ row }) => {
+              const balance = row.getValue("balance") as number;
+              return balance?.toLocaleString() ?? "-";
+            },
+          },
         ]}
       />
       {/* 페이지네이션 */}
@@ -88,7 +113,7 @@ function DrivingHistory({ userId }: { userId: string }) {
 
   // SWR을 사용해 주행 기록을 불러옵니다.
   const { data: listData, isLoading } = useSWR(
-    `/users/${userId}/driving-history?page=${page}&limit=${limit}`,
+    `/admin-members/members/user/${userId}/driving?page=${page}&limit=${limit}`,
     (url) => fetch(url)
   );
 
@@ -101,9 +126,40 @@ function DrivingHistory({ userId }: { userId: string }) {
         total={listData?.total || 0}
         columns={[
           // 주행 기록에 맞는 컬럼 정의
-          { accessorKey: "date", header: "주행 날짜" },
-          { accessorKey: "distance", header: "주행 거리" },
+          {
+            accessorKey: "date",
+            header: "주행 날짜",
+            cell: ({ row }) => {
+              const date = row.getValue("date");
+              if (!date) return "-";
+              return new Date(date as string).toLocaleString("ko-KR");
+            },
+          },
+          {
+            accessorKey: "distance",
+            header: "주행 거리",
+            cell: ({ row }) => {
+              const distance = row.getValue("distance") as number;
+              if (!distance) return "-";
+              return distance >= 1000
+                ? `${(distance / 1000).toFixed(2)} km`
+                : `${distance} m`;
+            },
+          },
           { accessorKey: "mode", header: "주행 모드" },
+          {
+            accessorKey: "duration",
+            header: "주행 시간",
+            cell: ({ row }) => {
+              const sec = row.getValue("duration") as number;
+              if (!sec) return "-";
+              const min = Math.floor(sec / 60);
+              const s = sec % 60;
+              return `${min}분 ${s}초`;
+            },
+          },
+          { accessorKey: "point", header: "획득 포인트" },
+          { accessorKey: "score", header: "점수" },
         ]}
       />
       {/* 페이지네이션 */}
@@ -144,7 +200,7 @@ function PointExchangeHistory({ userId }: { userId: string }) {
 
   // SWR을 사용해 포인트 교환 내역을 불러옵니다.
   const { data: listData, isLoading } = useSWR(
-    `/users/${userId}/points/exchange?page=${page}&limit=${limit}`,
+    `/admin-members/members/user/${userId}/exchange?page=${page}&limit=${limit}`,
     (url) => fetch(url)
   );
 
@@ -157,9 +213,34 @@ function PointExchangeHistory({ userId }: { userId: string }) {
         total={listData?.total || 0}
         columns={[
           // 포인트 교환 내역에 맞는 컬럼 정의
-          { accessorKey: "date", header: "교환일" },
-          { accessorKey: "amount", header: "교환 포인트" },
-          { accessorKey: "token_amount", header: "받은 토큰" },
+          {
+            accessorKey: "date",
+            header: "교환일",
+            cell: ({ row }: any) => (
+              <span>
+                {row.original.date
+                  ? new Date(row.original.date).toLocaleDateString("ko-KR")
+                  : "-"}
+              </span>
+            ),
+          },
+          {
+            accessorKey: "point_amount",
+            header: "교환 포인트",
+            cell: ({ row }: any) => (
+              <span>{row.original.point_amount?.toLocaleString() || "-"}</span>
+            ),
+          },
+          {
+            accessorKey: "coin_amount",
+            header: "받은 토큰",
+            cell: ({ row }: any) => (
+              <span>
+                {row.original.coin_amount?.toLocaleString() || "-"}{" "}
+                {row.original.coin_symbol || ""}
+              </span>
+            ),
+          },
           { accessorKey: "status", header: "상태" },
         ]}
       />
