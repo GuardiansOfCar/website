@@ -338,23 +338,29 @@ export default function PointExchangeHistoryPage() {
       ),
     },
     {
-      accessorKey: "points",
-      header: "교환 포인트",
-      cell: ({ row }: any) => (
-        <span className="text-sm">
-          {row.original.points?.toLocaleString() || "-"}
-        </span>
-      ),
-    },
-    {
-      accessorKey: "coinAmount",
-      header: "코인량",
-      cell: ({ row }: any) => (
-        <span className="text-sm">
-          {row.original.coinAmount?.toLocaleString() || "-"}{" "}
-          {row.original.coinSymbol || ""}
-        </span>
-      ),
+      accessorKey: "exchangeDetail",
+      header: "교환 내역",
+      cell: ({ row }: any) => {
+        const points = row.original.points?.toLocaleString() || "0";
+        const coinAmount = row.original.coinAmount?.toLocaleString() || "0";
+        const coinSymbol = row.original.coinSymbol || "GOTCAR";
+        const exchangeType = row.original.exchangeType || "p2c";
+
+        // p2c: Point → Coin, c2p: Coin → Point
+        if (exchangeType === "c2p") {
+          return (
+            <span className="text-sm font-medium">
+              {coinAmount} {coinSymbol} → {points} POINT
+            </span>
+          );
+        } else {
+          return (
+            <span className="text-sm font-medium">
+              {points} POINT → {coinAmount} {coinSymbol}
+            </span>
+          );
+        }
+      },
     },
     {
       accessorKey: "status",
