@@ -33,13 +33,18 @@ const exchangeStatusLabels: Record<
   string,
   { label: string; className: string }
 > = {
-  COMPLETED: { label: "교환 완료", className: "text-white" },
-  PENDING: {
-    label: "검토 필요",
+  A: { label: "완료", className: "text-green-400" },
+  R: {
+    label: "승인 대기",
     className: "text-cyan-400 underline cursor-pointer",
   },
-  REJECTED: { label: "거절 (거절사유)", className: "text-white" },
-  FAILED: { label: "교환 실패", className: "text-red-500" },
+  COMPLETED: { label: "완료", className: "text-green-400" },
+  PENDING: {
+    label: "승인 대기",
+    className: "text-cyan-400 underline cursor-pointer",
+  },
+  REJECTED: { label: "거절", className: "text-orange-400" },
+  FAILED: { label: "실패", className: "text-red-500" },
 };
 
 // 교환 포인트량 라벨
@@ -119,7 +124,7 @@ export default function PointExchangeHistoryPage() {
     isLoading,
     mutate: refreshData,
   } = useSWR(["/admin-point/exchange-history", request], (args) =>
-    fetch(args[0], { query: args[1] })
+    fetch(args[0], { query: args[1] }),
   );
 
   const history = historyData?.data || [];
@@ -139,7 +144,7 @@ export default function PointExchangeHistoryPage() {
         {
           method: "PUT",
           data: {},
-        }
+        },
       );
       if (result?.success) {
         alert("교환 요청이 승인되었습니다.");
@@ -169,7 +174,7 @@ export default function PointExchangeHistoryPage() {
         {
           method: "PUT",
           data: { reason: rejectReason },
-        }
+        },
       );
       if (result?.success) {
         alert("교환 요청이 거절되었습니다.");
@@ -204,7 +209,7 @@ export default function PointExchangeHistoryPage() {
             admin_memo: adminMemo || undefined,
             failure_reason: failureReason || undefined,
           },
-        }
+        },
       );
       if (result?.success) {
         alert("상태가 변경되었습니다.");
