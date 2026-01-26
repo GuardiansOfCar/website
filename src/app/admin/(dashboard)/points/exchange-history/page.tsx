@@ -333,10 +333,14 @@ export default function PointExchangeHistoryPage() {
       cell: ({ row }: any) => (
         <span className="text-sm">
           {row.original.exchangedAt
-            ? new Date(row.original.exchangedAt).toLocaleDateString("ko-KR", {
+            ? new Date(row.original.exchangedAt).toLocaleString("ko-KR", {
                 year: "numeric",
                 month: "2-digit",
                 day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: false,
               })
             : "-"}
         </span>
