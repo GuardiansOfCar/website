@@ -187,6 +187,11 @@ const sidebarNav = [
       },
     ],
   },
+  {
+    title: "시스템 설정",
+    url: "/admin/settings",
+    icon: Settings,
+  },
 ];
 
 // 메뉴 아이템에서 모든 URL을 재귀적으로 수집하는 함수
@@ -238,7 +243,7 @@ function RecursiveMenuItemContent({
           className={cn(
             "w-full justify-between transition-all duration-200 text-gray-700 dark:text-[#B4B5B1] hover:bg-gray-100 dark:hover:bg-gray-800",
             isActiveBranch &&
-              "bg-sidebar-accent text-sidebar-accent-foreground dark:bg-gray-800 dark:text-white"
+              "bg-sidebar-accent text-sidebar-accent-foreground dark:bg-gray-800 dark:text-white",
           )}
         >
           <div className="flex items-center gap-2">
@@ -294,7 +299,7 @@ function RecursiveMenuItem({
   const isActiveBranch = isPathInBranch(pathname, item);
   // ICO 관리 메뉴는 기본적으로 열려있도록 설정
   const [isOpen, setIsOpen] = useState(
-    isActiveBranch || item.title === "ICO 관리"
+    isActiveBranch || item.title === "ICO 관리",
   );
   const Icon = item.icon;
 
