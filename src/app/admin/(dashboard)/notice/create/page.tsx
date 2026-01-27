@@ -49,7 +49,7 @@ export default function NoticeCreatePage() {
   const [startTime, setStartTime] = useState("09:00");
   const [isImmediate, setIsImmediate] = useState(true);
   const [endDate, setEndDate] = useState<Date | undefined>(
-    dayjs().add(1, "month").toDate()
+    dayjs().add(1, "month").toDate(),
   );
   const [endTime, setEndTime] = useState("24:00");
   const [isPermanent, setIsPermanent] = useState(false);
@@ -100,19 +100,19 @@ export default function NoticeCreatePage() {
     // 현재 UI에서는 하나의 에디터 인스턴스만 사용하므로, 다국어 컨텐츠 입력이 불완전할 수 있음.
     // 사용자가 각 언어 탭을 눌러 제목을 바꾸고 에디터 내용을 바꿔도, 마지막에 저장된 'languages' state에는 title만 있고 content는 비어있음.
     // 'addLanguage' 시점이나 탭 전환 시점에 content를 저장하지 않고 있음.
-    // 이를 해결하기 위해 page.tsx의 상태 관리를 대폭 수정해야 하지만, 
-    // 우선은 "현재 에디터에 보이는 내용"을 "현재 선택된 언어"의 내용으로 간주하거나, 
+    // 이를 해결하기 위해 page.tsx의 상태 관리를 대폭 수정해야 하지만,
+    // 우선은 "현재 에디터에 보이는 내용"을 "현재 선택된 언어"의 내용으로 간주하거나,
     // 혹은 "영어(기본)" 내용으로 전송하는 등 임시 처리가 필요.
-    
+
     // **중요**: 사용자가 입력한 여러 언어의 제목과, 현재 에디터의 내용을 '모든 언어'의 내용으로 사용하거나
     // 혹은 languages state에 content 필드를 제대로 업데이트하는 로직이 선행되어야 함.
     // 기존 languages state에는 content 필드가 있으니, 이를 활용하도록 payload 매핑을 수정합니다.
-    
+
     // 임시: 현재 에디터의 내용을 모든 언어의 content로 설정 (다국어 본문 분리는 UI 개편 필요)
-    payload.languages = languages.map(l => ({
-        language: l.language,
-        title: l.title,
-        contents: contentHtml 
+    payload.languages = languages.map((l) => ({
+      language: l.language,
+      title: l.title,
+      contents: contentHtml,
     }));
 
     try {
@@ -136,9 +136,9 @@ export default function NoticeCreatePage() {
 
   // 언어 삭제 핸들러
   const removeLanguage = (id: number) => {
-    const languageToRemove = languages.find((l) => l.id === id);
-    if (languageToRemove?.language === "en") {
-      alert("영어는 기본 언어이므로 삭제할 수 없습니다.");
+    // 첫 번째 항목은 삭제 불가
+    if (languages[0]?.id === id) {
+      alert("첫 번째 언어는 삭제할 수 없습니다.");
       return;
     }
     setLanguages(languages.filter((lang) => lang.id !== id));
@@ -147,7 +147,7 @@ export default function NoticeCreatePage() {
   // 언어 변경 핸들러
   const updateLanguage = (id: number, language: string) => {
     setLanguages(
-      languages.map((lang) => (lang.id === id ? { ...lang, language } : lang))
+      languages.map((lang) => (lang.id === id ? { ...lang, language } : lang)),
     );
   };
 
@@ -334,7 +334,7 @@ export default function NoticeCreatePage() {
                 ))}
               </SelectContent>
             </Select>
-            {lang.language !== "en" && (
+            {index !== 0 && (
               <Button
                 onClick={() => removeLanguage(lang.id)}
                 variant="outline"
@@ -351,7 +351,7 @@ export default function NoticeCreatePage() {
               value={lang.title}
               onChange={(e) => {
                 const updatedLanguages = languages.map((l) =>
-                  l.id === lang.id ? { ...l, title: e.target.value } : l
+                  l.id === lang.id ? { ...l, title: e.target.value } : l,
                 );
                 setLanguages(updatedLanguages);
               }}
