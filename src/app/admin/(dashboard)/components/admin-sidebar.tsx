@@ -151,6 +151,11 @@ const sidebarNav = [
             url: "/admin/points/exchange-history",
             icon: History,
           },
+          {
+            title: "포인트 구매 내역 조회",
+            url: "/admin/points/purchase-history",
+            icon: History,
+          },
         ],
       },
     ],
