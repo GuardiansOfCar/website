@@ -19,13 +19,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 // 상태 라벨
 const statusLabels: Record<string, { label: string; className: string }> = {
@@ -382,21 +382,8 @@ export default function PointPurchaseHistoryPage() {
               <DataTable columns={columns} data={purchases} />
               <div className="mt-4">
                 <DataTablePaginationPrefixed
-                  pageCount={pagination.total_pages}
-                  page={pagination.page}
-                  pageSize={pagination.limit}
+                  request={request}
                   total={pagination.total}
-                  onPageChange={(page) => {
-                    const params = new URLSearchParams(searchParams.toString());
-                    params.set("page", String(page));
-                    router.push(`${pathname}?${params.toString()}`);
-                  }}
-                  onPageSizeChange={(size) => {
-                    const params = new URLSearchParams(searchParams.toString());
-                    params.set("limit", String(size));
-                    params.set("page", "1");
-                    router.push(`${pathname}?${params.toString()}`);
-                  }}
                 />
               </div>
             </>
@@ -405,16 +392,16 @@ export default function PointPurchaseHistoryPage() {
       </Card>
 
       {/* 수동 생성 모달 */}
-      <Sheet open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
-        <SheetContent className="w-[400px] sm:w-[540px]">
-          <SheetHeader>
-            <SheetTitle>C2P 수동 생성</SheetTitle>
-            <SheetDescription>
+      <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>C2P 수동 생성</DialogTitle>
+            <DialogDescription>
               누락된 BSC 트랜잭션을 수동으로 처리합니다.
               <br />
               PointPurchase + PointHistory가 생성되고 포인트가 즉시 지급됩니다.
-            </SheetDescription>
-          </SheetHeader>
+            </DialogDescription>
+          </DialogHeader>
 
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
@@ -501,7 +488,7 @@ export default function PointPurchaseHistoryPage() {
             </div>
           </div>
 
-          <SheetFooter>
+          <DialogFooter className="mt-6">
             <Button
               variant="outline"
               onClick={() => setIsCreateModalOpen(false)}
@@ -514,9 +501,9 @@ export default function PointPurchaseHistoryPage() {
               )}
               생성 및 포인트 지급
             </Button>
-          </SheetFooter>
-        </SheetContent>
-      </Sheet>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
