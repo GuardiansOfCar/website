@@ -273,7 +273,7 @@ export const Nav = () => {
           }
           target={"_blank"}
           rel={"noopener noreferrer"}
-          href={"https://x.com/gotcar_official"}
+          href={"https://x.com/GOTCAROFFICIAL"}
           aria-label={t("common.followX")}
         >
           <Image
@@ -607,7 +607,7 @@ export const Nav = () => {
                   }
                   target={"_blank"}
                   rel={"noopener noreferrer"}
-                  href={"https://x.com/gotcar_official"}
+                  href={"https://x.com/GOTCAROFFICIAL"}
                   aria-label={t("common.followX")}
                 >
                   <Image
