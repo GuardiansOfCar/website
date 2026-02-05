@@ -98,7 +98,7 @@ export const Nav = () => {
               className={clsx(
                 "block py-2 px-3 cursor-pointer transition-colors",
                 "max-laptop:px-5 max-laptop:py-5 max-laptop:justify-between",
-                "align-middle"
+                "align-middle",
               )}
               style={{
                 fontFamily: "Pretendard, sans-serif",
@@ -144,7 +144,7 @@ export const Nav = () => {
             isMobile && "px-2 py-2",
             !isMobile &&
               "max-laptop:px-5 max-laptop:py-5 max-laptop:justify-between max-laptop:w-full",
-            "align-middle"
+            "align-middle",
           )}
           style={{
             fontFamily: "Pretendard, sans-serif",
@@ -238,7 +238,7 @@ export const Nav = () => {
                     className={clsx(
                       "flex text-left w-full py-3 text-body-1b hover:text-primary cursor-pointer transition-colors",
                       selected === chapter.key && "!text-primary",
-                      "px-4 max-laptop:px-8 max-laptop:py-4 max-laptop:w-full"
+                      "px-4 max-laptop:px-8 max-laptop:py-4 max-laptop:w-full",
                     )}
                     style={{
                       color: isLightMode ? "#0F0F0F" : "#FFFFFF",
@@ -273,7 +273,7 @@ export const Nav = () => {
           }
           target={"_blank"}
           rel={"noopener noreferrer"}
-          href={"https://x.com/GOTCAROFFICIAL"}
+          href={"https://x.com/gotcar_official?s=21"}
           aria-label={t("common.followX")}
         >
           <Image
@@ -329,7 +329,7 @@ export const Nav = () => {
               "bg-[#2F2F31] rounded-xl",
               "text-[#FFFFFF] font-bold text-sm leading-[22px] text-center align-middle",
               "w-[80px] h-[42px]",
-              "max-laptop:w-full"
+              "max-laptop:w-full",
             )}
             style={{
               fontFamily: "Pretendard, sans-serif",
@@ -359,7 +359,7 @@ export const Nav = () => {
             "flex items-center justify-center gap-2",
             "bg-primary rounded-xl",
             "text-[#0F0F0F] font-bold text-sm leading-[22px] text-center align-middle",
-            "w-[129px] h-[42px] py-[10px] px-[14px]"
+            "w-[129px] h-[42px] py-[10px] px-[14px]",
           )}
           style={{
             fontFamily: "Pretendard, sans-serif",
@@ -387,7 +387,7 @@ export const Nav = () => {
         "rounded-2xl border-b border-neutral-60/20",
         "pt-3 px-6 pb-3",
         "flex items-center",
-        "max-laptop:max-w-[calc(100%-32px)] max-laptop:w-[calc(100%-32px)] max-laptop:mx-4 max-laptop:rounded-2xl max-laptop:border-b-0 max-laptop:bg-black max-laptop:backdrop-blur-none max-laptop:justify-between max-laptop:pt-4 max-laptop:px-4 max-laptop:pb-[19px]"
+        "max-laptop:max-w-[calc(100%-32px)] max-laptop:w-[calc(100%-32px)] max-laptop:mx-4 max-laptop:rounded-2xl max-laptop:border-b-0 max-laptop:bg-black max-laptop:backdrop-blur-none max-laptop:justify-between max-laptop:pt-4 max-laptop:px-4 max-laptop:pb-[19px]",
       )}
       style={{
         backgroundColor: isLightMode ? "white" : "rgba(7,20,25,0.8)",
@@ -480,7 +480,7 @@ export const Nav = () => {
           <ul
             className={clsx(
               "fixed z-[50] hidden max-laptop:block",
-              "top-[94px] flex flex-col"
+              "top-[94px] flex flex-col",
             )}
             style={{
               // height: "376px",
@@ -529,7 +529,7 @@ export const Nav = () => {
                     href={nav.href as any}
                     className={clsx(
                       "block cursor-pointer transition-all",
-                      "border-b last:border-b-0"
+                      "border-b last:border-b-0",
                     )}
                     style={{
                       width: "100%",
@@ -607,7 +607,7 @@ export const Nav = () => {
                   }
                   target={"_blank"}
                   rel={"noopener noreferrer"}
-                  href={"https://x.com/GOTCAROFFICIAL"}
+                  href={"https://x.com/gotcar_official?s=21"}
                   aria-label={t("common.followX")}
                 >
                   <Image
@@ -686,7 +686,7 @@ export const Nav = () => {
                       "flex items-center justify-center gap-2 w-full",
                       "bg-[#2F2F31] rounded-xl",
                       "text-[#FFFFFF] font-bold text-sm leading-[22px] text-center align-middle",
-                      "h-[42px]"
+                      "h-[42px]",
                     )}
                     style={{
                       fontFamily: "Pretendard, sans-serif",
@@ -710,7 +710,7 @@ export const Nav = () => {
                     "flex items-center justify-center gap-2 flex-1",
                     "bg-primary rounded-xl",
                     "text-[#0F0F0F] font-bold text-sm leading-[22px] text-center align-middle",
-                    "h-[42px]"
+                    "h-[42px]",
                   )}
                   style={{
                     fontFamily: "Pretendard, sans-serif",

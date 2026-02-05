@@ -53,7 +53,7 @@ export const CopyrightFooter = () => {
             }
             target={"_blank"}
             rel={"noopener noreferrer"}
-            href={"https://x.com/GOTCAROFFICIAL"}
+            href={"https://x.com/gotcar_official?s=21"}
             aria-label={"Follow GOTCAR on X (Twitter)"}
           >
             <Image

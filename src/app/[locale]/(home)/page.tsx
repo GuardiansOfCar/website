@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   try {
     const messages = JSON.parse(
-      readFileSync(`./messages/${locale}.json`, "utf-8")
+      readFileSync(`./messages/${locale}.json`, "utf-8"),
     );
     if (messages.metadata?.home) {
       const ogLocaleMap: Record<string, string> = {
@@ -128,7 +128,10 @@ const structuredData = {
   description:
     "GOTCAR transforms real-time driving data into secure, private, and valuable digital assets. Powered by AI Mobility Agent, building a safer, smarter, and decentralized mobility ecosystem.",
   foundingDate: "2024",
-  sameAs: ["https://x.com/GOTCAROFFICIAL", "https://t.me/GOTCAR_Official"],
+  sameAs: [
+    "https://x.com/gotcar_official?s=21",
+    "https://t.me/GOTCAR_Official",
+  ],
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "Customer Service",
