@@ -161,6 +161,22 @@ const sidebarNav = [
     ],
   },
   {
+    title: "쿠폰 관리",
+    icon: Gift,
+    children: [
+      {
+        title: "쿠폰 조회",
+        url: "/admin/coupons/list",
+        icon: Gift,
+      },
+      {
+        title: "쿠폰 생성",
+        url: "/admin/coupons/create",
+        icon: Gift,
+      },
+    ],
+  },
+  {
     title: "공지사항",
     icon: FileText,
     children: [

@@ -66,3 +66,40 @@ export const defaultNoticeListRequest: NoticeListRequest = {
   importance_type: "ALL",
   order_by: "RECENT",
 };
+
+// ✅ 3. 쿠폰 조회 전용 타입 및 기본값
+export interface CouponListRequest extends PaginationRequest {}
+
+export const defaultCouponListRequest: CouponListRequest = {
+  ...defaultPaginationRequest,
+};
+
+export interface CouponDetail {
+  id: number;
+  serial_number: string;
+  condition_name: string;
+  point_amount: number;
+  is_active: boolean;
+  is_used: boolean;
+  expired_at: string;
+  created_at: string;
+}
+
+export interface CouponListResponse {
+  coupons: CouponDetail[];
+  total: number;
+}
+
+export interface CreateCouponRequest {
+  serial_number: string;
+  condition_name: string;
+  point_amount: number;
+  expired_at: string;
+}
+
+export interface UpdateCouponRequest {
+  id: number;
+  condition_name?: string;
+  point_amount?: number;
+  expired_at?: string;
+}
