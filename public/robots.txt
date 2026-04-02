@@ -1,6 +1,9 @@
 # *
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /denied
+Disallow: /*/denied
 
 # Host
 Host: https://guardiansofthecar.com/

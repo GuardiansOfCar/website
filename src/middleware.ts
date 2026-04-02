@@ -8,6 +8,13 @@ import { match } from "@formatjs/intl-localematcher";
 
 const locales = routing.locales;
 const defaultLocale = routing.defaultLocale;
+const CANONICAL_HOST = "guardiansofthecar.com";
+
+// 더 이상 지원하지 않는 옛 locale 목록 (과거 사이트에서 사용됨)
+const legacyLocales = ["ko", "fr", "de", "nl", "ru", "es", "th", "zh-TW"];
+
+// 더 이상 존재하지 않는 옛 경로 목록
+const legacyPaths = ["/chapters", "/howtobuy", "/roadmap", "/g2e"];
 
 function detectLocale(request: NextRequest): string {
   const negotiatorHeaders: Record<string, string> = {};
@@ -23,7 +30,45 @@ const intlMiddleware = createMiddleware(routing);
 
 export async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
+  const host = req.headers.get("host") || "";
 
+  // ====================================================
+  // 1. www → non-www 강제 301 리다이렉트 (SEO canonical 통일)
+  // ====================================================
+  if (host.startsWith("www.")) {
+    const canonicalUrl = new URL(req.url);
+    canonicalUrl.host = CANONICAL_HOST;
+    return NextResponse.redirect(canonicalUrl, 301);
+  }
+
+  // ====================================================
+  // 2. 옛 locale/경로 → 301 리다이렉트 (과거 크롤링된 URL 정리)
+  // ====================================================
+  const pathSegments = path.split("/").filter(Boolean);
+  const firstSegment = pathSegments[0] || "";
+
+  // 옛 locale → /en으로 301 리다이렉트
+  if (legacyLocales.includes(firstSegment)) {
+    const restPath = pathSegments.slice(1).join("/");
+    const redirectUrl = new URL(
+      `/en${restPath ? `/${restPath}` : ""}`,
+      req.url,
+    );
+    return NextResponse.redirect(redirectUrl, 301);
+  }
+
+  // 옛 경로 (현재 locale 하위의 /chapters, /howtobuy 등) → 해당 locale 홈으로 301
+  const locale = locales.includes(firstSegment as any) ? firstSegment : null;
+  if (locale) {
+    const subPath = `/${pathSegments.slice(1).join("/")}`;
+    if (legacyPaths.some((lp) => subPath.startsWith(lp))) {
+      return NextResponse.redirect(new URL(`/${locale}`, req.url), 301);
+    }
+  }
+
+  // ====================================================
+  // 3. Geo IP 차단 (US, CN)
+  // ====================================================
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0];
 
   if (ip && !path.includes("/denied")) {
@@ -53,8 +98,9 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  const pathnameParts = path.split("/");
-  const firstSegment = pathnameParts[1];
+  // ====================================================
+  // 5. locale 라우팅
+  // ====================================================
   const hasLocale = locales.includes(firstSegment as any);
 
   if (!hasLocale) {
