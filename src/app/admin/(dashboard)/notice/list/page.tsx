@@ -85,19 +85,25 @@ export default function NoticeListPage() {
 
   // 검색 핸들러
   const handleSearch = () => {
+    const startDateFormatted = date?.from ? dayjs(date.from).format("YYYY-MM-DD") : undefined;
+    const endDateFormatted = date?.to ? dayjs(date.to).format("YYYY-MM-DD") : undefined;
+    const selectedPostType = postType === "ALL" ? undefined : postType;
+    const searchQuery = query || undefined;
+
     const params = {
       ...request,
       page: 1,
-      startDate: date?.from ? dayjs(date.from).format("YYYY-MM-DD") : undefined,
-      endDate: date?.to ? dayjs(date.to).format("YYYY-MM-DD") : undefined,
-      type: postType === "ALL" ? undefined : postType,
+      start_date: startDateFormatted,
+      startDate: startDateFormatted,
+      end_date: endDateFormatted,
+      endDate: endDateFormatted,
+      post_type: selectedPostType,
+      type: selectedPostType,
       importance_type: importanceType === "ALL" ? undefined : importanceType,
-      query: query || undefined,
+      search: searchQuery,
+      query: searchQuery,
       order_by: orderBy,
     };
-    console.log("@@@@@@@@@@@@")
-    console.log(params)
-    console.log("@@@@@@@@@@@@")
     router.push(`${pathname}?${stringify(params)}`);
   };
 

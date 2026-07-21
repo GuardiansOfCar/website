@@ -50,18 +50,20 @@ export const defaultDrivingHistoryRequest: DrivingHistoryListRequest = {
   sort_by: "RECENT",
 };
 
-// ✅ 2. 공지사항 조회 전용 타입 및 기본값
 export interface NoticeListRequest extends PaginationRequest {
   start_date?: string;
   end_date?: string;
+  post_type?: "ALL" | "EVENT" | "ANNOUNCEMENT";
   type?: "ALL" | "EVENT" | "ANNOUNCEMENT";
   importance_type?: "ALL" | "IMPORTANT" | "NORMAL";
+  search?: string;
   query?: string;
   order_by?: "RECENT" | "OLDEST";
 }
 
 export const defaultNoticeListRequest: NoticeListRequest = {
   ...defaultPaginationRequest,
+  post_type: "ALL",
   type: "ALL",
   importance_type: "ALL",
   order_by: "RECENT",
