@@ -53,6 +53,11 @@ export const PartnershipSection = () => {
         imagePath: "/images/abobe-logo.png",
         isImage: true,
       },
+      {
+        url: "https://www.zerra.ventures/",
+        imagePath: "/images/zerra-logo.png",
+        isImage: true,
+      },
     ];
   }, []);
 
