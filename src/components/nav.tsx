@@ -317,7 +317,7 @@ export const Nav = () => {
         </div>
 
         <NextLink
-          href={"https://docs.guardiansofthecar.com/"}
+          href={"https://gotcar.gitbook.io/gotcar-docs"}
           target={"_blank"}
           rel={"noopener noreferrer"}
           className={"max-laptop:ml-0"}
@@ -677,7 +677,7 @@ export const Nav = () => {
                 }}
               >
                 <NextLink
-                  href={"https://docs.guardiansofthecar.com/"}
+                  href={"https://gotcar.gitbook.io/gotcar-docs"}
                   target={"_blank"}
                   rel={"noopener noreferrer"}
                   className={"flex-1"}
