@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2026년 9월 4주차 (2026-09-21 ~ 2026-09-25)
+
+### 금주 작업 내역
+- **홈페이지 FAQ 항목 정리**: 토큰 클레임(`When can I claim my $GOTCAR tokens?`) 및 스테이킹(`How do I stake $GOTCAR?`) 관련 FAQ 질의응답 제거 (`faq-section.tsx`, 다국어 메시지 파일)
+- **상단 내비게이션 메뉴 정리**: 상단 메뉴바 및 모바일 메뉴에서 Staking 및 Referral 링크 항목 제거 (`nav.tsx`)
+
 ## 2026년 9월 3주차 (2026-09-15 ~ 2026-09-19)
 
 ### 금주 작업 내역

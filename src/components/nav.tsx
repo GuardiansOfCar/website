@@ -74,14 +74,6 @@ export const Nav = () => {
           href: `/${selected}` as `/${string}`,
           isHome: true,
         },
-        {
-          label: t("home.nav6"),
-          href: `/${selected}/staking` as `/${string}/staking`,
-        },
-        {
-          label: t("home.nav7"),
-          href: `/${selected}/referral` as `/${string}/referral`,
-        },
       ].map((nav, index) => {
         // 현재 경로와 비교 (pathname 직접 사용으로 SSR/CSR 일치)
         const isActive = nav.isHome
@@ -506,14 +498,6 @@ export const Nav = () => {
                 label: t("home.nav1"),
                 href: `/${selected}` as `/${string}`,
                 isHome: true,
-              },
-              {
-                label: t("home.nav6"),
-                href: `/${selected}/staking` as `/${string}/staking`,
-              },
-              {
-                label: t("home.nav7"),
-                href: `/${selected}/referral` as `/${string}/referral`,
               },
             ].map((nav, index) => {
               // 현재 경로와 비교 (pathname 직접 사용으로 SSR/CSR 일치)

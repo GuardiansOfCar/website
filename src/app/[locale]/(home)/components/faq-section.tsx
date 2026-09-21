@@ -120,8 +120,6 @@ export const FaqSection = () => {
     { question: t("home.faq.q3"), answer: t("home.faq.a3") },
     { question: t("home.faq.q4"), answer: t("home.faq.a4") },
     { question: t("home.faq.q5"), answer: t("home.faq.a5") },
-    { question: t("home.faq.q6"), answer: t("home.faq.a6") },
-    { question: t("home.faq.q7"), answer: t("home.faq.a7") },
   ];
 
   return (
